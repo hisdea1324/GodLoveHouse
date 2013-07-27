@@ -1,0 +1,67 @@
+﻿<?php
+require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
+
+$mode = trim($_REQUEST["mode"]);
+$status = trim($_REQUEST["status"]);
+if ((strlen($status)==0)) {
+	$status="S0001";
+} 
+
+switch (($mode)) {
+	case "changeStatus":
+changeStatus();
+		break;
+	case "editReserv":
+editReserv();
+		break;
+	case "deleteReserv":
+deleteReserv();
+		break;
+} 
+
+function changeStatus() {
+	$reservId = trim($_REQUEST["reservId"]);
+	$value = trim($_REQUEST["value"]);
+	$query = "UPDATE reservation SET reservStatus = '".$value."' WHERE reservationNo = ".$reservId;
+	$rs = $db->execute($query);
+
+	header("Location: "."index.php?status=".$status);
+} 
+
+function deleteReserv() {
+	$reservId = trim($_REQUEST["reservId"]);
+
+	$ObjQuery = new DataManager();
+
+	$ObjQuery->setTable("reservation");
+	$ObjQuery->setCondition("reservationNo = ".$reservId);
+	$ObjQuery->delete();
+
+	$ObjQuery = null;
+
+
+	header("Location: "."index.php?status=".$status);
+} 
+
+function editReserv() {
+	$reservId = trim($_REQUEST["reservId"]);
+	$fromDate = trim($_REQUEST["fromDate"]);
+	$toDate = trim($_REQUEST["toDate"]);
+
+	$ObjQuery = new DataManager();
+	$fieldList = array("startDate","endDate");
+	$valueList = array($fromDate,$toDate);
+
+	$ObjQuery->setTable("reservation");
+	$ObjQuery->setField($fieldList);
+	$ObjQuery->setValue($valueList);
+	$ObjQuery->setCondition("reservationNo = ".$reservId);
+	$ObjQuery->update();
+
+	$ObjQuery = null;
+
+
+	header("Location: "."index.php?status=".$status);
+} 
+?>

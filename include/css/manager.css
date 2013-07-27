@@ -1,0 +1,39 @@
+/* CSS Document */
+
+/* Global */
+body { font:12px/1.5 Dotum, Verdana, AppleGothic, Sans-serif; color:#000000; background:top left repeat-x #ffffff; }
+
+a:link					{ color:#333; text-decoration:none;}
+a:visited			 { color:#333; text-decoration:none;}
+a:hover				 { color:#3c75a7; text-decoration:none;}
+a:active				{ color:#333; text-decoration:none;}
+
+hr { list-style:none; vertical-align:left; }
+img { border:none;}
+
+dl { }
+dt { padding:2px; padding-right:0.7em; text-align: right; width:8.5em; }
+dd { margin:-1.7em 0 0 10em; }
+dd.button { position:absolute; margin-left: 19em; margin-top:-19px; } 
+
+/* title */
+#title h1 { margin:0; padding:0; color:#aaaaaa; }
+
+/* login page */
+#login .btn-login { height:40px; }
+#login input { height:13px; width:100px;}
+
+/* joinForm page */
+
+/* footer */
+#copyright { position:fixed; _position:absolute; top:97%; color:#aaaaaa; }
+
+/* error massage */
+.error_line 	{ color:#ed1c24; margin-top:5px;}
+
+/* main */
+.main { position:absolute; top:5em; left: 10%; height:30em; width:85%; }
+
+/* main menu */
+#menu { font-size:12px;}
+#subMenu { text-align:left;}

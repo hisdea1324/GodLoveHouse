@@ -1,0 +1,65 @@
+/* CSS Document */
+
+* {margin:0; padding:0}
+
+body { padding-left: 11em; font:12px/1.5 Dotum, Verdana, AppleGothic, Sans-serif; color:#000000; background:top left repeat-x #ffffff; }
+
+a:link					{ color:#333; text-decoration:none;}
+a:visited			 { color:#333; text-decoration:none;}
+a:hover				 { color:#3c75a7; text-decoration:none;}
+a:active				{ color:#333; text-decoration:none;}
+
+	img { border:none;}
+	hr { list-style:none; vertical-align:left; }
+	
+	h1, 
+	h2,
+	h3, 
+	h4,
+	input,
+	p { margin:0;	padding:0;}
+	
+	 
+	ul { list-style-type: none; padding: 0; margin: 0; position: absolute; top: 2em; left: 1em; width: 9em }
+	
+	h1 { font-size:1.5em;}
+	h2 { font-size:1.4em;}
+	h3 { font-size:1.2em;}
+	h4 { font-size:1em;}
+	
+	dl { width:800px; border:1px solid #eee; padding:5px; margin:0 3px 3px 0; vertical-align:bottom; }
+	dt { width:120px; float:left; margin: 0px 5px 5px 0; padding: 5px 0 5px 0; text-align:center; }
+	dd { width:600px; margin: 0 5px 5px 0; padding: 5px 0px 5px 10px; }
+	
+	label {cursor:pointer;}	
+	input , select , textbox, password { height:20px; vertical-align:middle; }
+	button { vertical-align:middle; border-top:1px solid #e2e2e2; cursor:hand; }
+	
+	.checkbox 	{ margin:0 3px;}	
+	.both 		{ clear:both;}
+	.btnWrap 	{ text-align:center; clear:both; padding-top:15px;}
+	.tip 		{ font-size:0.9em; padding-top:3px; color:#999;}
+	.error 		{ font-size:0.9em; padding-top:3px; color:#ed1c24!important;}
+	.caution	{ font-size:0.9em; padding-top:10px; color:#F60; text-align:center;}
+	.inItem		{ font-size:0.9em; padding:2px 0; color:#666; font-weight: lighter	!important;}
+	.guide 		{ background-color: #f7f7f7; padding:10px ; font-size:0.9em; letter-spacing:-1px; margin:10px 0;}
+	.beta		{ font-size:1em; }
+	.need 		{	}
+	.name 		{font-weight:bold; color:#fd8a1d;}
+	.cbox			{ border:1px solid #e9e9e9; background-color:#fbfbfb; padding:14px; clear:both;}
+	.wbox 		{ border:1px solid #e9e9e9; background-color:#fff; padding:10px 45px 10px 10px; text-align:center;}
+	
+/* layout */
+	#header { height:45px; overflow:hidden; margin-bottom:30px; padding-top:15px;}
+	.mainMenu { width:100%; text-align:left; font-size:14px; font-weight:bold;}
+	.mainMenu li {float:left; margin: 0 5px 5px 0;}
+	.subMenu { width:100%; text-align:left;}
+	.subMenu li {float:left; margin: 0 5px 5px 0;}
+	
+	.error_line 	{ color:#ed1c24; margin-top:5px;}
+	#copyright { color:#aaaaaa; }
+
+	#login_form { background-color:yellow; width:400px; }
+	.input_line { background-color:white; width:300px; }
+	.input_id { background-color:white; width:300px; }
+	.input_pw { background-color:white; width:300px; }

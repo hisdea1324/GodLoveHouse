@@ -1,0 +1,87 @@
+
+BODY, TD, TR, TABLE, SELECT, input{FONT-FAMILY:돋움, Dotum; COLOR:555555; FONT-SIZE:12px; LINE-HEIGHT:18px; margin:0px;}
+
+/*---------- 링크 CSS ----------*/
+a:link, a:visited, a:active { color:5A5A5A; TEXT-DECORATION:none;}
+a:hover { COLOR:#555555; TEXT-DECORATION:underline;}
+
+a.orange:link, a.orange:visited, a.orange:active { color:#EE7000; TEXT-DECORATION:none;}
+a.orange:hover { COLOR:#B75600; TEXT-DECORATION:underline;}
+a.blue:link, a.blue:visited, a.blue:active { color:#2F6FB0; TEXT-DECORATION:none;}
+a.blue:hover { COLOR:#044C94; TEXT-DECORATION:underline;}
+a.pink:link, a.pink:visited, a.pink:active { color:#FF4A85; TEXT-DECORATION:none;}
+a.pink:hover { COLOR:#CC0066; TEXT-DECORATION:underline;}
+a.green:link, a.green:visited, a.green:active { color:#5B7243; TEXT-DECORATION:none;}
+a.green:hover { COLOR:#5B7243; TEXT-DECORATION:underline;}
+a.Lgreen:link, a.Lgreen:visited, a.Lgreen:active { color:#68715B; TEXT-DECORATION:none;}
+a.Lgreen:hover { COLOR:#818D71; TEXT-DECORATION:underline;}
+a.brown:link, a.brown:visited, a.brown:active { color:#AC5009; TEXT-DECORATION:none;}
+a.brown:hover { COLOR:#75390B; TEXT-DECORATION:underline;}
+a.white:link, a.white:visited, a.white:active { color:D3D1E1; TEXT-DECORATION:none;}
+a.white:hover { COLOR:#FFFFFF; TEXT-DECORATION:underline;}
+a.red:link, a.red:visited, a.red:active { color:#FF0000; TEXT-DECORATION:none;}
+a.red:hover { COLOR:#AF0000; TEXT-DECORATION:underline;}
+a.wgreen:link, a.wgreen:visited, a.wgreen:active { color:#CCFF33; TEXT-DECORATION:none;}
+a.wgreen:hover { COLOR:#E9FFA7; TEXT-DECORATION:underline;}
+a.dblue:link, a.dblue:visited, a.dblue:active { color:#004EFF; TEXT-DECORATION:none;}
+a.dblue:hover { COLOR:#001EFF; TEXT-DECORATION:underline;}
+a.sky:link, a.sky:visited, a.sky:active { color:#138084; TEXT-DECORATION:none;}
+a.sky:hover { COLOR:#47A4A7; TEXT-DECORATION:underline;}
+a.pple:link, a.pple:visited, a.pple:active { color:#8C8DBB; TEXT-DECORATION:none;}
+a.pple:hover { COLOR:#65679A; TEXT-DECORATION:underline;}
+
+/*---------- 굵은 밑줄 링크 CSS ----------*/
+A.spot_red:link, A.spot_red:active, A.spot_red:visited { text-decoration:none; color: 5A5A5A; }
+A.spot_red:hover { text-decoration:none; border-bottom-width:2; border-bottom-style:solid; color: #FF0000}
+
+/*---------- 인풋 CSS ----------*/
+
+.INPUT		 {COLOR:5A5A5A; HEIGHT:18px; BORDER:1px #C0C0C0 solid;}
+.TEXTAREA	{COLOR:5A5A5A; BORDER:1px #C0C0C0 solid; LINE-HEIGHT:18px;}
+
+.Sinput {
+ border: 1px solid #71A14B;
+ border-top-color: #71A14B;
+ border-right-color: #71A14B;
+ border-bottom-color: #71A14B;
+ border-left-color: #71A14B;
+ border-top-style: solid;
+ border-right-style: solid;
+ border-bottom-style: solid;
+ border-left-style: solid;
+
+}
+
+/*---------- 폰트추가 CSS ----------*/
+
+.red			 {COLOR:#E1452B; LINE-HEIGHT:15px;}
+.pink			{COLOR:#980041; LINE-HEIGHT:15px;}
+.white		 {COLOR:#FFFFFF; LINE-HEIGHT:15px;}
+.blue			{COLOR:#044C94; LINE-HEIGHT:15px;}
+.brown		 {COLOR:#A15D2A; LINE-HEIGHT:15px;}
+.green		 {COLOR:#5B7243; LINE-HEIGHT:15px;}
+.orange		{COLOR:#EE7000; LINE-HEIGHT:15px;}
+.yellow		{COLOR:#FFF000; LINE-HEIGHT:15px;}
+.pple		 {COLOR:#8C8DBB; LINE-HEIGHT:15px;}
+.black		 {COLOR:#000000; LINE-HEIGHT:15px;}
+.notice		{COLOR:#576568; LINE-HEIGHT:15px;}
+.wgreen		{COLOR:#CCFF33; LINE-HEIGHT:15px;}
+
+.search	{color:#45672A; line-height:15px; font-weight:bold;}
+.gold	{color:#cd9932; line-height:15px; font-weight:bold;}
+.Lsky	{color:#708CA4; font-size:15px; font-weight:bold;}
+
+.ls				{LETTER-SPACING:-1px;}													/* 자간좁히기 */
+.small		 {FONT-SIZE:11; margin-top:4px}									/* 작은글씨 */
+
+
+/*---------- 기타설정 CSS ----------*/
+IMG				{BORDER:none;}
+
+/* member 테이블라인 */
+.td_top_a {HEIGHT: 2px; BACKGROUND-COLOR: #91BE36}
+.td_top_b {HEIGHT: 2px; BACKGROUND-COLOR: #B2B2B2}
+.td_b {BORDER-BOTTOM: #E4E4E4 1px solid; BACKGROUND-COLOR: #FFFFFF; PADDING-LEFT: 15px;}
+.td_d {BORDER-BOTTOM: #E4E4E4 1px solid; BACKGROUND-COLOR: #F3F3F3; BORDER-RIGHT: #E4E4E4 1px solid; PADDING-LEFT: 15px;}
+
+

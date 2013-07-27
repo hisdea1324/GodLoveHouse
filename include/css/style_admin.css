@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+/**/
+body {
+	margin: 10px; 
+	padding: 0px; 
+	list-style: none; 
+	list-style-type: none; 
+	border-collapse: collapse; 
+	color: #555555; 
+	font-size:12px; 
+	font-family:dotum,Arial,돋움; 
+	line-height:17px; 
+	scrollbar-3dlight-color:DADADA;
+	scrollbar-arrow-color:#DADADA;
+	scrollbar-track-color:#DADADA;
+	scrollbar-darkshadow-color:#DADADA;
+	scrollbar-face-color:#FFFFFF;
+	scrollbar-highlight-color:#FFFFFF;
+	scrollbar-shadow-color:#DADADA;
+	}
+td, div, p, ul, li, input, select, H1, H2, H3, H4 {	
+	margin: 0px; 
+	padding: 0px; 
+	list-style: none; 
+	list-style-type: none; 
+	border-collapse: collapse; 
+	color: #555555; 
+	font-size:12px; 
+	font-family:dotum,Arial,돋움; 
+	line-height:17px;
+	vertical-align:middle 
+	}	
+table { 
+	margin:0px; 
+	padding:0px; 
+	}
+hr { list-style:none; vertical-align:left; }	
+dt { padding:2px; padding-right:0.7em; text-align: right; width:8.5em; height:1.7em; }
+dd { margin:-1.7em 0 0 10em; }
+dd.button { position:absolute; margin-left: 19em; margin-top:-19px; } 	
+select { 
+	letter-spacing:-1; 
+	}
+input { 
+	height:16px; 
+	border:1px solid #d1d1d1; 
+	color:#787878;
+	vertical-align:middle 
+	}
+textarea { 
+	height:100px; 
+	width:97%; 
+	border:1px solid #d1d1d1; 
+	color:#787878; 
+	font-family:dotum,Arial,; 
+	font-size:12px;
+	line-height:17px
+	}
+form { 
+	margin:0px; 
+	}
+
+.chk,.radio { 
+	border:0px;
+	}
+
+a:link { COLOR: #555555; TEXT-DECORATION: none; }
+a:active { COLOR: #555555; TEXT-DECORATION: none; } 
+a:visited { COLOR: #555555; TEXT-DECORATION: none; }
+a:hover { COLOR: #555555; TEXT-DECORATION: underline; }
+
+a,area { blr:expression(this.onFocus=this.blur()) } /* for IE */
+:focus { -moz-outline-style:none; } /* for Firefox */ 
+
+img { border:none; }
+
+/*font*/
+.fs11, a.fs11:link, a.fs11:visited, a.fs11:hover, a.fs11:active { font-size:11px; font-family:dotum,돋움; line-height:14px; }
+.fc_01, a.fc_01:link, a.fc_01:visited, a.fc_01:hover, a.fc_01:active {color:#eb5f1b;}
+.fc_02, a.fc_01:link, a.fc_01:visited, a.fc_01:hover, a.fc_01:active {color:#7da60e;}
+.fc_gray, a.fc_gray:link, a.fc_gray:visited, a.fc_gray:hover, a.fc_gray:active {color:#999999;}
+.b, a.b:link, a.b:visited, a.b:hover, a.b:active { font-weight:bold; }
+
+/*align*/
+.cen {text-align:center}
+.right {text-align:right}
+
+/*contents*/
+.global {width:970px; margin-bottom:10px; height:15px}
+.global ul { float:left; display:inline}
+.global ul li {float:left; display:inline; margin-right:20px; background:url(../../images/admin/dot.gif) no-repeat 0px 7px; padding-left:8px}
+.topmenu {width:970px; height:58px; background:url(../../images/admin/bg_tm.gif) no-repeat; position:relative}
+.topmenu ul {float:left; display:inline; padding:0px 0 0 0px;}
+.topmenu ul li {float:left; display:inline; margin-right:60px; position:relative; margin-top:8px}
+.topmenu ul .logo {float:left; display:inline; margin-top:0px}
+.topmenu .sub { position:absolute; top:35px; left:200px}
+#wrap {width:970px; margin-top:10px}
+#wrap .lSec {width:150px; float:left;}
+#wrap .lSec ul li {*margin-top:-2px}
+#wrap .rSec {float:right; width:790px; padding-left:30px}
+
+/* login page */
+#login .btn-login { height:40px; }
+#login input { height:13px; width:100px;}
+
+/* main */
+.main { position:absolute; top:5em; left: 10%; height:30em; width:85%; }
+
+/* main menu */
+#menu { font-size:12px;}
+#subMenu { text-align:left;}
+
+/* footer */
+#copyright { position:fixed; _position:absolute; top:97%; color:#aaaaaa; }
