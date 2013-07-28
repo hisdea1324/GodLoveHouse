@@ -5,6 +5,215 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
+
+class RequestAddInfo {
+	protected $record = array();
+	protected $items = array();
+
+
+
+
+	public function __set($name,$value) { 
+		$this->record[$name] = $value;
+	}
+
+	public function __get($name) { 
+		return $this->record[$name];
+	}
+
+	public function __isset($name) {
+		return isset($this->record[$name]); 
+    }
+
+    function __construct() {
+		$this->record['reqId'] = -1;
+		$this->record['due'] = "";
+		$this->record['nick'] = "";
+		$this->record['nation'] = "";
+		$this->record['currentCost'] = 0;
+		$this->record['totalCost'] = 0;
+		$this->record['status'] = "05001";
+		$this->record['email'] = "";
+		$this->record['userId'] = "";
+		$this->record['itemCount'] = 0;
+	}
+
+
+	function Open($value) {
+		global $mysqli;
+
+		$column = array();
+		/* create a prepared statement */
+		$query = "SELECT A.reqId, A.userId, B.nick, A.status, A.nationCode, C.name, A.dueDate, B.email, ";
+		$query.= " (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId) AS totalCost, ";
+		$query.= " (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId AND userId > '') AS currentCost ";
+		$query.= " FROM requestAddInfo A, users B, code C ";
+		$query.= " WHERE A.reqId = ? AND A.userId = B.userId AND A.nationCode = C.code";
+
+
+		if ($stmt = $mysqli->prepare($query)) {
+
+			/* bind parameters for markers */
+			$stmt->bind_param("s", $value);
+
+			/* execute query */
+			$stmt->execute();
+			
+			$metaResults = $stmt->result_metadata();
+			$fields = $metaResults->fetch_fields();
+			$statementParams='';
+			
+			//build the bind_results statement dynamically so I can get the results in an array
+			foreach ($fields as $field) {
+				if (empty($statementParams)) {
+					$statementParams.="\$column['".$field->name."']";
+				} else {
+					$statementParams.=", \$column['".$field->name."']";
+				}
+			}
+
+
+			$statment = "\$stmt->bind_result($statementParams);";
+			eval($statment);
+			
+			while($stmt->fetch()){
+				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
+				//if your lazy and didn't want to write out each param to bind.
+				$this->record = $column;
+			}
+			
+			/* close statement */
+			$stmt->close();
+
+
+
+
+			$regItemColumn = array();
+			$query = "SELECT reqItemId FROM requestItem WHERE reqId = ? ";
+			$stmt->bind_param("i", $value);
+			$stmt->execute();
+			
+			$metaResults = $stmt->result_metadata();
+			$fields = $metaResults->fetch_fields();
+			$statementParams='';
+
+
+			foreach ($fields as $field) {
+				if (empty($statementParams)) {
+					$statementParams.="\$regItemColumn['".$field->name."']";
+				} else {
+					$statementParams.=", \$regItemColumn['".$field->name."']";
+				}
+			}
+
+
+			$statment = "\$stmt->bind_result($statementParams);";
+			eval($statment);
+			
+
+
+			while($stmt->fetch()){
+				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
+				//if your lazy and didn't want to write out each param to bind.
+				$items[$this->record['itemCount']] = new RequestItemObject();
+				echo $items[$this->record['itemCount']];
+				$items[$this->record['itemCount']]->Open($regItemColumn);
+				$this->record['itemCount'] = $this->record['itemCount'] + 1;
+			}
+			$stmt->close();
+		}
+	}
+
+	function Update() {
+		global $mysqli;
+
+
+		if (($this->record['id'] == -1)) {
+			$query = "INSERT INTO requestAddInfo (`reqId`, `userId`, `status', 'dueDate', 'nationCode') VALUES ";
+			$query = $query."(?, ?, ?, ?, ?)";
+
+			$stmt = $mysqli->prepare($query);
+
+			# New Data
+			$stmt->bind_param("issss", 
+				$this->record['reqId'], 
+				$this->record['userId'], 
+				$this->record['status'], 
+				$this->record['dueDate'], 
+				$this->record['nationCode']);
+
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+
+			
+
+			$stmt = $mysqli->prepare("SELECT MAX(reqId) as new_id FROM requestAddInfo WHERE userId = ?");
+			$stmt->bind_param("s", $this->record['userId']);
+			$stmt->execute();
+			$stmt->bind_result($this->record['m_reqId']);
+			$stmt->close();
+
+			
+			
+			
+			
+			if (($this->record['itemCount'] > 0)) {
+				for ($i=0; $i < $this->record['itemCount']; $i++) {
+					$items[$i]->$insert($this->record['userId'], $this->record['supType']);
+				}
+			}
+			
+		} else {
+
+			$query = "UPDATE requestAddInfo SET ";
+			$updateData = "`userId` = ?, ";
+			$updateData.= "`status` = ?, ";
+			$updateData.= "`dueDate` = ?, ";
+			$updateData.= "`nationCode` = ? ";
+			$query .= $updateData." WHERE `reqId` = ?";
+
+			# create a prepared statement
+			$stmt = $mysqli->prepare($query);
+			
+			$stmt->bind_param("sss", 
+				$this->record['userId'], 
+				$this->record['status'], 
+				$this->record['dueDate'], 
+				$this->record['nationCode'],
+				$this->record['reqId']);
+				
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+
+
+			if (($this->record['itemCount'] > 0)) {
+				for ($i=0; $i < $this->record['itemCount']; $i++) {
+					$items[$i]->$update($this->record['reqId']);
+				}
+			}
+		}
+	}
+
+	unction Delete() {
+		global $mysqli;
+
+		if ($this->record['id'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM requestAddInfo WHERE reqId = ?");
+			$stmt->bind_param("s", $this->record['reqId']);
+			$stmt->execute();
+			$stmt->close();
+		}
+	} 
+}
+
+
+/*
 class RequestAddInfo {
 	var $reqItemRS;
 	var $reqInfoRS;
@@ -210,5 +419,6 @@ class RequestAddInfo {
 			$objDB->execute_command($query);
 		} 
 	} 
-} 
+}
+*/ 
 ?>

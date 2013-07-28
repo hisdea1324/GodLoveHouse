@@ -5,6 +5,230 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
+
+class BoardObject {
+	protected $record = array();
+
+	public function __set($name,$value) { 
+		$this->record[$name] = $value;
+	}
+
+	public function __get($name) { 
+		return $this->record[$name];
+	}
+
+	public function __isset($name) {
+		return isset($this->record[$name]); 
+    }
+
+    function __construct() {
+    	$sessions = new __construct();
+
+		$this->record['id'] = -1;
+		$this->record['groupId'] = "";
+		$this->record['title'] = "";
+		$this->record['contents'] = "";
+		$this->record['password'] = "";
+		$this->record['regDate'] = "";
+		$this->record['editDate'] = "";
+		$this->record['userId'] = $sessions->UserID;
+		$this->record['countView'] = 0;
+		$this->record['countCommnent'] = 0;
+		$this->record['answerId'] = -1;
+		$this->record['answerNum'] = 1000;
+		$this->record['answerLv'] = 0;
+	}
+
+	function Open($value) {
+		global $mysqli;
+
+		$column = array();
+		/* create a prepared statement */
+		$query = "SELECT * from board WHERE id = ? ";
+
+		if ($stmt = $mysqli->prepare($query)) {
+
+			/* bind parameters for markers */
+			$stmt->bind_param("s", $value);
+
+			/* execute query */
+			$stmt->execute();
+			
+			$metaResults = $stmt->result_metadata();
+			$fields = $metaResults->fetch_fields();
+			$statementParams='';
+			
+			//build the bind_results statement dynamically so I can get the results in an array
+			foreach ($fields as $field) {
+				if (empty($statementParams)) {
+					$statementParams.="\$column['".$field->name."']";
+				} else {
+					$statementParams.=", \$column['".$field->name."']";
+				}
+			}
+
+
+			$statment = "\$stmt->bind_result($statementParams);";
+			eval($statment);
+			
+			while($stmt->fetch()){
+				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
+				//if your lazy and didn't want to write out each param to bind.
+				$this->record = $column;
+			}
+			
+			/* close statement */
+			$stmt->close();
+		}
+	}
+
+
+	function Update() {
+		global $mysqli;
+
+		if (($this->record['id'] == -1)) {
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userId`, "
+			$query.= "`answerId`, `answerNum`, `answerLv`) VALUES ";
+			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?)";
+
+			$stmt = $mysqli->prepare($query);
+
+			# New Data
+			$stmt->bind_param("sssssiii", 
+				$this->record['groupId'], 
+				$this->record['title'],
+				$this->record['contents'],
+				$this->record['password'],
+				$this->record['userId'],
+				$this->record['answerId'],
+				$this->record['answerNum'],
+				$this->record['answerLv']);
+
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM board WHERE userId = ?");
+			$stmt->bind_param("s", $this->record['userId']);
+			$stmt->execute();
+			$stmt->bind_result($this->record['id']);
+			$stmt->close();
+
+			if($this->record['answerId'] == -1) {
+				$stmt = $mysqli->prepare("UPDATE board SET answerId = id WHERE id = ? ");
+				$stmt->bind_param("i", $this->record['id']);
+				$this->record['answerId'] = $this->record['id'];
+				$stmt->execute();
+				$stmt->close();
+			}
+			else {
+				$query = "UPDATE board SET answerNum = answerNum - 1 ";
+				$query.= "WHERE answerId = ? AND answerNum <= ? ";
+				$query.= "AND answerLv > 0 AND id <> ? ";
+				$stmt->bind_param("iii", 
+						$this->record['answerId'], 
+						$this->record['answerNum'], 
+						$this->record['id'] );
+				$stmt->execute();
+				$stmt->close();
+			}
+		} else {
+
+			$query = "UPDATE board SET ";
+			$updateData = "`groupId` = ?, ";
+			$updateData = "`title` = ?, ";
+			$updateData = "`contents` = ?, ";
+			$updateData = "`password` = ?, ";
+			$updateData = "`editDate` =  getDate(), ";
+			$updateData = "`userId` = ?, ";
+			$updateData = "`countView` = ?, ";
+			$updateData = "`countComment` = ?, ";
+			$updateData = "`answerId` = ?, ";
+			$updateData.= "`answerNum` = ?, ";
+			$updateData.= "`answerLv` = ? ";
+			$query .= $updateData." WHERE `id` = ?";
+
+			# create a prepared statement
+			$stmt = $mysqli->prepare($query);
+			
+			$stmt->bind_param("sss", 
+				$this->record['groupId'], 
+				$this->record['title'],
+				$this->record['contents'],
+				$this->record['password'],
+				$this->record['userId'],
+				$this->record['countView'],
+				$this->record['countComment'],
+				$this->record['answerId'],
+				$this->record['answerNum'],
+				$this->record['answerLv'],
+				$this->record['id']);
+				
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+		}
+	} 
+
+	function Delete() {
+		global $mysqli;
+
+		if ($this->record['id'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM board WHERE id = ?");
+			$stmt->bind_param("i", $this->record['id']);
+			$stmt->execute();
+			$stmt->close();
+		}
+	}
+
+
+
+	function AddView() {
+		$sessions = new __construct();
+		if (($this->record['id'] > -1 && !$sessions->checkReadList($this->record['id']))) {
+			$query = "UPDATE board SET countView = countView + 1 WHERE id = ? ";
+			$stmt = $mysqli->prepare($query);
+			$stmt->bind_param("i", $this->record['id']);
+			$stmt->execute();
+			$stmt->close();
+			$this->record['countView'] = $this->record['countView'] + 1;
+		} 
+		$sessions = null;
+	}
+
+	function AddComment() {
+		if (($this->record['id'] > -1)) {
+			$query = "UPDATE board SET countComment = countComment + 1 WHERE id = ?";
+			$stmt = $mysqli->prepare($query);
+			$stmt->bind_param("i", $this->record['id']);
+			$stmt->execute();
+			$stmt->close();
+			$this->record['countComment'] = $this->record['countComment'] + 1;
+		} 
+
+	} 
+
+
+	function checkEditPermission() {
+		$sessions = new __construct();
+		if (($this->record['id'] == -1 || strcmp($sessions->UserID, $this->record['userId'])==0 || $sessions->UserLevel==9)) {
+			return true;
+		} else {
+			return false;
+		} 
+
+	} 
+
+
+
+}
+
+
+/*
 class BoardObject {
 	var $boardRS;
 
@@ -264,4 +488,5 @@ class BoardObject {
 
 	} 
 } 
+*/
 ?>
