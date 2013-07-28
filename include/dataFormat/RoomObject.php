@@ -234,7 +234,7 @@ class RoomObject {
 
 		if ($this->record['roomId'] > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM god_room WHERE roomId = ?");
-			$stmt->bind_param("d", $this->record['roomId']);
+			$stmt->bind_param("i", $this->record['roomId']);
 			$stmt->execute();
 			$stmt->close();
 			

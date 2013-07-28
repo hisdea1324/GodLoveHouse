@@ -5,169 +5,35 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
-
 class BoardGroup {
-	protected $record = array();
+	var $boardRS;
+	#  class member variable
+	# ***********************************************
+	var $m_groupId;
+	var $m_managerId;
+	var $m_authReadLv;
+	var $m_authWriteLv;
+	var $m_authCommentLv;
+	var $m_countList;
+	var $m_name;
 
-
-	public function __set($name,$value) { 
-		$this->record[$name] = $value;
-	}
-
-	public function __get($name) { 
-		return $this->record[$name];
-	}
-
-	public function __isset($name) {
-		return isset($this->record[$name]); 
-    }
-
-    function __construct() {
-		$this->record['groupId'] = -1;
-		$this->record['title'] = "";
-		$this->record['contents'] = "";
-		$this->record['password'] = "";
-		$this->record['regDate'] = "";
-		$this->record['editDate'] = "";
-		$this->record['userId'] = "";
-		$this->record['countView'] = 0;
-		$this->record['countComment'] = 0;
-		$this->record['countList'] = 0;
-		$this->record['answerId'] = -1;
-		$this->record['answerNum'] = 0;
-		$this->record['answerLv'] = 0;
-		$this->record['name'] = "";
-	}
-
-
-	function Open($value) {
-		global $mysqli;
-
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * from boardGroup WHERE groupId = ? ";
-
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $value);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
-		}
-	}
-
-
-	function Update() {
-		global $mysqli;
-
-		$resultCount = 0;
-		$stmt = $mysqli->prepare("SELECT CNT(*) FROM boardGroup WHERE groupId = ?");
-		$stmt->bind_param("s", $this->record['groupId']);
-		$stmt->execute();
-		$stmt->bind_result($resultCount);
-		$stmt->close();
-
-
-
-		if (($resultCount == 0)) {
-			$query = "INSERT INTO boardGroup (`groupId`, `managerId`, 'authReadLv', 'authWriteLv', ";
-			$query.= "'authCommentLv', 'countList','name') VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?)";
-
-			$stmt = $mysqli->prepare($query);
-
-			# New Data
-			$stmt->bind_param("ssiiiis", 
-				$this->record['groupId'],
-				$this->record['managerId'],
-				$this->record['authReadLv'],
-				$this->record['authWriteLv'],
-				$this->record['authCommentLv'],
-				$this->record['countList'], 
-				$this->record['name']);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-
-			
-		} else {
-
-			$query = "UPDATE boardGroup SET ";
-			$updateData = "`managerId` = ?, ";
-			$updateData = "`authReadLv` = ?, ";
-			$updateData = "`authWriteLv` = ?, ";
-			$updateData = "`authCommentLv` = ?, ";
-			$updateData = "`countList` = ?, ";
-			$updateData = "`name` = ?, ";
-			$query .= $updateData." WHERE `groupId` = ?";
-
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("ssiiiis", 
-				$this->record['groupId'],
-				$this->record['managerId'],
-				$this->record['authReadLv'],
-				$this->record['authWriteLv'],
-				$this->record['authCommentLv'],
-				$this->record['countList'], 
-				$this->record['name'],
-				$this->record['groupId']);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-		}
+	#  Get property
+	# ***********************************************
+	function GroupID() {
+		$GroupID = $m_groupId;
 	} 
 
-	function Delete() {
-		global $mysqli;
-
-		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM boardGroup WHERE groupId = ?");
-			$stmt->bind_param("s", $this->record['groupId']);
-			$stmt->execute();
-			$stmt->close();
-		}
+	function ManagerID() {
+		$ManagerID = $m_managerId;
 	} 
 
-	function AddList() {
-		$this->record['countList'] = $this->record['countList'] + 1;
-	}
+	function CountList() {
+		$CountList = $m_countList;
+	} 
 
-	/*
+	function Name() {
+		$Name = $m_name;
+	} 
 
 	function WritePermission() {
 		$sessions = new __construct();
@@ -204,6 +70,106 @@ class BoardGroup {
 		$sessions = null;
 
 	} 
-	*/
-}
+
+	#  Set property 
+	# ***********************************************
+	function GroupID($value) {
+		$m_groupId = trim($value);
+	} 
+
+	function ManagerID($value) {
+		$m_managerId = trim($value);
+	} 
+
+	function AuthReadLv($value) {
+		$m_authReadLv=intval($value);
+	} 
+
+	function AuthWriteLv($value) {
+		$m_authWriteLv=intval($value);
+	} 
+
+	function AuthCommentLv($value) {
+		$m_authCommentLv=intval($value);
+	} 
+
+	function Name($value) {
+		$m_name = trim($value);
+	} 
+
+	#  class initialize
+	# ***********************************************
+	function __construct() {
+		$m_groupId="";
+		$m_title="";
+		$m_contents="";
+		$m_password="";
+		$m_regDate="";
+		$m_editDate="";
+		$m_userId="";
+		$m_countView=0;
+		$m_countComment=0;
+		$m_answerId=-1;
+		$m_answerNum=0;
+		$m_answerLv=0;
+	} 
+
+	function __destruct() {
+		$boardRS = null;
+
+	} 
+
+	#  class method
+	# ***********************************************
+	function Open($groupId) {
+		$query = "SELECT * from boardGroup WHERE groupId = '".$mssqlEscapeString[$groupId]."'";
+		$boardRS = $objDB->execute_query($query);
+		if ((!$boardRS->eof && !$boardRS->bof)) {
+			$m_groupId = $boardRS["groupId"];
+			$m_managerId = $boardRS["managerId"];
+			$m_authReadLv=intval($boardRS["authReadLv"]);
+			$m_authWriteLv=intval($boardRS["authWriteLv"]);
+			$m_authCommentLv=intval($boardRS["authCommentLv"]);
+			$m_countList=intval($boardRS["countList"]);
+			$m_name = $boardRS["name"];
+		} 
+	} 
+
+	function Update() {
+		$query = "SELECT * FROM boardGroup WHERE groupId = '".$mssqlEscapeString[$m_groupId]."'";
+		$boardRS = $objDB->execute_query($query);
+
+		if (($memberRS->eof || $memberRS->bof)) {
+			# New Data
+			$query = "INSERT INTO boardGroup (groupId, managerId, authReadLv, authWriteLv, authCommentLv, countList, name) VALUES ";
+			$insertData="'".$mssqlEscapeString[$m_groupId]."',";
+			$insertData = $insertData."'".$mssqlEscapeString[$m_managerId]."',";
+			$insertData = $insertData."'".$m_authReadLv."',";
+			$insertData = $insertData."'".$m_authWriteLv."',";
+			$insertData = $insertData."'".$m_authCommentLv."', ";
+			$insertData = $insertData."'".$m_name."'";
+			$query = $query."(".$insertData.")";
+		} else {
+			$query = "UPDATE board SET ";
+			$updateData="managerId = '".$mssqlEscapeString[$m_managerId]."', ";
+			$updateData = $updateData."authReadLv = '".$m_authReadLv."', ";
+			$updateData = $updateData."authWriteLv = '".$m_authWriteLv."', ";
+			$updateData = $updateData."authCommentLv = '".$m_authCommentLv."', ";
+			$updateData = $updateData."countList = '".$m_countList."', ";
+			$updateData = $updateData."name = '".$mssqlEscapeString[$m_name]."' ";
+			$query = $query.$updateData." WHERE groupId = '".$mssqlEscapeString[$m_groupId]."'";
+		} 
+
+		$objDB->execute_command($query);
+	} 
+
+	function AddList() {
+		$m_countList = $m_countList+1;
+	} 
+
+	function Delete() {
+		$query = "DELETE FROM boardGroup WHERE groupId = '".$mssqlEscapeString[$m_groupId]."'";
+		$objDB->execute_command($query);
+	} 
+} 
 ?>

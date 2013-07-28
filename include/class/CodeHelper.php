@@ -12,7 +12,7 @@
 # ************************************************************
 class CodeHelper {
 	function getCodeName($value) {
-		$query = "SELECT name from code WHERE code = '".$mssqlEscapeString[$value]."'";
+		$query = "SELECT name from code WHERE code = '{$value}'";
 		$codeRS = $db->Execute($query);
 
 		if (($codeRS["name"]==!null)) {
@@ -54,7 +54,7 @@ class CodeHelper {
 	} 
 
 	function getCodeListByType($value,$index) {
-		$query = "SELECT * from code WHERE type = '".$mssqlEscapeString[$value]."'";
+		$query = "SELECT * from code WHERE type = '{$value}'";
 		$codeRS = $db->Execute($query);
 
 		return $codeRS;
@@ -63,12 +63,13 @@ class CodeHelper {
 	function getCodeList($query) {
 		$codeListRS = $db->Execute($query);
 
-		if ((!$codeListRS->Eof && !$codeListRS->Bof)) {
+		$retValue = 0;
+		if (!$codeListRS->Eof && !$codeListRS->Bof) {
 			while(!(($codeListRS->EOF || $codeListRS->BOF))) {
 				$codeInfo = new CodeObject();
 				$codeInfo->Open($codeListRS["code"]);
 
-				$index=count($retValue);
+				$index = count($retValue);
 				$retValue = $index;
 				echo $codeInfo;
 				$codeListRS->MoveNext;
@@ -79,27 +80,27 @@ class CodeHelper {
 	} 
 
 	function getNationCodeList() {
-		$query = "SELECT code FROM [code] WHERE type = '선교지' ORDER BY name";
+		$query = "SELECT code FROM `code` WHERE type = '선교지' ORDER BY name";
 		return getCodeList($query);
 	} 
 
 	function getSupportCodeList() {
-		$query = "SELECT code FROM [code] WHERE type = '후원타입' ORDER BY name";
+		$query = "SELECT code FROM `code` WHERE type = '후원타입' ORDER BY name";
 		return getCodeList($query);
 	} 
 
 	function getLocalCodeList() {
-		$query = "SELECT code FROM [code] WHERE type = '지역코드' ORDER BY name";
+		$query = "SELECT code FROM `code` WHERE type = '지역코드' ORDER BY name";
 		return getCodeList($query);
 	} 
 
 	function getHouseStatusCodeList() {
-		$query = "SELECT code FROM [code] WHERE type = '상태코드2' ORDER BY name";
+		$query = "SELECT code FROM `code` WHERE type = '상태코드2' ORDER BY name";
 		return getCodeList($query);
 	} 
 
 	function getStatusCodeList() {
-		$query = "SELECT code FROM [code] WHERE type = '상태코드' ORDER BY name";
+		$query = "SELECT code FROM `code` WHERE type = '상태코드' ORDER BY name";
 		return getCodeList($query);
 	} 
 } 

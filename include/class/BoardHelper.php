@@ -16,30 +16,30 @@ class BoardHelper {
 	# property
 	#***********************************************
 	function PAGE_UNIT() {
-		$PAGE_UNIT = $m_pageUnit;
+		return $this->m_pageUnit;
 	} 
 
 	function PAGE_COUNT() {
-		$PAGE_COUNT = $m_pageCount;
+		return $this->m_pageCount;
 	} 
 
 	function TOTAL_COUNT() {
-		$TOTAL_COUNT = $m_total;
+		return $this->m_total;
 	} 
 
 	function PAGE_UNIT($value) {
-		$m_pageUnit = $value;
+		$this->m_pageUnit = $value;
 	} 
 
 	function PAGE_COUNT($value) {
-		$m_pageCount = $value;
+		$this->m_pageCount = $value;
 	} 
 
 	function __construct() {
-		$m_eHandler = new ErrorHandler();
-		$m_pageCount=5;
-		$m_pageUnit=10;
-		$m_total=0;
+		$this->m_eHandler = new ErrorHandler();
+		$this->m_pageCount = 5;
+		$this->m_pageUnit = 10;
+		$this->m_total = 0;
 	} 
 
 	function __destruct() {
@@ -53,7 +53,7 @@ class BoardHelper {
 	} 
 
 	function getReplyInfoById($index) {
-		if ((strlen(trim($index)) == 0)) {
+		if (strlen(trim($index)) == 0) {
 			$index=-1;
 		}
 		
@@ -61,18 +61,16 @@ class BoardHelper {
 		$replyBoard = new BoardObject();
 		$board->Open($index);
 		$replyBoard->AnswerId = $board->AnswerId;
-		$replyBoard->AnswerNum = $board->AnswerNum-1;
-		$replyBoard->AnswerLv = $board->AnswerLv+1;
+		$replyBoard->AnswerNum = $board->AnswerNum - 1;
+		$replyBoard->AnswerLv = $board->AnswerLv + 1;
 		$replyBoard->Title="[Re]".$board->Title;
 		$replyBoard->Contents="<P>===================================================================</P>".$board->Contents."<P>==================================================================</P>";
-
-		$board = null;
 
 		return $replyBoard;
 	} 
 
 	function getBoardInfoById($index) {
-		if ((strlen(trim($index)) == 0)) {
+		if (strlen(trim($index)) == 0) {
 			$index = -1;
 		}
 		$board = new BoardObject();
@@ -80,40 +78,39 @@ class BoardHelper {
 		return $board;
 	} 
 
-	function setCondition($field,$keyword,$groupId) {
-		$strWhere=" WHERE groupId = '".$mssqlEscapeString[$groupId]."'";
-		if ((strlen($field)>0 && strlen($keyword)>0)) {
-			$strWhere = $strWhere." AND ".$field." LIKE '%".$mssqlEscapeForLikeSearch[$keyword]."%'";
+	function setCondition($field, $keyword, $groupId) {
+		$strWhere=" WHERE groupId = '{$groupId}'";
+		if (strlen($field) > 0 && strlen($keyword) > 0) {
+			$strWhere = $strWhere." AND ".$field." LIKE '%{$keyword}%'";
 		} 
 
-		$m_StrConditionQuery = $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from board".$m_StrConditionQuery;
-		$countRS = $db->Execute($query);
-		$m_total = $countRS["recordCount"];
-		$countRS = null;
+		$query = "SELECT COUNT(*) AS recordCount from board".$this->m_StrConditionQuery;
+		$countRS = $mysqli->Execute($query);
+		$this->m_total = $countRS["recordCount"];
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$m_total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $this->m_total);
 	} 
 
 	function getBoardListWithPaging($curPage) {
-		$topNum = $m_pageCount*$curPage;
+		$topNum = $htis->m_pageCount * $curPage;
 
-		$query = "SELECT top ".$topNum." * FROM board".$m_StrConditionQuery." ORDER BY answerId DESC, answerNum DESC";
-		$db->CursorLocation=3;
-		$boardRS = $db->Execute($query);
-		if (($boardRS->RecordCount>0)) {
-			$boardRS->PageSize = $m_pageCount;
+		$query = "SELECT top {$topNum} * FROM board ".$this->m_StrConditionQuery." ORDER BY answerId DESC, answerNum DESC";
+		$boardRS = $mysqli->Execute($query);
+		if ($boardRS->RecordCount > 0) {
+			$boardRS->PageSize = $this->m_pageCount;
 			$boardRS->AbsolutePage = $curPage;
 		} 
 
+		$retValue = 0;
 		if (!$boardRS->Eof && !$boardRS->Bof) {
 			while(!($boardRS->EOF || $boardRS->BOF)) {
 				$board = new BoardObject();
 				$board->Open($boardRS["id"]);
-				$index=count($retValue);
+				$index = count($retValue);
 				$retValue = $index;
 				echo $board;
 

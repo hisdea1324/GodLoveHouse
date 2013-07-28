@@ -7,15 +7,15 @@
 	header("Content-type: "."text/html;charset=utf-8");
 
 	global $Application;
-	$Application["FileRoot"]="F:\\HOME\\hisdea1324\\www\\";
-	$Application["WebRoot"]="localhost";
+	$Application["FileRoot"]="F:\\HOME\\npngjjh\\www\\";
+	$Application["WebRoot"]="http://ec2-54-248-246-249.ap-northeast-1.compute.amazonaws.com/";
 	$Application["Title"]="::: God's LoveHouse :::";
 	$Application["Charset"]="utf-8";
 
-	$Application["DBPass"]="root";
-	$Application["DBUser"]="root";
-	$Application["DBName"]="root";
-	$Application["DBSource"]="localhost";
+	$Application["DBPass"]="admin6394";
+	$Application["DBUser"]="npngjjh";
+	$Application["DBName"]="npngjjh";
+	$Application["DBSource"]="sql-008.cafe24.com";
 
 	$Application["QueryDebug"]=true;
 ?>

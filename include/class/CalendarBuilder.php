@@ -1,61 +1,61 @@
 <?php 
 class CalendarBuilder {
-	var $m_year;
-	var $m_month;
+	public $year;
+	public $month;
 
 	function __construct() {
-		$m_year=strftime("%Y",time());
-		$m_month=strftime("%m",time());
+		$this->year = strftime("%Y",time());
+		$this->month = strftime("%m",time());
 	} 
 
 	function __destruct() {
 		
-
 	} 
 
 	# Get property
 	# ***********************************************	
 	function CYear() {
-		$CYear = $m_year;
+		$CYear = $this->year;
 	} 
 
 	function CMonth() {
-		$CMonth=DataFormat($m_month);
+		return DataFormat($this->month);
 	} 
 
 	function CurrentMonth() {
-		$CurrentMonth = $m_year.DataFormat($m_month);
+		return $this->year.(DataFormat($this->month));
 	} 
 
 	function NextMonth() {
-		if (($m_month==12)) {
-			$retValue=($m_year+1)."01";
+		if ($this->month == 12) {
+			$retValue = ($this->year + 1)."01";
 		} else {
-			$retValue = $m_year.DataFormat($m_month+1);
+			$retValue = $this->year.(DataFormat($this->month + 1));
 		} 
 
-		$NextMonth = $retValue;
+		return $retValue;
 	} 
 
 	# 이번달 1일의 요일계산
 	# ---------------------------------	
 	function FirstDay() {
-		$FirstDay=strftime("%w",$m_year."-".$m_month."-1")+1; # 1:일요일 2:월요일 ....7:토요일		 return $function_ret;
+		# 1:일요일 2:월요일 ....7:토요일
+		return strftime("%w", $this->year."-".$this->month."-1") + 1; 
 	} 
 
 	# 이번달 마지막날 찾기
 	# --------------------------------	
 	function LastDate() {
 		# (다음달 1일) - (이번달 1일 ) = 이번달 마지막날짜		
-		$v_thisMonth = $m_year."-".$m_month."-1";
-		$v_nextMonth = $DateAdd["m"][1][$v_thisMonth];
-		$LastDate = $DateDiff["y"][$v_thisMonth][$v_nextMonth];
+		$v_thisMonth = $this->year."-".$this->month."-1";
+		$v_nextMonth = DateAdd("m", 1, $v_thisMonth);
+		return DateDiff("y", $v_thisMonth, $v_nextMonth);
 	} 
 
 	# 이번달 마지막날의 요일 찾기
 	# --------------------------------	
 	function LastDay() {
-		$LastDay = strftime("%w",$m_year."-".$m_month."-".$LastDate) + 1; 
+		$LastDay = strftime("%w", $this->year."-".$this->month."-".$this->LastDate()) + 1; 
 		# 1:일요일 2:월요일 ....7:토요일		 
 		return $LastDay;
 	} 
@@ -63,21 +63,21 @@ class CalendarBuilder {
 	#  Set property 
 	# ***********************************************
 	function CYear($value) {
-		if ((strlen($value) > 0)) {
-			$m_year = $value;
+		if (strlen($value) > 0) {
+			$this->year = $value;
 		} 
 	} 
 
 	function CMonth($value) {
-		if ((strlen($value) > 0)) {
-			$m_month = $value;
+		if (strlen($value) > 0) {
+			$this->month = $value;
 		} 
 	} 
 
 	#  Method
 	# ***********************************************
 	function getWeekName($value) {
-		$weekEndDate = (8 - $FirstDay) % 7;
+		$weekEndDate = (8 - $this->FirstDay()) % 7;
 		$weekNumber = ($weekEndDate + 7 - (($value) % 7)) % 7;
 		switch (($weekNumber)) {
 			case 5:
@@ -107,7 +107,7 @@ class CalendarBuilder {
 	} 
 
 	function IsWeekStart($value) {
-		$weekEndDate = (8 - $FirstDay) % 7;
+		$weekEndDate = (8 - $this->FirstDay()) % 7;
 
 		if (($weekEndDate == (($value - 1) % 7))) {
 			$retValue = true;
@@ -119,7 +119,7 @@ class CalendarBuilder {
 	} 
 
 	function IsWeekEnd($value) {
-		$weekEndDate = (8 - $FirstDay) % 7;
+		$weekEndDate = (8 - $this->FirstDay()) % 7;
 
 		if (($weekEndDate == ($value % 7))) {
 			$retValue = true;

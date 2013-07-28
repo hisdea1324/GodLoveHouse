@@ -14,15 +14,15 @@ class DataManager {
 	var $strCondition;
 
 	function __construct() {
-		$fieldList = array();
-		$fieldCount=-1;
-		$valueList = array();
-		$valueCount=-1;
-		$fieldNList = array();
-		$fieldNCount=-1;
-		$valueNList = array();
-		$valueNCount=-1;
-		$strCondition="";
+		$this->fieldList = array();
+		$this->fieldCount = -1;
+		$this->valueList = array();
+		$this->valueCount = -1;
+		$this->fieldNList = array();
+		$this->fieldNCount = -1;
+		$this->valueNList = array();
+		$this->valueNCount = -1;
+		$this->strCondition = "";
 	} 
 
 	function __destruct() {
@@ -30,143 +30,138 @@ class DataManager {
 	} 
 
 	function setTable($tName) {
-		$tableName = $tName;
+		$this->tableName = $tName;
 	} 
 
 	function setField($fList) {
-		if (($valueCount>=0 && $valueCount!=count($fList))) {
+		if ($this->valueCount >= 0 && $this->valueCount != count($fList)) {
 			print "Error: DataManager Error 1";
 			exit();
 		} else {
-			$fieldList = $fList;
-			$fieldCount=count($fList);
+			$this->fieldList = $fList;
+			$this->fieldCount=count($fList);
 		} 
 
 	} 
 
 	function setValue($vList) {
-		if (($fieldCount>=0 && $fieldCount!=count($vList))) {
+		if ($this->fieldCount >= 0 && $this->fieldCount != count($vList)) {
 			print "Error: DataManager Error 2";
 			exit();
 
 		} else {
-			$valueList = $vList;
-			$valueCount=count($vList);
+			$this->valueList = $vList;
+			$this->valueCount=count($vList);
 		} 
 	} 
 
 	function setFieldNum($fList) {
-		if (($valueNCount>=0 && $valueNCount!=count($fList))) {
+		if ($this->valueNCount >= 0 && $this->valueNCount != count($fList)) {
 			print "Error: DataManager Error 3";
 			exit();
 		} else {
-			$fieldNList = $fList;
-			$fieldNCount=count($fList);
+			$this->fieldNList = $fList;
+			$this->fieldNCount=count($fList);
 		} 
 	} 
 
 	function setValueNum($vList) {
-		if (($fieldNCount>=0 && $fieldNCount!=count($vList))) {
+		if ($this->fieldNCount >= 0 && $this->fieldNCount != count($vList)) {
 			print "Error: DataManager Error 4";
 			exit();
 		} else {
-			$valueNList = $vList;
-			$valueNCount=count($vList);
+			$this->valueNList = $vList;
+			$this->valueNCount = count($vList);
 		} 
 
 	} 
 
 	function setCondition($strCond) {
-		if ((strlen($strCond)==0)) {
+		if (strlen($strCond) == 0) {
 			print "Error: DataManager Error 5";
 			exit();
 
 		} 
 
-		$strCondition="WHERE ".$strCond;
+		return "WHERE ".$strCond;
 	} 
 
 	function insert() {
 		checkField();
 
-		if (($fieldNCount<0)) {
-			$strField = $join[$fieldList][","];
-			$strValue="'".$join[$valueList]["', '"]."'";
-		}
-			else
-		if (($fieldCount<0)) {
-			$strField = $join[$fieldNList][","];
-			$strValue = $join[$valueNList][","];
+		if ($this->fieldNCount < 0) {
+			$strField = join($this->fieldList, ",");
+			$strValue = "'".join($this->valueList, "', '")."'";
+		} elseif ($this->fieldCount < 0) {
+			$strField = join($this->fieldNList, ",");
+			$strValue = join($this->valueNList, ",");
 		} else {
-			$strField = $join[$fieldList][","].", ".$join[$fieldNList][","];
-			$strValue="'".$join[$valueList]["','"]."', ".$join[$valueNList][","];
+			$strField = join($this->fieldList, ",").", ".join($this->fieldNList, ",");
+			$strValue = "'".join($this->valueList, "','")."', ".join($this->valueNList, ",");
 		} 
 
 
-		$query = "INSERT INTO ".$tableName;
+		$query = "INSERT INTO ".$this->tableName;
 		$query = $query."(".$strField.") VALUES";
 		$query = $query."(".$strValue.")";
 		print $query;
-		$Rs = $db->Execute($query);
+		$mysqli->execute($query);
 	} 
 
 	function update() {
 		checkField();
 		checkCondition();
 
-		$query = "UPDATE ".$tableName." SET ";
-		for ($i=0; $i <= $fieldCount; $i = $i+1) {
-			$query = $query.$fieldList[$i]."='".$valueList[$i]."', ";
+		$query = "UPDATE ".$this->tableName." SET ";
+		for ($i=0; $i <= $this->fieldCount; $i = $i+1) {
+			$query = $query.$this->fieldList[$i]."='".$this->valueList[$i]."', ";
 
 		}
 
-		for ($i=0; $i <= $fieldNCount; $i = $i+1) {
-			$query = $query.$fieldNList[$i]."=".$valueNList[$i].", ";
+		for ($i=0; $i <= $this->fieldNCount; $i = $i+1) {
+			$query = $query.$this->fieldNList[$i]."=".$this->valueNList[$i].", ";
 
 		}
 
-		$query=substr($query,0,strlen($query)-2)." ".$strCondition;
-
-		$Rs = $db->Execute($query);
+		$query = substr($query, 0, strlen($query) - 2)." ".$this->strCondition();
+		$mysqli->execute($query);
 	} 
 
 	function delete() {
 		checkCondition();
-		$query = "DELETE FROM ".$tableName." ".$strCondition;
-		$Rs = $db->Execute($query);
+		$query = "DELETE FROM ".$this->tableName." ".$this->strCondition();
+		$mysqli->execute($query);
 	} 
 
 	function checkField() {
 		$check1=false;
 		$check2=false;
 
-		if (($valueCount<0 || $fieldCount<0)) {
+		if ($this->valueCount < 0 || $this->fieldCount < 0) {
 			$check1=true;
 		} 
 
-		if (($valueNCount<0 || $fieldNCount<0)) {
+		if ($this->valueNCount < 0 || $this->fieldNCount < 0) {
 			$check2=true;
 		} 
 
-		if (($check1 && $check2)) {
+		if ($check1 && $check2) {
 			print "Error: DataManager Error 6";
 			exit();
-
 		} 
 
 	} 
 
 	function checkCondition() {
-		if ((strlen($strCondition)==0)) {
+		if (strlen($this->strCondition()) == 0) {
 			print "Error: DataManager Error 7";
 			exit();
-
 		} 
 
 	} 
 
 	function Check_sql($str) {
-		$val=strtoupper($str);
+		$val = strtoupper($str);
 		if ((strpos($val,";") ? strpos($val,";")+1 : 0)!=0 || 
 			 (strpos($val,"@variable") ? strpos($val,"@variable")+1 : 0)!=0 || 
 			 (strpos($val,"@@variable") ? strpos($val,"@@variable")+1 : 0)!=0 || 
