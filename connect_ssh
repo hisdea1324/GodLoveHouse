@@ -1,1 +1,0 @@
-ssh -i ~/BLACKDEW7.pem ec2-user@54.248.246.249

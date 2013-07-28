@@ -14,7 +14,7 @@ class HospitalHelper {
 	var $m_StrConditionQuery;
 
 	function __construct() {
-		$m_eHandler = new ErrorHandler();
+		$this->m_eHandler = new ErrorHandler();
 	} 
 
 	function __destruct() {
@@ -23,19 +23,19 @@ class HospitalHelper {
 	#  property
 	# ***********************************************
 	function PAGE_UNIT() {
-		$PAGE_UNIT = $m_pageUnit;
+		return $this->m_pageUnit;
 	} 
 
 	function PAGE_COUNT() {
-		$PAGE_COUNT = $m_pageCount;
+		return $this->m_pageCount;
 	} 
 
 	function PAGE_UNIT($value) {
-		$m_pageUnit = $value;
+		$this->m_pageUnit = $value;
 	} 
 
 	function PAGE_COUNT($value) {
-		$m_pageCount = $value;
+		$this->m_pageCount = $value;
 	} 
 
 	#  method : return one Object
@@ -43,30 +43,28 @@ class HospitalHelper {
 	function getHospitalInfoById($hospitalId) {
 		$hospital = new HospitalObject();
 
-		if (($hospital->Open($hospitalId)==false)) {
-			$m_eHandler->ignoreError("Hospital Not Found.");
+		if ($hospital->Open($hospitalId)==false) {
+			$this->m_eHandler->ignoreError("Hospital Not Found.");
 		} 
 
 
-		$getHospitalInfoById = $hospital;
+		return $hospital;
 	} 
 
 	#  method : Return Object List
 	# ************************************************************
-	function setCondition($hospitalId,$regionCode,$fromDate,$toDate) {
+	function setCondition($hospitalId, $regionCode, $fromDate, $toDate) {
 		$strWhere=" WHERE status = 'S2002' ";
-		if ((strlen($hospitalId)>0)) {
-			$strWhere = $strWhere." AND hospitalId = '".$mssqlEscapeString[$hospitalId]."'";
+		if (strlen($hospitalId) > 0) {
+			$strWhere = $strWhere." AND hospitalId = '{$hospitalId}'";
 		} 
-		if ((strlen($regionCode)>0)) {
-			$strWhere = $strWhere." AND regionCode = '".$mssqlEscapeString[$regionCode]."'";
+		if (strlen($regionCode) > 0) {
+			$strWhere = $strWhere." AND regionCode = '{$regionCode}'";
 		} 
-		if ((strlen($fromDate)>0 && strlen($toDate)>0)) {
-			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '".$mssqlEscapeString[$toDate]."' AND endDate >= '".$mssqlEscapeString[$fromDate]."' )";
-		}
-			else
-		if ((strlen($fromDate)>0)) {
-			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE endDate >= '".$mssqlEscapeString[$fromDate]."')";
+		if (strlen($fromDate) > 0 && strlen($toDate) > 0) {
+			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '{$toDate}' AND endDate >= '{$fromDate}' )";
+		} elseif (strlen($fromDate) > 0) {
+			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE endDate >= '{$fromDate}')";
 		}
 			else
 		if ((strlen($toDate)>0)) {
