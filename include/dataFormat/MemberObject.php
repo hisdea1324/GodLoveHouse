@@ -49,9 +49,6 @@ class MemberObject {
 	}
 
 
-
-
-
 	function Open($userId) {
 		global $mysqli;
 
