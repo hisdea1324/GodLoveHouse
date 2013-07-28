@@ -5,6 +5,182 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
+
+
+class RequestItemObject {
+	protected $record = array();
+
+	public function __set($name,$value) { 
+		$this->record[$name] = $value;
+	}
+
+	public function __get($name) { 
+		return $this->record[$name];
+	}
+
+	public function __isset($name) {
+		return isset($this->record[$name]); 
+    }
+
+    function __construct() {
+		$this->record['reqItemId'] = -1;
+		$this->record['reqId'] = "";
+		$this->record['item'] = "";
+		$this->record['descript'] = "";
+		$this->record['cost'] = 0;
+		$this->record['userId'] = "";
+		$this->record['sendStatus'] = "s1001";
+	}
+
+
+
+	function Open($value) {
+		global $mysqli;
+
+		$column = array();
+		/* create a prepared statement */
+		$query = "SELECT reqId, item, descript, cost, userId, sendStatus FROM requestItem WHERE reqItemId = ? ";
+		if ($stmt = $mysqli->prepare($query)) {
+
+			/* bind parameters for markers */
+			$stmt->bind_param("i", $value);
+
+			/* execute query */
+			$stmt->execute();
+			
+			$metaResults = $stmt->result_metadata();
+			$fields = $metaResults->fetch_fields();
+			$statementParams='';
+			
+			//build the bind_results statement dynamically so I can get the results in an array
+			foreach ($fields as $field) {
+				if (empty($statementParams)) {
+					$statementParams.="\$column['".$field->name."']";
+				} else {
+					$statementParams.=", \$column['".$field->name."']";
+				}
+			}
+
+
+			$statment = "\$stmt->bind_result($statementParams);";
+			eval($statment);
+			
+			while($stmt->fetch()){
+				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
+				//if your lazy and didn't want to write out each param to bind.
+				$this->record = $column;
+			}
+			
+			/* close statement */
+			$stmt->close();
+		}
+	}
+
+	function Update() {
+		global $mysqli;
+
+
+		if (($this->record['id'] == -1)) {
+			$query = "INSERT INTO requestItem ('reqId', 'item', 'descript', 'cost', 'userId', 'sendStatus') VALUES ";
+
+			$query = $query."(?, ?, ?, ?, ?, ?)";
+
+			$stmt = $mysqli->prepare($query);
+
+			# New Data
+			$stmt->bind_param("ississ", 
+				$this->record['reqId'], 
+				$this->record['item'], 
+				$this->record['descript'], 
+				$this->record['cost'], 
+				$this->record['userId'],
+				$this->record['sendStatus']);
+
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+
+			
+
+			$stmt = $mysqli->prepare("SELECT MAX(reqItemId) as new_id FROM requestItem WHERE reqId = ?");
+			$stmt->bind_param("s", $this->record['reqId']);
+			$stmt->execute();
+			$stmt->bind_result($this->record['reqItemId']);
+			$stmt->close();
+			
+		} else {
+
+			$query = "UPDATE requestItem SET ";
+			$updateData = "`reqId` = ?, ";
+			$updateData.= "`item` = ?, ";
+			$updateData.= "`descript` = ?, ";
+			$updateData.= "`cost` = ?, ";
+			$updateData.= "`secret` = ?, ";
+			$updateData.= "`userId` = ?, ";
+			$updateData.= "`sendStatus` = ?, ";
+			$query .= $updateData." WHERE `reqItemId` = ?";
+
+			# create a prepared statement
+			$stmt = $mysqli->prepare($query);
+			
+			# New Data
+			$stmt->bind_param("ississ", 
+				$this->record['reqId'], 
+				$this->record['item'], 
+				$this->record['descript'], 
+				$this->record['cost'],
+				$this->record['secret'], 
+				$this->record['userId'],
+				$this->record['sendStatus'],
+				$this->record['reqItemId']);
+				
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+		}
+	}
+
+	function Insert($userId,$supType) {
+		$query = "SELECT supId from requestInfo WHERE userId = ? AND supType = ?";
+		
+		$supId = -1;
+		$stmt = $mysqli->prepare($query);
+				$stmt->bind_param("ss", $userId, $supType);
+				$stmt->execute();
+				$stmt->bind_result($supId);
+				$stmt->close();
+
+		if($supId > 0) {
+			$query = "INSERT INTO requestItem (supId, reqItemId, cost) VALUES (?, ?, ?)";
+			$stmt = $mysqli->prepare($query);
+			$stmt->bind_param("iii", $supId, $this->record['reqItemId'], $this->record['cost']);
+			$stmt->execute();
+			$stmt->close();
+
+		}
+	} 
+
+	function Delete() {
+		global $mysqli;
+		if ($this->record['reqItemId'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM requestItem WHERE reqItemId = ?");
+			$stmt->bind_param("i", $this->record['reqItemId']);
+			$stmt->execute();
+			$stmt->close();
+		}
+	}
+
+
+	function showPrice() {
+		return $PriceFormat[$this->record['cost']][1];
+	} 
+}	
+
+/*
 class RequestItemObject {
 	var $reqItemRS;
 
@@ -190,4 +366,6 @@ class RequestItemObject {
 		return $PriceFormat[$m_cost][1];
 	} 
 } 
+
+*/
 ?>
