@@ -13,7 +13,7 @@ class RoomObject {
 		$this->record[$name] = $value; 
 	}
 	
-	public function __get($name) { 
+	public function __get($name) {
 		switch ($name) {
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record['explain']);
