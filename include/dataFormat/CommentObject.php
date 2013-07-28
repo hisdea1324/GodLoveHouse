@@ -184,6 +184,9 @@ class CommentObject {
 	} 
 }
 
+
+
+/*
 class CommentObject {
 	var $m_index;
 	var $m_parentId;
@@ -342,5 +345,6 @@ class CommentObject {
 			$objDB->execute_command($query);
 		}
 	} 
-} 
+}
+*/  
 ?>
