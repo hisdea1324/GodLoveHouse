@@ -173,9 +173,7 @@ class AccountObject {
 			$stmt->execute();
 			$stmt->close();
 		}
-
-
-
+	}
 }
 
 
