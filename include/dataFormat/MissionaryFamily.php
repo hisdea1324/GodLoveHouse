@@ -139,7 +139,7 @@ class MissionaryFamily {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userId'] > -1) {
+		if ($this->record['id'] > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM missionary_family WHERE id = ?");
 			$stmt->bind_param("s", $this->record['id']);
 			$stmt->execute();
