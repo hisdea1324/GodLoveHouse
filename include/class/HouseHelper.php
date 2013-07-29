@@ -16,7 +16,7 @@ class HouseHelper {
 	var $m_StrConditionQuery;
 
 	function __construct() {
-		$m_eHandler = new ErrorHandler();
+		$this->m_eHandler = new ErrorHandler();
 	} 
 
 	function __destruct() {
@@ -25,19 +25,19 @@ class HouseHelper {
 	#  property
 	# ***********************************************
 	function PAGE_UNIT() {
-		$PAGE_UNIT = $m_pageUnit;
+		return $this->m_pageUnit;
 	} 
 
 	function PAGE_COUNT() {
-		$PAGE_COUNT = $m_pageCount;
+		return $this->m_pageCount;
 	} 
 
 	function PAGE_UNIT($value) {
-		$m_pageUnit = $value;
+		$this->m_pageUnit = $value;
 	} 
 
 	function PAGE_COUNT($value) {
-		$m_pageCount = $value;
+		$this->m_pageCount = $value;
 	} 
 
 	#  method : return one Object
@@ -66,84 +66,69 @@ class HouseHelper {
 	# ************************************************************
 	function setCondition($houseId,$regionCode,$fromDate,$toDate) {
 		$strWhere=" WHERE B.status = 'S2002' AND A.houseId = B.houseId ";
-		if ((strlen($houseId)>0)) {
-			$strWhere = $strWhere." AND A.houseId = '".$mssqlEscapeString[$houseId]."'";
+		if (strlen($houseId) > 0) {
+			$strWhere = $strWhere." AND A.houseId = '{$houseId}'";
 		} 
-		if ((strlen($regionCode)>0)) {
-			$strWhere = $strWhere." AND B.regionCode = '".$mssqlEscapeString[$regionCode]."'";
+		if (strlen($regionCode) > 0) {
+			$strWhere = $strWhere." AND B.regionCode = '{$regionCode}'";
 		} 
-		if ((strlen($fromDate)>0 && strlen($toDate)>0)) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate	<= '".$mssqlEscapeString[$toDate]."' AND endDate >= '".$mssqlEscapeString[$fromDate]."' )";
-		}
-			else
-		if ((strlen($fromDate)>0)) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE endDate >= '".$mssqlEscapeString[$fromDate]."')";
-		}
-			else
-		if ((strlen($toDate)>0)) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate	<= '".$mssqlEscapeString[$toDate]."')";
+		if (strlen($fromDate) > 0 && strlen($toDate) > 0) {
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate <= '{$toDate}' AND endDate >= '{$fromDate}' )";
+		} elseif (strlen($fromDate) > 0) {
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE endDate >= '{$fromDate}')";
+		} elseif (strlen($toDate) > 0) {
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate <= '{$toDate}')";
 		} 
 
-		$m_StrConditionQuery = $strWhere;
+		return $strWhere;
 	} 
 
 	function setEtcCondition($regionCode) {
 		$strWhere=" WHERE B.status = 'S2001' AND A.houseId = B.houseId ";
-		if ((strlen($regionCode)>0)) {
-			$strWhere = $strWhere." AND B.regionCode = '".$mssqlEscapeString[$regionCode]."'";
+		if (strlen($regionCode) > 0) {
+			$strWhere = $strWhere." AND B.regionCode = '{$regionCode}'";
 		} 
-		$m_StrConditionQuery = $strWhere;
+		return $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount FROM room A, house B".$m_StrConditionQuery;
-		$countRS = $db->Execute($query);
+		$query = "SELECT COUNT(*) AS recordCount FROM room A, house B".$this->m_StrConditionQuery;
+		$countRS = $mysqli->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getRoomListWithPaging($curPage) {
-		$topNum = $m_pageCount*$curPage;
+		$topNum = $this->m_pageCount * $curPage;
 
-		$query = "SELECT top ".$topNum." A.roomId, B.houseId FROM room A, house B ".$m_StrConditionQuery." ORDER BY A.fee ASC";
-		$db->CursorLocation=3;
-		$listRS = $db->Execute($query);
+		$query = "SELECT top ".$topNum." A.roomId, B.houseId FROM room A, house B ".$this->m_StrConditionQuery." ORDER BY A.fee ASC";
+		$listRS = $mysqli->Execute($query);
 
-		if (($listRS->RecordCount>0)) {
-			$listRS->PageSize = $m_pageCount;
+		if ($listRS->RecordCount > 0) {
+			$listRS->PageSize = $this->m_pageCount;
 			$listRS->AbsolutePage = $curPage;
 			while(!(($listRS->EOF || $listRS->BOF))) {
 				$roomInfo = new RoomObject();
 				$roomInfo->Open($listRS["roomId"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $roomInfo;
-				$listRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $roomInfo;
 	} 
 
 	function getHouseList($query) {
-		$houseListRS = $db->Execute($query);
+		$houseListRS = $mysqli->Execute($query);
 
-		if ((!$houseListRS->Eof && !$houseListRS->Bof)) {
-			while(!(($houseListRS->EOF || $houseListRS->BOF))) {
+		if (!$houseListRS->Eof && !$houseListRS->Bof) {
+			while(!($houseListRS->EOF || $houseListRS->BOF)) {
 				$houseInfo = new HouseObject();
 				$houseInfo->Open($houseListRS["houseId"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $houseInfo;
-				$houseListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $houseInfo;
 	} 
 
 	function getHouseListByEtc() {
@@ -152,31 +137,29 @@ class HouseHelper {
 	} 
 
 	function getHouseListByRegion($regionCode) {
-		if ((strlen($regionCode)==0)) {
+		if (strlen($regionCode) == 0) {
 			$query = "SELECT houseId FROM house WHERE houseId IN (SELECT distinct houseId FROM room)";
 		} else {
-			$query = "SELECT houseId FROM house WHERE houseId IN (SELECT distinct houseId FROM room) AND regionCode = '".$mssqlEscapeString[$regionCode]."'";
+			$query = "SELECT houseId FROM house WHERE houseId IN (SELECT distinct houseId FROM room) AND regionCode = '{$regionCode}'";
 		} 
 
 		return getHouseList($query);
 	} 
 
 	function getHouseListByUserId($userId,$houseType) {
-		if (($userId=="lovehouse")) {
+		if ($userId == "lovehouse") {
 			$query = "SELECT houseId FROM house WHERE status = 'S2002'";
-		}
-			else
-		if (($houseType==1)) {
-			$query = "SELECT houseId FROM house WHERE userId = '".$mssqlEscapeString[$userId]."' AND status = 'S2002'";
+		} elseif ($houseType == 1) {
+			$query = "SELECT houseId FROM house WHERE userId = '$userId' AND status = 'S2002'";
 		} else {
-			$query = "SELECT houseId FROM house WHERE userId = '".$mssqlEscapeString[$userId]."' AND (status = 'S2001')";
+			$query = "SELECT houseId FROM house WHERE userId = '$userId' AND (status = 'S2001')";
 		} 
 
 		return getHouseList($query);
 	} 
 
 	function setReservationListConditionWithHouse($search,$houseId) {
-		switch (($search)) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."'";
 				break;
@@ -196,7 +179,7 @@ class HouseHelper {
 	} 
 
 	function setReservationListConditionWithDate($search,$houseId,$roomId) {
-		switch (($search)) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
@@ -216,7 +199,7 @@ class HouseHelper {
 	} 
 
 	function setReservationListCondition_n($search,$houseId,$roomId) {
-		switch (($search)) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
@@ -236,7 +219,7 @@ class HouseHelper {
 	} 
 
 	function setReservationListCondition($search) {
-		switch (($search)) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' ";
 				break;
@@ -256,69 +239,58 @@ class HouseHelper {
 	} 
 
 	function makeReservationListPagingHTML($curPage) {
-		$sessions = new __construct();
+		$sessions = new Session();
 		$query = "SELECT COUNT(*) AS recordCount FROM house A, room B, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$m_StrConditionQuery;
+		if ($sessions->UserID == "lovehouse") {
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."' ".$m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
 		} 
 
 		$countRS = $db->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getReservationListWithPaging($curPage) {
-		$sessions = new __construct();
-		$topNum = $m_pageCount*$curPage;
+		$sessions = new Session();
+		$topNum = $this->m_pageCount * $curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM house A, room B, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$m_StrConditionQuery;
+		if ($sessions->UserID == "lovehouse") {
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."' ".$m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
-		$db->CursorLocation=3;
-		$reserveListRS = $db->Execute($query);
+		$reserveListRS = $mysqli->Execute($query);
 
-		if (($reserveListRS->RecordCount>0)) {
-			$reserveListRS->PageSize = $m_pageCount;
+		if ($reserveListRS->RecordCount > 0) {
+			$reserveListRS->PageSize = $this->m_pageCount;
 			$reserveListRS->AbsolutePage = $curPage;
-			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
+			while(!($reserveListRS->EOF || $reserveListRS->BOF)) {
 				$reservInfo = new ReservationObject();
 				$reservInfo->Open($reserveListRS["reservationNo"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $reservInfo;
-				$reserveListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $reservInfo;
 	} 
 
 	function getReservationList($query) {
-		$reserveListRS = $db->Execute($query);
+		$reserveListRS = $mysqli->Execute($query);
 
-		if ((!$reserveListRS->Eof && !$reserveListRS->Bof)) {
-			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
+		if (!$reserveListRS->Eof && !$reserveListRS->Bof) {
+			while(!($reserveListRS->EOF || $reserveListRS->BOF)) {
 				$reserveInfo = new ReservationObject();
 				$reserveInfo->Open($reserveListRS["reservationNo"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $reserveInfo;
-				$reserveListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $reserveInfo;
 	} 
 
 	function getReservationListByManager($curPage) {
@@ -326,7 +298,7 @@ class HouseHelper {
 		if (($sessions->UserID=="lovehouse")) {
 			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId";
 		} else {
-			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."'";
+			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."'";
 		} 
 
 		return getReservationList($query);
@@ -334,7 +306,7 @@ class HouseHelper {
 
 	function getReservationListByUser($curPage) {
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
-		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$mssqlEscapeString[$sessions->UserID]."' ";
+		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$sessions->UserID."' ";
 		$query = $query."ORDER BY C.regDate DESC";
 		return getReservationList($query);
 	} 

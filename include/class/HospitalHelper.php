@@ -61,52 +61,46 @@ class HospitalHelper {
 		if (strlen($regionCode) > 0) {
 			$strWhere = $strWhere." AND regionCode = '{$regionCode}'";
 		} 
+		
 		if (strlen($fromDate) > 0 && strlen($toDate) > 0) {
 			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '{$toDate}' AND endDate >= '{$fromDate}' )";
 		} elseif (strlen($fromDate) > 0) {
 			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE endDate >= '{$fromDate}')";
+		} elseif (strlen($toDate) > 0) {
+			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '{$toDate}')";
 		}
-			else
-		if ((strlen($toDate)>0)) {
-			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '".$mssqlEscapeString[$toDate]."')";
-		} 
 
 		$m_StrConditionQuery = $strWhere;
 	} 
 
 	function setEtcCondition($regionCode) {
 		$strWhere=" WHERE status = 'S2001' ";
-		if ((strlen($regionCode)>0)) {
-			$strWhere = $strWhere." AND regionCode = '".$mssqlEscapeString[$regionCode]."'";
-		} 
+		if (strlen($regionCode) > 0) {
+			$strWhere = $strWhere." AND regionCode = '{$regionCode}'";
+		}
 		$m_StrConditionQuery = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount FROM hospital".$m_StrConditionQuery;
+		$query = "SELECT COUNT(*) AS recordCount FROM hospital".$this->m_StrConditionQuery;
 		$countRS = $db->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getHospitalList($query) {
 		$hospitalListRS = $db->Execute($query);
 
-		if ((!$hospitalListRS->Eof && !$hospitalListRS->Bof)) {
-			while(!(($hospitalListRS->EOF || $hospitalListRS->BOF))) {
+		if (!$hospitalListRS->Eof && !$hospitalListRS->Bof) {
+			while (!($hospitalListRS->EOF || $hospitalListRS->BOF)) {
 				$hospitalInfo = new HospitalObject();
 				$hospitalInfo->Open($hospitalListRS["hospitalId"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $hospitalInfo;
-				$hospitalListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $hospitalInfo;
 	} 
 
 	function getHospitalListByEtc() {
@@ -118,52 +112,47 @@ class HospitalHelper {
 		if ((strlen($regionCode)==0)) {
 			$query = "SELECT hospitalId FROM hospital";
 		} else {
-			$query = "SELECT hospitalId FROM hospital WHERE regionCode = '".$mssqlEscapeString[$regionCode]."'";
+			$query = "SELECT hospitalId FROM hospital WHERE regionCode = '{$regionCode}";
 		} 
 
 		return getHospitalList($query);
 	} 
 
 	function getHospitalListWithPaging($curPage) {
-		$topNum = $m_pageCount*$curPage;
+		$topNum = $this->m_pageCount * $curPage;
 
-		$query = "SELECT top ".$topNum." hospitalId FROM hospital ".$m_StrConditionQuery." ORDER BY price ASC";
-		$db->CursorLocation=3;
-		$listRS = $db->Execute($query);
+		$query = "SELECT top ".$topNum." hospitalId FROM hospital ".$this->m_StrConditionQuery." ORDER BY price ASC";
+		$listRS = $mysqli->Execute($query);
 
-		if (($listRS->RecordCount>0)) {
-			$listRS->PageSize = $m_pageCount;
+		if ($listRS->RecordCount > 0) {
+			$listRS->PageSize = $this->m_pageCount;
 			$listRS->AbsolutePage = $curPage;
+			
 			while(!(($listRS->EOF || $listRS->BOF))) {
 				$hospitalInfo = new HospitalObject();
 				$hospitalInfo->Open($listRS["hospitalId"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $hospitalInfo;
-				$listRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $hospitalInfo;
 	} 
 
-	function getHospitalListByUserId($userId,$hospitalType) {
-		if (($userId=="lovehouse")) {
+	function getHospitalListByUserId($userId, $hospitalType) {
+		if ($userId == "lovehouse") {
 			$query = "SELECT hospitalId FROM hospital WHERE AND status = 'S2002'";
 		}
 			else
-		if (($hospitalType==1)) {
-			$query = "SELECT hospitalId FROM hospital WHERE userId = '".$mssqlEscapeString[$userId]."' AND status = 'S2002'";
+		if ($hospitalType == 1) {
+			$query = "SELECT hospitalId FROM hospital WHERE userId = '{$userId}' AND status = 'S2002'";
 		} else {
-			$query = "SELECT hospitalId FROM hospital WHERE userId = '".$mssqlEscapeString[$userId]."' AND status = 'S2001'";
+			$query = "SELECT hospitalId FROM hospital WHERE userId = '{$userId}' AND status = 'S2001'";
 		} 
 
 		return getHospitalList($query);
 	} 
 
-	function setReservationListCondition_n($search,$hospitalId) {
-		switch (($search)) {
+	function setReservationListCondition_n($search, $hospitalId) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001'	AND A.hospitalId = '".$hospitalId."'";
 				break;
@@ -183,7 +172,7 @@ class HospitalHelper {
 	} 
 
 	function setReservationListCondition($search) {
-		switch (($search)) {
+		switch ($search) {
 			case "1":
 				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' ";
 				break;
@@ -205,49 +194,44 @@ class HospitalHelper {
 	function makeReservationListPagingHTML($curPage) {
 		$sessions = new __construct();
 		$query = "SELECT COUNT(*) AS recordCount FROM hospital A, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
-			$query = $query." WHERE A.hospitalId = C.hospitalId ".$m_StrConditionQuery;
+		if ($sessions->UserID=="lovehouse") {
+			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."' ".$m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
 		} 
 
 		$countRS = $db->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getReservationListWithPaging($curPage) {
-		$sessions = new __construct();
-		$topNum = $m_pageCount*$curPage;
+		$sessions = new Session();
+		$topNum = $this->m_pageCount*$curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM hospital A, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
-			$query = $query." WHERE A.hospitalId = C.hospitalId ".$m_StrConditionQuery;
+		if ($sessions->UserID == "lovehouse") {
+			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."' ".$m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
 		$db->CursorLocation=3;
 		$reserveListRS = $db->Execute($query);
 
-		if (($reserveListRS->RecordCount>0)) {
-			$reserveListRS->PageSize = $m_pageCount;
+		if ($reserveListRS->RecordCount > 0) {
+			$reserveListRS->PageSize = $this->m_pageCount;
 			$reserveListRS->AbsolutePage = $curPage;
 			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
 				$reservInfo = new ReservationObject();
 				$reservInfo->Open($reserveListRS["reservationNo"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $reservInfo;
-				$reserveListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $reservInfo;
 	} 
 
 	function getReservationList($query) {
@@ -257,15 +241,10 @@ class HospitalHelper {
 			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
 				$reserveInfo = new ReservationObject();
 				$reserveInfo->Open($reserveListRS["reservationNo"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $reserveInfo;
-				$reserveListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $reserveInfo;
 	} 
 
 	function getReservationListByManager($curPage) {
@@ -274,7 +253,7 @@ class HospitalHelper {
 		if (($sessions->UserID=="lovehouse")) {
 			$query = $query."WHERE A.hospitalId = C.hospitalId";
 		} else {
-			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userId = '".$mssqlEscapeString[$sessions->UserID]."'";
+			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."'";
 		} 
 
 		return getReservationList($query);

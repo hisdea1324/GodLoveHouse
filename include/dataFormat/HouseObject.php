@@ -76,7 +76,7 @@ class HouseObject {
 	}
 	
 	public function __isset($name) {
-		return isset($this->record[$name]); 
+		return isset($this->record[$name]);
     }
 
 	#  class initialize
