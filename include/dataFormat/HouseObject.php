@@ -81,7 +81,15 @@ class HouseObject {
 
 	#  class initialize
 	# ***********************************************
-	function __construct() {
+	function __construct($houseId = -1) {
+		if (houseId == -1) {
+			initialize();
+		} else {
+			Open($houseId);
+		}
+	}
+	
+	private function initialize() {
 		$this->record['houseId'] = -1;
 		$this->record['assocName'] = null;
 		$this->record['address1'] = null;
@@ -135,6 +143,7 @@ class HouseObject {
 			}
 
 			$statment = "\$stmt->bind_result($statementParams);";
+			// $statment: $stmt->bind_result($colomn['a'], $column['b']...)
 			eval($statment);
 			
 			while ($stmt->fetch()) {
