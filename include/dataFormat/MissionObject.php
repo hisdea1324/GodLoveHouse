@@ -22,6 +22,9 @@ class MissionObject {
 		return isset($this->record[$name]); 
     }
 
+    function __construct($value) {
+    	$this->Open($value);
+    }
 
     function __construct() {
 		$this->record['userId'] = "";
@@ -95,7 +98,7 @@ class MissionObject {
 
 
 			if($this->record['imageId'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '" . $this->record['imageId'] . "'";
+				$query = "SELECT `name` FROM attachFile WHERE `id` = '" . $this->record['imageId'] . "'";
 
 				if ($result = $mysqli->query($query)) {
 				    /* Get field information for all columns */
@@ -109,14 +112,13 @@ class MissionObject {
 			//나중에 확인 해볼 것 
 			$familyId = -1;
 			if (($this->record['familyCount'] > 0)) {
-				$stmt = $mysqli->prepare("SELECT id FROM missionary_family WHERE userId = ?");
+				$stmt = $mysqli->prepare("SELECT `id` FROM missionary_family WHERE `userId` = ?");
 				$stmt->bind_param("s", $this->record['userId']);
 				$stmt->execute();
 				$stmt->bind_result($familyId);
 				while ($stmt->fetch()) {
-					$mFamily = new MissionaryFamily();
-					$mFamily->Open($familyId);
-					$this->family[] = $mFamily;
+//					$mFamily->Open($familyId);
+					$this->family[] = new MissionaryFamily($familyId);;
 				}
    				$stmt->close();
 			}
@@ -226,7 +228,7 @@ class MissionObject {
 		global $mysqli;
 
 		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM missionary WHERE userId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM missionary WHERE `userId` = ?");
 			$stmt->bind_param("s", $this->record['userId']);
 			$stmt->execute();
 			$stmt->close();
@@ -238,8 +240,8 @@ class MissionObject {
 	function GetFamilyPrayCount($userId) {
 		$resultCount = -1;
 		$query = "SELECT ";
-		$query.= " SUM(CASE WHEN familyType = 'F0001' THEN 1 ELSE 0 END) AS FamilyPrayCnt ";
-		$query.= " FROM family WHERE userId = ? ";
+		$query.= " SUM(CASE WHEN `familyType` = 'F0001' THEN 1 ELSE 0 END) AS FamilyPrayCnt ";
+		$query.= " FROM family WHERE `userId` = ? ";
 		$stmt = $mysqli->prepare($query);
 		$stmt->bind_param("s", $this->record['userId']);
 		$stmt->execute();
@@ -253,8 +255,8 @@ class MissionObject {
 	function GetFamilyPrayCount($userId) {
 		$resultCount = -1;
 		$query = "SELECT ";
-		$query.= " SUM(CASE WHEN familyType = 'F0002' THEN 1 ELSE 0 END) AS FamilyFareCnt "
-		$query.= " FROM family WHERE userId = ? ";
+		$query.= " SUM(CASE WHEN `familyType` = 'F0002' THEN 1 ELSE 0 END) AS FamilyFareCnt "
+		$query.= " FROM family WHERE `userId` = ? ";
 		$stmt = $mysqli->prepare($query);
 		$stmt->bind_param("s", $this->record['userId']);
 		$stmt->execute();

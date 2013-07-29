@@ -37,7 +37,7 @@ class CommentObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT id, parentId, hostUserId, followId, comments, regDate, secret FROM familyComment WHERE id = ? ";
+		$query = "SELECT `id`, `parentId`, `hostUserId`, `followId`, `comments`, `regDate`, `secret` FROM familyComment WHERE `id` = ? ";
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
@@ -74,7 +74,7 @@ class CommentObject {
 
 			$commentColumn = array();
 
-			$query = "SELECT id FROM familyComment WHERE parentId = ? ";
+			$query = "SELECT `id` FROM familyComment WHERE `parentId` = ? ";
 			$stmt->bind_param("i", $value);
 			$stmt->execute();
 			
@@ -115,7 +115,7 @@ class CommentObject {
 
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO familyComment (`parentId`, `hostUserId`, `followId', 'comments', 'secret') VALUES ";
+			$query = "INSERT INTO familyComment (`parentId`, `hostUserId`, `followId', `comments`, `secret`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
@@ -136,7 +136,7 @@ class CommentObject {
 
 			
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM familyComment WHERE followId = ?");
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM familyComment WHERE `followId` = ?");
 			$stmt->bind_param("s", $this->record['followId']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
@@ -176,7 +176,7 @@ class CommentObject {
 		global $mysqli;
 
 		if ($this->record['id'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM familyComment WHERE id = ?");
+			$stmt = $mysqli->prepare("DELETE FROM familyComment WHERE `id` = ?");
 			$stmt->bind_param("s", $this->record['id']);
 			$stmt->execute();
 			$stmt->close();
