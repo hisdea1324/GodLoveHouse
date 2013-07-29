@@ -44,7 +44,7 @@ class BoardObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT * from board WHERE id = ? ";
+		$query = "SELECT * from board WHERE `id` = ? ";
 
 		if ($stmt = $mysqli->prepare($query)) {
 
@@ -110,23 +110,23 @@ class BoardObject {
 			# close statement
 			$stmt->close();
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM board WHERE userId = ?");
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM board WHERE `userId` = ?");
 			$stmt->bind_param("s", $this->record['userId']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
 			$stmt->close();
 
 			if($this->record['answerId'] == -1) {
-				$stmt = $mysqli->prepare("UPDATE board SET answerId = id WHERE id = ? ");
+				$stmt = $mysqli->prepare("UPDATE board SET `answerId` = `id` WHERE `id` = ? ");
 				$stmt->bind_param("i", $this->record['id']);
 				$this->record['answerId'] = $this->record['id'];
 				$stmt->execute();
 				$stmt->close();
 			}
 			else {
-				$query = "UPDATE board SET answerNum = answerNum - 1 ";
-				$query.= "WHERE answerId = ? AND answerNum <= ? ";
-				$query.= "AND answerLv > 0 AND id <> ? ";
+				$query = "UPDATE board SET `answerNum` = `answerNum` - 1 ";
+				$query.= "WHERE `answerId` = ? AND `answerNum` <= ? ";
+				$query.= "AND `answerLv` > 0 AND `id` <> ? ";
 				$stmt->bind_param("iii", 
 						$this->record['answerId'], 
 						$this->record['answerNum'], 
@@ -178,7 +178,7 @@ class BoardObject {
 		global $mysqli;
 
 		if ($this->record['id'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM board WHERE id = ?");
+			$stmt = $mysqli->prepare("DELETE FROM board WHERE `id` = ?");
 			$stmt->bind_param("i", $this->record['id']);
 			$stmt->execute();
 			$stmt->close();
@@ -190,7 +190,7 @@ class BoardObject {
 	function AddView() {
 		$sessions = new __construct();
 		if (($this->record['id'] > -1 && !$sessions->checkReadList($this->record['id']))) {
-			$query = "UPDATE board SET countView = countView + 1 WHERE id = ? ";
+			$query = "UPDATE board SET `countView` = `countView` + 1 WHERE `id` = ? ";
 			$stmt = $mysqli->prepare($query);
 			$stmt->bind_param("i", $this->record['id']);
 			$stmt->execute();
@@ -202,7 +202,7 @@ class BoardObject {
 
 	function AddComment() {
 		if (($this->record['id'] > -1)) {
-			$query = "UPDATE board SET countComment = countComment + 1 WHERE id = ?";
+			$query = "UPDATE board SET `countComment` = `countComment` + 1 WHERE `id` = ?";
 			$stmt = $mysqli->prepare($query);
 			$stmt->bind_param("i", $this->record['id']);
 			$stmt->execute();

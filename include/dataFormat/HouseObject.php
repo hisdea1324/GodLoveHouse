@@ -159,7 +159,7 @@ class HouseObject {
 			
 			$roomId = -1;
 			if (($this->record['houseId'] > -1)) {
-				$stmt = $mysqli->prepare("SELECT roomId FROM room WHERE houseId = ?");
+				$stmt = $mysqli->prepare("SELECT `roomId` FROM god_room WHERE `houseId` = ?");
 				$stmt->bind_param("i", $this->record['houseId']);
 				$stmt->execute();
 				$stmt->bind_result($roomId);
@@ -278,7 +278,7 @@ class HouseObject {
 		global $mysqli;
 
 		if ($this->record['houseId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM god_house WHERE houseId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM god_house WHERE `houseId` = ?");
 			$stmt->bind_param("d", $this->record['houseId']);
 			$stmt->execute();
 			$stmt->close();

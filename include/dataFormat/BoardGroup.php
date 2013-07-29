@@ -45,7 +45,7 @@ class BoardGroup {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT * from boardGroup WHERE groupId = ? ";
+		$query = "SELECT * from boardGroup WHERE `groupId` = ? ";
 
 		if ($stmt = $mysqli->prepare($query)) {
 
@@ -97,8 +97,8 @@ class BoardGroup {
 
 
 		if (($resultCount == 0)) {
-			$query = "INSERT INTO boardGroup (`groupId`, `managerId`, 'authReadLv', 'authWriteLv', ";
-			$query.= "'authCommentLv', 'countList','name') VALUES ";
+			$query = "INSERT INTO boardGroup (`groupId`, `managerId`, `authReadLv`, `authWriteLv`, ";
+			$query.= "`authCommentLv`, `countList`,`name`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);

@@ -34,7 +34,7 @@ class AttachFile {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT * from attachFile WHERE id = ? ";
+		$query = "SELECT * from attachFile WHERE `id` = ? ";
 
 		if ($stmt = $mysqli->prepare($query)) {
 
@@ -95,7 +95,7 @@ class AttachFile {
 			# close statement
 			$stmt->close();
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM attachFile WHERE userId = ?");
+			$stmt = $mysqli->prepare("SELECT MAX(id) AS new_id FROM attachFile WHERE `userId` = ?");
 			$stmt->bind_param("s", $this->record['code']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
@@ -130,7 +130,7 @@ class AttachFile {
 		global $mysqli;
 
 		if ($this->record['id'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM attachFile WHERE userId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM attachFile WHERE `userId` = ?");
 			$stmt->bind_param("s", $this->record['id']);
 			$stmt->execute();
 			$stmt->close();
