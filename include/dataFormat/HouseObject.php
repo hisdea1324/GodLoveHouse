@@ -82,10 +82,13 @@ class HouseObject {
 	#  class initialize
 	# ***********************************************
 	function __construct($houseId = -1) {
-		if (houseId == -1) {
-			initialize();
+
+		echo "HouseId : ".$houseId; 
+
+		if ($houseId == -1) {
+			$this->initialize();
 		} else {
-			Open($houseId);
+			$this->Open($houseId);
 		}
 	}
 	
@@ -117,7 +120,7 @@ class HouseObject {
 	
 	#  class method
 	# ***********************************************
-	function Open($houseId) {
+	public function Open($houseId) {
 		global $mysqli;
 
 		$column = array();
