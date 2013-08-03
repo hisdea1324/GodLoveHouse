@@ -1,17 +1,20 @@
 <?php
-//require "include/config.php";
-//require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
-//require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HouseObject.php");
+require "include/_config.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HouseObject.php");
 
-//$test = new HouseObject();
+$test = new HouseObject();
 //$test->Update(); // initiaize code in db? 
 //print_r($test); // test class member are right?
 //
-//echo "<br><br>";
-//$test->Open(4); // selected data?
-//print_r($test); // 
-//$test->Delete(); // delete ok?
+echo "<br><br>";
+$test->Open(0); // selected data?
+print_r($test); // 
+$test->Delete(); // delete ok?
 
+
+
+/*
 class test {
 	public $value;
 	
@@ -30,8 +33,8 @@ class test {
 		echo $v;
 	}
 	*/
-}
+//}
 
-$test1 = new test();
-$test2 = new test(2);
+//$test1 = new test();
+//$test2 = new test(2);
 ?>

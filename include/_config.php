@@ -12,10 +12,10 @@
 	$Application["Title"]="::: God's LoveHouse :::";
 	$Application["Charset"]="utf-8";
 
-	$Application["DBPass"]="root";
-	$Application["DBUser"]="root";
-	$Application["DBName"]="root";
-	$Application["DBSource"]="localhost";
+	$Application["pass"]="root";
+	$Application["user"]="root";
+	$Application["db"]="mysql";
+	$Application["server"]="localhost";
 
 	$Application["QueryDebug"]=true;
 ?>
