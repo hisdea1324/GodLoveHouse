@@ -115,7 +115,7 @@ class SupportItemObject {
 	} 
 
 	function showPrice() {
-		return $PriceFormat[$m_cost][1]." / 월";
+		return PriceFormat($m_cost, 1)." / 월";
 	} 
 } 
 ?>

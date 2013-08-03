@@ -87,9 +87,9 @@ class BoardObject {
 		global $mysqli;
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userId`, "
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userId`, ";
 			$query.= "`answerId`, `answerNum`, `answerLv`) VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?)";
+			$query.= "(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
 

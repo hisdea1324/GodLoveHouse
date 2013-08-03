@@ -82,7 +82,7 @@ function body() {
 		$ymd = $calendar->CYear.$calendar->CMonth.$calendar->DataFormat($i);
 
 		if (($dailySupport->Exists($ymd))) {
-			$sumPrice = $PriceFormat[$dailySupport->Item($ymd)][2]."<br />";
+			$sumPrice = PriceFormat($dailySupport->Item($ymd), 2)."<br />";
 		} 
 
 		print "<td>".$i."<br />".$sumPrice."</td>";
