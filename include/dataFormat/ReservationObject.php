@@ -138,7 +138,7 @@ class ReservationObject {
 		global $mysqli;
 
 		if (($this->record['reservationNo'] == -1)) {
-			$query = "INSERT INTO god_reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`) VALUES ";
+			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`) VALUES ";
 			$query = "(?, ?, ?, ?, ?, ?, ?)";
 
 			# create a prepared statement

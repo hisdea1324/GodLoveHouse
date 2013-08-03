@@ -38,7 +38,7 @@ function body() {
 				<input id="password" name="password" type="password" tabindex="2" class="loginpw" />
 			</dd>
 		</dl>
-		<?php if (strlen($_REQUEST["userid"])>0) {
+		<?php if (strlen($_REQUEST["userid"]) > 0) {
 ?>
 		<div class="error_line" id="errorMsg">
 			아이디 또는 비밀번호가 일치하지 않습니다.	

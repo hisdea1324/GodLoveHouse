@@ -54,7 +54,7 @@ class MemberObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from god_member WHERE userId = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from member WHERE userId = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("i", $userId);
@@ -94,7 +94,7 @@ class MemberObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from god_member WHERE nick = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from member WHERE nick = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("s", $userNick);
@@ -135,7 +135,7 @@ class MemberObject {
 		global $mysqli;
 
 		if (($this->record['roomId'] == -1)) {
-			$query = "INSERT INTO god_member (`userId`, `password`, `passQuest`, `passAnser`, ";
+			$query = "INSERT INTO member (`userId`, `password`, `passQuest`, `passAnser`, ";
 			$query = $query."`memo`, `name`, `nick`, `userLv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
 			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
@@ -146,7 +146,7 @@ class MemberObject {
 			# New Data
 			$stmt->bind_param("ssissssssssssssi", 
 				$this->record['userId'], 
-				$this->record['password'], 
+				crypt($this->record['password']), 
 				$this->record['passQuest'], 
 				$this->record['passAnswer'], 
 				$this->record['memo'], 
@@ -170,7 +170,7 @@ class MemberObject {
 			
 		} else {
 
-			$query = "UPDATE god_member SET ";
+			$query = "UPDATE member SET ";
 			$updateData = "`nick` = ?, ";
 			$updateData.= "`userLv` = ?, ";
 			$updateData.= "`email` = ?, ";
@@ -210,7 +210,7 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM god_member WHERE userId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM member WHERE userId = ?");
 			$stmt->bind_param("s", $this->record['userId']);
 			$stmt->execute();
 			$stmt->close();
