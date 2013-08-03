@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 #require "class/BoardHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
 #require "class/CommentHelper.php";
-#require "class/MemberHelper.php";
+#require "class/.php";
 #require "class/SupportHelper.php";
 #require "class/HouseHelper.php";
 #require "class/HospitalHelper.php";
@@ -27,10 +27,9 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/global.php");
 #require "dataFormat/AttachFile.php";
 #require "dataFormat/CodeObject.php";
 #require "dataFormat/CommentObject.php";
-#require "dataFormat/MemberObject.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");
 #require "dataFormat/MissionObject.php";
 #require "dataFormat/MissionaryFamily.php";
-#require "dataFormat/__construct.php";
 #require "dataFormat/AccountObject.php";
 #require "dataFormat/SupportObject.php";
 #require "dataFormat/SupportItemObject.php";
@@ -43,4 +42,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/global.php");
 #require "dataFormat/ReservationObject.php";
 #require "dataFormat/BoardObject.php";
 #require "dataFormat/BoardGroup.php";
+
+error_reporting(-1);
+ini_set('display_errors', 'On');
 ?>

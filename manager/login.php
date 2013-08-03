@@ -12,9 +12,12 @@ if (strlen($userid) == 0 || strlen($password) == 0) {
 
 $query = "SELECT * FROM member WHERE userid = '".$userid."'";
 if (!($result = $mysqli->real_query($query)) || $result->num_rows == 0) {
-	echo "no user!!";
-	echo "insert new manager!";
-	//header("Location: "."index.php?userid=".$userid);
+	$member = new MemberObject();
+	$member->userId = "lovehouse";
+	$member->password = "6394";
+	$member->userLv = "9";
+	$member->Update();
+	header("Location: "."index.php?userid=".$userid);
 } 
 
 $obj = $result->fetch_object();

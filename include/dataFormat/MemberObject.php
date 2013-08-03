@@ -15,6 +15,7 @@
 
 class MemberObject {
 	protected $record = array();
+	protected $isNew = false;
 
 	public function __set($name,$value) { 
 		$this->record[$name] = $value; 
@@ -29,22 +30,28 @@ class MemberObject {
     }
 
     // 멤버 오브젝트 초기화 함수  
-    function __construct() {
-		$this->record['userId'] = "";
-		$this->record['password'] = "";
-		$this->record['passQuest'] = "";
-		$this->record['passAnswer'] = "";
-		$this->record['memo'] = null;
-		$this->record['name'] = "";
-		$this->record['nick'] = "";
-		$this->record['userLevel'] = 0;
-		$this->record['email'] = "";
-		$this->record['jumin'] = "";
-		$this->record['address1'] = null;
-		$this->record['address2'] = null;
-		$this->record['zipcode'] = "";
-		$this->record['phone'] = "";
-		$this->record['mobile'] = "";
+    function __construct($userId = "") {
+    	if ($userId == "") {
+    		$this->isNew = true;
+    	} else {
+    		$this->isNew = false;
+    	}
+    	
+		$this->record['userId'] = $userId;
+		$this->record['password'] = "a";
+		$this->record['passQuest'] = 0;
+		$this->record['passAnswer'] = "a";
+		$this->record['memo'] = "a";
+		$this->record['name'] = "a";
+		$this->record['nick'] = "a";
+		$this->record['userLv'] = 0;
+		$this->record['email'] = "a";
+		$this->record['jumin'] = "0000000000000";
+		$this->record['address1'] = "a";
+		$this->record['address2'] = "a";
+		$this->record['zipcode'] = "000000";
+		$this->record['phone'] = "a";
+		$this->record['mobile'] = "a";
 		$this->record['msgOk'] = 0;
 	}
 
@@ -134,8 +141,8 @@ class MemberObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['roomId'] == -1)) {
-			$query = "INSERT INTO member (`userId`, `password`, `passQuest`, `passAnser`, ";
+		if ($this->isNew) {
+			$query = "INSERT INTO `member` (`userId`, `password`, `passQuest`, `passAnswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userLv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
 			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
@@ -144,9 +151,9 @@ class MemberObject {
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
-			$stmt->bind_param("ssissssssssssssi", 
+			$stmt->bind_param("ssissssisssssssi", 
 				$this->record['userId'], 
-				crypt($this->record['password']), 
+				$this->record['password'], 
 				$this->record['passQuest'], 
 				$this->record['passAnswer'], 
 				$this->record['memo'], 

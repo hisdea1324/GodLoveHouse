@@ -82,7 +82,6 @@ class HouseObject {
 	#  class initialize
 	# ***********************************************
 	function __construct($houseId = -1) {
-
 		echo "HouseId : ".$houseId; 
 
 		if ($houseId == -1) {
