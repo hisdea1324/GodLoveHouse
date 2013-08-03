@@ -1,12 +1,10 @@
 <?php
-require "/include/function/manager.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/function/manager.php");
 
 function checkAuth() {
-	if ($_SESSION['userLv']<9) {
+	if ($_SESSION['userLv'] < 9) {
 		header("Location: "."/");
 		exit();
-
 	} 
-
 } 
 ?>

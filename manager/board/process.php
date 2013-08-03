@@ -15,19 +15,19 @@ $page = trim($_REQUEST["page"]);
 
 switch (($mode)) {
 	case "addPost":
-addPost();
+		addPost();
 		break;
 	case "editPost":
-editPost();
+		editPost();
 		break;
 	case "replyPost":
-replyPost();
+		replyPost();
 		break;
 	case "deletePost":
-deletePost();
+		deletePost();
 		break;
 	case "editGroup":
-editGroup();
+		editGroup();
 		break;
 } 
 
