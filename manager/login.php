@@ -9,8 +9,8 @@ if (strlen($userid)==0 || strlen($password)==0) {
 	header("Location: "."index.php");
 } 
 
-$query = "SELECT * FROM users WHERE userid = '".$mssqlEscapeString[$userid]."' AND password = '".$mssqlEscapeString[$Encrypt[$password]]."'";
-$rs = $db->execute($query);
+$query = "SELECT * FROM users WHERE userid = '".mysqlEscapeString($userid)."' AND password = '".mysqlEscapeString($password)."'";
+$rs = $mysqli->execute($query);
 
 if (!$Rs->eof || !$Rs->bof) {
 	$_SESSION['userId'] = $userid;

@@ -39,7 +39,7 @@ function addPost() {
 	$contents=str_replace("'","''",$contents);
 
 	$query = "SELECT MAX(id) + 1 AS newId FROM board";
-	$rs = $db->execute($query);
+	$rs = $mysqli->execute($query);
 	if ($Rs->Eof || $Rs->Bof) {
 		$answerId=1;
 	} else {

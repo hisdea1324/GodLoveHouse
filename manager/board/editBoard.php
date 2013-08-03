@@ -23,6 +23,7 @@ body();
 showAdminFooter();
 
 function body() {
+	global $groupId, $name, $authWrite, $authRead, $managerId
 ?>
 <div class="sub">
 	<a href="index.php">게시판목록</a> | 

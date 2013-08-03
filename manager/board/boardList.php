@@ -72,6 +72,7 @@ function makeCondition($groupId,$field,$keyword) {
 } 
 
 function body() {
+	global $groupId, $field, $keyword, $htmlTable, $strPage;
 ?>
 <div class="sub">
 	<a href="index.php">게시판목록</a> | 
@@ -107,11 +108,11 @@ function body() {
 				<td align="right">
 					<input type="hidden" name="groupId" value="<?php echo $groupId;?>">
 					<select name="field">
-						<option value="name" <?php if (($field=="name")) {
+						<option value="name" <?php if ($field == "name") {
 ?>selected<?php } ?>>이름</option>
-						<option value="userid" <?php if (($field=="userid")) {
+						<option value="userid" <?php if ($field == "userid") {
 ?>selected<?php } ?>>아이디</option>
-						<option value="title" <?php if (($field=="title")) {
+						<option value="title" <?php if ($field == "title") {
 ?>selected<?php } ?>>제목</option>
 					</select>
 					<input type="text" name="keyword" size="15" value="<?php echo $keyword;?>">
