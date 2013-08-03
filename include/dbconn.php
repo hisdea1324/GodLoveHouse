@@ -1,6 +1,6 @@
 <?php
-global $mysqli;
-$mysqli = new mysqli('localhost', 'lovehouse', '6394', 'godlovehouse');
+global $mysqli, $Application;
+$mysqli = new mysqli($Application["server"], $Application["user"], $Application["pass"], $Application["db"]);
 
 /* check connection */
 if ($mysqli->connect_errno) {
