@@ -9,27 +9,27 @@ class MemberHelper {
 	#  property
 	# ***********************************************
 	function PAGE_UNIT() {
-		$PAGE_UNIT = $m_pageUnit;
+		return $this->m_pageUnit;
 	} 
 
 	function PAGE_COUNT() {
-		$PAGE_COUNT = $m_pageCount;
+		return $this->m_pageCount;
 	} 
 
 	function PAGE_UNIT($value) {
-		$m_pageUnit = $value;
+		$this->m_pageUnit = $value;
 	} 
 
 	function PAGE_COUNT($value) {
-		$m_pageCount = $value;
+		$this->m_pageCount = $value;
 	} 
 
 	#  creater
 	# ***********************************************
 	function __construct() {
-		$m_eHandler = new ErrorHandler();
-		$m_pageCount=5;
-		$m_pageUnit=10;
+		$this->m_eHandler = new ErrorHandler();
+		$this->m_pageCount=5;
+		$this->m_pageUnit=10;
 	} 
 
 	#  destoryer
@@ -42,61 +42,61 @@ class MemberHelper {
 	function getMemberByUserId($userId) {
 		$member = new MemberObject();
 
-		if (($member->Open($userId)==false)) {
-			$m_eHandler->ignoreError("Member Not Found.");
+		if ($member->Open($userId)==false) {
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 
-		$getMemberByUserId = $member;
+		return $member;
 	} 
 
 	function getMemberByUserNick($nick) {
 		$member = new MemberObject();
 
-		if (($member->OpenByNick($nick)==false)) {
-			$m_eHandler->ignoreError("Member Not Found.");
+		if ($member->OpenByNick($nick) == false) {
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 
-		$getMemberByUserNick = $member;
+		return $member;
 	} 
 
 	function getMissionInfoByUserId($userId) {
 		$mission = new MissionObject();
 
-		if (($mission->Open($userId)==false)) {
-			$m_eHandler->ignoreError("Member Not Found.");
+		if ($mission->Open($userId) == false) {
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 
-		$getMissionInfoByUserId = $mission;
+		return $mission;
 	} 
 
 	function getAccountInfoByUserId($userId) {
 		$account = new AccountObject();
 
-		if (($account->Open($userId)==false)) {
+		if ($account->Open($userId) == false) {
 			$m_eHandler->ignoreError("Account Not Found.");
 		} 
 
 
-		$getAccountInfoByUserId = $account;
+		return $account;
 	} 
 
 	function getSupportByUserId($userId) {
 		$support = new SupportObject();
 
-		if (($support->Open($userId)==false)) {
+		if ($support->Open($userId) == false) {
 			$m_eHandler->ignoreError("Supporter Not Found.");
 		} 
 
 
-		$getSupportByUserId = $support;
+		return $support;
 	} 
 
 	function getFamilyType($missionId,$userId) {
 
-		if ((strlen($userId)>0)) {
+		if (strlen($userId) > 0) {
 			$query = "SELECT familyType FROM family WHERE userId = '".$missionId."' AND followUserId = '".$userId."'";
 			$familyRS = $db->Execute($query);
 			if (!$familyRS->EOF && !$familyRS->BOF) {
@@ -112,79 +112,77 @@ class MemberHelper {
 		} 
 
 
-		$getFamilyLevel = $retValue;
+		return $retValue;
 	} 
 
 	#  method list Helper
 	# *********************************************************
 	function setCondition($userLv,$field,$keyword) {
-		if (($userLv>0)) {
+		if ($userLv > 0) {
 			$strWhere=" WHERE userLv = '".$userLv."'";
 		} else {
 			$strWhere=" WHERE userLv between 0 and 8 ";
 		} 
 
-		if ((strlen($field)>0 && strlen($keyword)>0)) {
+		if (strlen($field) > 0 && strlen($keyword) > 0) {
 			$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 		} 
 
-		$m_StrConditionQuery = $strWhere;
+		return $strWhere;
 	} 
 
 	function setOrder($order) {
-		$m_StrOrderQuery=" ORDER BY ".$order;
+		return " ORDER BY ".$order;
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from users".$m_StrConditionQuery;
-		$countRS = $db->Execute($query);
+		$query = "SELECT COUNT(*) AS recordCount from users".$this->m_StrConditionQuery;
+		$countRS = $mysqli->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getMemberListWithPageing($curPage) {
-		$topNum = $m_pageCount*$curPage;
+		$topNum = $this->m_pageCount * $curPage;
 
-		$query = "SELECT TOP ".$topNum." * FROM users ".$m_StrConditionQuery.$m_StrOrderQuery;
-		$db->CursorLocation=3;
-		$listRS = $db->Execute($query);
-		if (($listRS->RecordCount>0)) {
-			$listRS->PageSize = $m_pageCount;
+		$query = "SELECT TOP ".$topNum." * FROM users ".$this->m_StrConditionQuery.$this->m_StrOrderQuery;
+		$listRS = $mysqli->Execute($query);
+		if ($listRS->RecordCount > 0) {
+			$listRS->PageSize = $this->m_pageCount;
 			$listRS->AbsolutePage = $curPage;
 		} 
 
 
-		$getMemberListWithPageing = $db->Execute($query);
+		return $mysqli->Execute($query);
 	} 
 
 	function setMissionListCondition($field,$keyword) {
-		if ((strlen($field)>0 && strlen($keyword)>0)) {
+		if (strlen($field) > 0 && strlen($keyword) > 0) {
 			$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 		} 
 
-		$m_StrConditionQuery="WHERE approval = 1".$strWhere;
+		return "WHERE approval = 1".$strWhere;
 	} 
 
 	function makePagingMissionList($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from missionary ".$m_StrConditionQuery;
+		$query = "SELECT COUNT(*) AS recordCount from missionary ".$this->m_StrConditionQuery;
 		$countRS = $db->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return $makePagingN[$curPage][$m_pageCount][$m_pageUnit][$total];
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getMissionListWithPageing($curPage) {
 
-		$topNum = $m_pageCount*$curPage;
+		$topNum = $this->m_pageCount * $curPage;
 
-		$query = "SELECT top ".$topNum." userid FROM missionary ".$m_StrConditionQuery." ORDER BY missionName";
-		$db->CursorLocation=3;
-		$missionRS = $db->Execute($query);
+		$query = "SELECT top ".$topNum." userid FROM missionary ".$this->m_StrConditionQuery." ORDER BY missionName";
+		$missionRS = $mysqli->Execute($query);
 		if (($missionRS->RecordCount>0)) {
-			$missionRS->PageSize = $m_pageCount;
+			$missionRS->PageSize = $this->m_pageCount;
 			$missionRS->AbsolutePage = $curPage;
 		} 
 
@@ -193,35 +191,24 @@ class MemberHelper {
 			while(!($missionRS->EOF || $missionRS->BOF)) {
 				$mission = new MissionObject();
 				$mission->Open($missionRS["userid"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $mission;
-
-				$missionRS->MoveNext;
 			} 
 		} 
 
 
-		return $retValue;
+		return $mission;
 	} 
 
 	function getMissionList($query) {
 		$memberListRS = $db->Execute($query);
 
-		if ((!$memberListRS->Eof && !$memberListRS->Bof)) {
-			while(!(($memberListRS->EOF || $memberListRS->BOF))) {
+		if (!$memberListRS->Eof && !$memberListRS->Bof) {
+			while(!($memberListRS->EOF || $memberListRS->BOF)) {
 				$memberInfo = new MissionObject();
 				$memberInfo->Open($memberListRS["userId"]);
-
-				$index=count($retValue);
-				$retValue = $index;
-				echo $memberInfo;
-				$memberListRS->MoveNext;
 			} 
 		} 
 
-		return $retValue;
+		return $memberInfo;
 	} 
 
 	function getMemberListByPrayer($userId) {
