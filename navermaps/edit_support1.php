@@ -47,7 +47,7 @@ function body() {
 	for ($i=0; $i<=count($missionList2)-1; $i = $i+1) {
 		$mission = $missionList2[$i];
 ?>
-					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>) : <?php echo $PriceFormat[30000][1];?> / 월</p>
+					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>) : <?php echo priceFormat(30000, 1);?> / 월</p>
 <?php 
 
 	}
@@ -57,7 +57,7 @@ function body() {
 		</tr><tr>
 			<td> 선교사 후원금 합계 </td> 
 			<?	 $mission_donation=count($missionList2)*30000;?>
-			<td><?php echo $PriceFormat[$mission_donation][1];?></td>
+			<td><?php echo priceFormat($mission_donation, 1);?></td>
 		</tr><tr>
 			<td>정기 후원 리스트 보기</td>
 			<td>
@@ -78,7 +78,7 @@ function body() {
 			</td>
 		</tr><tr>
 			<td> 정기 후원금 합계</td>
-			<td><?php echo $PriceFormat[$regular_donation][1];?></td>
+			<td><?php echo priceFormat($regular_donation, 1);?></td>
 		</tr><tr>
 			<td> 자원봉사 리스트 보기</td>
 			<td>
@@ -105,7 +105,7 @@ function body() {
 			<td><?php echo $account->Method;?></td>
 		</tr><tr>
 			<td>총 정기후원금액</td>
-			<td><?php echo $PriceFormat[$regular_donation+$mission_donation][1];?> / 월</td>
+			<td><?php echo priceFormat($regular_donation+$mission_donation, 1);?> / 월</td>
 		</tr><tr>
 			<td>이체일</td>
 			<td><?php echo $account->SendDate;?></td>

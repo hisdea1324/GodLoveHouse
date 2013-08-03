@@ -1,8 +1,7 @@
 ﻿<?php 
 # url을 parsing하여 dictionary 형식으로 return하는 함수
 # { 'protocol', 'domain', 'path', 'query' }
-function public() {	
-	ParsingURL($sUrl);
+function ParsingURL($sUrl) {
 	# $parsedURL is of type "Scripting.Dictionary"
 	$urlPattern="http:#[a-zA-Z0-9]/([a-zA-Z0-9]/)*([a-zA-Z.])*";
 
@@ -157,14 +156,12 @@ function URLDecode($url) {
 	return $url;
 } 
 
-function public() {	
-	mssqlEscapeString($str);
+function mssqlEscapeString($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	return $str;
 } 
 
-function public() {	
-	mssqlEscapeForLikeSearch($str);
+function mssqlEscapeForLikeSearch($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	$str=str_replace("%","[%]",$str); # 특수문자 제거
 	$str=str_replace("_","[_]",$str); # 특수문자 제거

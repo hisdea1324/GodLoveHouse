@@ -115,7 +115,7 @@ function body() {
 				<td class="td01">최대인원</td>
 				<td><?php echo $room->Limit;?>명</td>
 				<td class="td01">가격(1일기준) </td>
-				<td><?php echo $priceFormat[$room->Fee][1];?></td>
+				<td><?php echo priceFormat($room->Fee, 1);?></td>
 			</tr>
 			<tr>
 				<td class="td01">세탁시설</td>

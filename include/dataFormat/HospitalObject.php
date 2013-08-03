@@ -808,7 +808,7 @@ class HospitalObject {
 
 	function showFee() {
 		if (($m_price>0)) {
-			$retString = PriceFormat($m_price, 1)."/일";
+			$retString = priceFormat($m_price, 1)."/일";
 		} else {
 			$retString = "무료";
 		} 

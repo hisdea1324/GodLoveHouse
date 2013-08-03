@@ -114,7 +114,7 @@ function body() {
 				<td><?php echo $num-$i;?></td>
 				<td class="ltd"><?php echo $boardObj->ReplyImage;?><a href="view.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>&id=<?php echo $boardObj->BoardID;?>"><?php echo $boardObj->Title;?></a></td>
 				<td><?php echo $boardObj->UserID;?></td>
-				<td><?php echo $dateFormat[$boardObj->RegDAte][1];?></td>
+				<td><?php echo dateFormat($boardObj->RegDAte, 1);?></td>
 				<td><?php echo $boardObj->CountView;?></td>
 				</tr>
 				<?php 

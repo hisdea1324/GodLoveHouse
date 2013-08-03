@@ -93,7 +93,7 @@ function body() {
 ?>
 				<tr>
 					<td><strong><?php echo $reqInfo->Title;?></strong></td>
-					<td><?php echo $PriceFormat[$newPriceList[$j]][1];?> / 월</td>
+					<td><?php echo priceFormat($newPriceList[$j], 1);?> / 월</td>
 				</tr>
 <?php 
 

@@ -85,8 +85,8 @@ function body() {
 						<td><?php echo $listRS["regionName"];?></td>
 						<td><?php echo $listRS["nick"];?></td>
 						<td><?php echo $listRS["title"];?></td>
-						<td><?php echo $priceFormat[$listRS["costCurrent"]][1];?></td>
-						<td><?php echo $dateFormat[$listRS["sendDate"]][1];?></td>
+						<td><?php echo priceFormat($listRS["costCurrent"], 1);?></td>
+						<td><?php echo dateFormat($listRS["sendDate"], 1);?></td>
 					</tr>
 <?php
 					$listRS->MoveNext;

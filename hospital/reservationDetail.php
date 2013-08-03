@@ -92,7 +92,7 @@ function body() {
 				<td class="td01">최대인원</td>
 				<td><?php echo $hospital->PersonLimit;?>명</td>
 				<td class="td01">가격(1일기준) </td>
-				<td><?php echo $priceFormat[$hospital->Price][1];?></td>
+				<td><?php echo priceFormat($hospital->Price, 1);?></td>
 			</tr>
 			<tr>
 				<td class="td01">제출서류</td>

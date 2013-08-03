@@ -78,7 +78,7 @@ function body() {
 					<p><?php echo $textFormat[$requestInfo->Explain][1];?></p>
 				</td>
 				<td><?php echo $reqAddInfo->SupportRatio;?> %</td>
-				<td><?php echo $dateFormat[$reqAddInfo->Due][1];?></td>
+				<td><?php echo dateFormat($reqAddInfo->Due, 1);?></td>
 			</tr>
 <?php 
 
