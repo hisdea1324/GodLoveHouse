@@ -120,7 +120,7 @@ class CodeObject {
 
 
 		if (($this->record['index'] == -1)) {
-			$query = "INSERT INTO code (`code`, `type`, `name`) VALUES ";
+			$query = "INSERT INTO god_code (`code`, `type`, `name`) VALUES ";
 			$query = $query."(?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
@@ -140,7 +140,7 @@ class CodeObject {
 
 
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM code WHERE `code` = ?");
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM god_code WHERE `code` = ?");
 			$stmt->bind_param("s", $this->record['code']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['index']);
@@ -176,7 +176,7 @@ class CodeObject {
 		global $mysqli;
 
 		if ($this->record['index'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM code WHERE `id` = ?");
+			$stmt = $mysqli->prepare("DELETE FROM god_code WHERE `id` = ?");
 			$stmt->bind_param("s", $this->record['index']);
 			$stmt->execute();
 			$stmt->close();
