@@ -23,7 +23,7 @@ $supporter = $s_Helper->getSupportBySupId($supId);
 $account = $s_Helper->getAccountInfoByUserId($supporter->UserId);
 
 $query = "SELECT COUNT(*) AS recordCount from supportItem WHERE supId = ".$supId;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.supItemId, B.title, A.cost FROM supportItem A, requestInfo B WHERE A.reqId = B.reqId AND A.supId = ".$supId." ORDER BY ".$order;

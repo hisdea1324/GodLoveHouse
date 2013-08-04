@@ -256,7 +256,7 @@ function body() {
 	function frmSubmit() {
 		<?php 
 if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
-	$backURL = $_SERVER["PATH_INFO"];
+	$backURL = get_path_info();
 ?>
 			alert("병원등록은 로그인을 하신후에 할 수 있습니다.");
 			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";

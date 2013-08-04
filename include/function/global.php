@@ -141,10 +141,18 @@ function checkAuthorize($groupId, $checkMode) {
 	} 
 } 
 
-function makePaging($page,$pageCount,$pageUnit,$query) {
+function get_path_info() {
+    $pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']);
+    $asd = substr($_SERVER['REQUEST_URI'], 0, $pos - 2);
+    $asd = substr($asd, strlen($_SERVER['SCRIPT_NAME']) + 1);
+    
+    return $asd;    
+}
+
+function makePaging($page, $pageCount, $pageUnit, $query) {
 	global $Application;
 	
-	$pathInfo = $_SERVER["PATH_INFO"];
+	$pathInfo = get_path_info();
 	if ((strlen($_SERVER["QUERY_STRING"]) > 0)) {
 		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0)) {
 			$tempString=substr($_SERVER["QUERY_STRING"],strlen($_SERVER["QUERY_STRING"])-(strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
@@ -190,7 +198,7 @@ function makePaging($page,$pageCount,$pageUnit,$query) {
 function makePagingN($page,$pageCount,$pageUnit,$total) {
 	global $Application;
 	
-	$pathInfo = $_SERVER["PATH_INFO"];
+	$pathInfo = get_path_info();
 	if ((strlen($_SERVER["QUERY_STRING"])>0)) {
 		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)>0)) {
 			$tempString=substr($_SERVER["QUERY_STRING"],strlen($_SERVER["QUERY_STRING"])-(strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));

@@ -14,7 +14,7 @@ if ((strlen($page)==0)) {
 
 $strWhere=makeCondition($supprotType,$field,$keyword);
 $query = "SELECT COUNT(*) AS recordCount FROM request A, code B, user C".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.*, C.nick, B.name AS regionName FROM request A, code B, user C".$strWhere." ORDER BY A.reqId DESC";

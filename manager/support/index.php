@@ -23,7 +23,7 @@ if ((strlen($order)==0)) {
 $strWhere=makeCondition($field,$keyword);
 
 $query = "SELECT COUNT(*) AS recordCount from requestInfo A, requestAddInfo B ".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "select top ".$topNum." * FROM requestInfo A, requestAddInfo B ".$strWhere." ORDER BY ".$order;

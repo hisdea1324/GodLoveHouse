@@ -31,7 +31,7 @@ $boardName = $listRS["name"];
 $strWhere=makeCondition($groupId,$field,$keyword);
 
 $query = "SELECT COUNT(*) AS recordCount from board".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "select top ".$topNum." * from board ".$strWhere." ORDER BY ".$order." DESC";

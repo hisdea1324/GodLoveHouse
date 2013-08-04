@@ -92,7 +92,7 @@ class tableBuilder {
 	}
 
 	function tableHeader() {
-		$pathInfo = $_SERVER["PATH_INFO"];
+		$pathInfo = get_path_info();
 		if ((strlen($_SERVER["QUERY_STRING"]) > 0)) {
 			if (((strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) > 0)) {
 				$tempString = substr($_SERVER["QUERY_STRING"], strlen($_SERVER["QUERY_STRING"]) - (strlen($_SERVER["QUERY_STRING"]) - (strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) + 1));

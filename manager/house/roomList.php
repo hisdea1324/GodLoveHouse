@@ -20,7 +20,7 @@ if ((strlen($page)==0)) {
 $strWhere=makeCondition($houseId,$field,$keyword);
 
 $query = "SELECT COUNT(*) AS recordCount from room ".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." * FROM room ".$strWhere." ORDER BY roomName";
