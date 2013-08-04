@@ -1,10 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$checkUserLogin[];
+checkUserLogin();
 
 $detailIdList = trim($_REQUEST["check"]);
-if ((strlen($detailIdList)==0)) {
-	$alertBack["잘못된 접근입니다."];
+if (strlen($detailIdList) == 0) {
+	alertBack("잘못된 접근입니다.");
 } 
 
 $itemidList=explode(",",$detailIdList);

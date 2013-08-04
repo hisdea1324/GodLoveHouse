@@ -148,33 +148,34 @@ class MemberObject {
 			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			$stmt = $mysqli->prepare($query);
-
-			# New Data
-			$stmt->bind_param("ssissssisssssssi", 
-				$this->record['userId'], 
-				$this->record['password'], 
-				$this->record['passQuest'], 
-				$this->record['passAnswer'], 
-				$this->record['memo'], 
-				$this->record['name'], 
-				$this->record['nick'], 
-				$this->record['userLv'], 
-				$this->record['email'], 
-				$this->record['jumin'], 
-				$this->record['address1'], 
-				$this->record['address2'],
-				$this->record['zipcode'],
-				$this->record['phone'],
-				$this->record['mobile'],
-				$this->record['msgOk']);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			if ($stmt = $mysqli->prepare($query)) {
+				print_r($stmt);
+	
+				# New Data
+				$stmt->bind_param("ssissssisssssssi", 
+					$this->record['userId'], 
+					$this->record['password'], 
+					$this->record['passQuest'], 
+					$this->record['passAnswer'], 
+					$this->record['memo'], 
+					$this->record['name'], 
+					$this->record['nick'], 
+					$this->record['userLv'], 
+					$this->record['email'], 
+					$this->record['jumin'], 
+					$this->record['address1'], 
+					$this->record['address2'],
+					$this->record['zipcode'],
+					$this->record['phone'],
+					$this->record['mobile'],
+					$this->record['msgOk']);
+	
+				# execute query
+				$stmt->execute();
 			
+				# close statement
+				$stmt->close();
+			}
 		} else {
 
 			$query = "UPDATE member SET ";

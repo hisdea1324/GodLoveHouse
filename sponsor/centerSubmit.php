@@ -3,8 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $needUserLv[1];
 
 $chkCenter = trim($_REQUEST["chkCenter"]);
-if ((strlen($chkCenter)==0)) {
-	$alertBack["선택된 항목이 없습니다."];
+if (strlen($chkCenter) == 0) {
+	alertBack("선택된 항목이 없습니다.");
 } 
 
 
@@ -19,6 +19,7 @@ body();
 showFooter();
 
 function body() {
+	global $requests;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -36,7 +37,7 @@ function body() {
 				<th class="th01">내용</th>
 			</tr>
 <?php 
-	if ((count($requests)==0)) {
+	if (count($requests) == 0) {
 ?>
 			<tr>
 				<td colspan="2">리스트가 없습니다</td>
@@ -52,7 +53,7 @@ function body() {
 					<p class="b">[<?php echo $requestInfo->Title;?>]</p>
 					<img src="<?php echo $requestInfo->Image;?>" width="120" height="75" class="img">
 				</td>
-				<td class="ltd"><?php echo $textFormat[$requestInfo->Explain][1];?></td>
+				<td class="ltd"><?php echo textFormat($requestInfo->Explain, 1);?></td>
 			</tr>
 			<tr>
 				<td class="total">&nbsp;</td>

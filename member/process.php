@@ -74,6 +74,8 @@ function deleteRoom() {
 } 
 
 function editUser() {
+	global $Application;
+	
 	# 비밀번호 체크, 아이디 체크 해야함
 	$missionary = trim($_REQUEST["missionary"]);
 
@@ -102,7 +104,7 @@ function editUserNormal() {
 	$member->UserID = $_REQUEST["userId"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = $Encrypt[$_REQUEST["password"]];
+	$member->Password = crypt($_REQUEST["password"]);
 	$member->PasswordQuestion = $_REQUEST["password_quest"];
 	$member->PasswordAnswer = $_REQUEST["password_answer"];
 
@@ -250,6 +252,8 @@ function deleteFamily() {
 } 
 
 function logout() {
+	global $Application;
+	
 	$loginSession = new __construct();
 	$loginSession->expireSession();
 
@@ -257,11 +261,12 @@ function logout() {
 } 
 
 function changeReservStatus() {
+	global $Application;
 	$status = trim($_REQUEST["status"]);
 	$houseId = trim($_REQUEST["houseId"]);
 	$roomId = trim($_REQUEST["roomId"]);
-	if (($status<2 || $status>4)) {
-		$alertBack["잘못된 값입니다"];
+	if ($status < 2 || $status > 4) {
+		alertBack("잘못된 값입니다");
 	} 
 	$bookNo = trim($_REQUEST["bookNo"]);
 
@@ -309,7 +314,7 @@ function reservation() {
 	$manager->Open($house->UserID);
 	$from_number="01010041004";
 	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
-sendSMSMessage($from_number,$Join[$manager->Mobile][""],$message);
+sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
 
 } 
 ?>

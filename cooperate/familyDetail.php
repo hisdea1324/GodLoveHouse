@@ -3,8 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $needUserLv[1];
 
 $userId = trim($_REQUEST["userId"]);
-if ((strlen($userId)==0)) {
-	$alertBack["잘못된 접근입니다."];
+if (strlen($userId) == 0) {
+	alertBack("잘못된 접근입니다.");
 } 
 
 $page = trim($_REQUEST["page"]);

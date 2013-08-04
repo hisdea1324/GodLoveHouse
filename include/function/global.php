@@ -99,25 +99,27 @@ function needUserLv($level) {
 		header("Location: ".$Application["WebRoot"]."member/login.php");
 	} 
 
-	if (($_SESSION['userLv']<$level)) {
-		$alertBack["권한이 없습니다"];
+	if ($_SESSION['userLv'] < $level) {
+		alertBack("권한이 없습니다");
 	} 
 } 
 
 function checkUserLogin() {
-	if ((strlen($_SESSION['UserId'])==0)) {
+	global $Application;
+	
+	if (strlen($_SESSION['UserId']) == 0) {
 		header("Location: ".$Application["WebRoot"]."member/login.php");
 	} 
 } 
 
 function checkAuthorize($groupId, $checkMode) {
-	if ((strlen($groupId)==0)) {
+	if (strlen($groupId) == 0) {
 		return false;
 	} 
 
 	$query = "select * from boardGroup where groupId='".$groupId."'";
 
-	switch (($checkMode)) {
+	switch ($checkMode) {
 		case "W":
 			$authLv = $authRS["authWriteLv"];
 			break;
@@ -140,6 +142,8 @@ function checkAuthorize($groupId, $checkMode) {
 } 
 
 function makePaging($page,$pageCount,$pageUnit,$query) {
+	global $Application;
+	
 	$pathInfo = $_SERVER["PATH_INFO"];
 	if ((strlen($_SERVER["QUERY_STRING"]) > 0)) {
 		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0)) {
@@ -162,8 +166,8 @@ function makePaging($page,$pageCount,$pageUnit,$query) {
 	$linkUrl=str_replace("?&","?",str_replace("?&","?",$linkUrl));
 	$linkUrl=str_replace("&&","&",str_replace("&&","&",$linkUrl));
 
-	$totalPage=round($total/$pageCount);
-	$prevPage=round($page/$pageUnit)*10+1;
+	$totalPage = round($total/$pageCount);
+	$prevPage = round($page/$pageUnit)*10+1;
 	$nextPage = $prevPage+10;
 	if (($nextPage>$totalPage)) {
 		$nextPage = $totalPage;
@@ -184,6 +188,8 @@ function makePaging($page,$pageCount,$pageUnit,$query) {
 } 
 
 function makePagingN($page,$pageCount,$pageUnit,$total) {
+	global $Application;
+	
 	$pathInfo = $_SERVER["PATH_INFO"];
 	if ((strlen($_SERVER["QUERY_STRING"])>0)) {
 		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)>0)) {

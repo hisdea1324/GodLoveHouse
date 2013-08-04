@@ -1,5 +1,7 @@
 <?php 
 function readHtmlFile($fileName) {
+	global $Application;
+	
 	$readString="";
 	# $fs is of type "Scripting.FileSystemObject"
 	$objFile=fopen($Application["FileRoot"].$fileName,"r");
@@ -10,6 +12,8 @@ function readHtmlFile($fileName) {
 } 
 
 function makeExcelFile($fileName,$objrs) {
+	global $Application;
+
 	# $fs is of type "Scripting.FileSystemObject"
 	$objFile=fopen($Application["FileRoot"]."upload\\board".$fileName,"r");
 
