@@ -8,6 +8,10 @@ showAdminFooter();
 
 function body() {
 	global $Application;
+	$userid = "";
+	if (isset($_REQUEST["userid"])) {
+		$userid = $_REQUEST["userid"];
+	}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"	"http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -28,7 +32,7 @@ function body() {
 		<dl id="login">
 			<dt>아이디</dt>
 			<dd>
-				<input id="userid" name="userid" type="text" class="userid" tabindex="1" value="<?php echo $_REQUEST["userid"];?>"/>
+				<input id="userid" name="userid" type="text" class="userid" tabindex="1" value="<?php echo $userid;?>"/>
 			</dd>
 			<dd class="button">
 				<button type="submit" tabindex="3" class="btn-login" value="로그인"><span>로그인</span></button>
@@ -38,7 +42,7 @@ function body() {
 				<input id="password" name="password" type="password" tabindex="2" class="loginpw" />
 			</dd>
 		</dl>
-		<?php if (strlen($_REQUEST["userid"]) > 0) {
+		<?php if (strlen($userid) > 0) {
 ?>
 		<div class="error_line" id="errorMsg">
 			아이디 또는 비밀번호가 일치하지 않습니다.	

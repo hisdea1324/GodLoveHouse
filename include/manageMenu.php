@@ -5,6 +5,6 @@ function checkAuth() {
 	if ($_SESSION['userLv'] < 9) {
 		header("Location: "."/");
 		exit();
-	} 
+	}
 } 
 ?>

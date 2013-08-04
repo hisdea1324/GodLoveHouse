@@ -149,12 +149,11 @@ class MemberObject {
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			if ($stmt = $mysqli->prepare($query)) {
-				print_r($stmt);
-	
+
 				# New Data
 				$stmt->bind_param("ssissssisssssssi", 
 					$this->record['userId'], 
-					$this->record['password'], 
+					crypt($this->record['password'], $this->record['userId']),
 					$this->record['passQuest'], 
 					$this->record['passAnswer'], 
 					$this->record['memo'], 

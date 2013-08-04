@@ -134,7 +134,7 @@ function checkAuthorize($groupId, $checkMode) {
 			break;
 	} 
 
-	if (($authLv > $_SESSION['UserLv'])) {
+	if ($authLv > $_SESSION['UserLv']) {
 		return false;
 	} else {
 		return true;

@@ -11,26 +11,38 @@ if (strlen($userid) == 0 || strlen($password) == 0) {
 }
 
 $query = "SELECT * FROM member WHERE userid = '".$userid."'";
-if (!($result = $mysqli->real_query($query)) || $result->num_rows == 0) {
+$result = $mysqli->query($query);
+
+if (!$result) {
+	echo "db access something wrong!!";
+	header("Location: "."index.php?userid=".$userid);
+}
+
+if ($result->num_rows > 0) {
+	$obj = $result->fetch_object();
+	echo "<br>".$obj->password."<br>";
+	echo crypt($password, $obj->userId)."<br>";
+	
+	if ($obj->password != crypt($password, $obj->userId)) {
+		echo "no matched password!!";
+		header("Location: "."index.php?userid=".$userid);
+	} else {
+		$_SESSION['userId'] = $userid;
+		$_SESSION['userLv'] = $obj->userLv;
+		echo "{$userid} loggined!!";
+		header("Location: "."main.php");
+	}
+	
+	/* free result set */
+	$result->close();
+} else {
+	# 관리자 생성
 	$member = new MemberObject();
 	$member->userId = "lovehouse";
 	$member->password = "6394";
 	$member->userLv = "9";
 	$member->Update();
+	echo "new manager created!!";
 	header("Location: "."index.php?userid=".$userid);
-} 
-
-$obj = $result->fetch_object();
-if ($obj->password != crypt($password)) {
-	echo "no matched password!!";
-	//header("Location: "."index.php?userid=".$userid);
-} 
-
-$_SESSION['userId'] = $userid;
-$_SESSION['userLv'] = $obj->userLv;
-header("Location: "."main.php");
-
-/* free result set */
-$result->close();
-
+}
 ?>
