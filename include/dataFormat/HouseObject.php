@@ -157,7 +157,7 @@ class HouseObject {
 			/* close statement */
 			$stmt->close();
 
-			if (($this->record['documentId'] > 0)) {
+			if ($this->record['documentId'] > 0) {
 				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
 				$stmt->bind_param("i", $this->record['documentId']);
 				$stmt->execute();
@@ -169,7 +169,7 @@ class HouseObject {
 			
 			
 			$roomId = -1;
-			if (($this->record['houseId'] > -1)) {
+			if ($this->record['houseId'] > -1) {
 				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
 				$stmt->bind_param("i", $this->record['houseId']);
 				$stmt->execute();
@@ -187,7 +187,7 @@ class HouseObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['houseId'] == -1)) {
+		if ($this->record['houseId'] == -1) {
 			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userId`, ";
 			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";

@@ -17,22 +17,23 @@ $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S2002";
 // 조건문 작성
 $strWhere = makeCondition($status, $field, $keyword);
 
-$query = "SELECT COUNT(*) AS recordCount FROM house ".$strWhere;
+$query = "SELECT * FROM house ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT*$page;
+$topNum = $PAGE_COUNT * $page + 1;
 
-$query = "SELECT top ".$topNum." * FROM house ".$strWhere." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
+$query = "SELECT * FROM house ".$strWhere." ORDER BY ".$order." LIMIT $topNum, $PAGE_COUNT";
+$listRS = $mysqli->query($query);
+
+/*
+if ($listRS->RecordCount > 0) {
 	$listRS->PageSize = $PAGE_COUNT;
 	$listRS->AbsolutePage = $page;
-} 
-
+}
+*/
 
 // 테이블 생성
 $objTable = new tableBuilder();
-if (($status=="S2002")) {
+if ($status == "S2002") {
 	$objTable->setButton(array("방정보","수정","대기"));
 } else {
 	$objTable->setButton(array("방정보","수정","삭제","승인"));

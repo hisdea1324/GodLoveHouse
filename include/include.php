@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 
 #require "class/dbHelper.php";
-#require "class/tableBuilder.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/tableBuilder.php");
 #require "class/dataManager.php";
 #require "class/ErrorHandler.php";
 #require "class/BoardHelper.php";
