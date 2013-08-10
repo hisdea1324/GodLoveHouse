@@ -158,7 +158,10 @@ class tableBuilder {
 		return $retString;
 	}
 
-	function getTable($result) {
+	function getTable($query) {
+		global $mysqli;
+		
+		$result = $mysqli->query($query);
 		while ($row = $result->fetch_row()) {
 			$keyString = "";
 			for ($i = 0; $i <= $this->keyCount; $i++) {
@@ -182,21 +185,15 @@ class tableBuilder {
 				$rowString = $rowString . "</td>" . chr(13);
 			}
 
-			$rowString = $rowString . "</tr>" . chr(13);
-			$num = $num +1;
-		}
-
-		while (!($num > $startNum + $this->pageSize)) {
-			$rowString = $rowString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
+			$pagingString = $pagingString . "</tr>" . chr(13);
+			$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
 			for ($i = 0; $i <= $this->fieldCount + 1; $i++) {
-				$rowString = $rowString . "	<td>&nbsp;</td>" . chr(13);
+				$pagingString = $pagingString . "	<td>&nbsp;</td>" . chr(13);
 			}
-
-			$rowString = $rowString . "</tr>" . chr(13);
-			$num = $num +1;
+			$pagingString = $pagingString . "</tr>" . chr(13);
 		}
 
-		return tableHeader() . $rowString . tableFooter();
+		return tableHeader() . $rowString . $pagingString . tableFooter();
 	}
 
 	function displayListPage() {

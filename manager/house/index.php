@@ -22,7 +22,6 @@ $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT * $page + 1;
 
 $query = "SELECT * FROM house ".$strWhere." ORDER BY ".$order." LIMIT $topNum, $PAGE_COUNT";
-$listRS = $mysqli->query($query);
 
 /*
 if ($listRS->RecordCount > 0) {
@@ -44,7 +43,7 @@ $objTable->setField(array("houseId","assocName","houseName","userId","contact1",
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("houseId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
+$htmlTable = $objTable->getTable($query);
 
 showAdminHeader("관리툴 - 선교관관리","","","");
 body();
