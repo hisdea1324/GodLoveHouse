@@ -9,44 +9,51 @@
 #  last update date : 2009/12/30
 # ************************************************************
 class HouseHelper {
-	var $m_eHandler;
+	public $m_eHandler;
 
-	var $m_pageCount;
-	var $m_pageUnit;
-	var $m_StrConditionQuery;
+	public $m_pageCount;
+	public $m_pageUnit;
+	public $m_StrConditionQuery;
 
-	function __construct() {
+	public function __construct() {
 		$this->m_eHandler = new ErrorHandler();
 	} 
 
-	function __destruct() {
+	public function __destruct() {
 	} 
 
 	#  property
 	# ***********************************************
-	function PAGE_UNIT() {
-		return $this->m_pageUnit;
-	} 
-
-	function PAGE_COUNT() {
-		return $this->m_pageCount;
-	} 
-
-	function PAGE_UNIT($value) {
-		$this->m_pageUnit = $value;
-	} 
-
-	function PAGE_COUNT($value) {
-		$this->m_pageCount = $value;
-	} 
+	public function __get($name) {
+		switch ($name) {
+			case "PAGE_UNIT":
+				return $this->m_pageUnit;
+			case "PAGE_COUNT":
+				return $this->m_pageCount;
+			default: 
+				return null;
+		}
+	}
+	
+	public function __set($name, $value) {
+ 		switch ($name) {
+			case "PAGE_UNIT" :
+				$this->m_pageUnit = $value;
+				break;
+			case "PAGE_COUNT" :
+				$this->m_pageCount = $value;
+				break;
+		}
+		 
+	}
 
 	#  method : return one Object
 	# ***********************************************
 	function getHouseInfoById($houseId) {
 		$house = new HouseObject();
 
-		if (($house->Open($houseId)==false)) {
-			$m_eHandler->ignoreError("House Not Found.");
+		if ($house->Open($houseId) == false) {
+			$this->m_eHandler->ignoreError("House Not Found.");
 		} 
 
 		return $house;
@@ -55,8 +62,8 @@ class HouseHelper {
 	function getRoomInfoById($roomId) {
 		$room = new RoomObject();
 
-		if (($room->Open($roomId)==false)) {
-			$m_eHandler->ignoreError("Room Not Found.");
+		if ($room->Open($roomId) == false) {
+			$this->m_eHandler->ignoreError("Room Not Found.");
 		} 
 
 		return $room;

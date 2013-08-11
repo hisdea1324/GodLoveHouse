@@ -60,38 +60,40 @@ class tableBuilder {
 
 	}
 
-	function setGotoPage($l_gotoPage) {
-		$this->currentPage = $l_gotoPage;
-		if ($l_gotoPage == "") {
+	function setGotoPage($value) {
+		$this->currentPage = $value;
+		if ($value == "") {
 			$this->currentPage = 1;
 		} else {
-			$this->currentPage = $l_gotoPage;
+			$this->currentPage = $value;
 		}
 
-		$currentBlock = intval(($l_gotoPage -1) / $this->blockSize) * $this->blockSize +1;
+		$currentBlock = intval(($value -1) / $this->blockSize) * $this->blockSize +1;
 	}
 
-	function setButton($l_fields) {
-		$this->buttonList = $l_fields;
-		$this->buttonCount = count($l_fields);
+	function setButton($value) {
+		$this->buttonList = $value;
+		$this->buttonCount = count($value);
 	}
 
-	function setColumn($l_fields) {
-		$this->columnList = $l_fields;
-		$this->columnCount = count($l_fields);
+	function setColumn($value) {
+		$this->columnList = $value;
+		$this->columnCount = count($value);
 	}
 
-	function setField($l_fields) {
-		$this->fieldList = $l_fields;
-		$this->fieldCount = count($l_fields);
+	function setField($value) {
+		$this->fieldList = $value;
+		$this->fieldCount = count($value);
 	}
 
-	function setKeyValue($l_fields) {
-		$this->keyList = $l_fields;
-		$this->keyCount = count($l_fields);
+	function setKeyValue($value) {
+		$this->keyList = $value;
+		$this->keyCount = count($value);
 	}
 
-	function tableHeader() {
+	private function tableHeader() {
+		$retString = "";
+		
 		$pathInfo = get_path_info();
 		if (strlen($_SERVER["QUERY_STRING"]) > 0) {
 			if ((strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) > 0) {
@@ -120,9 +122,8 @@ class tableBuilder {
 
 		$retString = $retString . "<table id=\"table\" cellpadding='3' cellspacing='1' width='100%' bgcolor='#999999'>" . chr(13);
 		$retString = $retString . "<thead id=\"theader\" bgcolor='#FFFFFF' align='center'>" . chr(13);
-		# retString = retString & "	<th>No</th>" & chr(13)
 		if ($this->columnCount >= 0) {
-			for ($i = 0; $i <= $this->columnCount; $i++) {
+			for ($i = 0; $i < $this->columnCount; $i++) {
 				if ($this->order == $this->fieldList[$i]) {
 					if ($this->orderType == "ASC") {
 						$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+DESC'><u>" . $this->columnList[$i] . "△ </u></a></th>" . chr(13);
@@ -135,9 +136,8 @@ class tableBuilder {
 				}
 			}
 		} else {
-			for ($i = 0; $i <= $this->fieldCount; $i++) {
-				$retString = $retString . "	<th>" . $this->fieldList[$i] . "</th>" . chr(13);
-
+			foreach ($this->fieldList as $field) {
+				$retString = $retString . "	<th>" . $field . "</th>" . chr(13);
 			}
 		}
 
@@ -151,8 +151,8 @@ class tableBuilder {
 		return $retString;
 	}
 
-	function tableFooter() {
-		$retString = $retString . "</tbody>" . chr(13);
+	private function tableFooter() {
+		$retString = "</tbody>" . chr(13);
 		$retString = $retString . "</table>" . chr(13);
 
 		return $retString;
@@ -160,40 +160,43 @@ class tableBuilder {
 
 	function getTable($query) {
 		global $mysqli;
+		$rowString = "";
+		$pagingString = "";
 		
-		$result = $mysqli->query($query);
-		while ($row = $result->fetch_row()) {
-			$keyString = "";
-			for ($i = 0; $i <= $this->keyCount; $i++) {
-				$keyString = $keyString . ", '" . $row[$this->keyList[$i]] . "'";
-
-			}
-
-			$rowString = $rowString . "<tr bgcolor='#FFFFFF' align='center' height='28' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
-			# rowString = rowString & "	<td>" & num & "</td>" & chr(13)
-			for ($i = 0; $i <= $this->fieldCount; $i++) {
-				$rowString = $rowString . "	<td>" . textFormat($row[$this->fieldList[$i]], 1) . "</td>" . chr(13);
-			}
-
-			if (($this->buttonCount >= 0)) {
-				$rowString = $rowString . "<td>";
-				for ($i = 0; $i <= $this->buttonCount; $i++) {
-					$rowString = $rowString . " <input type='button' value='" . $this->buttonList[$i] . "' onclick=\"clickButton(" . $i . $keyString . ");\">";
-
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_row()) {
+				$keyString = "";
+				for ($i = 0; $i <= $this->keyCount; $i++) {
+					$keyString = $keyString . ", '" . $row[$this->keyList[$i]] . "'";
+	
 				}
-
-				$rowString = $rowString . "</td>" . chr(13);
+	
+				$rowString = $rowString . "<tr bgcolor='#FFFFFF' align='center' height='28' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
+				# rowString = rowString & "	<td>" & num & "</td>" & chr(13)
+				for ($i = 0; $i <= $this->fieldCount; $i++) {
+					$rowString = $rowString . "	<td>" . textFormat($row[$this->fieldList[$i]], 1) . "</td>" . chr(13);
+				}
+	
+				if (($this->buttonCount >= 0)) {
+					$rowString = $rowString . "<td>";
+					for ($i = 0; $i <= $this->buttonCount; $i++) {
+						$rowString = $rowString . " <input type='button' value='" . $this->buttonList[$i] . "' onclick=\"clickButton(" . $i . $keyString . ");\">";
+	
+					}
+	
+					$rowString = $rowString . "</td>" . chr(13);
+				}
+	
+				$pagingString = $pagingString . "</tr>" . chr(13);
+				$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
+				for ($i = 0; $i <= $this->fieldCount + 1; $i++) {
+					$pagingString = $pagingString . "	<td>&nbsp;</td>" . chr(13);
+				}
+				$pagingString = $pagingString . "</tr>" . chr(13);
 			}
-
-			$pagingString = $pagingString . "</tr>" . chr(13);
-			$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
-			for ($i = 0; $i <= $this->fieldCount + 1; $i++) {
-				$pagingString = $pagingString . "	<td>&nbsp;</td>" . chr(13);
-			}
-			$pagingString = $pagingString . "</tr>" . chr(13);
 		}
 
-		return tableHeader() . $rowString . $pagingString . tableFooter();
+		return $this->tableHeader() . $rowString . $pagingString . $this->tableFooter();
 	}
 
 	function displayListPage() {

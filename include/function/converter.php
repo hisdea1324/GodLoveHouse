@@ -124,38 +124,6 @@ function priceFormat($price,$stype) {
 	return $retString;
 } 
 
-function URLEncode($url) {
-	$url=str_replace("%","%25",$url);
-	$url=str_replace(":","%3A",$url);
-	$url=str_replace("/","%2F",$url);
-	$url=str_replace(".","%2E",$url);
-	$url=str_replace("?","%3F",$url);
-	$url=str_replace("=","%3D",$url);
-	$url=str_replace("&","%26",$url);
-	$url=str_replace("+","%2B",$url);
-	$url=str_replace("@","%40",$url);
-	$url=str_replace("#","%23",$url);
-	$url=str_replace("!","%21",$url);
-
-	return $url;
-} 
-
-function URLDecode($url) {
-	$url=str_replace("%3A",":",$url);
-	$url=str_replace("%2F","/",$url);
-	$url=str_replace("%2E",".",$url);
-	$url=str_replace("%3F","?",$url);
-	$url=str_replace("%3D","=",$url);
-	$url=str_replace("%26","&",$url);
-	$url=str_replace("%2B","+",$url);
-	$url=str_replace("%40","@",$url);
-	$url=str_replace("%23","#",$url);
-	$url=str_replace("%21","!",$url);
-	$url=str_replace("%25","%",$url);
-
-	return $url;
-} 
-
 function mssqlEscapeString($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	return $str;

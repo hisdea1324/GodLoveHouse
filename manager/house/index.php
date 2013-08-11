@@ -64,6 +64,8 @@ function makeCondition($status,$field,$keyword) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
@@ -89,7 +91,7 @@ function body() {
 	<!-- 컨텐츠 들어가는 부분 -->
 
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
-			<form name="findForm" method="get" action="<?php echo $CurUrl;?>">
+			<form name="findForm" method="get" action="./index.php">
 			<tr>
 				<td align="right">
 					<select name="field">
