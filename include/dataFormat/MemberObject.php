@@ -30,21 +30,21 @@ class MemberObject {
 
     // 멤버 오브젝트 초기화 함수  
     function __construct() {
-		$this->record['userId'] = "";
-		$this->record['password'] = "";
-		$this->record['passQuest'] = "";
-		$this->record['passAnswer'] = "";
-		$this->record['memo'] = null;
-		$this->record['name'] = "";
-		$this->record['nick'] = "";
-		$this->record['userLevel'] = 0;
-		$this->record['email'] = "";
-		$this->record['jumin'] = "";
-		$this->record['address1'] = null;
-		$this->record['address2'] = null;
-		$this->record['zipcode'] = "";
-		$this->record['phone'] = "";
-		$this->record['mobile'] = "";
+		$this->record['userId'] = -1;
+		$this->record['password'] = "test";
+		$this->record['passQuest'] = -1;
+		$this->record['passAnswer'] = "test";
+		$this->record['memo'] = "111111";
+		$this->record['name'] = "은지";
+		$this->record['nick'] = "linge";
+		$this->record['userLv'] = "1";
+		$this->record['email'] = "0419@gmail.com";
+		$this->record['jumin'] = "900418-0000000";
+		$this->record['address1'] = "서울 은평";
+		$this->record['address2'] = "갈현동";
+		$this->record['zipcode'] = "000-000";
+		$this->record['phone'] = "000-000-0000";
+		$this->record['mobile'] = "000-000-0000";
 		$this->record['msgOk'] = 0;
 	}
 
@@ -134,16 +134,25 @@ class MemberObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['roomId'] == -1)) {
-			$query = "INSERT INTO god_member (`userId`, `password`, `passQuest`, `passAnser`, ";
+		if (($this->record['userId'] == -1)) {
+
+
+
+			$query = "INSERT INTO god_member (`userId`, `password`, `passQuest`, `passAnswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userLv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
-			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
+			$query = $query."`zipcode`, `phone`, `mobile`, `msgOK`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
 
-			# New Data
+
+			echo "##########################################################";
+			echo "Query ::::: " . $query;
+			echo "##########################################################";
+
+
+			# New Datax
 			$stmt->bind_param("ssissssssssssssi", 
 				$this->record['userId'], 
 				$this->record['password'], 
@@ -186,7 +195,7 @@ class MemberObject {
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
-			$stmt->bind_param("sssssssssi", 
+			$stmt->bind_param("sssssssssis", 
 				$this->record['nick'], 
 				$this->record['userLv'], 
 				$this->record['email'], 
@@ -196,7 +205,8 @@ class MemberObject {
 				$this->record['zipcode'], 
 				$this->record['phone'], 
 				$this->record['mobile'], 
-				$this->record['msgOk']);
+				$this->record['msgOk'],
+				$this->record['userId']);
 				
 			# execute query
 			$stmt->execute();
