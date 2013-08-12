@@ -26,7 +26,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/converter.php");
 #require "function/debug.php";
 
 #require "dataFormat/AttachFile.php";
-#require "dataFormat/CodeObject.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/CodeObject.php");
 #require "dataFormat/CommentObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");
 #require "dataFormat/MissionObject.php";
