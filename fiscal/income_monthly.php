@@ -51,7 +51,7 @@ function body() {
 		if (($monthlySupport->Exists($yearMonth))) {
 			$intSum = $intSum+$monthlySupport->Item($yearMonth);
 ?>
-			<td class="right"><a href="income_daily.php?y=<?php echo $calendar->CYear;?>&m=<?php echo $i;?>"><?php echo $PriceFormat[$monthlySupport->Item($yearMonth)][2];?></a></td>
+			<td class="right"><a href="income_daily.php?y=<?php echo $calendar->CYear;?>&m=<?php echo $i;?>"><?php echo priceFormat($monthlySupport->Item($yearMonth), 2);?></a></td>
 <?php 
 		} else { 
 ?>
@@ -62,7 +62,7 @@ function body() {
 ?>
 			<tr>
 						<td class="fc_01 b bg_gray">합계</td>
-						<td class="fc_01 b bg_gray"><?php echo $PriceFormat[$intSum][2];?></td>
+						<td class="fc_01 b bg_gray"><?php echo priceFormat($intSum, 2);?></td>
 					</tr>
 				</table>
 			</div>			

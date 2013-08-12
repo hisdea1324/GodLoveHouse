@@ -2,14 +2,16 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-
-$userid = $_REQUEST["userid"];
-
 //call showAdminHeader("관리툴 - 로그인", "", "", "")
 body();
 showAdminFooter();
 
 function body() {
+	global $Application;
+	$userid = "";
+	if (isset($_REQUEST["userid"])) {
+		$userid = $_REQUEST["userid"];
+	}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"	"http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -40,7 +42,7 @@ function body() {
 				<input id="password" name="password" type="password" tabindex="2" class="loginpw" />
 			</dd>
 		</dl>
-		<?php if (strlen($userid)>0) {
+		<?php if (strlen($userid) > 0) {
 ?>
 		<div class="error_line" id="errorMsg">
 			아이디 또는 비밀번호가 일치하지 않습니다.	

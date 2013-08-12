@@ -99,25 +99,28 @@ function needUserLv($level) {
 		header("Location: ".$Application["WebRoot"]."member/login.php");
 	} 
 
-	if (($_SESSION['userLv']<$level)) {
-		$alertBack["권한이 없습니다"];
+	if ($_SESSION['userLv'] < $level) {
+		alertBack("권한이 없습니다");
 	} 
 } 
 
 function checkUserLogin() {
-	if ((strlen($_SESSION['UserId'])==0)) {
+	global $Application;
+	
+	if (strlen($_SESSION['UserId']) == 0) {
 		header("Location: ".$Application["WebRoot"]."member/login.php");
 	} 
 } 
 
 function checkAuthorize($groupId, $checkMode) {
-	if ((strlen($groupId)==0)) {
+	if (strlen($groupId) == 0) {
 		return false;
-	} 
+	}
 
 	$query = "select * from boardGroup where groupId='".$groupId."'";
 
-	switch (($checkMode)) {
+	$authRS = array();
+	switch ($checkMode) {
 		case "W":
 			$authLv = $authRS["authWriteLv"];
 			break;
@@ -132,19 +135,34 @@ function checkAuthorize($groupId, $checkMode) {
 			break;
 	} 
 
-	if (($authLv > $_SESSION['UserLv'])) {
+	if ($authLv > $_SESSION['UserLv']) {
 		return false;
 	} else {
 		return true;
 	} 
 } 
 
-function makePaging($page,$pageCount,$pageUnit,$query) {
-	$pathInfo = $_SERVER["PATH_INFO"];
-	if ((strlen($_SERVER["QUERY_STRING"]) > 0)) {
-		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0)) {
-			$tempString=substr($_SERVER["QUERY_STRING"],strlen($_SERVER["QUERY_STRING"])-(strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
-			if (((strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0))) {
+function get_path_info() {
+    return $_SERVER['SCRIPT_NAME'];    
+}
+
+function makePaging($page, $pageCount, $pageUnit, $query) {
+	global $Application, $mysqli;
+
+	if ($result = $mysqli->query($query)) {
+	    /* determine number of rows result set */
+	    $total = $result->num_rows;
+	    /* close result set */
+	    $result->close();
+	} else {
+		$total = 0;
+	}
+
+	$pathInfo = get_path_info();
+	if (strlen($_SERVER["QUERY_STRING"]) > 0) {
+		if ((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"], "page=") + 1 : 0) > 0) {
+			$tempString = substr($_SERVER["QUERY_STRING"], strlen($_SERVER["QUERY_STRING"]) - (strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
+			if (strpos($tempString,"&") ? strpos($tempString,"&") + 1 : 0) {
 				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1).substr($tempString,strlen($tempString)-(strlen($tempString)-(strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)+1))."&";
 			} else {
 				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1);
@@ -153,42 +171,44 @@ function makePaging($page,$pageCount,$pageUnit,$query) {
 			$queryString = $_SERVER["QUERY_STRING"]."&";
 		} 
 	} else {
-		$queryString="";
+		$queryString = "";
 	} 
 
 	$linkUrl = $pathInfo."?".$queryString;
 
 	# 임시코드 : 나중에 수정합시다.
-	$linkUrl=str_replace("?&","?",str_replace("?&","?",$linkUrl));
-	$linkUrl=str_replace("&&","&",str_replace("&&","&",$linkUrl));
+	$linkUrl = str_replace("?&", "?", str_replace("?&", "?", $linkUrl));
+	$linkUrl = str_replace("&&", "&", str_replace("&&", "&", $linkUrl));
 
-	$totalPage=round($total/$pageCount);
-	$prevPage=round($page/$pageUnit)*10+1;
-	$nextPage = $prevPage+10;
-	if (($nextPage>$totalPage)) {
+	$totalPage = round($total / $pageCount);
+	$prevPage = round($page / $pageUnit) * 10 + 1;
+	$nextPage = $prevPage + 10;
+	if ($nextPage > $totalPage) {
 		$nextPage = $totalPage;
 	} 
 
-	$str="<div class='paging'><a href='".$linkUrl."page=1'> <img src='".$Application["WebRoot"]."images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='".$Application["WebRoot"]."images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
-	for ($i=1; $i <= $totalPage; $i = $i+1) {
-		if (($i-$page==0)) {
+	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='".$Application["WebRoot"]."images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='".$Application["WebRoot"]."images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	for ($i = 1; $i <= $totalPage; $i++) {
+		if ($i - $page == 0) {
 			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
 		} else {
 			$str = $str."<a href='".$linkUrl."page=".$i."'>".$i."</a> | ";
 		} 
 	}
 
-	$str=substr($str,0,strlen($str)-2);
+	$str = substr($str, 0, strlen($str) - 2);
 	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_02.gif' alt='' /></a> </div>";
 	return $str;
 } 
 
-function makePagingN($page,$pageCount,$pageUnit,$total) {
-	$pathInfo = $_SERVER["PATH_INFO"];
-	if ((strlen($_SERVER["QUERY_STRING"])>0)) {
-		if (((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)>0)) {
+function makePagingN($page, $pageCount, $pageUnit, $total) {
+	global $Application;
+	
+	$pathInfo = get_path_info();
+	if (strlen($_SERVER["QUERY_STRING"]) > 0) {
+		if ((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0) {
 			$tempString=substr($_SERVER["QUERY_STRING"],strlen($_SERVER["QUERY_STRING"])-(strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
-			if (((strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0))) {
+			if ((strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)) {
 				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1).substr($tempString,strlen($tempString)-(strlen($tempString)-(strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)+1))."&";
 			} else {
 				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1);
@@ -206,10 +226,10 @@ function makePagingN($page,$pageCount,$pageUnit,$total) {
 	$linkUrl=str_replace("?&","?",str_replace("?&","?",$linkUrl));
 	$linkUrl=str_replace("&&","&",str_replace("&&","&",$linkUrl));
 
-	$totalPage=round($total/$pageCount)+1;
-	$prevPage=round($page/$pageUnit)*10+1;
-	$nextPage = $prevPage+10;
-	if (($nextPage>$totalPage)) {
+	$totalPage = round($total / $pageCount) + 1;
+	$prevPage = round($page / $pageUnit) * 10 + 1;
+	$nextPage = $prevPage + 10;
+	if ($nextPage > $totalPage) {
 		$nextPage = $totalPage;
 	} 
 

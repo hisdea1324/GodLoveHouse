@@ -77,7 +77,7 @@ function body() {
 						<td class="td01">작성자</td>
 						<td><?php echo $board->UserId;?></td>
 						<td class="td01">작성일</td>
-						<td><?php echo $dateFormat[$board->RegDate][1];?></td>
+						<td><?php echo dateFormat($board->RegDate, 1);?></td>
 						<td class="td01">조회</td>
 						<td><?php echo $board->CountView;?></td>
 					</tr>

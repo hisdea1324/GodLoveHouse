@@ -55,14 +55,14 @@ if ((strlen($id)>0)) {
 
 
 //쓰기권한 체크
-if (($checkAuthorize[$groupId]["W"]==false)) {
+if (checkAuthorize($groupId, "W") == false) {
 	alertGoPage("권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
-} else if (($mode=="edit" && $userId != $_SESSION['UserId'] && $_SESSION['UserLv']<9)) {
+} else if ($mode == "edit" && $userId != $_SESSION['UserId'] && $_SESSION['UserLv'] < 9) {
 	alertGoPage("권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
 
 
-switch (($groupId)) {
+switch ($groupId) {
 	case "notice":
 		$headerSet = array("HOME > 커뮤니티 > 공지사항","community","tit_0601.gif");
 		break;

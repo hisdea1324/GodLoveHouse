@@ -28,6 +28,7 @@ $objTable = null;
 
 
 function body() {
+	global $htmlTable;
 ?>
 <div class="sub">
 	<a href="index.php">게시판목록</a> | 

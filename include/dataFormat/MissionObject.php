@@ -212,7 +212,7 @@ class MissionObject {
 				$this->record['approval'],
 				$this->record['imageId'],
 				$this->record['flagFamily']);
-				$this->record['userId'], 
+				$this->record['userId'];
 				
 			# execute query
 			$stmt->execute();
@@ -255,7 +255,7 @@ class MissionObject {
 	function GetFamilyPrayCount($userId) {
 		$resultCount = -1;
 		$query = "SELECT ";
-		$query.= " SUM(CASE WHEN `familyType` = 'F0002' THEN 1 ELSE 0 END) AS FamilyFareCnt "
+		$query.= " SUM(CASE WHEN `familyType` = 'F0002' THEN 1 ELSE 0 END) AS FamilyFareCnt ";
 		$query.= " FROM family WHERE `userId` = ? ";
 		$stmt = $mysqli->prepare($query);
 		$stmt->bind_param("s", $this->record['userId']);

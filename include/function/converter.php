@@ -1,8 +1,7 @@
 ﻿<?php 
 # url을 parsing하여 dictionary 형식으로 return하는 함수
 # { 'protocol', 'domain', 'path', 'query' }
-function public() {	
-	ParsingURL($sUrl);
+function ParsingURL($sUrl) {
 	# $parsedURL is of type "Scripting.Dictionary"
 	$urlPattern="http:#[a-zA-Z0-9]/([a-zA-Z0-9]/)*([a-zA-Z.])*";
 
@@ -125,46 +124,12 @@ function priceFormat($price,$stype) {
 	return $retString;
 } 
 
-function URLEncode($url) {
-	$url=str_replace("%","%25",$url);
-	$url=str_replace(":","%3A",$url);
-	$url=str_replace("/","%2F",$url);
-	$url=str_replace(".","%2E",$url);
-	$url=str_replace("?","%3F",$url);
-	$url=str_replace("=","%3D",$url);
-	$url=str_replace("&","%26",$url);
-	$url=str_replace("+","%2B",$url);
-	$url=str_replace("@","%40",$url);
-	$url=str_replace("#","%23",$url);
-	$url=str_replace("!","%21",$url);
-
-	return $url;
-} 
-
-function URLDecode($url) {
-	$url=str_replace("%3A",":",$url);
-	$url=str_replace("%2F","/",$url);
-	$url=str_replace("%2E",".",$url);
-	$url=str_replace("%3F","?",$url);
-	$url=str_replace("%3D","=",$url);
-	$url=str_replace("%26","&",$url);
-	$url=str_replace("%2B","+",$url);
-	$url=str_replace("%40","@",$url);
-	$url=str_replace("%23","#",$url);
-	$url=str_replace("%21","!",$url);
-	$url=str_replace("%25","%",$url);
-
-	return $url;
-} 
-
-function public() {	
-	mssqlEscapeString($str);
+function mssqlEscapeString($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	return $str;
 } 
 
-function public() {	
-	mssqlEscapeForLikeSearch($str);
+function mssqlEscapeForLikeSearch($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	$str=str_replace("%","[%]",$str); # 특수문자 제거
 	$str=str_replace("_","[_]",$str); # 특수문자 제거

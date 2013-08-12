@@ -1,10 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$checkUserLogin[];
+checkUserLogin();
 
 $detailIdList = trim($_REQUEST["check"]);
-if ((strlen($detailIdList)==0)) {
-	$alertBack["잘못된 접근입니다."];
+if (strlen($detailIdList) == 0) {
+	alertBack("잘못된 접근입니다.");
 } 
 
 $itemidList=explode(",",$detailIdList);
@@ -24,7 +24,7 @@ $strDetail="";
 for ($i=0; $i<=count($reqItems); $i = $i+1) {
 	$reqItem = $reqItems[$i];
 	if ((intval($reqItem->RequestItemID)==intval($itemidList[$arrayNum]))) {
-		$strDetail="<li>".$reqItem->RequestItem." : ".$priceFormat[$reqItem->Cost][1]." </li>".$strDetail;
+		$strDetail="<li>".$reqItem->RequestItem." : ".priceFormat($reqItem->Cost, 1)." </li>".$strDetail;
 		$strPrice = $strPrice+$reqItem->Cost;
 
 		if (($arrayNum==count($itemidList))) {
@@ -98,9 +98,9 @@ function body() {
 			</tr>
 			<tr>
 				<th>후원금액</th>
-				<td><?php echo $priceFormat[$strPrice][1];?></td>
+				<td><?php echo priceFormat($strPrice, 1);?></td>
 				<th>후원마감일</th>
-				<td><?php echo $dateFormat[$reqAddInfo->Due][1];?></td>
+				<td><?php echo dateFormat($reqAddInfo->Due, 1);?></td>
 			</tr>
 			<tr>
 				<th colspan="4">

@@ -34,8 +34,19 @@ class HouseObject {
 		switch ($name) {
 			case "contact1":
 			case "contact2":
+				$value = explode("-", $this->record[$name]);
+				if (count($value) == 3) {
+					return $value;
+				} else {
+					return array("", "", "");
+				}
 			case "zipcode":
-				return explode("-", $this->record[$name]);
+				$value = explode("-", $this->record[$name]);
+				if (count($value) == 2) {
+					return $value;
+				} else {
+					return array("", "");
+				}
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "roomCount": 
@@ -71,7 +82,11 @@ class HouseObject {
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
 			default:
-				return $this->record[$name];
+				if (isset($this->record[$name])) {
+					return $this->record[$name];
+				} else {
+					return "";
+				}
 		}
 	}
 	
@@ -82,9 +97,6 @@ class HouseObject {
 	#  class initialize
 	# ***********************************************
 	function __construct($houseId = -1) {
-
-		echo "HouseId : ".$houseId; 
-
 		if ($houseId == -1) {
 			$this->initialize();
 		} else {
@@ -125,7 +137,7 @@ class HouseObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from god_house WHERE houseId = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from house WHERE houseId = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("i", $houseId);
@@ -158,7 +170,7 @@ class HouseObject {
 			/* close statement */
 			$stmt->close();
 
-			if (($this->record['documentId'] > 0)) {
+			if ($this->record['documentId'] > 0) {
 				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
 				$stmt->bind_param("i", $this->record['documentId']);
 				$stmt->execute();
@@ -170,8 +182,8 @@ class HouseObject {
 			
 			
 			$roomId = -1;
-			if (($this->record['houseId'] > -1)) {
-				$stmt = $mysqli->prepare("SELECT `roomId` FROM god_room WHERE `houseId` = ?");
+			if ($this->record['houseId'] > -1) {
+				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
 				$stmt->bind_param("i", $this->record['houseId']);
 				$stmt->execute();
 				$stmt->bind_result($roomId);
@@ -188,8 +200,8 @@ class HouseObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['houseId'] == -1)) {
-			$query = "INSERT INTO god_house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userId`, ";
+		if ($this->record['houseId'] == -1) {
+			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userId`, ";
 			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -229,7 +241,7 @@ class HouseObject {
 			$this->record['houseId'] = $mysqli->insert_id;
 			
 		} else {
-			$query = "UPDATE god_house SET ";
+			$query = "UPDATE house SET ";
 			$updateData = "`assocName` = ?, ";
 			$updateData = $updateData."`address1` = ?, ";
 			$updateData = $updateData."`address2` = ?, ";
@@ -290,7 +302,7 @@ class HouseObject {
 		global $mysqli;
 
 		if ($this->record['houseId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM god_house WHERE `houseId` = ?");
+			$stmt = $mysqli->prepare("DELETE FROM house WHERE `houseId` = ?");
 			$stmt->bind_param("d", $this->record['houseId']);
 			$stmt->execute();
 			$stmt->close();

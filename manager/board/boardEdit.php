@@ -4,49 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
 checkAuth();
 
-//=================에디터용 ==================
-if ((strlen($lang)==0)) {
-	$lang="euc-kr";
-} 
-$editor_mode = $_REQUEST["editor_mode"];
-if ((strlen($editor_mode)==0)) {
-	$editor_mode="1";
-} 
-if ((strlen($editor_Url)==0)) {
-	$editor_Url="/editor";
-} 
-if ((strlen($formName)==0)) {
-	$formName="dataForm";
-} 
-
-if ((strlen($contentForm)==0)) {
-	$contentForm="contents";
-} 
-if ((strlen($formPost)==0)) {
-	$formPost="process.php";
-} 
-if ((strlen($upload_image)==0)) {
-	$upload_image="/upload/board"; // 이미지 업로드 사용 (1은 사용안함)
-} 
-if ((strlen($upload_media)==0)) {
-	$upload_media="/upload/board"; // 미디어 업로드 사용 (1은 사용안함)
-} 
-//=================에디터용 ==================
-
-if (strlen(trim($_REQUEST["groupId"]))==0) {
-alertGoPage("잘못된 접근입니다","/index.php");
+if (strlen(trim($_REQUEST["groupId"])) == 0) {
+	alertGoPage("잘못된 접근입니다","/index.php");
 } else {
 	$groupId = trim($_REQUEST["groupId"]);
 } 
-
-
-$mode = trim($_REQUEST["mode"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$gotoPage = trim($_REQUEST["gotoPage"]);
-$contents = trim($_REQUEST["contents"]);
-$title = trim($_REQUEST["title"]);
-$id = trim($_REQUEST["id"]);
 
 if (trim($mode)=="") {
 	$mode="addPost";
@@ -70,10 +32,53 @@ if (($mode=="replyPost")) {
 
 
 showAdminHeader("관리툴 - 게시판 글쓰기","","","");
-body();
+body($groupId);
 showAdminFooter();
 
-function body() {
+function body($groupId) {
+	//=================에디터용 ==================
+	$lang = $_REQUEST["lang"];
+	if (strlen($lang) == 0) {
+		$lang = "utf-8";
+	} 
+	$editor_mode = $_REQUEST["editor_mode"];
+	if (strlen($editor_mode) == 0) {
+		$editor_mode = "1";
+	} 
+	$editor_Url = $_REQUEST["editor_Url"];
+	if (strlen($editor_Url) == 0) {
+		$editor_Url = "/editor";
+	} 
+	$formName = $_REQUEST["formName"];
+	if (strlen($formName) == 0) {
+		$formName="dataForm";
+	} 
+	
+	$contentForm = $_REQUEST["contentForm"];
+	if (strlen($contentForm) == 0) {
+		$contentForm = "contents";
+	} 
+	$formPost = $_REQUEST["formPost"];
+	if (strlen($formPost) == 0) {
+		$formPost = "process.php";
+	} 
+	$upload_image = $_REQUEST["upload_image"];
+	if (strlen($upload_image) == 0) {
+		$upload_image = "/upload/board"; // 이미지 업로드 사용 (1은 사용안함)
+	} 
+	$upload_media = $_REQUEST["upload_media"];
+	if (strlen($upload_media) == 0) {
+		$upload_media = "/upload/board"; // 미디어 업로드 사용 (1은 사용안함)
+	} 
+	//=================에디터용 ==================
+
+	$mode = trim($_REQUEST["mode"]);
+	$field = trim($_REQUEST["field"]);
+	$keyword = trim($_REQUEST["keyword"]);
+	$gotoPage = trim($_REQUEST["gotoPage"]);
+	$contents = trim($_REQUEST["contents"]);
+	$title = trim($_REQUEST["title"]);
+	$id = trim($_REQUEST["id"]);
 ?>
 <div class="sub">
 	<a href="index.php">게시판목록</a> | 

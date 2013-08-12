@@ -43,7 +43,7 @@ function body() {
 			</tr>
 			<tr>
 				<th>후원마감일</th>
-				<td colspan="3"><?php echo $dateFormat[$reqAddInfo->Due][1];?></td>
+				<td colspan="3"><?php echo dateFormat($reqAddInfo->Due, 1);?></td>
 			</tr>
 		</table>
 
@@ -107,7 +107,7 @@ function body() {
 ?>
 				<td class="ltd"> <?php echo $ReqItem->RequestItem;?> </td>
 				<td class="ltd"><?php echo $ReqItem->Descript;?> </td>
-				<td class="rtd"><?php echo $priceFormat[$ReqItem->Cost][1];?></td>
+				<td class="rtd"><?php echo priceFormat($ReqItem->Cost, 1);?></td>
 				<td><?php echo $reqItem->Status;?></td>
 			</tr>
 			<input type="hidden" name="cost<?php echo $reqItem->RequestItemID;?>" id="cost<?php echo $reqItem->RequestItemID;?>" value="<?php echo $reqItem->Cost;?>" />

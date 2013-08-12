@@ -25,7 +25,7 @@ if ((strlen($order)==0)) {
 $strWhere=makeCondition($supId,$reqId,$field,$keyword,$wait);
 
 $query = "SELECT COUNT(*) AS recordCount FROM supportInfo ".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." supId, userId, name, regDate, sumPrice FROM supportInfo ".$strWhere;

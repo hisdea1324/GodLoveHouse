@@ -5,46 +5,34 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 checkAuth();
 
 //페이징 갯수 
-$PAGE_COUNT=15;
-$PAGE_UNIT=10;
+$PAGE_COUNT = 15;
+$PAGE_UNIT = 10;
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$order = trim($_REQUEST["order"]);
-$page = trim($_REQUEST["page"]);
-$status = trim($_REQUEST["status"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($field)==0)) {
-	$field="houseName";
-} 
-if ((strlen($order)==0)) {
-	$order="regDate DESC";
-} 
-if ((strlen($status)==0)) {
-	$status="S2002";
-} 
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "houseName";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "regDate DESC";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
+$status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S2002";
 
 // 조건문 작성
-$strWhere=makeCondition($status,$field,$keyword);
+$strWhere = makeCondition($status, $field, $keyword);
 
-$query = "SELECT COUNT(*) AS recordCount FROM house ".$strWhere;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
-$topNum = $PAGE_COUNT*$page;
+$query = "SELECT * FROM house ".$strWhere;
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
+$topNum = $PAGE_COUNT * $page + 1;
 
-$query = "SELECT top ".$topNum." * FROM house ".$strWhere." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
+$query = "SELECT * FROM house ".$strWhere." ORDER BY ".$order." LIMIT $topNum, $PAGE_COUNT";
+
+/*
+if ($listRS->RecordCount > 0) {
 	$listRS->PageSize = $PAGE_COUNT;
 	$listRS->AbsolutePage = $page;
-} 
-
+}
+*/
 
 // 테이블 생성
 $objTable = new tableBuilder();
-if (($status=="S2002")) {
+if ($status == "S2002") {
 	$objTable->setButton(array("방정보","수정","대기"));
 } else {
 	$objTable->setButton(array("방정보","수정","삭제","승인"));
@@ -55,7 +43,7 @@ $objTable->setField(array("houseId","assocName","houseName","userId","contact1",
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("houseId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
+$htmlTable = $objTable->getTable($query);
 
 showAdminHeader("관리툴 - 선교관관리","","","");
 body();
@@ -76,6 +64,8 @@ function makeCondition($status,$field,$keyword) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
@@ -101,7 +91,7 @@ function body() {
 	<!-- 컨텐츠 들어가는 부분 -->
 
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
-			<form name="findForm" method="get" action="<?php echo $CurUrl;?>">
+			<form name="findForm" method="get" action="./index.php">
 			<tr>
 				<td align="right">
 					<select name="field">

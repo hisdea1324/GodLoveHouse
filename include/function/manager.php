@@ -1,5 +1,6 @@
 <?php 
-function showAdminHeader($strTitle,$strJSFile1,$strJSFile2,$strCSSFile) {
+function showAdminHeader($strTitle, $strJSFile1, $strJSFile2, $strCSSFile) {
+	global $Application;
 	$defaultTitle="::: God Love House Manager Page :::";
 	if (strlen($strTitle)==0) {
 		$strTitle = $defaultTitle;
@@ -28,26 +29,28 @@ function showAdminHeader($strTitle,$strJSFile1,$strJSFile2,$strCSSFile) {
 	} else {
 		$strCSS=str_replace("[CSS_FILE]",$defaultCSS,$strCSS);
 	} 
-
-	$strHeader = $readHtmlFile["include\\html\\adminHeader.php"];
-	$strHeader=str_replace("[TITLE]",$strTitle,$strHeader);
-	$strHeader=str_replace("[INCLUDE_JS1]",$strJS1,$strHeader);
-	$strHeader=str_replace("[INCLUDE_JS2]",$strJS2,$strHeader);
-	$strHeader=str_replace("[INCLUDE_CSS]",$strCSS,$strHeader);
-	$strHeader=str_replace("[WEBROOT]",$Application["WebRoot"],$strHeader);
-	$strHeader=str_replace("[CHARSET]",$Application["Charset"],$strHeader);
+	
+	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/adminHeader.php");
+	$strHeader = str_replace("[TITLE]", $strTitle, $strHeader);
+	$strHeader = str_replace("[INCLUDE_JS1]", $strJS1, $strHeader);
+	$strHeader = str_replace("[INCLUDE_JS2]", $strJS2, $strHeader);
+	$strHeader = str_replace("[INCLUDE_CSS]", $strCSS, $strHeader);
+	$strHeader = str_replace("[WEBROOT]", $Application["WebRoot"], $strHeader);
+	$strHeader = str_replace("[CHARSET]", $Application["Charset"], $strHeader);
 
 	print $strHeader;
 } 
 
 function showAdminMenu() {
-	$strMenu = $readHtmlFile["include\\html\\adminMenu.php"];
-	$strMenu=str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+	global $Application;
+	
+	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/adminMenu.php");
+	$strMenu=str_replace("[WEBROOT]", $Application["WebRoot"], $strMenu);
 
 	print $strMenu;
 } 
 
 function showAdminFooter() {
-	print $readHtmlFile["include\\html\\adminFooter.php"];
+	print file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/adminFooter.php");
 } 
 ?>

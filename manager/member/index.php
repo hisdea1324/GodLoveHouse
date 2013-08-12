@@ -28,7 +28,7 @@ $strWhere=makeCondition($userLv,$field,$keyword);
 $query = "SELECT COUNT(*) AS recordCount from users".$strWhere;
 
 // 페이징을 모두 만들어옴
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 
 $topNum = $PAGE_COUNT*$page;
 

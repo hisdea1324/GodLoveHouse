@@ -3,8 +3,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $needUserLv[1];
 
 $userId = trim($_REQUEST["userId"]);
-if ((strlen($userId)==0)) {
-	$alertBack["잘못된 접근입니다."];
+if (strlen($userId) == 0) {
+	alertBack("잘못된 접근입니다.");
 } 
 
 $page = trim($_REQUEST["page"]);
@@ -127,7 +127,7 @@ function body() {
 			<dt>
 				<img src="../images/board/ico_n.gif" alt="" valign="absmiddle" />
 				<strong><?php echo $comment->FollowId;?></strong><span class="line">|</span>
-				<span id="date<?php echo $comment->ID;?>"><?php echo $dateFormat[$comment->RegDate][1];?></span>
+				<span id="date<?php echo $comment->ID;?>"><?php echo dateFormat($comment->RegDate, 1);?></span>
 				<span id="button<?php echo $comment->ID;?>">
 <?php 
 			if (($comment->FollowId == $sessions->UserId)) {
@@ -185,7 +185,7 @@ function body() {
 				<dt>
 					<img src="../images/board/ioc-reply.gif" alt="" valign="absmiddle" />
 					<strong><?php echo $replyComment->FollowId;?></strong><span class="line">|</span>
-					<span id="date<?php echo $replyComment->ID;?>"><?php echo $dateFormat[$replyComment->RegDate][1];?></span>
+					<span id="date<?php echo $replyComment->ID;?>"><?php echo dateFormat($replyComment->RegDate, 1);?></span>
 					<span id="button<?php echo $replyComment->ID;?>">
 <?php 
 					if (($replyComment->FollowId == $sessions->UserId)) {

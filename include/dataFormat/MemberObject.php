@@ -15,6 +15,7 @@
 
 class MemberObject {
 	protected $record = array();
+	protected $isNew = false;
 
 	public function __set($name,$value) { 
 		$this->record[$name] = $value; 
@@ -29,22 +30,28 @@ class MemberObject {
     }
 
     // 멤버 오브젝트 초기화 함수  
-    function __construct() {
-		$this->record['userId'] = -1;
-		$this->record['password'] = "test";
-		$this->record['passQuest'] = -1;
-		$this->record['passAnswer'] = "test";
-		$this->record['memo'] = "111111";
-		$this->record['name'] = "은지";
-		$this->record['nick'] = "linge";
-		$this->record['userLv'] = "1";
-		$this->record['email'] = "0419@gmail.com";
-		$this->record['jumin'] = "900418-0000000";
-		$this->record['address1'] = "서울 은평";
-		$this->record['address2'] = "갈현동";
-		$this->record['zipcode'] = "000-000";
-		$this->record['phone'] = "000-000-0000";
-		$this->record['mobile'] = "000-000-0000";
+    function __construct($userId = "") {
+    	if ($userId == "") {
+    		$this->isNew = true;
+    	} else {
+    		$this->isNew = false;
+    	}
+    	
+		$this->record['userId'] = $userId;
+		$this->record['password'] = "a";
+		$this->record['passQuest'] = 0;
+		$this->record['passAnswer'] = "a";
+		$this->record['memo'] = "a";
+		$this->record['name'] = "a";
+		$this->record['nick'] = "a";
+		$this->record['userLv'] = 0;
+		$this->record['email'] = "a";
+		$this->record['jumin'] = "0000000000000";
+		$this->record['address1'] = "a";
+		$this->record['address2'] = "a";
+		$this->record['zipcode'] = "000000";
+		$this->record['phone'] = "a";
+		$this->record['mobile'] = "a";
 		$this->record['msgOk'] = 0;
 	}
 
@@ -54,7 +61,7 @@ class MemberObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from god_member WHERE userId = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from member WHERE userId = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("i", $userId);
@@ -94,7 +101,7 @@ class MemberObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from god_member WHERE nick = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from member WHERE nick = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("s", $userNick);
@@ -134,52 +141,43 @@ class MemberObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['userId'] == -1)) {
-
-
-
-			$query = "INSERT INTO god_member (`userId`, `password`, `passQuest`, `passAnswer`, ";
+		if ($this->isNew) {
+			$query = "INSERT INTO `member` (`userId`, `password`, `passQuest`, `passAnswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userLv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
-			$query = $query."`zipcode`, `phone`, `mobile`, `msgOK`) VALUES ";
+			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-			$stmt = $mysqli->prepare($query);
+			if ($stmt = $mysqli->prepare($query)) {
 
-
-			echo "##########################################################";
-			echo "Query ::::: " . $query;
-			echo "##########################################################";
-
-
-			# New Datax
-			$stmt->bind_param("ssissssssssssssi", 
-				$this->record['userId'], 
-				$this->record['password'], 
-				$this->record['passQuest'], 
-				$this->record['passAnswer'], 
-				$this->record['memo'], 
-				$this->record['name'], 
-				$this->record['nick'], 
-				$this->record['userLv'], 
-				$this->record['email'], 
-				$this->record['jumin'], 
-				$this->record['address1'], 
-				$this->record['address2'],
-				$this->record['zipcode'],
-				$this->record['phone'],
-				$this->record['mobile'],
-				$this->record['msgOk']);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+				# New Data
+				$stmt->bind_param("ssissssisssssssi", 
+					$this->record['userId'], 
+					crypt($this->record['password'], $this->record['userId']),
+					$this->record['passQuest'], 
+					$this->record['passAnswer'], 
+					$this->record['memo'], 
+					$this->record['name'], 
+					$this->record['nick'], 
+					$this->record['userLv'], 
+					$this->record['email'], 
+					$this->record['jumin'], 
+					$this->record['address1'], 
+					$this->record['address2'],
+					$this->record['zipcode'],
+					$this->record['phone'],
+					$this->record['mobile'],
+					$this->record['msgOk']);
+	
+				# execute query
+				$stmt->execute();
 			
+				# close statement
+				$stmt->close();
+			}
 		} else {
 
-			$query = "UPDATE god_member SET ";
+			$query = "UPDATE member SET ";
 			$updateData = "`nick` = ?, ";
 			$updateData.= "`userLv` = ?, ";
 			$updateData.= "`email` = ?, ";
@@ -195,7 +193,7 @@ class MemberObject {
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
-			$stmt->bind_param("sssssssssis", 
+			$stmt->bind_param("sssssssssi", 
 				$this->record['nick'], 
 				$this->record['userLv'], 
 				$this->record['email'], 
@@ -205,8 +203,7 @@ class MemberObject {
 				$this->record['zipcode'], 
 				$this->record['phone'], 
 				$this->record['mobile'], 
-				$this->record['msgOk'],
-				$this->record['userId']);
+				$this->record['msgOk']);
 				
 			# execute query
 			$stmt->execute();
@@ -220,7 +217,7 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM god_member WHERE userId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM member WHERE userId = ?");
 			$stmt->bind_param("s", $this->record['userId']);
 			$stmt->execute();
 			$stmt->close();

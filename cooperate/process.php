@@ -2,11 +2,13 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $Application;
+
 # 현재 로그인 세션
 $sessions = new __construct();
 if (($sessions->isSessionAlived()==false)) {
 	alertGoPage("로그인해 주세요",$Application["WebRoot"]."/member/login.php");
-} 
+}
 
 $mode = trim($_REQUEST["mode"]);
 if ($mode=="editComment") {

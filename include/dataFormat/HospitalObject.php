@@ -278,7 +278,7 @@ class HospitalObject {
 
 	function showFee() {
 		if (($this->record['price'] > 0)) {
-			$retString = $priceFormat[$this->record['id']][1]."/일";
+			$retString = priceFormat($this->record['id'], 1)."/일";
 		} else {
 			$retString = "무료";
 		} 
@@ -808,7 +808,7 @@ class HospitalObject {
 
 	function showFee() {
 		if (($m_price>0)) {
-			$retString = $priceFormat[$m_price][1]."/일";
+			$retString = priceFormat($m_price, 1)."/일";
 		} else {
 			$retString = "무료";
 		} 

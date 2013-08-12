@@ -21,7 +21,7 @@ function shortList() {
 		print "<li>작성된 글이 없습니다.</li>";
 	} else {
 		while(false) {
-			print "<li><span>".$dateFormat[$listRS["regDate"]][1]."</span> ";
+			print "<li><span>".dateFormat($listRS["regDate"], 1)."</span> ";
 			print "<a href='".$Application["WebRoot"]."community/view.php?groupId=".$groupId."&id=".$listRS["id"]."'>".$titleFormat[$listRS["title"]][18];
 			print "</a></li>";
 			$listRS->MoveNext;

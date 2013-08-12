@@ -15,19 +15,19 @@ $page = trim($_REQUEST["page"]);
 
 switch (($mode)) {
 	case "addPost":
-addPost();
+		addPost();
 		break;
 	case "editPost":
-editPost();
+		editPost();
 		break;
 	case "replyPost":
-replyPost();
+		replyPost();
 		break;
 	case "deletePost":
-deletePost();
+		deletePost();
 		break;
 	case "editGroup":
-editGroup();
+		editGroup();
 		break;
 } 
 
@@ -39,7 +39,7 @@ function addPost() {
 	$contents=str_replace("'","''",$contents);
 
 	$query = "SELECT MAX(id) + 1 AS newId FROM board";
-	$rs = $db->execute($query);
+	$rs = $mysqli->execute($query);
 	if ($Rs->Eof || $Rs->Bof) {
 		$answerId=1;
 	} else {

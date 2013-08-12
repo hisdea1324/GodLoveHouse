@@ -14,10 +14,10 @@ if ((strlen($page)==0)) {
 
 $strWhere=makeCondition($supprotType,$field,$keyword);
 $query = "SELECT COUNT(*) AS recordCount FROM request A, code B, users C".$strWhere;
-#strPage = makePaging(page, PAGE_COUNT, PAGE_UNIT, query)$topNum = $PAGE_COUNT*$page;
+#$strPage = makePaging(page, PAGE_COUNT, PAGE_UNIT, query)
+#$topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.*, C.nick, B.name AS regionName FROM request A, code B, users C".$strWhere." ORDER BY A.reqId DESC";
-$db->CursorLocation=3;
 #Set listRS = db.Execute(query)
 #if (listRS.RecordCount > 0) then 
 #	listRS.PageSize = PAGE_COUNT

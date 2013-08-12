@@ -176,7 +176,7 @@ class RequestItemObject {
 
 
 	function showPrice() {
-		return $PriceFormat[$this->record['cost']][1];
+		return priceFormat($this->record['cost'], 1);
 	} 
 }	
 
@@ -363,7 +363,7 @@ class RequestItemObject {
 	} 
 
 	function showPrice() {
-		return $PriceFormat[$m_cost][1];
+		return priceFormat($m_cost, 1);
 	} 
 } 
 

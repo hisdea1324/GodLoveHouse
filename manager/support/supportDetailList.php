@@ -23,7 +23,7 @@ $supporter = $s_Helper->getSupportBySupId($supId);
 $account = $s_Helper->getAccountInfoByUserId($supporter->UserId);
 
 $query = "SELECT COUNT(*) AS recordCount from supportItem WHERE supId = ".$supId;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.supItemId, B.title, A.cost FROM supportItem A, requestInfo B WHERE A.reqId = B.reqId AND A.supId = ".$supId." ORDER BY ".$order;
@@ -87,7 +87,7 @@ function body() {
 		<ul>
 			<li>후원자 : <?php echo $supporter->Name;?> (<?php echo $supporter->UserId;?>)</li>
 			<li>후원타입 : <?php echo $supporter->SupportType;?></li>
-			<li>총 후원금액: <?php echo $priceFormat[$supporter->SumPrice][1];?></li>
+			<li>총 후원금액: <?php echo priceFormat($supporter->SumPrice, 1);?></li>
 			<?	 $jumin = $supporter->Jumin;?>
 			<li>주민등록번호: <?php echo $jumin[0];?>-<?php echo $jumin[1];?></li>
 			<?	 $mobile = $supporter->Mobile;?>

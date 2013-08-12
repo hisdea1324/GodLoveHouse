@@ -25,7 +25,7 @@ $query = "select sum(cost) as costTotal from (select cost from requestItem WHERE
 $costRS = $db->Execute($query);
 
 $query = "SELECT COUNT(*) AS recordCount from requestItem WHERE reqId = ".$reqId;
-$strPage = $makePaging[$page][$PAGE_COUNT][$PAGE_UNIT][$query];
+$strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." * from requestItem WHERE reqId = ".$reqId." ORDER BY ".$order;

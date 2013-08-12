@@ -1,4 +1,5 @@
 <?php
+global $Application;
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -15,10 +16,12 @@ if ($mode=="addSupport") {
 
 
 function addSupport() {
+	global $Application;
+	
 	$sessions = new __construct();
 	$c_Helper = new CodeHelper();
 
-// 후원 정보	$support = new SupportObject();
+	# 후원 정보	$support = new SupportObject();
 	$support->Open($sessions->UserId, $c_Helper->getSupportCode(1));
 	$support->Name = $_REQUEST["name"];
 	$support->Jumin = $_REQUEST["nid1"].$_REQUEST["nid2"];
@@ -32,39 +35,41 @@ function addSupport() {
 	$support->Update();
 
 	//후원 항목 예약	
-	$detailIDList=explode(",",trim($_REQUEST["detailId"]));
+	$detailIDList = explode(",", trim($_REQUEST["detailId"]));
 	$s_Helper = new SupportHelper();
 	$reqItemList = $s_Helper->getReqItemListByReqId($_REQUEST["reqId"]);
-	for ($i=0; $i<=count($reqItemList)-1; $i = $i+1) {
+	
+	for ($i = 0; $i <= count($reqItemList) - 1; $i++) {
 		$checkValue=false;
 		foreach ($detailIDList as $detailId) {
 			if (($reqItemList[$i]->RequestItemID==intval(trim($detailId)))) {
 				//해당 항목 예약
-				$reqItemList[$i]->$SendUser = $sessions->UserId;
-				$reqItemList[$i]->$Update[];
+				$reqItemList[$i]->SendUser = $sessions->UserId;
+				$reqItemList[$i]->Update();
 				$checkValue=true;
 			} 
 
 		}
-		if ((!$checkValue && strlen($reqItemList[$i]->$SendUser)>0 && $reqItemList[$i]->SendUser == $sessions->UserID)) {
+		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $sessions->UserID) {
 			//해당 항목 예약 삭제
-			$reqItemList[$i]->$SendUser="";
-			$reqItemList[$i]->$Update[];
+			$reqItemList[$i]->SendUser = "";
+			$reqItemList[$i]->Update();
 		} 
 
 
 	}
 
 
-//후원 상세 정보	$supportItem = new SupportItemObject();
+	# 후원 상세 정보	$supportItem = new SupportItemObject();
 	$supportItem->OpenWithIndex($support->SupportID, $_REQUEST["reqId"]);
 	$supportItem->Cost = $_REQUEST["sumPrice"];
 	$supportItem->update();
 
-alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/special.php");
+	alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/special.php");
 } 
 
 function addCenterSupport() {
+	global $Application;
 	$sessions = new __construct();
 
 // 입금 정보	$m_Helper = new MemberHelper();
@@ -107,13 +112,13 @@ function addCenterSupport() {
 	}
 
 
-alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/center.php");
+	alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/center.php");
 } 
 
 function addServiceSupport() {
 	$check = trim($_REQUEST["check"]);
-	if ((strlen(trim($_REQUEST["check"]))==0)) {
-		$alertBack["선택된 항목이 없습니다."];
+	if (strlen(trim($_REQUEST["check"])) == 0) {
+		alertBack("선택된 항목이 없습니다.");
 	} 
 
 

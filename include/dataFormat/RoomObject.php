@@ -153,7 +153,7 @@ class RoomObject {
 		global $mysqli;
 
 		if (($this->record['roomId'] == -1)) {
-			$query = "INSERT INTO god_room (`houseId`, `roomName`, `limit`, `explain`, ";
+			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
 			$query = $query."`network`, `kitchen`, `laundary`, `fee`, ";
 			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -184,11 +184,11 @@ class RoomObject {
 			
 			$this->record['roomId'] = $mysqli->insert_id;
 			
-			$query = "UPDATE god_house SET roomCount = roomCount + 1 WHERE houseId = '".$this->record['houseId']."'";
+			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->record['houseId']."'";
 			$mysqli->real_query($query);
 			
 		} else {
-			$query = "UPDATE god_room SET ";
+			$query = "UPDATE room SET ";
 			$updateData = "`houseId` = ?, ";
 			$updateData = $updateData."`roomName` = ?, ";
 			$updateData = $updateData."`limit` = ?, ";
@@ -233,12 +233,12 @@ class RoomObject {
 		global $mysqli;
 
 		if ($this->record['roomId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM god_room WHERE roomId = ?");
+			$stmt = $mysqli->prepare("DELETE FROM room WHERE roomId = ?");
 			$stmt->bind_param("i", $this->record['roomId']);
 			$stmt->execute();
 			$stmt->close();
 			
-			$query = "UPDATE god_house SET roomCount = roomCount - 1 WHERE houseId = '".$this->record['houseId']."'";
+			$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = '".$this->record['houseId']."'";
 			$mysqli->real_query($query);
 		}
 	} 

@@ -162,7 +162,7 @@ class RequestAddInfo {
 			
 			if (($this->record['itemCount'] > 0)) {
 				for ($i=0; $i < $this->record['itemCount']; $i++) {
-					$items[$i]->$insert($this->record['userId'], $this->record['supType']);
+					$items[$i]->insert($this->record['userId'], $this->record['supType']);
 				}
 			}
 			
@@ -194,13 +194,13 @@ class RequestAddInfo {
 
 			if (($this->record['itemCount'] > 0)) {
 				for ($i=0; $i < $this->record['itemCount']; $i++) {
-					$items[$i]->$update($this->record['reqId']);
+					$items[$i]->update($this->record['reqId']);
 				}
 			}
 		}
 	}
 
-	unction Delete() {
+	function Delete() {
 		global $mysqli;
 
 		if ($this->record['id'] > -1) {
