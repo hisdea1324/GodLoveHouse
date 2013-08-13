@@ -68,7 +68,7 @@ class CodeHelper {
 			while($row = $result->fetch_array()) {
 				$codeInfo = new CodeObject();
 				$codeInfo->Open($row["code"]);
-				$return->append($codeInfo);
+				$return[] = $codeInfo;
 			} 
 		} 
 

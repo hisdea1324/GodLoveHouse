@@ -140,13 +140,13 @@ function body() {
 			<dt>
 				주거형태
 			<dd>
-				<input name="buildType" id="buildType" type="radio" value="1" class="chk" <?php if (($houseObj->buildingTypeCode==1)) { print "checked"; } ?> tabindex="7" />
+				<input name="buildType" id="buildType" type="radio" value="1" class="chk" <?php if ($houseObj->buildingType == 1) { print "checked"; } ?> tabindex="7" />
 				<span class="r10">아파트</span>
-				<input name="buildType" id="buildType" type="radio" value="2" class="chk" <?php if (($houseObj->buildingTypeCode==2)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="2" class="chk" <?php if ($houseObj->buildingType == 2) { print "checked"; } ?> />
 				<span class="r10">빌라</span>
-				<input name="buildType" id="buildType" type="radio" value="3" class="chk" <?php if (($houseObj->buildingTypeCode==3)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="3" class="chk" <?php if ($houseObj->buildingType == 3) { print "checked"; } ?> />
 				<span class="r10">원룸</span>
-				<input name="buildType" id="buildType" type="radio" value="4" class="chk" <?php if (($houseObj->buildingTypeCode==4)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="4" class="chk" <?php if ($houseObj->buildingType == 4) { print "checked"; } ?> />
 				<span class="r10">기타</span>
 			<dt>
 				지역코드
@@ -248,7 +248,7 @@ if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
 		<?php } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?><%
+		<?php } ?>
 	}
 //]]>
 </script>

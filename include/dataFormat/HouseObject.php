@@ -64,7 +64,7 @@ class HouseObject {
 				} else {
 					return "<a href='".$this->record[$name]."' target='_blank'>".$this->record[$name]."</a>";
 				} 
-			case "buildingType":
+			case "buildingTypeValue":
 				switch ($this->record[$name]) {
 					case 1:
 						return "아파트";

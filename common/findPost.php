@@ -1,30 +1,31 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$dong = $_REQUEST["dong"];
+$dong = (isset($_REQUEST["dong"])) ? $_REQUEST["dong"] : "";
 $zipListTemplete = "		<tr><td width='17%' bgcolor='f5f5f5'> [zip1] - [zip2] </td><td width='83%' bgcolor='#F5F5F5'> <a href=\"javascript:sendzip('[zip1]','[zip2]','[addr2]')\"><font color='#6A6A6A'>[addr1]</font></a> </td>	</tr>";
 
-if ($dong>"") {
-	$query = "SELECT zipcode, sido, gugun, dong, bunji FROM zipcode WHERE dong LIKE N'%".$mssqlEscapeForLikeSearch[$dong]."%'";
-	$rs = $db->execute($query);
-
-	while (!$Rs->eof) {
-		$zip1 = substr($Rs["zipcode"],0,3);
-		$zip2 = substr($Rs["zipcode"],strlen($Rs["zipcode"])-(3));
-		$addr1 = trim($Rs["sido"])." ".trim($Rs["gugun"])." ".trim($Rs["dong"])." ".trim($Rs["bunji"]);
-		$addr2 = trim($Rs["sido"])." ".trim($Rs["gugun"])." ".trim($Rs["dong"]);
-		$addr1 = trim($addr1);
-		$addr2 = trim($addr2);
-
-		$dongList = $dongList.str_replace("[addr2]",$addr2,str_replace("[addr1]",$addr1,str_replace("[zip2]",$zip2,str_replace("[zip1]",$zip1,$zipListTemplete))));
-		$Rs->movenext;
-	} 
+if ($dong > "") {
+	global $mysqli;
+	$query = "SELECT zipcode, sido, gugun, dong, bunji FROM zipcode WHERE dong LIKE '%".mysql_escape_string($dong)."%'";
+	
+	$dongList = "";
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_array()) {
+			$zip1 = substr($row["zipcode"],0,3);
+			$zip2 = substr($row["zipcode"],strlen($row["zipcode"])-(3));
+			$addr1 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"])." ".trim($row["bunji"]);
+			$addr2 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"]);
+			$addr1 = trim($addr1);
+			$addr2 = trim($addr2);
+	
+			$dongList = $dongList.str_replace("[addr2]",$addr2,str_replace("[addr1]",$addr1,str_replace("[zip2]",$zip2,str_replace("[zip1]",$zip1,$zipListTemplete))));
+		} 
+	}
 } 
 
 if (!isset($dongList)) {
 	$dongList="	<tr bgcolor='f5f5f5'><td align='center'><font color='#666666'>검색된 주소가 없습니다</font></td></tr>";
 } 
-
 ?>
 <HTML>
 <HEAD>
@@ -41,8 +42,9 @@ function sendzip(zip1, zip2, addr){
 	opener.document.getElementById("addr2").focus();
 	window.close();
 }
-function addrM(){
-	document.getElementById("addrForm").action='findPost.php?Code=<?php echo $Code;?><%'
+
+function addrM() {
+	document.getElementById("addrForm").action = 'findPost.php';
 	document.getElementById("addrForm").submit();
 }
 //-->

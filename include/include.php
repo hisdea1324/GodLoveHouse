@@ -20,7 +20,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/converter.php");
 #require "function/validator.php";
 #require "function/math.php";
 #require "function/file.php";
-#require "function/script.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/function/script.php");
 #require "function/fileuploadComm.php";
 #require "function/string.php";
 #require "function/debug.php";
