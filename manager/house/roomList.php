@@ -110,7 +110,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, roomId) {
 		switch(no) {
@@ -122,12 +122,12 @@ function body() {
 	}
 
 	function goEdit(roomId) {
-		location.href = 'editRoom.php?mode=editRoom&houseId=<?php echo $houseId;?><%&roomId=' + roomId + searchString;
+		location.href = 'editRoom.php?mode=editRoom&houseId=<?php echo $houseId;?>&roomId=' + roomId + searchString;
 	}
 
 	function goDelete(roomId) {
 		if (confirm("정말 삭제 하시렵니까?")) {
-			location.href = 'process.php?mode=deleteRoom&houseId=<?php echo $houseId;?><%&roomId=' + roomId + searchString;
+			location.href = 'process.php?mode=deleteRoom&houseId=<?php echo $houseId;?>&roomId=' + roomId + searchString;
 		}
 	}
 
@@ -138,7 +138,7 @@ function body() {
 	}
 	
 	function addRoom() {
-		location.href = 'editRoom.php?mode=addRoom&houseId=<?php echo $houseId;?><%&' + searchString;
+		location.href = 'editRoom.php?mode=addRoom&houseId=<?php echo $houseId;?>&' + searchString;
 	}
 //]]>
 </script>

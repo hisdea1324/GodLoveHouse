@@ -158,7 +158,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, userId) {
 		switch(no) {
@@ -192,17 +192,17 @@ function body() {
 			case 1: goDelete(userId); break;
 			default: break;
 <?		 break;
-} ?><%
+} ?>
 		}
 	}
 
 	function goShow(userId) {
-		location.href = 'editForm.php?userLv=<?php echo $userLv;?><%&userId=' + userId;
+		location.href = 'editForm.php?userLv=<?php echo $userLv;?>&userId=' + userId;
 	}
 
 	function goDelete(userId) {
 		if (confirm("정말 삭제 하시겠습니까?")) {
-			location.href = 'process.php?mode=deleteUser&userLv=<?php echo $userLv;?><%&userId=' + userId;
+			location.href = 'process.php?mode=deleteUser&userLv=<?php echo $userLv;?>&userId=' + userId;
 		}
 	}
 	

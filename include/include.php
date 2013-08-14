@@ -14,7 +14,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
 #require "class/SupportHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/HouseHelper.php");
 #require "class/HospitalHelper.php";
-
 require_once($_SERVER['DOCUMENT_ROOT']."/include/function/global.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/function/converter.php");
 #require "function/validator.php";
@@ -24,7 +23,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/script.php");
 #require "function/fileuploadComm.php";
 #require "function/string.php";
 #require "function/debug.php";
-
 #require "dataFormat/AttachFile.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/CodeObject.php");
 #require "dataFormat/CommentObject.php";

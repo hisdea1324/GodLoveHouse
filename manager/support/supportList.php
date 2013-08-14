@@ -157,20 +157,20 @@ function body() {
 	}
 	
 	function goShowUser(userId) {
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/<%manager/member/editForm.php?mode=editUser&userId=' + userId;
+		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/manager/member/editForm.php?mode=editUser&userId=' + userId;
 	}
 
 	function goChange(supId) {
 		var str;
-		str = "<?php if (($wait=="0")) { ?>비<?php } ?><%승인합니다.";
+		str = "<?php if (($wait=="0")) { ?>비<?php } ?>승인합니다.";
 		
 		if (confirm(str)) {
-			location.href = 'process.php?mode=statusChange&supId=' + supId + '&wait=<?php echo $wait;?><%';
+			location.href = 'process.php?mode=statusChange&supId=' + supId + '&wait=<?php echo $wait;?>';
 		}
 	}
 	
 	function addSupportDetail() {
-		location.href = 'addRequestDetail.php?mode=addSupportDetail&supId=<?php echo $supId;?><%';
+		location.href = 'addRequestDetail.php?mode=addSupportDetail&supId=<?php echo $supId;?>';
 	}
 //]]>
 </script>

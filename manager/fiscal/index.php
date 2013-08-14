@@ -39,7 +39,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, houseId) {
 		switch(no) {
@@ -59,7 +59,7 @@ if (($status=="S2002")) {
 <?php 
 } 
 
-?><%
+?>
 			default: break;
 		}
 	}

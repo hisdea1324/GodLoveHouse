@@ -263,7 +263,7 @@ if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
 		<?php } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?><%
+		<?php } ?>
 	}
 //]]>
 </script>

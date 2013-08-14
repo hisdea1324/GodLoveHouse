@@ -115,7 +115,7 @@ function body() {
 		var obj;
 		var price = 0;
 		
-		for (var i = 1; i <= <?php echo $num;?><%; i++) { 
+		for (var i = 1; i <= <?php echo $num;?>; i++) { 
 			obj = document.getElementById('price'+i).value;
 			if (obj == '') {
 				document.getElementById('price'+i).value = 0;
@@ -130,7 +130,7 @@ function body() {
 	
 	function frmSubmit() {
 		var idList = '';
-		for(var i = 1; i <= <?php echo $num;?><%; i++) {
+		for(var i = 1; i <= <?php echo $num;?>; i++) {
 			obj = document.getElementById('price'+i).value;
 			if ( parseInt(obj) > 0) {
 				idList = idList + document.getElementById('reqId'+i).value + ",";

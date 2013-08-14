@@ -129,7 +129,7 @@ function body() {
 		if (hospital.length == 0) {
 			return;
 		}
-		location.href = "etc.php?region=<?php echo $regionCode;?><%&hospitalId=" + hospital;
+		location.href = "etc.php?region=<?php echo $regionCode;?>&hospitalId=" + hospital;
 	}
 	
 	function frmSubmit() {

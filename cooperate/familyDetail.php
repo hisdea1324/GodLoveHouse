@@ -256,7 +256,7 @@ function body() {
 		} else {
 			location.href = "process.php?mode=addFamily02&userId=<?php echo $userId;?>"
 		}
-		<?php } ?><%
+		<?php } ?>
 	}
 	
 	function cancel_comment(commentId) {

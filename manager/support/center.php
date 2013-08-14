@@ -60,7 +60,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, reqId)	{
 		switch(no) {
@@ -77,7 +77,7 @@ function body() {
 
 	function goDelete(reqId) {
 		if (confirm("정말 삭제 하시렵니까?")) {
-			location.href = 'process.php?supportType=<?php echo $supportType;?><%&mode=deleteRequest&reqId=' + reqId + searchString;
+			location.href = 'process.php?supportType=<?php echo $supportType;?>&mode=deleteRequest&reqId=' + reqId + searchString;
 		}
 	}
 	
@@ -86,7 +86,7 @@ function body() {
 	}
 	
 	function addRequest() {
-		location.href = 'addRequest.php?supportType=<?php echo $supportType;?><%' + searchString;
+		location.href = 'addRequest.php?supportType=<?php echo $supportType;?>' + searchString;
 	}
 //]]>
 </script>
