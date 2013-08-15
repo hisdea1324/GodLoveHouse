@@ -21,7 +21,7 @@ $query = "SELECT * FROM house ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT * FROM house ".$strWhere." ORDER BY ".$order." LIMIT $topNum, $PAGE_COUNT";
+$query = "SELECT * FROM house $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 // 테이블 생성
 $objTable = new tableBuilder();
 if ($status == "S2002") {

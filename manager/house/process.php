@@ -123,10 +123,12 @@ function deleteHouse() {
 } 
 
 function confirmHouse() {
+	global $mysqli;
+	
 	$houseId = trim($_REQUEST["houseId"]);
 	$value = trim($_REQUEST["value"]);
 	$query = "UPDATE house SET status = '".$value."' WHERE houseId = ".$houseId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 
 	header("Location: "."index.php");
 } 

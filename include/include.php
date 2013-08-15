@@ -37,7 +37,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");
 #require "dataFormat/RequestItemObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HouseObject.php");
 #require "dataFormat/HospitalObject.php";
-#require "dataFormat/RoomObject.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RoomObject.php");
 #require "dataFormat/ReservationObject.php";
 #require "dataFormat/BoardObject.php";
 #require "dataFormat/BoardGroup.php";

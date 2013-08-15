@@ -12,15 +12,18 @@
 # ************************************************************
 class CodeHelper {
 	function getCodeName($value) {
+		global $mysqli;
+		
 		$query = "SELECT name from code WHERE code = '{$value}'";
-		$codeRS = $db->Execute($query);
-
-		if (($codeRS["name"]==!null)) {
-			return $codeRS["name"];
-		} else {
-			return false;
-		} 
-
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				if ($row["name"] ==! null) {
+					return $row["name"];
+				}
+			}
+		}
+		
+		return false;
 	} 
 
 	function getSupportCode($index) {

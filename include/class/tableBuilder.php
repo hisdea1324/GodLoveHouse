@@ -162,6 +162,7 @@ class tableBuilder {
 		global $mysqli;
 		$rowString = "";
 		$pagingString = "";
+		$htmContent = "";
 		
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
@@ -198,8 +199,10 @@ class tableBuilder {
 
 	function displayListPage() {
 		global $RecordCount, $gotoPage;
+		
 		# 여기 수정해야 함
-		$this->totalpage = Ceil($RecordCount, $this->pageSize);
+		$htmContent = "";
+		$this->totalpage = Ceil($RecordCount / $this->pageSize);
 		$gb = "1";
 
 		if ($this->totalPage > 0) {

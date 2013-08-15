@@ -2,11 +2,12 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$roomId = trim($_REQUEST["roomId"]);
-$houseId = trim($_REQUEST["houseId"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
+$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
+$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
+
 
 $h_Helper = new HouseHelper();
 $room = $h_Helper->getRoomInfoById($roomId);
@@ -18,6 +19,8 @@ body();
 showAdminFooter();
 
 function body() {
+	global $keyword, $field, $page;
+	global $house, $room;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
