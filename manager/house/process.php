@@ -78,7 +78,7 @@ function editHouse() {
 function editRoom() {
 	$room = new RoomObject();
 
-	$room->RoomID = $_REQUEST["roomId"];
+	$room->roomId = $_REQUEST["roomId"];
 	$room->HouseID = $_REQUEST["houseId"];
 	$room->RoomName = $_REQUEST["roomName"];
 	$room->Network = $_REQUEST["network"];

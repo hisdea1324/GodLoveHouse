@@ -9,12 +9,42 @@ class RoomObject {
 	protected $record = array();
 	protected $image = array();
 
-	public function __set($name,$value) { 
-		$this->record[$name] = $value; 
+	public function __set($name, $value) { 
+		switch ($name) {
+			case 'RoomID': case 'RoomId': 
+				$this->record['roomId'] = $value;
+				break;
+			case "HouseID":
+				$this->record['houseId'] = $value;
+				break;
+			case "RoomName":
+				$this->record['roomName'] = $value;
+				break;
+			case "Network":
+				$this->record['network'] = $value;
+				break;
+			case "Kitchen":
+				$this->record['kitchen'] = $value;
+				break;
+			case "Laundary":
+				$this->record['laundary'] = $value;
+				break;
+			case "Fee":
+				$this->record['fee'] = $value;
+				break;
+			case "Limit":
+				$this->record['limit'] = $value;
+				break;
+			default:
+				$this->record[$name] = $value; 
+				break;
+		}
 	}
 	
 	public function __get($name) {
 		switch ($name) {
+			case 'RoomID': case 'RoomId': 
+				return $this->record['roomId'];
 			case "RoomName":
 				return $this->record['roomName'];
 			case "Network":
@@ -172,7 +202,7 @@ class RoomObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['roomId'] == -1)) {
+		if ($this->record['roomId'] == -1) {
 			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
 			$query = $query."`network`, `kitchen`, `laundary`, `fee`, ";
 			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
@@ -182,6 +212,7 @@ class RoomObject {
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
+			print_r($this->record);
 			$stmt->bind_param("isissssiiiii", 
 				$this->record['houseId'], 
 				$this->record['roomName'], 
@@ -205,7 +236,7 @@ class RoomObject {
 			$this->record['roomId'] = $mysqli->insert_id;
 			
 			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->record['houseId']."'";
-			$mysqli->real_query($query);
+			$mysqli->query($query);
 			
 		} else {
 			$query = "UPDATE room SET ";
