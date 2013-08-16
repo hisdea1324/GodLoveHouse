@@ -19,17 +19,9 @@ $strWhere = makeCondition($status, $field, $keyword);
 
 $query = "SELECT * FROM house ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT * $page + 1;
+$topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT * FROM house ".$strWhere." ORDER BY ".$order." LIMIT $topNum, $PAGE_COUNT";
-
-/*
-if ($listRS->RecordCount > 0) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-}
-*/
-
+$query = "SELECT * FROM house $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 // 테이블 생성
 $objTable = new tableBuilder();
 if ($status == "S2002") {
@@ -120,7 +112,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, houseId) {
 		switch(no) {
@@ -140,7 +132,7 @@ if (($status=="S2002")) {
 <?php 
 } 
 
-?><%
+?>
 			default: break;
 		}
 	}

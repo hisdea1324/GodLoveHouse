@@ -17,7 +17,7 @@ function addCode() {
 	$objCode->CodeType = $_REQUEST["newType"];
 	$objCode->Update();
 
-"index.php";// asp2php says 'huh'?: 
+	header("Location: "."index.php");
 } 
 
 function deleteCode() {
@@ -25,7 +25,7 @@ function deleteCode() {
 	$objCode->OpenById($_REQUEST["id"]);
 	$objCode->Delete();
 
-"index.php";// asp2php says 'huh'?: 
+	header("Location: "."index.php");
 } 
 ?>
 

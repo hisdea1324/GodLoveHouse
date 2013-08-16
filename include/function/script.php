@@ -90,9 +90,7 @@ function closeAndReload() {
 	exit();
 } 
 
-function alertGoPage($msg,$url) {
-	$db->Close;
-	$db = null;
+function alertGoPage($msg, $url) {
 ?>
 <html><head><title>Alert & Go Page</title></head><body>
 	<script language="javascript">

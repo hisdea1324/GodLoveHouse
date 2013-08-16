@@ -271,12 +271,12 @@ function body() {
 			return;
 		}
 		
-		location.href = "reservationDetail.php?houseId=<?php echo $houseId;?><%&roomId=" + room;
+		location.href = "reservationDetail.php?houseId=<?php echo $houseId;?>&roomId=" + room;
 	}
 	
 	function goRoomList() {
 		history.back(-1);
-		//location.href = "reservation.php?houseId=<?php echo $houseId;?><%";
+		//location.href = "reservation.php?houseId=<?php echo $houseId;?>";
 	}
 	
 	function changeImage(imgName) {
@@ -284,7 +284,7 @@ function body() {
 	}
 	
 	function callPage(y, m) {
-		var url = 'ajax.php?mode=getCalendar&roomId=<?php echo $roomId;?><%&year='+y+'&month='+m;
+		var url = 'ajax.php?mode=getCalendar&roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
 		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar]);
 	}
 
@@ -312,21 +312,21 @@ function body() {
 	
 	function allow(value) {
 		if (confirm('예약을 승인합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?><%&roomId=<?php echo $roomId;?><%&status=2&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=2&bookNo=' + value;
 	}
 
 	function deny(value) {
 		if (confirm('예약을 거절합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?><%&roomId=<?php echo $roomId;?><%&status=4&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=4&bookNo=' + value;
 	}
 
 	function complete(value) {
 		if (confirm('예약을 완료합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?><%&roomId=<?php echo $roomId;?><%&status=3&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=3&bookNo=' + value;
 	}
 	
 	function search(value) {
-		location.href = 'mypage_houseReserv_a.php?houseId=<?php echo $houseId;?><%&roomId=<?php echo $roomId;?><%&search=' + value;
+		location.href = 'mypage_houseReserv_a.php?houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&search=' + value;
 	}
 
 	var obj_num;

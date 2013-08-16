@@ -137,7 +137,7 @@ function body() {
 		if (hospital.length == 0) {
 			return;
 		}
-		location.href = "reservation.php?region=<?php echo $regionCode;?><%&hospitalId=" + hospital;
+		location.href = "reservation.php?region=<?php echo $regionCode;?>&hospitalId=" + hospital;
 	}
 	
 	function frmSubmit() {

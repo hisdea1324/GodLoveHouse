@@ -6,28 +6,28 @@ $mode = trim($_REQUEST["mode"]);
 
 switch (($mode)) {
 	case "editHouse":
-editHouse();
+		editHouse();
 		break;
 	case "deleteHouse":
-deleteHouse();
+		deleteHouse();
 		break;
 	case "confirmHouse":
-confirmHouse();
+		confirmHouse();
 		break;
 	case "editRoom":
-editRoom();
+		editRoom();
 		break;
 	case "deleteRoom":
-deleteRoom();
+		deleteRoom();
 		break;
 	case "editHospital":
-editHospital();
+		editHospital();
 		break;
 	case "deleteHospital":
-deleteHospital();
+		deleteHospital();
 		break;
 	case "confirmHospital":
-confirmHospital();
+		confirmHospital();
 		break;
 } 
 
@@ -43,34 +43,34 @@ function editHouse() {
 	$zipcode[0] = $_REQUEST["post1"];
 	$zipcode[1] = $_REQUEST["post2"];
 
-	$house->HouseID = $_REQUEST["houseId"];
-	$house->UserID = $_REQUEST["userId"];
-	$house->HouseName = $_REQUEST["houseName"];
-	$house->AssocName = $_REQUEST["assocName"];
-	$house->Manager1 = $_REQUEST["manager1"];
-	$house->Contact1 = $contact;
-	$house->Contact2 = $contact2;
-	$house->BuildingType = $_REQUEST["buildType"];
-	$house->Zipcode = $zipcode;
-	$house->Address1 = $_REQUEST["addr1"];
-	$house->Address2 = $_REQUEST["addr2"];
-	$house->Price = $_REQUEST["price"];
-	$house->PersonLimit = $_REQUEST["personLimit"];
-	$house->RoomLimit = $_REQUEST["roomLimit"];
-	$house->Explain = $_REQUEST["explain"];
-	$house->RegionCode = $_REQUEST["region"];
-	$house->Status = $_REQUEST["status"];
-	$house->DocumentId = $_REQUEST["idDocument"];
-	$house->Document = $_REQUEST["txtDocument"];
-	$house->Homepage = $_REQUEST["homepage"];
+	$house->houseId = $_REQUEST["houseId"];
+	$house->userId = $_REQUEST["userId"];
+	$house->houseName = $_REQUEST["houseName"];
+	$house->assocName = $_REQUEST["assocName"];
+	$house->manager1 = $_REQUEST["manager1"];
+	$house->contact1 = $contact;
+	$house->contact2 = $contact2;
+	$house->buildingType = $_REQUEST["buildType"];
+	$house->zipcode = $zipcode;
+	$house->address1 = $_REQUEST["addr1"];
+	$house->address2 = $_REQUEST["addr2"];
+	$house->price = $_REQUEST["price"];
+	$house->personLimit = $_REQUEST["personLimit"];
+	$house->roomLimit = $_REQUEST["roomLimit"];
+	$house->explain = $_REQUEST["explain"];
+	$house->regionCode = $_REQUEST["region"];
+	$house->status = $_REQUEST["status"];
+	$house->documentId = $_REQUEST["idDocument"];
+	$house->document = $_REQUEST["txtDocument"];
+	$house->homepage = $_REQUEST["homepage"];
 	$house->Update();
 
 	$house = null;
 
-	if ((strlen($_REQUEST["status"])>0)) {
-alertGoPage("처리되었습니다.","index.php?status=".$_REQUEST["status"]);
+	if (strlen($_REQUEST["status"]) > 0) {
+		alertGoPage("처리되었습니다.","index.php?status=".$_REQUEST["status"]);
 	} else {
-alertGoPage("처리되었습니다.","index.php");
+		alertGoPage("처리되었습니다.","index.php");
 	} 
 
 } 
@@ -78,7 +78,7 @@ alertGoPage("처리되었습니다.","index.php");
 function editRoom() {
 	$room = new RoomObject();
 
-	$room->RoomID = $_REQUEST["roomId"];
+	$room->roomId = $_REQUEST["roomId"];
 	$room->HouseID = $_REQUEST["houseId"];
 	$room->RoomName = $_REQUEST["roomName"];
 	$room->Network = $_REQUEST["network"];
@@ -123,10 +123,12 @@ function deleteHouse() {
 } 
 
 function confirmHouse() {
+	global $mysqli;
+	
 	$houseId = trim($_REQUEST["houseId"]);
 	$value = trim($_REQUEST["value"]);
 	$query = "UPDATE house SET status = '".$value."' WHERE houseId = ".$houseId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 
 	header("Location: "."index.php");
 } 

@@ -113,12 +113,12 @@ function body() {
 	}
 
 	function goSupport(id) {
-		location.href = 'supportList.php?reqId=<?php echo $reqId;?><%';
+		location.href = 'supportList.php?reqId=<?php echo $reqId;?>';
 		return;
 	}
 
 	function goEdit(id) {
-		location.href = 'addRequestDetail.php?reqId=<?php echo $reqId;?><%&id=' + id;
+		location.href = 'addRequestDetail.php?reqId=<?php echo $reqId;?>&id=' + id;
 	}
 
 	function goDelete(id) {
@@ -128,7 +128,7 @@ function body() {
 	}
 	
 	function addRequestDetail() {
-		location.href = 'addRequestDetail.php?reqId=<?php echo $reqId;?><%';
+		location.href = 'addRequestDetail.php?reqId=<?php echo $reqId;?>';
 	}
 //]]>
 </script>

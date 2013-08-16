@@ -10,11 +10,32 @@ class CodeObject {
 
 
 	public function __set($name,$value) { 
-		$this->record[$name] = $value;
+		switch ($name) {
+			case 'Code':
+				$this->record['code'] = $value;
+				break;
+			case 'Name':
+				$this->record['name'] = $value;
+				break;
+			case 'CodeType':
+				$this->record['type'] = $value;
+				break;
+			default:
+				$this->record[$name] = $value;
+		}
 	}
 
 	public function __get($name) { 
-		return $this->record[$name];
+		switch ($name) {
+			case 'Code':
+				return $this->record['code'];
+			case 'Name':
+				return $this->record['name'];
+			case 'CodeType':
+				return $this->record['type'];
+			default:
+				return $this->record[$name];
+		}
 	}
 
 	public function __isset($name) {
@@ -24,7 +45,7 @@ class CodeObject {
     function __construct() {
 		$this->record['index'] = -1;
 		$this->record['code'] = "";
-		$this->record['cType'] = "";
+		$this->record['type'] = "";
 		$this->record['name'] = "";
 	}
 
@@ -118,10 +139,9 @@ class CodeObject {
 	function Update() {
 		global $mysqli;
 
-
-		if (($this->record['index'] == -1)) {
-			$query = "INSERT INTO code (`code`, `type`, `name`) VALUES ";
-			$query = $query."(?, ?, ?)";
+		if ($this->record['index'] == -1) {
+			$query = "INSERT INTO `code` (`code`, `type`, `name`) VALUES ";
+			$query = $query."(?, ?, ?);";
 
 			$stmt = $mysqli->prepare($query);
 
@@ -137,29 +157,21 @@ class CodeObject {
 			# close statement
 			$stmt->close();
 
-
-
-
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM code WHERE `code` = ?");
-			$stmt->bind_param("s", $this->record['code']);
-			$stmt->execute();
-			$stmt->bind_result($this->record['index']);
-			$stmt->close();
-			
+			$this->record['index'] = $mysqli->insert_id;
 		} else {
 
-			$query = "UPDATE code SET ";
+			$query = "UPDATE `code` SET ";
 			$updateData = "`code` = ?, ";
 			$updateData.= "`type` = ?, ";
 			$updateData.= "`name` = ? ";
-			$query .= $updateData." WHERE `id` = ?";
+			$query .= $updateData." WHERE `index` = ?";
 
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sss", 
 				$this->record['code'], 
-				$this->record['cType'], 
+				$this->record['type'], 
 				$this->record['name'], 
 				$this->record['index']);
 				
@@ -176,7 +188,7 @@ class CodeObject {
 		global $mysqli;
 
 		if ($this->record['index'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM code WHERE `id` = ?");
+			$stmt = $mysqli->prepare("DELETE FROM `code` WHERE `index` = ?");
 			$stmt->bind_param("s", $this->record['index']);
 			$stmt->execute();
 			$stmt->close();

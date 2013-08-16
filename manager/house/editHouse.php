@@ -55,19 +55,19 @@ function body() {
 			<dt>
 				선교관 이름 
 			<dd>
-				<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?php echo $houseObj->HouseName;?>" />
+				<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?php echo $houseObj->houseName;?>" />
 			<dt>
 				선교관 관리자
 			<dd>
-				<input type="text" name="userId" id="userId" maxlength="50" tabindex="2" value="<?php echo $houseObj->UserID;?>" /> (관리자의 UserID를 입력하세요)
+				<input type="text" name="userId" id="userId" maxlength="50" tabindex="2" value="<?php echo $houseObj->userId;?>" /> (관리자의 UserID를 입력하세요)
 			<dt>
 				운영단체
 			<dd>
-				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?php echo $houseObj->AssocName;?>" />
+				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?php echo $houseObj->assocName;?>" />
 			<dt>
 				담당자 이름1
 			<dd>
-				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?php echo $houseObj->Manager1;?>" //>
+				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?php echo $houseObj->manager1;?>" //>
 			<dt>
 				담당자 연락처1
 			<dd>
@@ -140,13 +140,13 @@ function body() {
 			<dt>
 				주거형태
 			<dd>
-				<input name="buildType" id="buildType" type="radio" value="1" class="chk" <?php if (($houseObj->buildingTypeCode==1)) { print "checked"; } ?> tabindex="7" />
+				<input name="buildType" id="buildType" type="radio" value="1" class="chk" <?php if ($houseObj->buildingType == 1) { print "checked"; } ?> tabindex="7" />
 				<span class="r10">아파트</span>
-				<input name="buildType" id="buildType" type="radio" value="2" class="chk" <?php if (($houseObj->buildingTypeCode==2)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="2" class="chk" <?php if ($houseObj->buildingType == 2) { print "checked"; } ?> />
 				<span class="r10">빌라</span>
-				<input name="buildType" id="buildType" type="radio" value="3" class="chk" <?php if (($houseObj->buildingTypeCode==3)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="3" class="chk" <?php if ($houseObj->buildingType == 3) { print "checked"; } ?> />
 				<span class="r10">원룸</span>
-				<input name="buildType" id="buildType" type="radio" value="4" class="chk" <?php if (($houseObj->buildingTypeCode==4)) { print "checked"; } ?> />
+				<input name="buildType" id="buildType" type="radio" value="4" class="chk" <?php if ($houseObj->buildingType == 4) { print "checked"; } ?> />
 				<span class="r10">기타</span>
 			<dt>
 				지역코드
@@ -155,10 +155,10 @@ function body() {
 					<option value=''>-- 지역선택 --</option>
 				<?php 
 	foreach ($codeRegions as $region) {
-		if ($houseObj->regionCode == $region->Code) {
-			print "<option value='".$region->Code."' selected>".$region->Name."</option>";
+		if ($houseObj->regionCode == $region->code) {
+			print "<option value='".$region->code."' selected>".$region->name."</option>";
 		} else {
-			print "<option value='".$region->Code."'>".$region->Name."</option>";
+			print "<option value='".$region->code."'>".$region->name."</option>";
 		} 
 
 
@@ -210,10 +210,10 @@ function body() {
 				<select name="status" id="status">
 <?php 
 	foreach ($codeStatus as $status) {
-		if ($houseObj->StatusCode == $status->Code) {
-			print "<option value='".$status->Code."' selected>".$status->Name."</option>";
+		if ($houseObj->status == $status->code) {
+			print "<option value='".$status->code."' selected>".$status->name."</option>";
 		} else {
-			print "<option value='".$status->Code."'>".$status->Name."</option>";
+			print "<option value='".$status->code."'>".$status->name."</option>";
 		} 
 
 
@@ -248,7 +248,7 @@ if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
 		<?php } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?><%
+		<?php } ?>
 	}
 //]]>
 </script>

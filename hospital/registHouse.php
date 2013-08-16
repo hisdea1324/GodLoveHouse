@@ -206,7 +206,7 @@ function body() {
 			}
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-<?php } ?><%
+<?php } ?>
 	}
 //]]>
 </script>

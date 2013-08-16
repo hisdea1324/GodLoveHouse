@@ -2,10 +2,13 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
+
 checkAuth();
 
-$mode = trim($_REQUEST["mode"]);
-switch (($mode)) {
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
+
+switch ($mode) {
 	case "1":
 		$query = "SELECT * FROM code where type = '상태코드' OR type = '상태코드2' order by type, code";
 		break;
@@ -26,14 +29,13 @@ switch (($mode)) {
 		break;
 } 
 
-$db_helper = new dbHelper();
-$codeRS = $db_helper->execute_query($query);
+$result = $mysqli->query($query);
 
 showAdminHeader("관리툴 - 코드관리","","","");
-body($codeRS);
+body($result);
 showAdminFooter();
 
-function body($codeRS) {
+function body($result) {
 ?>
 		<div class="sub">
 			<a href="index.php?mode=0">전체</a> | 
@@ -67,16 +69,15 @@ function body($codeRS) {
 				<tr><th>코드번호</th><th>코드값</th><th>타입</th><th> </th><tr>
 			<tbody>
 <?php 
-	while(!(($codeRS->eof || $codeRS->bof))) {
+	while ($row = $result->fetch_array()) {
 ?>
 				<tr>
-					<td><?php echo $codeRS["code"];?></td>
-					<td><?php echo $codeRS["name"];?></td>
-					<td><?php echo $codeRS["type"];?></td>
-					<td><a href="process.php?mode=delete&id=<?php echo $codeRS["id"];?>">[삭제]</a></td>
+					<td><?php echo $row["code"];?></td>
+					<td><?php echo $row["name"];?></td>
+					<td><?php echo $row["type"];?></td>
+					<td><a href="process.php?mode=delete&id=<?php echo $row["id"];?>">[삭제]</a></td>
 				</tr>
 <?php 
-		$codeRS->MoveNext;
 	} 
 ?>
 			<form action="process.php" method="post" id="frmCode" name="frmCode">
@@ -90,6 +91,7 @@ function body($codeRS) {
 							<option value="지역코드">지역코드</option>
 							<option value="후원타입">후원타입</option>
 							<option value="상태코드">상태코드</option>
+							<option value="상태코드2">상태코드2</option>
 							<option value="BANK">은행코드</option>
 						</select>
 					</td>

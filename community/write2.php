@@ -165,7 +165,7 @@ function body() {
 <script type="text/javascript">
 //<![CDATA[
 	function frmSubmit(){
-		var theForm = document.getElementById("<?php echo $formName;?><%");
+		var theForm = document.getElementById("<?php echo $formName;?>");
 		
 		if (document.getElementById('title').value=="") {
 			alert("제목을 입력하세요.");

@@ -172,7 +172,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 		} 
 	} else {
 		$queryString = "";
-	} 
+	}
 
 	$linkUrl = $pathInfo."?".$queryString;
 

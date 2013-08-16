@@ -32,6 +32,10 @@ class HouseObject {
 	
 	public function __get($name) { 
 		switch ($name) {
+			case "HouseID":
+				return $this->record['houseId'];
+			case "HouseName":
+				return $this->record['houseName'];
 			case "contact1":
 			case "contact2":
 				$value = explode("-", $this->record[$name]);
@@ -51,20 +55,20 @@ class HouseObject {
 				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "roomCount": 
 				return count($this->mRoom);
-			case "document": 
-				if (strlen($this->record[$name]) > 0) {
+			case "document_link": 
+				if (strlen($this->record['document']) > 0) {
 					return "<a href='/upload/room/".$this->record[$name]."'>".$this->record[$name]."</a>";
 				}
 				return "없음"; 
 			case "homepage":
 				if (strlen($this->record[$name]) == 0) {
 					return "없음";
-				} else if ((substr($this->record[$name],0,"4")!="http")) {
+				} else if (substr($this->record[$name],0,"4") != "http") {
 					return "<a href='http://".$this->record[$name]."' target='_blank'>http://".$this->record[$name]."</a>";
 				} else {
 					return "<a href='".$this->record[$name]."' target='_blank'>".$this->record[$name]."</a>";
 				} 
-			case "buildingType":
+			case "buildingTypeValue":
 				switch ($this->record[$name]) {
 					case 1:
 						return "아파트";
@@ -326,4 +330,3 @@ class HouseObject {
 	}
 }
 ?>
-

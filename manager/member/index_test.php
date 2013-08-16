@@ -128,7 +128,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, userId) {
 		switch(no) {
@@ -163,7 +163,7 @@ function body() {
 			case 2: goDelete(userId); break;
 			default: break;
 <?		 break;
-} ?><%
+} ?>
 		}
 	}
 

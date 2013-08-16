@@ -145,7 +145,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, reservId, roomId, userId) {
 		switch(no) {
@@ -170,19 +170,19 @@ function body() {
 			case 1: goShowUser(userId); break;
 			case 2: goEdit(reservId); break;
 			case 3: goDelete(reservId); break;
-<?php } ?><%
+<?php } ?>
 			default: break;
 		}
 	}
 
 	function goShowRoom(roomId) 
 	{
-		window.open('<?php echo "http://".$_SERVER['SERVER_NAME'];?>/<%living/reservationDetail.php?roomId=' + roomId, 'new', '');
+		window.open('<?php echo "http://".$_SERVER['SERVER_NAME'];?>/living/reservationDetail.php?roomId=' + roomId, 'new', '');
 	}
 	
 	function goShowUser(userId) 
 	{
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/<%' + 'manager/member/editForm.php?mode=editUser&userId=' + userId;
+		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/' + 'manager/member/editForm.php?mode=editUser&userId=' + userId;
 	}
 
 	function goEdit(reservId) 

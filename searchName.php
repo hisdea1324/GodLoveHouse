@@ -110,12 +110,12 @@ function doSearch() {
 		return false;
 	}
 
-	document.getElementById("searchId").action="<?php echo $CurUrl;?><%?mode=search";
+	document.getElementById("searchId").action="<?php echo $CurUrl;?>?mode=search";
 	document.getElementById("searchId").submit();
 }
 
 function choice() {
-	opener.document.getElementById("nickName").value="<?php echo $checkNickName;?><%";
+	opener.document.getElementById("nickName").value="<?php echo $checkNickName;?>";
 	opener.document.getElementById("name").focus();
 	window.close();
 }

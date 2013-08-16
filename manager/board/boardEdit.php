@@ -143,7 +143,7 @@ function body($groupId) {
 <script src="/common/js/global.js"></script>
 <script language="javascript">
 	function dataCheck(){
-		var theForm = document.getElementById("<?php echo $formName;?><%");
+		var theForm = document.getElementById("<?php echo $formName;?>");
 
 		if (document.getElementById('title').value=="") {
 			alert("제목을 입력하세요.");
@@ -156,6 +156,6 @@ function body($groupId) {
 			return false;
 		}
 		
-		theForm.<?php echo $contentForm;?><%.value = SubmitHTML();
+		theForm.<?php echo $contentForm;?>.value = SubmitHTML();
 	}
 </script>

@@ -656,7 +656,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?><%&userId=<?php echo $userId;?><%&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?>&userId=<?php echo $userId;?>&familyId=" + familyId;
 	}
 //]]>
 </script>

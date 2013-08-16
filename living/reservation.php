@@ -154,7 +154,7 @@ function body() {
 		if (house.length == 0) {
 			return;
 		}
-		location.href = "reservation.php?region=<?php echo $regionCode;?><%&houseId=" + house;
+		location.href = "reservation.php?region=<?php echo $regionCode;?>&houseId=" + house;
 	}
 	
 	function frmSubmit() {

@@ -120,40 +120,40 @@ class tableBuilder {
 		$linkUrl = str_replace("?&", "?", str_replace("?&", "?", $linkUrl));
 		$linkUrl = str_replace("&&", "&", str_replace("&&", "&", $linkUrl));
 
-		$retString = $retString . "<table id=\"table\" cellpadding='3' cellspacing='1' width='100%' bgcolor='#999999'>" . chr(13);
-		$retString = $retString . "<thead id=\"theader\" bgcolor='#FFFFFF' align='center'>" . chr(13);
+		$retString = $retString . "<table id=\"table\" cellpadding='3' cellspacing='1' width='100%' bgcolor='#999999'>\r\n" . chr(13);
+		$retString = $retString . "<thead id=\"theader\" bgcolor='#FFFFFF' align='center'>\r\n" . chr(13);
 		if ($this->columnCount >= 0) {
 			for ($i = 0; $i < $this->columnCount; $i++) {
 				if ($this->order == $this->fieldList[$i]) {
 					if ($this->orderType == "ASC") {
-						$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+DESC'><u>" . $this->columnList[$i] . "△ </u></a></th>" . chr(13);
+						$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+DESC'><u>" . $this->columnList[$i] . "△ </u></a></th>\r\n" . chr(13);
 					} else
 						if ($this->order == $this->fieldList[$i]) {
-							$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+ASC'><u>" . $this->columnList[$i] . "▽ </u></a></th>" . chr(13);
+							$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+ASC'><u>" . $this->columnList[$i] . "▽ </u></a></th>\r\n" . chr(13);
 						}
 				} else {
-					$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "'>" . $this->columnList[$i] . "</a></th>" . chr(13);
+					$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "'>" . $this->columnList[$i] . "</a></th>\r\n" . chr(13);
 				}
 			}
 		} else {
 			foreach ($this->fieldList as $field) {
-				$retString = $retString . "	<th>" . $field . "</th>" . chr(13);
+				$retString = $retString . "	<th>" . $field . "</th>\r\n" . chr(13);
 			}
 		}
 
 		if ($this->buttonCount >= 0) {
-			$retString = $retString . "	<th>action</th>" . chr(13);
+			$retString = $retString . "	<th>action</th>\r\n" . chr(13);
 		}
 
-		$retString = $retString . "</thead>" . chr(13);
+		$retString = $retString . "</thead>\r\n" . chr(13);
 		$retString = $retString . "<tbody id=\"tbody\">" . chr(13);
 
 		return $retString;
 	}
 
 	private function tableFooter() {
-		$retString = "</tbody>" . chr(13);
-		$retString = $retString . "</table>" . chr(13);
+		$retString = "</tbody>\r\n" . chr(13);
+		$retString = $retString . "</table>\r\n" . chr(13);
 
 		return $retString;
 	}
@@ -162,37 +162,35 @@ class tableBuilder {
 		global $mysqli;
 		$rowString = "";
 		$pagingString = "";
+		$htmContent = "";
 		
 		if ($result = $mysqli->query($query)) {
-			while ($row = $result->fetch_row()) {
+			while ($row = $result->fetch_array()) {
 				$keyString = "";
-				for ($i = 0; $i <= $this->keyCount; $i++) {
-					$keyString = $keyString . ", '" . $row[$this->keyList[$i]] . "'";
-	
+				foreach ($this->keyList as $key) {
+					$keyString = $keyString . ", '" . $row[$key] . "'";
 				}
 	
-				$rowString = $rowString . "<tr bgcolor='#FFFFFF' align='center' height='28' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
-				# rowString = rowString & "	<td>" & num & "</td>" & chr(13)
-				for ($i = 0; $i <= $this->fieldCount; $i++) {
-					$rowString = $rowString . "	<td>" . textFormat($row[$this->fieldList[$i]], 1) . "</td>" . chr(13);
+				$rowString = $rowString . "<tr bgcolor='#FFFFFF' align='center' height='28' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">\r\n" . chr(13);
+				foreach ($this->fieldList as $field) {
+					$rowString = $rowString . "	<td>" . textFormat($row[$field], 1) . "</td>\r\n" . chr(13);
 				}
 	
-				if (($this->buttonCount >= 0)) {
-					$rowString = $rowString . "<td>";
-					for ($i = 0; $i <= $this->buttonCount; $i++) {
-						$rowString = $rowString . " <input type='button' value='" . $this->buttonList[$i] . "' onclick=\"clickButton(" . $i . $keyString . ");\">";
-	
+				if ($this->buttonCount >= 0) {
+					$rowString = $rowString . "<td>\r\n";
+					for ($i = 0; $i < $this->buttonCount; $i++) {
+						$rowString = $rowString . " <input type='button' value='" . $this->buttonList[$i] . "' onclick=\"clickButton(" . $i . $keyString . ");\">\r\n";
 					}
 	
-					$rowString = $rowString . "</td>" . chr(13);
+					$rowString = $rowString . "</td>\r\n" . chr(13);
 				}
 	
-				$pagingString = $pagingString . "</tr>" . chr(13);
-				$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">" . chr(13);
-				for ($i = 0; $i <= $this->fieldCount + 1; $i++) {
-					$pagingString = $pagingString . "	<td>&nbsp;</td>" . chr(13);
+				$pagingString = $pagingString . "</tr>\r\n" . chr(13);
+				$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">\r\n" . chr(13);
+				for ($i = 0; $i < $this->fieldCount + 1; $i++) {
+					$pagingString = $pagingString . "	<td>&nbsp;</td>\r\n" . chr(13);
 				}
-				$pagingString = $pagingString . "</tr>" . chr(13);
+				$pagingString = $pagingString . "</tr>\r\n" . chr(13);
 			}
 		}
 
@@ -201,8 +199,10 @@ class tableBuilder {
 
 	function displayListPage() {
 		global $RecordCount, $gotoPage;
+		
 		# 여기 수정해야 함
-		$this->totalpage = Ceil($RecordCount, $this->pageSize);
+		$htmContent = "";
+		$this->totalpage = Ceil($RecordCount / $this->pageSize);
 		$gb = "1";
 
 		if ($this->totalPage > 0) {

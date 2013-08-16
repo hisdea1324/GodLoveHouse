@@ -118,12 +118,12 @@ function doSearch(){
 		}
 	}
 
-	document.getElementById("searchId").action="<?php echo $CurUrl;?><%?mode=search";
+	document.getElementById("searchId").action="<?php echo $CurUrl;?>?mode=search";
 	document.getElementById("searchId").submit();
 }
 
 function choice(){
-	opener.document.getElementById("userId").value="<?php echo $checkUserId;?><%";
+	opener.document.getElementById("userId").value="<?php echo $checkUserId;?>";
 	opener.document.getElementById("name").focus();
 	window.close();
 }

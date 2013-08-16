@@ -2,38 +2,27 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
+
 checkAuth();
 
 //페이징 갯수 
-$PAGE_COUNT=15;
-$PAGE_UNIT=10;
+$PAGE_COUNT = 15;
+$PAGE_UNIT = 10;
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
-$houseId = trim($_REQUEST["houseId"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+$houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : null;
 
 // 조건문 작성
-$strWhere=makeCondition($houseId,$field,$keyword);
+$strWhere = makeCondition($houseId,$field,$keyword);
 
 $query = "SELECT COUNT(*) AS recordCount from room ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT*$page;
+$topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT top ".$topNum." * FROM room ".$strWhere." ORDER BY roomName";
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
-
-
-$query = "SELECT houseName FROM house WHERE houseId = ".$houseId;
-$houseRS = $db->Execute($query);
+$query = "SELECT * FROM room $strWhere ORDER BY roomName LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -42,19 +31,14 @@ $objTable->setColumn(array("방코드","방이름","인원","인터넷","주방"
 $objTable->setField(array("roomId","roomName","limit","network","kitchen","laundary","fee"));
 $objTable->setKeyValue(array("roomId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRs);
+$htmlTable = $objTable->getTable($query);
 $htmlPaging = $objTable->displayListPage();
+
+$houseRS = new HouseObject($houseId);
 
 showAdminHeader("관리툴 - 방관리","","","");
 body();
 showAdminFooter();
-
-$objTable = null;
-
-$houseRS = null;
-
-$listRs = null;
-
 
 function makeCondition($houseId,$field,$keyword) {
 	$strWhere=" WHERE houseId = '".$houseId."'";
@@ -66,6 +50,8 @@ function makeCondition($houseId,$field,$keyword) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $houseRS, $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
@@ -93,7 +79,7 @@ function body() {
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
 			<tr>
 				<td><input type="button" value="방 추가" onclick="addRoom()" style="cursor:hand;" /></td>
-				<td align="right"><h3>선교관 관리 : <?php echo $houseRS["houseName"];?></h3></td>
+				<td align="right"><h3>선교관 관리 : <?php echo $houseRS->houseName;?></h3></td>
 			</tr>
 			</form>
 		</table>
@@ -110,7 +96,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?><%&field=<?php echo $field;?><%';
+	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
 	function clickButton(no, roomId) {
 		switch(no) {
@@ -122,12 +108,12 @@ function body() {
 	}
 
 	function goEdit(roomId) {
-		location.href = 'editRoom.php?mode=editRoom&houseId=<?php echo $houseId;?><%&roomId=' + roomId + searchString;
+		location.href = 'editRoom.php?mode=editRoom&houseId=<?php echo $houseId;?>&roomId=' + roomId + searchString;
 	}
 
 	function goDelete(roomId) {
 		if (confirm("정말 삭제 하시렵니까?")) {
-			location.href = 'process.php?mode=deleteRoom&houseId=<?php echo $houseId;?><%&roomId=' + roomId + searchString;
+			location.href = 'process.php?mode=deleteRoom&houseId=<?php echo $houseId;?>&roomId=' + roomId + searchString;
 		}
 	}
 
@@ -138,7 +124,7 @@ function body() {
 	}
 	
 	function addRoom() {
-		location.href = 'editRoom.php?mode=addRoom&houseId=<?php echo $houseId;?><%&' + searchString;
+		location.href = 'editRoom.php?mode=addRoom&houseId=<?php echo $houseId;?>&' + searchString;
 	}
 //]]>
 </script>

@@ -9,34 +9,84 @@ class RoomObject {
 	protected $record = array();
 	protected $image = array();
 
-	public function __set($name,$value) { 
-		$this->record[$name] = $value; 
+	public function __set($name, $value) { 
+		switch ($name) {
+			case 'RoomID': case 'RoomId': 
+				$this->record['roomId'] = $value;
+				break;
+			case "HouseID":
+				$this->record['houseId'] = $value;
+				break;
+			case "RoomName":
+				$this->record['roomName'] = $value;
+				break;
+			case "Network":
+				$this->record['network'] = $value;
+				break;
+			case "Kitchen":
+				$this->record['kitchen'] = $value;
+				break;
+			case "Laundary":
+				$this->record['laundary'] = $value;
+				break;
+			case "Fee":
+				$this->record['fee'] = $value;
+				break;
+			case "Limit":
+				$this->record['limit'] = $value;
+				break;
+			default:
+				$this->record[$name] = $value; 
+				break;
+		}
 	}
 	
 	public function __get($name) {
 		switch ($name) {
+			case 'RoomID': case 'RoomId': 
+				return $this->record['roomId'];
+			case "RoomName":
+				return $this->record['roomName'];
+			case "Network":
+				return $this->record['network'];
+			case "Kitchen":
+				return $this->record['kitchen'];
+			case "Laundary":
+				return $this->record['laundary'];
+			case "Fee":
+				return $this->record['fee'];
+			case "Limit":
+				return $this->record['limit'];
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record['explain']);
-			case "image1":
+			case "image1": case "Image1";
 				if (strlen($this->image[0]) > 0) {
 					return "/upload/room/".$this->image[0];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image2":
+			case "image2": case "Image2":
 				if (strlen($this->image[1]) > 0) {
 					return "/upload/room/".$this->image[1];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image3":
+			case "image3": case "Image3":
 				if (strlen($this->image[2]) > 0) {
 					return "/upload/room/".$this->image[2];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image4":
+			case "image4": case "Image4":
 				if (strlen($this->image[3]) > 0) {
 					return "/upload/room/".$this->image[3];
 				}
 				return "/upload/room/ex_01.gif";
+			case "ImageID1":
+				return $this->record["imageId1"];
+			case "ImageID2":
+				return $this->record["imageId2"];
+			case "ImageID3":
+				return $this->record["imageId3"];
+			case "ImageID4":
+				return $this->record["imageId4"];
 			default:
 				return $this->record[$name];
 		}
@@ -152,7 +202,7 @@ class RoomObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['roomId'] == -1)) {
+		if ($this->record['roomId'] == -1) {
 			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
 			$query = $query."`network`, `kitchen`, `laundary`, `fee`, ";
 			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
@@ -162,6 +212,7 @@ class RoomObject {
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
+			print_r($this->record);
 			$stmt->bind_param("isissssiiiii", 
 				$this->record['houseId'], 
 				$this->record['roomName'], 
@@ -185,7 +236,7 @@ class RoomObject {
 			$this->record['roomId'] = $mysqli->insert_id;
 			
 			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->record['houseId']."'";
-			$mysqli->real_query($query);
+			$mysqli->query($query);
 			
 		} else {
 			$query = "UPDATE room SET ";
