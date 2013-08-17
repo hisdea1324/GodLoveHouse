@@ -9,32 +9,22 @@ $supportType="03001";
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$order = trim($_REQUEST["order"]);
-$page = trim($_REQUEST["page"]);
 
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($order)==0)) {
-	$order="A.regDate DESC";
-} 
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "A.regDate DESC";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
+
 
 // 조건문 작성
 $strWhere=makeCondition($field,$keyword);
 
-$query = "SELECT COUNT(*) AS recordCount from requestInfo A, requestAddInfo B ".$strWhere;
+$query = "SELECT * AS recordCount from requestInfo A, requestAddInfo B ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT*$page;
+$topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT TOP ".$topNum." * FROM requestInfo A, requestAddInfo B ".$strWhere." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
+
+$query = "SELECT * FROM requestInfo A, requestAddInfo B $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 
 
 // 테이블 생성
@@ -45,10 +35,9 @@ $objTable->setOrder($order);
 $objTable->setField(array("reqId","title","userId","status","regDate","dueDate"));
 $objTable->setKeyValue(array("reqId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
+$htmlTable = $objTable->getTable($query);
 
 showAdminHeader("관리툴 - 후원관리","","","");
-//call showAdminMenu()
 body();
 showAdminFooter();
 
@@ -56,6 +45,7 @@ $listRS = null;
 
 
 function makeCondition($field,$keyword) {
+	global $supportType;
 	$strWhere=" WHERE A.reqId = B.reqId AND A.supportType = '".$supportType."'";
 	if ((strlen($field)>0 && strlen($keyword)>0)) {
 		$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
@@ -65,6 +55,8 @@ function makeCondition($field,$keyword) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
