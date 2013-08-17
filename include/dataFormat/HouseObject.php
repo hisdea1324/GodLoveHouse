@@ -184,7 +184,7 @@ class HouseObject {
 				$this->mDocument = $this->record["document"];
 			} 
 			
-			
+			/*
 			$roomId = -1;
 			if ($this->record['houseId'] > -1) {
 				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
@@ -192,12 +192,12 @@ class HouseObject {
 				$stmt->execute();
 				$stmt->bind_result($roomId);
 				while ($stmt->fetch()) {
-					$room = new RoomObject();
-					$room->Open($roomId);
+					$room = new RoomObject($roomId);
 					$this->mRoom[] = $room;
 				}
    				$stmt->close();
 			}
+			*/
 		}
 	} 
 	

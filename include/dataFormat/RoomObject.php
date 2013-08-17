@@ -98,7 +98,15 @@ class RoomObject {
 
 	#  class initialize
 	# ***********************************************
-	function __construct() {
+	function __construct($roomId = -1) {
+		if ($roomId == -1) {
+			$this->initialize();
+		} else {
+			$this->Open($roomId);
+		}
+	}
+	
+	private function initialize() {
 		$this->record['roomId'] = -1;
 		$this->record['houseId'] = -1;
 		$this->record['roomName'] = null;
