@@ -9,19 +9,22 @@ $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
 $supportType="03002";
+$goToPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
+
+
+
 
 $query = "SELECT * FROM requestInfo WHERE supportType = '".$supportType."' ORDER BY regDate DESC";
-$supportRS = $db->Execute($query);
-
 // 테이블 생성
 $objTable = new tableBuilder();
 $objTable->setButton(array("후원자","수 정","삭 제"));
 $objTable->setColumn(array("후원코드","제목","등록일"));
 $objTable->setField(array("reqId","title","regDate"));
 $objTable->setKeyValue(array("reqId"));
-$objTable->setGotoPage($_REQUEST["gotoPage"]);
-$htmlTable = $objTable->getTable($supportRS);
-$htmlPaging = $objTable->displayListPage();
+$objTable->setGotoPage($goToPage);
+$htmlTable = $objTable->getTable($query);
+//$htmlPaging = $objTable->displayListPage();
+
 
 showAdminHeader("관리툴 - 후원관리","","","");
 body();
@@ -31,6 +34,7 @@ $supportRS = null;
 
 
 function body() {
+	global $htmlTable;
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
