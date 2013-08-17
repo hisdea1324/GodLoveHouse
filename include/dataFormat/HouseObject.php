@@ -5,13 +5,6 @@
 #  editor : Sookbun Lee 
 #  last update date : 2013. 07. 22
 # ************************************************************
-
-//$house = new HouseObject();
-//$house->Open(1);
-
-//$house->houseId;
-//isset($house->houseId);
-
 class HouseObject {
 	protected $record = array();
 	public $mRoom = array();
@@ -178,7 +171,7 @@ class HouseObject {
 				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
 				$stmt->bind_param("i", $this->record['documentId']);
 				$stmt->execute();
-				$stmt->bind_result($this->document);
+				$stmt->bind_result($this->record["document"]);
 				$stmt->close();
 			} else {
 				$this->mDocument = $this->record["document"];
