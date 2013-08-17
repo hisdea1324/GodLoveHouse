@@ -42,7 +42,7 @@ showAdminFooter();
 
 function makeCondition($houseId,$field,$keyword) {
 	$strWhere=" WHERE houseId = '".$houseId."'";
-	if ((strlen($field)>0 && strlen($keyword)>0)) {
+	if (strlen($field) > 0 && strlen($keyword) > 0) {
 		$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 	} 
 
