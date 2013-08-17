@@ -8,37 +8,30 @@ checkAuth();
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-$wait = trim($_REQUEST["wait"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$reqId = trim($_REQUEST["reqId"]);
-$supId = trim($_REQUEST["supId"]);
-$order = trim($_REQUEST["order"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($order)==0)) {
-	$order="reqId";
-} 
 
+//페이지 변수 설정 
+$wait = (isset($_REQUEST["wait"])) ? trim($_REQUEST["wait"]) : 0;
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : 0;
+$supId = (isset($_REQUEST["supId"])) ? trim($_REQUEST["supId"]) : 0;
+$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "reqId";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
+
+
+//조건문 작성 
 $strWhere=makeCondition($supId,$reqId,$field,$keyword,$wait);
 
-$query = "SELECT COUNT(*) AS recordCount FROM supportInfo ".$strWhere;
+
+$query = "SELECT *  FROM supportInfo ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT*$page;
+$topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT top ".$topNum." supId, userId, name, regDate, sumPrice FROM supportInfo ".$strWhere;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
-
+$query = "SELECT supId, userId, name, regDate, sumPrice FROM supportInfo $strWhere LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
+
 if (($wait=="1")) {
 	$objTable->setButton(array("상세보기","회원정보","승 인"));
 } else {
@@ -50,14 +43,12 @@ $objTable->setField(array("supId","userId","name","sumPrice","regDate"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("supId","userId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
-$htmlPaging = $objTable->displayListPage();
+$htmlTable = $objTable->getTable($query);
+//$htmlPaging = $objTable->displayListPage();
 
 showAdminHeader("관리툴 - 후원관리","","","");
 body();
 showAdminFooter();
-
-$listRS = null;
 
 $objTable = null;
 
@@ -94,6 +85,8 @@ function makeCondition($supId,$reqId,$field,$keyword,$wait) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
