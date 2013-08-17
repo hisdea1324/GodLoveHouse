@@ -30,9 +30,7 @@ showAdminHeader("관리툴 - 후원관리","","","");
 body();
 showAdminFooter();
 
-$supportRS = null;
-
-
+//$supportRS = null;
 function body() {
 	global $htmlTable;
 ?>

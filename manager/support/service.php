@@ -5,12 +5,15 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 checkAuth();
 
 $supportType="03003";
+$goToPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
+
+
+
 //페이징 갯수 
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
 $query = "SELECT * FROM requestInfo WHERE supportType = '".$supportType."' ORDER BY regDate DESC";
-$Rs = $db->Execute($query);
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -18,22 +21,20 @@ $objTable->setButton(array("후원자","수 정","삭 제"));
 $objTable->setColumn(array("후원코드","제목","등록일"));
 $objTable->setField(array("reqId","title","regDate"));
 $objTable->setKeyValue(array("reqId"));
-$objTable->setGotoPage($_REQUEST["gotoPage"]);
-$htmlTable = $objTable->getTable($Rs);
-$htmlPaging = $objTable->displayListPage();
+$objTable->setGotoPage($goToPage);
+$htmlTable = $objTable->getTable($query);
+//$htmlPaging = $objTable->displayListPage();
 
 showAdminHeader("관리툴 - 후원관리","","","");
 body();
 showAdminFooter();
 
-$Rs = null;
-
-$supportRS = null;
-
+//$Rs = null;
+//$supportRS = null;
 
 function body() {
+	global $htmlTable;
 ?>
-
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
 	<a href="index.php">특별후원</a> | 
@@ -55,7 +56,6 @@ function body() {
 		</ul>
 	</div>
 	<div class="rSec">
-
 		<?php echo $htmlTable;?>
 	</div>
 
