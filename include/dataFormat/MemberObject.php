@@ -30,14 +30,19 @@ class MemberObject {
     }
 
     // 멤버 오브젝트 초기화 함수  
-    function __construct($userId = "") {
-    	if ($userId == "") {
+    function __construct($userId = -1) {
+    	if ($userId == -1) {
     		$this->isNew = true;
+    		$this->initialize();
     	} else {
     		$this->isNew = false;
+    		$this->Open($userId);
     	}
-    	
-		$this->record['userId'] = $userId;
+	}
+
+
+	private function initialize() {
+		$this->record['userId'] = "";
 		$this->record['password'] = "a";
 		$this->record['passQuest'] = 0;
 		$this->record['passAnswer'] = "a";
@@ -64,7 +69,7 @@ class MemberObject {
 		if ($stmt = $mysqli->prepare("SELECT * from member WHERE userId = ?")) {
 
 			/* bind parameters for markers */
-			$stmt->bind_param("i", $userId);
+			$stmt->bind_param("s", $userId);
 
 			/* execute query */
 			$stmt->execute();
@@ -151,7 +156,7 @@ class MemberObject {
 			if ($stmt = $mysqli->prepare($query)) {
 
 				# New Data
-				$stmt->bind_param("ssissssisssssssi", 
+				$stmt->bind_param("isissssisssssssi", 
 					$this->record['userId'], 
 					crypt($this->record['password'], $this->record['userId']),
 					$this->record['passQuest'], 
@@ -218,7 +223,7 @@ class MemberObject {
 
 		if ($this->record['userId'] > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM member WHERE userId = ?");
-			$stmt->bind_param("s", $this->record['userId']);
+			$stmt->bind_param("i", $this->record['userId']);
 			$stmt->execute();
 			$stmt->close();
 		}
