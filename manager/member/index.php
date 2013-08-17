@@ -129,14 +129,10 @@ function body() {
 			<tr>
 				<td align="right">
 					<select name="field">
-						<option value="name" <?php if (($field=="name")) {
-?>selected<?php } ?>>이름</option>
-						<option value="userid" <?php if (($field=="userid")) {
-?>selected<?php } ?>>아이디</option>
-						<option value="mobile" <?php if (($field=="mobile")) {
-?>selected<?php } ?>>핸드폰</option>
-						<option value="phone" <?php if (($field=="phone")) {
-?>selected<?php } ?>>전화번호</option>
+						<option value="name" <?php if (($field=="name")) {?>selected<?php } ?>>이름</option>
+						<option value="userid" <?php if (($field=="userid")) {?>selected<?php } ?>>아이디</option>
+						<option value="mobile" <?php if (($field=="mobile")) {?>selected<?php } ?>>핸드폰</option>
+						<option value="phone" <?php if (($field=="phone")) {?>selected<?php } ?>>전화번호</option>
 					</select>
 					<input type="text" name="keyword" size="15" value="<?php echo $keyword;?>">
 					<input type="image" src="/images/btn_find.gif" border="0" align="absmiddle">

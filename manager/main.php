@@ -29,7 +29,6 @@ showAdminHeader("관리툴 - 메인","","","");
 	<!-- 컨텐츠 들어가는 부분 -->
 	</div>
 	</div>
-
 <?php 
 showAdminFooter();
 ?>
