@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -9,7 +9,6 @@ if ($mode=="add") {
 	deleteCode();
 } 
 
-
 function addCode() {
 	$objCode = new CodeObject();
 	$objCode->Code = $_REQUEST["newCode"];
@@ -17,15 +16,17 @@ function addCode() {
 	$objCode->CodeType = $_REQUEST["newType"];
 	$objCode->Update();
 
-	header("Location: "."index.php");
+	//header("Location: index.php");
+	//echo '<meta http-equiv="Refresh" content="0; url=index.php">';
+	MoveToPage("index.php");
 } 
 
 function deleteCode() {
 	$objCode = new CodeObject();
 	$objCode->OpenById($_REQUEST["id"]);
 	$objCode->Delete();
-
-	header("Location: "."index.php");
+	//header("Location: "."index.php");
+	//echo '<meta http-equiv="Refresh" content="0; url=index.php">';
+	MoveToPage("index.php");
 } 
 ?>
-

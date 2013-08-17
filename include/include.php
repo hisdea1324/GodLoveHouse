@@ -1,9 +1,8 @@
 <?php
-session_start();
-
+//TEST를 위해서 다음줄 주석 처리 나중에 다시 주석부분을 풀어야 함 
+//session_start();
 require_once($_SERVER['DOCUMENT_ROOT']."/include/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
-
 #require "class/dbHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/ErrorHandler.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/tableBuilder.php");
@@ -41,7 +40,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RoomObject.php");
 #require "dataFormat/ReservationObject.php";
 #require "dataFormat/BoardObject.php";
 #require "dataFormat/BoardGroup.php";
+// error_reporting(-1);
+// ini_set('display_errors', 'On');
 
-error_reporting(-1);
-ini_set('display_errors', 'On');
+function MoveToPage($page) {
+	//header("Location: ".$page);
+	echo '<meta http-equiv="Refresh" content="0; url='.$page.'">';
+}
+
+
 ?>

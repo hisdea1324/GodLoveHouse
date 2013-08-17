@@ -7,15 +7,17 @@ $password = trim($_REQUEST["password"]);
 
 #값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.
 if (strlen($userid) == 0 || strlen($password) == 0) {
-	header("Location: "."index.php");
+	//header("Location: "."index.php");
+	MoveToPage("index.php");
 }
 
-$query = "SELECT * FROM member WHERE userid = '".$userid."'";
+$query = "SELECT * FROM member WHERE userId = '".$userid."'";
 $result = $mysqli->query($query);
 
 if (!$result) {
 	echo "db access something wrong!!";
-	header("Location: "."index.php?userid=".$userid);
+	//header("Location: "."index.php?userid=".$userid);
+	MoveToPage("index.php?userid=".$userid);
 }
 
 if ($result->num_rows > 0) {
@@ -25,12 +27,14 @@ if ($result->num_rows > 0) {
 	
 	if ($obj->password != crypt($password, $obj->userId)) {
 		echo "no matched password!!";
-		header("Location: "."index.php?userid=".$userid);
+		//header("Location: "."index.php?userid=".$userid);
+		MoveToPage("index.php?userid=".$userid);
 	} else {
 		$_SESSION['userId'] = $userid;
 		$_SESSION['userLv'] = $obj->userLv;
 		echo "{$userid} loggined!!";
-		header("Location: "."main.php");
+		//header("Location: "."main.php");
+		MoveToPage("main.php");
 	}
 	
 	/* free result set */
@@ -43,6 +47,7 @@ if ($result->num_rows > 0) {
 	$member->userLv = "9";
 	$member->Update();
 	echo "new manager created!!";
-	header("Location: "."index.php?userid=".$userid);
+	//header("Location: "."index.php?userid=".$userid);
+	MoveToPage("index.php?userid=".$userid);
 }
 ?>

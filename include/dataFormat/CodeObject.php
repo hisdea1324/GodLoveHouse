@@ -43,7 +43,7 @@ class CodeObject {
     }
 
     function __construct() {
-		$this->record['index'] = -1;
+		$this->record['id'] = -1;
 		$this->record['code'] = "";
 		$this->record['type'] = "";
 		$this->record['name'] = "";
@@ -103,7 +103,7 @@ class CodeObject {
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
-			$stmt->bind_param("s", $value);
+			$stmt->bind_param("i", $value);
 
 			/* execute query */
 			$stmt->execute();
@@ -139,7 +139,7 @@ class CodeObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->record['index'] == -1) {
+		if ($this->record['id'] == -1) {
 			$query = "INSERT INTO `code` (`code`, `type`, `name`) VALUES ";
 			$query = $query."(?, ?, ?);";
 
@@ -157,7 +157,7 @@ class CodeObject {
 			# close statement
 			$stmt->close();
 
-			$this->record['index'] = $mysqli->insert_id;
+			$this->record['id'] = $mysqli->insert_id;
 		} else {
 
 			$query = "UPDATE `code` SET ";
@@ -169,11 +169,11 @@ class CodeObject {
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
-			$stmt->bind_param("sss", 
+			$stmt->bind_param("sssi", 
 				$this->record['code'], 
 				$this->record['type'], 
 				$this->record['name'], 
-				$this->record['index']);
+				$this->record['id']);
 				
 			# execute query
 			$stmt->execute();
@@ -187,9 +187,9 @@ class CodeObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['index'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM `code` WHERE `index` = ?");
-			$stmt->bind_param("s", $this->record['index']);
+		if ($this->record['id'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM code WHERE `id` = ?");
+			$stmt->bind_param("i", $this->record['id']);
 			$stmt->execute();
 			$stmt->close();
 		}

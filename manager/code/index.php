@@ -1,10 +1,12 @@
 ﻿<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
-
 global $mysqli;
 
+/* 나중에 주석을 풀어야함 - 관리자권한 체크 
 checkAuth();
+*/
+
 
 $mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
 
@@ -61,7 +63,6 @@ function body($result) {
 
 		<div class="rSec">
 		<!-- 컨텐츠 들어가는 부분 -->
-
 			<!-- S login -->
 			<div class="codeList">
 			<table>
@@ -107,7 +108,6 @@ function body($result) {
 <?php 
 } 
 ?>
-
 <script type="text/javascript">
 //<![CDATA[
 	function frmSubmit() {
