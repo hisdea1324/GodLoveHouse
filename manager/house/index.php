@@ -17,11 +17,14 @@ $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S2002";
 // 조건문 작성
 $strWhere = makeCondition($status, $field, $keyword);
 
+// 페이지 네비게이
 $query = "SELECT * FROM house ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT * ($page - 1);
 
+// 현재 페이지에 보여줄 레코
+$topNum = $PAGE_COUNT * ($page - 1);
 $query = "SELECT * FROM house $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
+
 // 테이블 생성
 $objTable = new tableBuilder();
 if ($status == "S2002") {
@@ -29,7 +32,6 @@ if ($status == "S2002") {
 } else {
 	$objTable->setButton(array("방정보","수정","삭제","승인"));
 } 
-
 $objTable->setColumn(array("선교관코드","단체명","선교관이름","관리자","연락처","방갯수"));
 $objTable->setField(array("houseId","assocName","houseName","userId","contact1","roomCount"));
 $objTable->setOrder($order);
