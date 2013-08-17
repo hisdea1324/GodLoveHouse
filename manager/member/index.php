@@ -2,50 +2,35 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+
+
 checkAuth();
 
 //페이징 갯수 
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$userLv = trim($_REQUEST["userLv"]);
-$order = trim($_REQUEST["order"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($userLv)==0)) {
-	$userLv=0;
-} 
-if ((strlen($order)==0)) {
-	$order="registDate DESC";
-} 
+
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$userLv = (isset($_REQUEST["userLv"])) ? trim($_REQUEST["userLv"]) : 0;
+$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "registDate DESC";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
 // 조건문 작성
 $strWhere=makeCondition($userLv,$field,$keyword);
-$query = "SELECT COUNT(*) AS recordCount from users".$strWhere;
 
-// 페이징을 모두 만들어옴
+$query = "SELECT * FROM member ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
+$topNum = $PAGE_COUNT * ($page - 1);
 
-$topNum = $PAGE_COUNT*$page;
-
-$query = "select top ".$topNum." * from users ".$strWhere." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
-
-
-$listRS = $db->Execute($query);
+$query = "SELECT * FROM member $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
-switch (($userLv)) {
+
+//버튼 설정 
+switch ($userLv) {
 	case "1":
 		$path="일반회원";
 		$objTable->setButton(array("선교사로","관리자로","정보변경","삭제"));
@@ -63,32 +48,31 @@ switch (($userLv)) {
 		$objTable->setButton(array("정보변경","삭제"));
 		break;
 } 
+
 $objTable->setColumn(array("회원등급","이름","회원아이디","연락처","등록일"));
-$objTable->setField(array("userLv","name","userid","mobile","registDate"));
+$objTable->setField(array("userLv","name","userId","mobile","registDate"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("userId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
+$htmlTable = $objTable->getTable($query);
+
+
 $htmlPaging = $objTable->displayListPage();
 
-//download Csv File
-//test = makeExcelFile("test.csv", listRS)
-
 showAdminHeader("관리툴 - 회원관리","","","");
-//call showAdminMenu()
 body();
 showAdminFooter();
 
 $listRS = null;
-
 $objTable = null;
+
 
 
 function makeCondition($userLv,$field,$keyword) {
 	if (($userLv>0)) {
 		$strWhere=" WHERE userLv = '".$userLv."'";
 	} else {
-		$strWhere=" WHERE userLv between 0 and 8 ";
+		$strWhere=" WHERE userLv BETWEEN 0 AND 8 ";
 	} 
 
 	if ((strlen($field)>0 && strlen($keyword)>0)) {
@@ -99,6 +83,8 @@ function makeCondition($userLv,$field,$keyword) {
 } 
 
 function body() {
+	global $keyword, $field;
+	global $htmlTable, $strPage;
 ?>
 	<div class="sub">
 	<a href="editForm.php">회원등록</a> | 

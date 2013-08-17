@@ -8,10 +8,12 @@ $supportType="03001";
 //페이징 갯수 
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
+
 $field = trim($_REQUEST["field"]);
 $keyword = trim($_REQUEST["keyword"]);
 $order = trim($_REQUEST["order"]);
 $page = trim($_REQUEST["page"]);
+
 if ((strlen($page)==0)) {
 	$page=1;
 } 
@@ -26,7 +28,7 @@ $query = "SELECT COUNT(*) AS recordCount from requestInfo A, requestAddInfo B ".
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
-$query = "select top ".$topNum." * FROM requestInfo A, requestAddInfo B ".$strWhere." ORDER BY ".$order;
+$query = "SELECT TOP ".$topNum." * FROM requestInfo A, requestAddInfo B ".$strWhere." ORDER BY ".$order;
 $db->CursorLocation=3;
 $listRS = $db->Execute($query);
 if (($listRS->RecordCount>0)) {
@@ -92,10 +94,8 @@ function body() {
 			<tr>
 				<td align="right">
 					<select name="field">
-						<option value="title" <?php if (($field=="title")) {
-?>selected<?php } ?>>제목</option>
-						<option value="userid" <?php if (($field=="userid")) {
-?>selected<?php } ?>>선교사</option>
+						<option value="title" <?php if (($field=="title")) {?>selected<?php } ?>>제목</option>
+						<option value="userid" <?php if (($field=="userid")) {?>selected<?php } ?>>선교사</option>
 					</select>
 					<input type="text" name="keyword" size="15" value="<?php echo $keyword;?>">
 					<input type="image" src="/images/btn_find.gif" border="0" align="absmiddle">
