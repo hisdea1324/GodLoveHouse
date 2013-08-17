@@ -94,22 +94,21 @@ function editRoom() {
 
 	$room->Update();
 
-	header("Location: "."roomList.php?houseId=".$_REQUEST["houseId"]);
+	header("Location: roomList.php?houseId=".$_REQUEST["houseId"]);
 } 
 
 function deleteRoom() {
+	global $mysqli;
+	
 	$houseId = trim($_REQUEST["houseId"]);
 	$roomId = trim($_REQUEST["roomId"]);
 
 	$query = "DELETE FROM room WHERE roomId = ".$roomId;
-	$deleteRs = $db->Execute($query);
+	$deleteRs = $mysqli->query($query);
 	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$houseId;
-	$deleteRs = $db->Execute($query);
+	$deleteRs = $mysqli->query($query);
 
-	$deleteRs = null;
-
-
-	header("Location: "."index.php");
+	header("Location: roomList.php?houseId={$houseId}");
 } 
 
 function deleteHouse() {
@@ -119,7 +118,7 @@ function deleteHouse() {
 	$query = "DELETE FROM room WHERE houseId = ".$houseId;
 	$rs = $db->execute($query);
 
-	header("Location: "."index.php");
+	header("Location: index.php");
 } 
 
 function confirmHouse() {
