@@ -153,7 +153,7 @@ class RequestAddInfo {
 			$stmt = $mysqli->prepare("SELECT MAX(reqId) as new_id FROM requestAddInfo WHERE userId = ?");
 			$stmt->bind_param("s", $this->record['userId']);
 			$stmt->execute();
-			$stmt->bind_result($this->record['m_reqId']);
+			$stmt->bind_result($this->record['reqId']);
 			$stmt->close();
 
 			
@@ -178,7 +178,7 @@ class RequestAddInfo {
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
-			$stmt->bind_param("sss", 
+			$stmt->bind_param("ssssi", 
 				$this->record['userId'], 
 				$this->record['status'], 
 				$this->record['dueDate'], 
@@ -203,9 +203,9 @@ class RequestAddInfo {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['id'] > -1) {
+		if ($this->record['reqId'] > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM requestAddInfo WHERE reqId = ?");
-			$stmt->bind_param("s", $this->record['reqId']);
+			$stmt->bind_param("i", $this->record['reqId']);
 			$stmt->execute();
 			$stmt->close();
 		}

@@ -2,25 +2,29 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$supportType = trim($_REQUEST["supportType"]);
-$reqId = trim($_REQUEST["reqId"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$gotoPage = trim($_REQUEST["gotoPage"]);
+$supportType = (isset($_REQUEST["supportType"])) ? trim($_REQUEST["supportType"]) : "";
+$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : 0;
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
+
+
 
 $c_Helper = new CodeHelper();
 $s_Helper = new SupportHelper();
-$requestObj = $s_Helper->getRequestInfoByReqId($reqId);
-$requestAdd = $s_Helper->getRequestAddInfoByReqId($reqId);
+$requestObj = $s_Helper->getRequestInfoByReqID($reqId);
+$requestAdd = $s_Helper->getRequestAddInfoByReqID($reqId);
 $nationCodes = $c_Helper->getNationCodeList();
 $supportCodes = $c_Helper->getSupportCodeList();
 
 checkAuth();
+
 showAdminHeader("관리툴 - 후원 등록","","","");
 body();
 showAdminFooter();
 
 function body() {
+	global $field, $gotoPage, $requestObj, $keyword, $supportCodes, $requestAdd, $nationCodes;
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
@@ -49,64 +53,60 @@ function body() {
 		<input type="hidden" name="keyword" value="<?php echo $keyword;?>" />
 		<input type="hidden" name="gotoPage" value="<?php echo $gotoPage;?>" />
 		<input type="hidden" name="mode" value="editRequest" />
-		<input type="hidden" name="reqId" value="<?php echo $requestObj->RequestID;?>" />
+		<input type="hidden" name="reqId" value="<?php echo $requestObj->regId;?>" />
 			<dt>
 				후원타입
 			<dd>
 				<select name="supportType" id="supportType" tabindex="32">
 				<?php 
-	for ($i=0; $i<=count($supportCodes)-1; $i = $i+1) {
-		$codeObj = $supportCodes[$i];
-		if (($codeObj->Code == $requestObj->SupportTypeCode)) {
-			print "<option value=\"".$codeObj->Code."\" selected>".$codeObj->Name."</option>";
-		} else {
-			print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
-		} 
-
-
-	}
-
+					for ($i=0; $i<=count($supportCodes)-1; $i = $i+1) {
+						$codeObj = $supportCodes[$i];
+						if (($codeObj->Code == $requestObj->supportType)) {
+							print "<option value=\"".$codeObj->Code."\" selected>".$codeObj->Name."</option>";
+						} else {
+							print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
+						} 
+					}
 ?>
 				</select>
 				<dt>
 				후원 제목
 			<dd>
-				<input type="text" name="title" size="50" maxlength=100 value="<?php echo $requestObj->Title;?>" />
+				<input type="text" name="title" size="50" maxlength=100 value="<?php echo $requestObj->title;?>" />
 			<dt>
 				상세설명
 			<dd>
-				<textarea name="explain" cols=50 rows=5><?php echo $requestObj->Explain;?></textarea>
+				<textarea name="explain" cols=50 rows=5>
+					<?php echo $requestObj->explain;?>
+				</textarea>
 			<dt>
 				이미지
 			<dd>
 				<div id="showimage" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'ImageFile', 'support')" style="cursor:pointer" /> (106x66)<br />
-				<input type="hidden" name="idImageFile" id="idImageFile" value="<?php echo $requestObj->ImageID;?>" />
-				<img src="<?php echo $requestObj->Image;?>" id="imgImageFile" width="106" height="66" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
+				<input type="hidden" name="idImageFile" id="idImageFile" value="<?php echo $requestObj->imageId;?>" />
+				<img src="<?php echo $requestObj->fileImage;?>" id="imgImageFile" width="106" height="66" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
 			<dt>
 				요청 선교사
 			<dd>
-				<input type="text" name="userId" size="20" maxlength=30 value="<?php echo $requestAdd->UserID;?>" /> (특별후원일 경우만 입력, 회원 ID를 정확히 입력해야 함)
+				<input type="text" name="userId" size="20" maxlength=30 value="<?php echo $requestAdd->userId;?>" /> (특별후원일 경우만 입력, 회원 ID를 정확히 입력해야 함)
 			<dt>
 				마감일
 			<dd>
-				<input type="text" name="dueDate" size="20" maxlength=30 value="<?php echo $requestAdd->Due;?>" /> (특별후원일 경우만 입력, 입력형식:2010-04-01)
+				<input type="text" name="dueDate" size="20" maxlength=30 value="<?php echo $requestAdd->due;?>" /> (특별후원일 경우만 입력, 입력형식:2010-04-01)
 			<dt>
 				선교지코드
 			<dd>
 				<select name="nationCode" id="nationCode" tabindex="32">
 				<?php 
-	for ($i=0; $i<=count($nationCodes)-1; $i = $i+1) {
-		$codeObj = $nationCodes[$i];
-		if (($codeObj->Code == $requestAdd->NationCode)) {
-			print "<option value=\"".$codeObj->Code."\" selected>".$codeObj->Name."</option>";
-		} else {
-			print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
-		} 
-
-
-	}
-
+				for ($i=0; $i<=count($nationCodes)-1; $i = $i+1) {
+					$codeObj = $nationCodes[$i];
+					if (($codeObj->Code == $requestAdd->nation)) {
+						print "<option value=\"".$codeObj->Code."\" selected>".$codeObj->Name."</option>";
+					} else {
+						print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
+					} 
+				}
 ?>
 				</select> (특별후원일 경우만 입력)
 			<dt>&nbsp;

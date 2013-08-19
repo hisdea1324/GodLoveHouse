@@ -1,33 +1,16 @@
 <?php 
 class SupportHelper {
-	var $m_eHandler;
-	var $m_pageCount;
-	var $m_pageUnit;
-	var $m_StrConditionQuery;
-	var $m_StrOrderQuery;
-
-	#  property
-	# ***********************************************
-	function PAGE_UNIT() {
-		return $this->m_pageUnit;
-	} 
-
-	function PAGE_COUNT() {
-		return $this->m_pageCount;
-	} 
-
-	function PAGE_UNIT($value) {
-		$this->m_pageUnit = $value;
-	} 
-
-	function PAGE_COUNT($value) {
-		$this->m_pageCount = $value;
-	} 
+	protected $record = array();
+	protected $eHandler;
 
 	#  creater
 	# ***********************************************
 	function __construct() {
-		$this->m_eHandler = new ErrorHandler();
+		$this->record["pageCount"] = 0;
+		$this->record["pageUnit"] = 0;
+		$this->record["strConditionQuery"] = "";
+		$this->record["strOrderQuery"] = "";
+		$this->eHandler = new ErrorHandler();
 	} 
 
 	#  destoryer
@@ -38,13 +21,10 @@ class SupportHelper {
 	#  method : return one Account Object
 	# ***********************************************
 	function getAccountInfoByUserId($userId) {
-		$account = new AccountObject();
-
-		if ($account->Open($userId) == false) {
-			$m_eHandler->ignoreError("Account Not Found.");
+		$account = new AccountObject($userId);
+		if (!$account) {
+			$this->eHandler->ignoreError("Account Not Found.");
 		} 
-
-
 		return $account;
 	} 
 
@@ -54,7 +34,7 @@ class SupportHelper {
 		$support = new SupportObject();
 
 		if ($support->Open($userId, $supType) == false) {
-			$m_eHandler->ignoreError("Supporter Not Found.");
+			$eHandler->ignoreError("Supporter Not Found.");
 		} 
 
 
@@ -77,7 +57,7 @@ class SupportHelper {
 		$supInfo = new SupportObject();
 
 		if ($supInfo->OpenWithSupId($supId) == false) {
-			$m_eHandler->ignoreError("Supporter Not Found.");
+			$eHandler->ignoreError("Supporter Not Found.");
 		} 
 
 
@@ -90,7 +70,7 @@ class SupportHelper {
 		$reqInfo = new RequestObject();
 
 		if ($reqInfo->Open($reqId) == false) {
-			$m_eHandler->ignoreError("Request Infomation Not Found.");
+			$this->eHandler->ignoreError("Request Infomation Not Found.");
 		} 
 
 
@@ -101,7 +81,7 @@ class SupportHelper {
 		$reqAddInfo = new RequestAddInfo();
 
 		if ($reqAddInfo->Open($reqId) == false) {
-			$m_eHandler->ignoreError("Request Additional Infomation Not Found.");
+			$this->eHandler->ignoreError("Request Additional Infomation Not Found.");
 		} 
 
 
@@ -112,7 +92,7 @@ class SupportHelper {
 		$reqItem = new RequestItemObject();
 
 		if ($reqItem->Open($reqItemId) == false) {
-			$m_eHandler->ignoreError("Request Detail Item Infomation Not Found.");
+			$eHandler->ignoreError("Request Detail Item Infomation Not Found.");
 		} 
 
 
@@ -140,21 +120,25 @@ class SupportHelper {
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from supportInfo".$this->m_StrConditionQuery;
+		$query = "SELECT COUNT(*) AS recordCount from supportInfo".$this->record["strConditionQuery"];
 		$countRS = $mysqli->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
+		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $total);
 	} 
 
 	function getSupporterList($curPage) {
-		$topNum = $this->m_pageCount * $curPage;
+		$topNum = $this->record["pageCount"] * $curPage;
 
-		$query = "select top ".$topNum." * from supportInfo ".$this->m_StrConditionQuery.$this->m_StrOrderQuery;
+		$query = "SELECT * FROM supportInfo ".$this->record["strConditionQuery"].$this->record["strOrderQuery"]." LIMIT $topNum, ".$this->record["pageCount"];
 		$listRS = $mysqli->Execute($query);
+
+
+
+
 		if ($listRS->RecordCount > 0) {
-			$listRS->PageSize = $this->m_pageCount;
+			$listRS->PageSize = $this->record["pageCount"];
 			$listRS->AbsolutePage = $curPage;
 		} 
 
@@ -174,12 +158,12 @@ class SupportHelper {
 	} 
 
 	function makePagingHTMLRequestInfo($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from requestInfo WHERE supportType = '03001'".$this->m_StrConditionQuery;
+		$query = "SELECT COUNT(*) AS recordCount from requestInfo WHERE supportType = '03001'".$this->record["strConditionQuery"];
 		$countRS = $mysqli->Execute($query);
 		$total = $countRS["recordCount"];
 		$countRS = null;
 
-		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
+		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $total);
 	} 
 
 	function getRequestList($query) {
@@ -201,7 +185,7 @@ class SupportHelper {
 		$listRS = $mysqli->Execute($query);
 
 		if ($listRS->RecordCount > 0) {
-			$listRS->PageSize = $this->m_pageCount;
+			$listRS->PageSize = $this->record["pageCount"];
 			$listRS->AbsolutePage = $curPage;
 			while(!($listRS->eof || $listRS->bof)) {
 				$requestInfo = new RequestObject();
@@ -214,8 +198,8 @@ class SupportHelper {
 	} 
 
 	function getSpecialList($curPage) {
-		$topNum = $this->m_pageCount * $curPage;
-		$query = "SELECT TOP ".$topNum." A.reqId FROM requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.supportType = '03001'".$this->m_StrConditionQuery." ORDER BY A.regDate DESC";
+		$topNum = $this->record["pageCount"] * $curPage;
+		$query = "SELECT TOP ".$topNum." A.reqId FROM requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.supportType = '03001'".$this->record["strConditionQuery"]." ORDER BY A.regDate DESC";
 
 		return getRequestListWithPaging($query,$curPage);
 	} 

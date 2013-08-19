@@ -45,10 +45,20 @@ class AccountObject {
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
-		$this->record['index'] = -1;
-		$this->record['m_userid'] = "";
-		$this->record['m_name'] = "";
+
+    function __construct($userId = -1) {
+		if ($userId == -1) {
+			$this->initialize();
+		} else {
+			$this->Open($userId);
+		}
+	}
+
+
+    function initialize() {
+		$this->record['id'] = -1;
+		$this->record['userId'] = "";
+		$this->record['name'] = "";
 		$this->record['bank'] = "";
 		$this->record['method'] = "";
 		$this->record['number'] = "";

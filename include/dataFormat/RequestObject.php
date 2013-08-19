@@ -5,6 +5,187 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
+
+class RequestObject {
+	protected $record = array();
+
+	public function __set($name,$value) { 
+		switch($name) {
+			case "supportType" : 
+				switch (($value)) {
+					case "03001":
+						$value="특별후원";
+						break;
+					case "03002":
+						$value="센터후원";
+						break;
+					case "03003":
+						$value="자원봉사";
+						break;
+				} 
+				break;
+
+			case "fileImage" :
+				if ((strlen($this->record["fileImage"])==0)) {
+					$this_record["fileImage"] = "noimg.gif";
+				} 
+				else {
+					$this_record["fileImage"] = "/upload/support/".$this->record["fileImage"];
+				}
+				break;
+
+			default :
+				$this->record[$name] = $value;
+				break;	
+		}
+	}
+
+
+	public function __get($name) { 
+		switch($name) {
+			case "fileImage":
+				//echo $this->record["fileImage"];
+				return $this->record["fileImage"];
+			default : 
+				return $this->record[$name];
+		}
+	}
+
+
+	public function __isset($name) {
+		return isset($this->record[$name]); 
+    }
+
+    function __construct() {
+    	$c_Helper = new CodeHelper();
+
+
+		$this->record['regId'] = -1;
+		$this->record['title'] = "";
+		$this->record['explain'] = "";
+		$this->record['supportType'] = $c_Helper->getSupportCode(2);
+		$this->record['regDate'] = "";
+		$this->record['imageId'] = -1;
+		$this->record['fileImage'] = "noimg.gif";
+	}
+
+
+	function Open($value) {
+		global $mysqli;
+
+		$column = array();
+		/* create a prepared statement */
+		$query = "SELECT 'reqId', 'title', 'explain', 'supportType', 'regDate', 'imageId' FROM requestInfo WHERE 'reqId' = ? ";
+
+		if ($stmt = $mysqli->prepare($query)) {
+
+			/* bind parameters for markers */
+			$stmt->bind_param("i", $value);
+
+			/* execute query */
+			$stmt->execute();
+			$metaResults = $stmt->result_metadata();
+			$fields = $metaResults->fetch_fields();
+			$statementParams='';
+			
+			//build the bind_results statement dynamically so I can get the results in an array
+			foreach ($fields as $field) {
+				if (empty($statementParams)) {
+					$statementParams.="\$column['".$field->name."']";
+				} else {
+					$statementParams.=", \$column['".$field->name."']";
+				}
+			}
+
+
+			$statment = "\$stmt->bind_result($statementParams);";
+			eval($statment);
+			
+			while($stmt->fetch()){
+				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
+				//if your lazy and didn't want to write out each param to bind.
+				$this->record = $column;
+			}
+			/* close statement */
+			$stmt->close();
+
+
+			if ($this->record['imageId'] > 0) {
+				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
+				$stmt->bind_param("i", $this->record['imageId']);
+				$stmt->execute();
+				$stmt->bind_result($this->record["fileImage"]);
+				$stmt->close();
+			} else {
+				$this->mDocument = $this->record["fileImage"];
+			} 
+		}
+	}
+
+
+	function Update() {
+		global $mysqli;
+
+		if ($this->record['id'] == -1) {
+			$query = "INSERT INTO requestInfo (`title`, `explain`, `supportType`, 'imageId') VALUES ";
+			$query = $query."(?, ?, ?, ?);";
+
+			$stmt = $mysqli->prepare($query);
+
+			# New Data
+			$stmt->bind_param("sssi", 
+				$this->record['title'], 
+				$this->record['explain'],
+				$this->record['supportType'], 
+				$this->record['imageId']);
+
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+
+			$this->record['regId'] = $mysqli->insert_id;
+		} else {
+
+			$query = "UPDATE requestInfo SET ";
+			$updateData = "`title` = ?, ";
+			$updateData = "`explain` = ?, ";
+			$updateData.= "`supportType` = ?, ";
+			$updateData.= "`imageId` = ? ";
+			$query .= $updateData." WHERE `regId` = ?";
+
+			# create a prepared statement
+			$stmt = $mysqli->prepare($query);
+			
+			$stmt->bind_param("sssii", 
+				$this->record['title'], 
+				$this->record['explain'], 
+				$this->record['supportType'], 
+				$this->record['imageId'],
+				$this->record['regId']);
+				
+			# execute query
+			$stmt->execute();
+		
+			# close statement
+			$stmt->close();
+		}
+	}
+
+	function Delete() {
+		global $mysqli;
+
+		if ($this->record['reqId'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM requestInfo WHERE `reqId` = ?");
+			$stmt->bind_param("i", $this->record['regId']);
+			$stmt->execute();
+			$stmt->close();
+		}
+	}  
+}	
+
+/*
 class RequestObject {
 	#  class member variable
 	# ***********************************************
@@ -171,4 +352,5 @@ class RequestObject {
 		$objDB->execute_command($query);
 	} 
 } 
+*/
 ?>
