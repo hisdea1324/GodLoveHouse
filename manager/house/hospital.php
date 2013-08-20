@@ -76,6 +76,8 @@ function makeCondition($status,$field,$keyword) {
 } 
 
 function body() {
+	global $CurUrl, $strPage, $htmlTable;
+	global $field, $keyword;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 

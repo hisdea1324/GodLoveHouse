@@ -17,11 +17,11 @@ $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S2002";
 // 조건문 작성
 $strWhere = makeCondition($status, $field, $keyword);
 
-// 페이지 네비게이
+// 페이지 네비게이션 
 $query = "SELECT * FROM house ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 
-// 현재 페이지에 보여줄 레코
+// 현재 페이지에 보여줄 레코드 
 $topNum = $PAGE_COUNT * ($page - 1);
 $query = "SELECT * FROM house $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 

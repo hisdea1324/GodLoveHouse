@@ -2,36 +2,34 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
-if (trim($mode)=="") {
-	$mode="addReserv";
-} 
+global $mysqli;
 
-$reservId = trim($_REQUEST["reservId"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "addReserv";
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : "";
+$reservId = (isset($_REQUEST["reservId"])) ? trim($_REQUEST["reservId"]) : "";
 
-if ((strlen($reservId)>0)) {
-	$query = "SELECT A.startDate, A.endDate, B.nick, B.name, B.phone, B.mobile, C.RoomName, D.houseName, D.assocName, D.manager1, D.contact1, D.manager2, D.contact2, E.name AS regionName FROM reservation A, users B, room C, house D, code E ";
+if (strlen($reservId) > 0) {
+	$query = "SELECT A.startDate, A.endDate, B.nick, B.name, B.phone, B.mobile, C.roomName, D.houseName, D.assocName, D.manager1, D.contact1, D.manager2, D.contact2, E.name AS regionName FROM reservation A, users B, room C, house D, code E ";
 	$query = $query."WHERE A.userId = B.userId AND A.roomId = C.roomId AND C.houseId = D.houseId AND D.regionCode = E.code AND A.reservationNo = ".$reservId;
-	$reservRS = $db->Execute($query);
-	$fromDate = $reservRS["startDate"];
-	$toDate = $reservRS["endDate"];
-	$nick = $reservRS["nick"];
-	$userName = $reservRS["name"];
-	$phone = $reservRS["phone"];
-	$mobile = $reservRS["mobile"];
-	$houseName = $reservRS["houseName"];
-	$assocName = $reservRS["assocName"];
-	$roomName = $reservRS["roomName"];
-	$contact1 = $reservRS["contact1"]."(".$reservRS["manager1"].")";
-	$contact2 = $reservRS["contact2"]."(".$reservRS["manager2"].")";
-	$regionName = $reservRS["regionName"];
-	$reservRS = null;
-
+	if ($result = $mysqli->query($query)) {
+		if ($row = $result->fetch_array()) {
+			$fromDate = date("Y-m-d", $row["startDate"]);
+			$toDate = date("Y-m-d", $row["endDate"]);
+			$nick = $row["nick"];
+			$userName = $row["name"];
+			$phone = $row["phone"];
+			$mobile = $row["mobile"];
+			$houseName = $row["houseName"];
+			$assocName = $row["assocName"];
+			$roomName = $row["roomName"];
+			$contact1 = $row["contact1"]."(".$row["manager1"].")";
+			$contact2 = $row["contact2"]."(".$row["manager2"].")";
+			$regionName = $row["regionName"];
+		}
+	}
 } 
-
 
 checkAuth();
 showAdminHeader("관리툴 - 예약 정보 수정","","","");
@@ -39,6 +37,8 @@ body();
 showAdminFooter();
 
 function body() {
+	global $keyword, $field, $mode, $page, $reservId;
+	global $fromDate, $toDate, $nick, $userName, $phone, $mobile, $houseName, $assocName, $roomName, $contact1, $contact2, $regionName;
 ?>
 	<div class="sub">
 	<a href="index.php?status=S0001">신규예약</a> | 
@@ -61,7 +61,7 @@ function body() {
 		
 	<div class="rSec">
 		<dl>
-		<form name="dataForm" method="post">
+		<form id="dataForm" name="dataForm" method="post" action="process.php">
 		<input type="hidden" name="field" value="<?php echo $field;?>" />
 		<input type="hidden" name="keyword" value="<?php echo $keyword;?>" />
 		<input type="hidden" name="page" value="<?php echo $page;?>" />
@@ -87,15 +87,15 @@ function body() {
 			<dd>
 				<ol>
 				<li>방 : <?php echo $roomName;?></li>
-				<li>선교관 : <?php echo $houseName;?> (<?php echo $assocname;?>)</li>
+				<li>선교관 : <?php echo $houseName;?> (<?php echo $assocName;?>)</li>
 				<li>션교관 연락처1 : <?php echo $contact1;?></li>
 				<li>션교관 연락처2 : <?php echo $contact2;?></li>
 				<li>지역 : <?php echo $regionName;?></li>
 				</ol>
 			<dt>
 			<dd>
-				<img src="/images/button/btn_ok.gif" border="0" onclick="check();" style="cursor:hand;">&nbsp;&nbsp;&nbsp;
-				<img src="/images/button/btn_cancel.gif" border="0" onclick="history.back(-1);" style="cursor:hand"></a>
+				<img src="/images/board/btn_ok.gif" border="0" onclick="check();" style="cursor:hand;">&nbsp;&nbsp;&nbsp;
+				<img src="/images/board/btn_cancel.gif" border="0" onclick="history.back(-1);" style="cursor:hand"></a>
 		</form>
 		</dl>
 	</div>
@@ -108,7 +108,6 @@ function body() {
 	calendar_init();
 
 	function check() {
-		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}
 //]]>

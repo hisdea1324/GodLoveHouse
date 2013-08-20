@@ -12,23 +12,37 @@
 
 <?php 
 $Naddress = $_REQUEST["Naddr"];
-//Naddress= server.URLEncode(request("addr"))//response.write "1 :"&request("addr") & "							 "//response.write "3 :"& Naddress//451884 291241 //Naddress = "경기도 금촌검산 유승아파트 102호 203호"
+//Naddress= server.URLEncode(request("addr"))
+//response.write "1 :"&request("addr") & "							 "
+//response.write "3 :"& Naddress
+//451884 291241 
+//Naddress = "경기도 금촌검산 유승아파트 102호 203호"
 $queryVal = $Naddress;
 
 //java.net.URLEncoder.encode(address)$queryVal=rawurlencode($Naddress);
-//queryVal = server.UrlEncode(Trim(Naddress))//queryVal = addressy//response.write "4:" & queryVal
+//queryVal = server.UrlEncode(Trim(Naddress))
+//queryVal = addressy
+//response.write "4:" & queryVal
 if (!($queryVal=="")) {
-//response.write queryVal &"-1-"	$REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&encoding=utf-8&query=".$queryVal;
-//response.write REQUEST_URL	// $xml is of type "MSXML2.ServerXMLHTTP"
-	$xml->Open"GET"	$REQUEST_URL	$False;
-	$xml->SetRequestHeader"GET"	$REQUEST_URL."HTTP/1.0";
+//response.write queryVal &"-1-"	
+$REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&encoding=utf-8&query=".$queryVal;
+//response.write REQUEST_URL	
+// $xml is of type "MSXML2.ServerXMLHTTP"
+	$xml->Open("GET", $REQUEST_URL, false);
+	$xml->SetRequestHeader("GET", $REQUEST_URL."HTTP/1.0");
 	$xml->Send();
 //	response.write xml.ResponseText	// $dom is of type "Microsoft.XMLDOM"
 	$dom->async=false;
-	$dom->load$xml->responseBody;
+	$dom->load();
+	$xml->responseBody;
 	$xmlroot = $dom->documentElement;
-//Set xmlnode1//Set xmlnode2//response.write "	"&	xmlroot.childNodes.Length	if (($xmlroot->childNodes$Length)>2) {
-//	response.write xmlroot.childNodes.Length//response.write xmlroot.childNodes(1).text		$xmlnode1 = $xmlroot->SelectSingleNode;
+//Set xmlnode1
+//Set xmlnode2
+//response.write "	"&	xmlroot.childNodes.Length	
+	if (($xmlroot->childNodes->length)>2) {
+//	response.write xmlroot.childNodes.Length
+//response.write xmlroot.childNodes(1).text		
+	$xmlnode1 = $xmlroot->SelectSingleNode;
 		$x = $xmlnode1->text;
 
 //	response.write xmlnode1.text

@@ -20,6 +20,8 @@ body();
 showAdminFooter();
 
 function body() {
+	global $CurUrl, $strPage, $htmlTable, $gotoPage, $codeResions, $codeStatus;
+	global $field, $keyword;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
@@ -183,7 +185,7 @@ function body() {
 			<dt>
 				병원 설명 
 			<dd>
-				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?php echo $textFormat[$hospitalObj->Explain][2];?></textarea>	
+				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?php echo textFormat($hospitalObj->Explain, 2);?></textarea>	
 			<dt>
 				제출서류
 			<dd>

@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 #require "class/dbHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/ErrorHandler.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/tableBuilder.php");
-#require "class/dataManager.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/DataManager.php");
 #require "class/BoardHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
 #require "class/CommentHelper.php";
@@ -47,6 +47,4 @@ function MoveToPage($page) {
 	//header("Location: ".$page);
 	echo '<meta http-equiv="Refresh" content="0; url='.$page.'">';
 }
-
-
 ?>

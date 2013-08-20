@@ -2,34 +2,35 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
-$status = trim($_REQUEST["status"]);
-if ((strlen($status)==0)) {
-	$status="S0001";
-} 
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
+$status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S0001";
 
-switch (($mode)) {
+switch ($mode) {
 	case "changeStatus":
-changeStatus();
+		changeStatus();
 		break;
 	case "editReserv":
-editReserv();
+		editReserv();
 		break;
 	case "deleteReserv":
-deleteReserv();
+		deleteReserv();
 		break;
 } 
 
 function changeStatus() {
+	global $mysqli, $status;
+	
 	$reservId = trim($_REQUEST["reservId"]);
 	$value = trim($_REQUEST["value"]);
 	$query = "UPDATE reservation SET reservStatus = '".$value."' WHERE reservationNo = ".$reservId;
-	$rs = $db->execute($query);
+	$rs = $mysqli->query($query);
 
 	header("Location: "."index.php?status=".$status);
 } 
 
 function deleteReserv() {
+	global $status;
+	
 	$reservId = trim($_REQUEST["reservId"]);
 
 	$ObjQuery = new DataManager();
@@ -40,18 +41,20 @@ function deleteReserv() {
 
 	$ObjQuery = null;
 
-
 	header("Location: "."index.php?status=".$status);
 } 
 
 function editReserv() {
+	global $status;
+	
 	$reservId = trim($_REQUEST["reservId"]);
 	$fromDate = trim($_REQUEST["fromDate"]);
 	$toDate = trim($_REQUEST["toDate"]);
 
 	$ObjQuery = new DataManager();
+	
 	$fieldList = array("startDate","endDate");
-	$valueList = array($fromDate,$toDate);
+	$valueList = array($fromDate, $toDate);
 
 	$ObjQuery->setTable("reservation");
 	$ObjQuery->setField($fieldList);
@@ -60,7 +63,6 @@ function editReserv() {
 	$ObjQuery->update();
 
 	$ObjQuery = null;
-
 
 	header("Location: "."index.php?status=".$status);
 } 

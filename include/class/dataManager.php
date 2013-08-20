@@ -1,19 +1,19 @@
-<?php 
+<?php
 class DataManager {
-	var $fieldList;
-	var $fieldCount;
-	var $valueList;
-	var $valueCount;
+	public $fieldList;
+	public $fieldCount;
+	public $valueList;
+	public $valueCount;
 
-	var $fieldNList;
-	var $fieldNCount;
-	var $valueNList;
-	var $valueNCount;
+	public $fieldNList;
+	public $fieldNCount;
+	public $valueNList;
+	public $valueNCount;
 
-	var $tableName;
-	var $strCondition;
+	public $tableName;
+	public $strCondition;
 
-	function __construct() {
+	public function __construct() {
 		$this->fieldList = array();
 		$this->fieldCount = -1;
 		$this->valueList = array();
@@ -27,8 +27,9 @@ class DataManager {
 
 	function __destruct() {
 
-	} 
-
+	}
+}
+/*
 	function setTable($tName) {
 		$this->tableName = $tName;
 	} 
@@ -115,12 +116,10 @@ class DataManager {
 		$query = "UPDATE ".$this->tableName." SET ";
 		for ($i=0; $i <= $this->fieldCount; $i = $i+1) {
 			$query = $query.$this->fieldList[$i]."='".$this->valueList[$i]."', ";
-
 		}
 
 		for ($i=0; $i <= $this->fieldNCount; $i = $i+1) {
 			$query = $query.$this->fieldNList[$i]."=".$this->valueNList[$i].", ";
-
 		}
 
 		$query = substr($query, 0, strlen($query) - 2)." ".$this->strCondition();
@@ -159,7 +158,6 @@ class DataManager {
 		} 
 
 	} 
-
 	function Check_sql($str) {
 		$val = strtoupper($str);
 		if ((strpos($val,";") ? strpos($val,";")+1 : 0)!=0 || 
@@ -186,8 +184,6 @@ class DataManager {
 			 (strpos($val,"shutdown") ? strpos($val,"shutdown")+1 : 0)!=0 || 
 			 (strpos($val,"drop") ? strpos($val,"drop")+1 : 0)!=0 || 
 			 (strpos($val,"--") ? strpos($val,"--")+1 : 0)!=0 || 
-			 (strpos($val,"/*") ? strpos($val,"/*")+1 : 0)!=0 || 
-			 (strpos($val,"*/") ? strpos($val,"*/")+1 : 0)!=0 || 
 			 (strpos($val,"XP_") ? strpos($val,"XP_")+1 : 0)!=0 || 
 			 (strpos($val,"DECLARE") ? strpos($val,"DECLARE")+1 : 0)!=0 || 
 			 (strpos($val,"SELECT") ? strpos($val,"SELECT")+1 : 0)!=0 || 
@@ -202,5 +198,6 @@ class DataManager {
 			return $str;
 		}
 	} 
-} 
+}
+*/
 ?>

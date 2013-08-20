@@ -77,6 +77,8 @@ function makeCondition($status,$field,$keyword) {
 } 
 
 function body() {
+	global $CurUrl, $strPage, $htmlTable;
+	global $field, $keyword;
 ?>
 
 	<div class="main">
