@@ -37,13 +37,8 @@ class HouseObject {
 				} else {
 					return array("", "", "");
 				}
-			case "zipcode":
-				$value = explode("-", $this->record[$name]);
-				if (count($value) == 2) {
-					return $value;
-				} else {
-					return array("", "");
-				}
+			case "zipcode": case "Zipcode":
+				return strsub_replace($this->record['zipcode'], "-", 3, 0);
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "roomCount": 
@@ -75,7 +70,7 @@ class HouseObject {
 			case "region":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['regionCode']);
-			case "status":
+			case "status": case "StatusCode":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
 			default:
@@ -311,6 +306,8 @@ class HouseObject {
 	}
 	
 	function showContactInfo() {
+		$retString = "";
+		
 		if (strlen($this->record["contact1"]) > 10) {
 			$retString = $this->record["manager1"]." ".$this->record["contact1"];
 		} 

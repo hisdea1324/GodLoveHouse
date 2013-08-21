@@ -10,24 +10,36 @@
 <?php header("Content-type: "."text/html;charset=utf-8"); ?>
 
 <?php 
-
 $addressy = $_REQUEST["addr"];
-//response.write addressy//451884 291241 //addressy = "경기도 금촌검산 유승아파트 102호 203호"//response.write addressy//queryVal = addressy
+//response.write addressy
+//451884 291241 
+//addressy = "경기도 금촌검산 유승아파트 102호 203호"
+//response.write addressy
+//queryVal = addressy
 $queryVal=rawurlencode($addressy);
 //queryVal = server.UrlEncode(Trim(addressy))
 //response.write queryVal
 if (!($queryVal=="")) {
-//response.write queryVal &"-1-"	$REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&query=".$queryVal;
-//response.write REQUEST_URL	// $xml is of type "MSXML2.ServerXMLHTTP"
-	$xml->Open"GET"	$REQUEST_URL.""	$False;
-	$xml->SetRequestHeader"GET"	$REQUEST_URL."HTTP/1.0";
+//response.write queryVal &"-1-"	
+$REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&query=".$queryVal;
+//response.write REQUEST_URL	
+// $xml is of type "MSXML2.ServerXMLHTTP"
+	$xml->Open("GET", $REQUEST_URL."", false);
+	$xml->SetRequestHeader("GET", $REQUEST_URL."HTTP/1.0");
 	$xml->Send();
-//	response.write xml.ResponseText	// $dom is of type "Microsoft.XMLDOM"
+//	response.write xml.ResponseText	
+// $dom is of type "Microsoft.XMLDOM"
 	$dom->async=false;
-	$dom->load$xml->responseBody;
+	$dom->load();
+	$xml->responseBody;
 	$xmlroot = $dom->documentElement;
-//Set xmlnode1//Set xmlnode2//response.write "	"&	xmlroot.childNodes.Length	if (($xmlroot->childNodes$Length)>2) {
-//	response.write xmlroot.childNodes.Length//response.write xmlroot.childNodes(1).text		$xmlnode1 = $xmlroot->SelectSingleNode;
+//Set xmlnode1
+//Set xmlnode2
+//response.write "	"&	xmlroot.childNodes.Length
+	if (($xmlroot->childNodes->length) > 2) {
+//	response.write xmlroot.childNodes.Length
+//response.write xmlroot.childNodes(1).text
+		$xmlnode1 = $xmlroot->SelectSingleNode;
 		$x = $xmlnode1->text;
 
 //	response.write xmlnode1.text

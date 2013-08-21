@@ -43,8 +43,10 @@ class RoomObject {
 	
 	public function __get($name) {
 		switch ($name) {
-			case 'RoomID': case 'RoomId': 
+			case "RoomID": case "RoomId": 
 				return $this->record['roomId'];
+			case "HouseID":
+				return $this->record['houseId'];
 			case "RoomName":
 				return $this->record['roomName'];
 			case "Network":
@@ -88,6 +90,7 @@ class RoomObject {
 			case "ImageID4":
 				return $this->record["imageId4"];
 			default:
+				echo $name;
 				return $this->record[$name];
 		}
 	}

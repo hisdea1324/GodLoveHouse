@@ -1,17 +1,16 @@
 ﻿<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$roomId = trim($_REQUEST["roomId"]);
-$houseId = trim($_REQUEST["houseId"]);
-$toDate = trim($_REQUEST["toDate"]);
-$fromDate = trim($_REQUEST["fromDate"]);
+$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
+$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+$toDate = (isset($_REQUEST["toDate"])) ? trim($_REQUEST["toDate"]) : "";
+$fromDate = (isset($_REQUEST["fromDate"])) ? trim($_REQUEST["fromDate"]) : "";
 
-$sessions = new __construct();
 $h_Helper = new HouseHelper();
 $room = $h_Helper->getRoomInfoById($roomId);
 $house = $h_Helper->getHouseInfoById($room->HouseID);
 
-if ($house->StatusCode=="S2002") {
+if ($house->StatusCode == "S2002") {
 	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif");
 } else {
 	showHeader("HOME > 선교관 >	기타 선교관 안내","living","tit_0201.gif");
@@ -21,6 +20,8 @@ body();
 showFooter();
 
 function body() {
+	global $roomId, $houseId, $fromDate, $toDate;
+	global $room, $house;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -33,9 +34,9 @@ function body() {
 				<option value=''>-- 객실선택 --</option>
 <?php 
 	$rooms = $house->RoomList;
-	for ($i=1; $i<=count($rooms); $i = $i+1) {
+	for ($i = 1; $i <= count($rooms); $i++) {
 		$roomInfo = $rooms[$i];
-		if ((trim($roomId) == trim($roomInfo->RoomID))) {
+		if (trim($roomId) == trim($roomInfo->RoomID)) {
 ?>
 				<option value='<?php echo $roomInfo->RoomID;?>' selected><?php echo $roomInfo->RoomName;?></option>
 <?php 
@@ -74,7 +75,7 @@ function body() {
 		</div>
 
 <?php
-	if ($house->StatusCode=="S2002") {
+	if ($house->StatusCode == "S2002") {
 ?>
 		<form action="process.php" method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
@@ -136,8 +137,7 @@ function body() {
 			<tr>
 				<td class="td01">주소</td>
 				<td colspan="5">
-					<?	 $zipcode = $house->Zipcode;?>
-					[<?php echo $zipcode[0];?>-<?php echo $zipcode[1];?>]
+					[<?php echo $house->Zipcode?>]
 					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($house->Address1.$house->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $house->Address1;?> <?php echo $house->Address2;?></A>
 				</td>
 			</tr>
@@ -200,7 +200,7 @@ function body() {
 	
 	function reserveSubmit() {
 <?php 
-if ($sessions->UserLevel<=1) {
+if ($sessions->UserLevel <= 1) {
 ?>
 			alert('선교사 혹은 선교관리자 회원이 되어야 예약이 가능합니다.');
 			return;
