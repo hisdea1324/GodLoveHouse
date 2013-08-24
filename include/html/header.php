@@ -1,8 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!--DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"	"http://www.w3.org/TR/html4/loose.dtd"-->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=[CHARSET]" />
+	<meta http-equiv="Content-Type" content="text/html; charset=[CHARSET]">
 	<title>[TITLE]</title>
 	<link href="[WEBROOT]include/css/style.css" rel="stylesheet" type="text/css">
 	<script language='javascript' src='[WEBROOT]include/js/flash.js'></script>
@@ -21,9 +20,9 @@
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	})();
-
-</script>
+	</script>
 </head>
+
 <body onLoad="MM_preloadImages('[WEBROOT]images/sub/left_0101_on.gif')">
 <div id="top"><a href="[WEBROOT]index.php"><img src="[WEBROOT]images/common/logo.gif" class="logo"></a>
 	<ul class="gm">

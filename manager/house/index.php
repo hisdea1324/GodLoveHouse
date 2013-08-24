@@ -47,7 +47,6 @@ $listRS = null;
 
 $objTable = null;
 
-
 function makeCondition($status,$field,$keyword) {
 	$strWhere=" WHERE status = '".$status."'";
 	if ((strlen($field)>0 && strlen($keyword)>0)) {
@@ -59,7 +58,7 @@ function makeCondition($status,$field,$keyword) {
 
 function body() {
 	global $keyword, $field;
-	global $htmlTable, $strPage;
+	global $htmlTable, $strPage, $status;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
@@ -110,8 +109,6 @@ function body() {
 	
 	</div>
 
-<?php } ?>
-
 <script type="text/javascript">
 //<![CDATA[
 	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
@@ -119,7 +116,7 @@ function body() {
 	function clickButton(no, houseId) {
 		switch(no) {
 <?php 
-if (($status=="S2002")) {
+if ($status == "S2002") {
 ?>
 			case 0: goShow(houseId); break;
 			case 1: goEdit(houseId); break;
@@ -160,4 +157,6 @@ if (($status=="S2002")) {
 	}
 //]]>
 </script>	
+
+<?php } ?>
 

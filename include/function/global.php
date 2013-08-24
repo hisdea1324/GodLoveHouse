@@ -62,7 +62,7 @@ function showHeader($strNavi,$strSub,$strTitleImg) {
 	$strSubMenu = str_replace("[TITLEIMG]",$strTitleImg,$strSubMenu);
 	$strSubMenu = str_replace("[NAVIGATION]",$strNavi,$strSubMenu);
 
-	print $strHeader.$strSubMenu;
+	echo $strHeader.$strSubMenu;
 } 
 
 function showMenu() {
