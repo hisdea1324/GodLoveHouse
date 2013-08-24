@@ -22,6 +22,9 @@ body();
 showFooter();
 
 function body() {
+	global $codes, $regionCode, $page, $strPage;
+	global $houses, $houseId, $rooms;
+	global $fromDate, $toDate;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -31,9 +34,9 @@ function body() {
 				<select name="region" id="region" onchange="selectRegion()">
 					<option value=''>-- 지역선택 --</option>
 <?php 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
+	for ($i = 0; $i <= count($codes) - 1; $i++) {
 		$codeObj = $codes[$i];
-		if (($regionCode == $codeObj->Code)) {
+		if ($regionCode == $codeObj->Code) {
 			print "<option value='".$codeObj->Code."' selected>".$codeObj->Name."</option>";
 		} else {
 			print "<option value='".$codeObj->Code."'>".$codeObj->Name."</option>";
@@ -47,8 +50,8 @@ function body() {
 			<?php 
 	for ($i=0; $i<=count($houses)-1; $i = $i+1) {
 		$houseObj = $houses[$i];
-		$houseName = $StrFormatByLength[$houseObj->HouseName][12];
-		if ((strlen($houseId)>0 && $houseId==($houseObj->HouseID))) {
+		$houseName = StrFormatByLength($houseObj->HouseName, 12);
+		if (strlen($houseId) > 0 && $houseId==($houseObj->HouseID)) {
 			print "<option value='".$houseObj->HouseID."' selected>".$houseName."</option>";
 		} else {
 			print "<option value='".$houseObj->HouseID."'>".$houseName."</option>";
@@ -82,7 +85,7 @@ function body() {
 						<th class="th01">내용</th>
 					</tr>
 <?php
-	if ((count($rooms)==0)) {
+	if (count($rooms) == 0) {
 ?>
 					<tr>
 						<td colspan="4">
@@ -91,18 +94,18 @@ function body() {
 					</tr>
 <?php
 	} else {
-		for ($i=0; $i<=count($rooms)-1; $i = $i+1) {
+		for ($i = 0; $i <= count($rooms) - 1; $i++) {
 			$roomObj = $rooms[$i];
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
 					<tr>
-				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT)+($i+1);?></td>
+				<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
 						<td>
 <?php 
-			if ((strlen($toDate)>0)) {
+			if (strlen($toDate) > 0) {
 				$searchDateValue = $searchDateValue."&toDate=".$toDate;
 			}
-			if ((strlen($fromDate)>0)) {
+			if (strlen($fromDate) > 0) {
 				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
 			}
 ?>

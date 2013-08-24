@@ -99,48 +99,50 @@ class HouseHelper {
 	} 
 
 	function makePagingHTML($curPage) {
+		global $mysqli;
 		$query = "SELECT COUNT(*) AS recordCount FROM room A, house B".$this->m_StrConditionQuery;
-		$countRS = $mysqli->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$total = $row["recordCount"];
+			}
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getRoomListWithPaging($curPage) {
+		global $mysqli;
 		$topNum = $this->m_pageCount * $curPage;
 
 		$query = "SELECT top ".$topNum." A.roomId, B.houseId FROM room A, house B ".$this->m_StrConditionQuery." ORDER BY A.fee ASC";
-		$listRS = $mysqli->Execute($query);
 
-		if ($listRS->RecordCount > 0) {
-			$listRS->PageSize = $this->m_pageCount;
-			$listRS->AbsolutePage = $curPage;
-			while(!(($listRS->EOF || $listRS->BOF))) {
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
 				$roomInfo = new RoomObject();
-				$roomInfo->Open($listRS["roomId"]);
-			} 
-		} 
+				$roomInfo->Open($row["roomId"]);
+			}
+		}
 
 		return $roomInfo;
 	} 
 
 	function getHouseList($query) {
-		$houseListRS = $mysqli->Execute($query);
+		global $mysqli;
 
-		if (!$houseListRS->Eof && !$houseListRS->Bof) {
-			while(!($houseListRS->EOF || $houseListRS->BOF)) {
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
 				$houseInfo = new HouseObject();
-				$houseInfo->Open($houseListRS["houseId"]);
-			} 
-		} 
+				$houseInfo->Open($row["houseId"]);
+			}
+		}
 
 		return $houseInfo;
 	} 
 
 	function getHouseListByEtc() {
 		$query = "SELECT houseId FROM house WHERE (status = 'S2001' OR roomCount = 0)";
-		return getHouseList($query);
+		return $this->getHouseList($query);
 	} 
 
 	function getHouseListByRegion($regionCode) {
@@ -150,7 +152,7 @@ class HouseHelper {
 			$query = "SELECT houseId FROM house WHERE houseId IN (SELECT distinct houseId FROM room) AND regionCode = '{$regionCode}'";
 		} 
 
-		return getHouseList($query);
+		return $this->getHouseList($query);
 	} 
 
 	function getHouseListByUserId($userId,$houseType) {
@@ -162,7 +164,7 @@ class HouseHelper {
 			$query = "SELECT houseId FROM house WHERE userId = '$userId' AND (status = 'S2001')";
 		} 
 
-		return getHouseList($query);
+		return $this->getHouseList($query);
 	} 
 
 	function setReservationListConditionWithHouse($search,$houseId) {
@@ -246,6 +248,8 @@ class HouseHelper {
 	} 
 
 	function makeReservationListPagingHTML($curPage) {
+		global $mysqli;
+		
 		$sessions = new Session();
 		$query = "SELECT COUNT(*) AS recordCount FROM house A, room B, reservation C ";
 		if ($sessions->UserID == "lovehouse") {
@@ -254,14 +258,18 @@ class HouseHelper {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
 		} 
 
-		$countRS = $db->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$total = $row["recordCount"];
+			}
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getReservationListWithPaging($curPage) {
+		global $mysqli;
+		
 		$sessions = new Session();
 		$topNum = $this->m_pageCount * $curPage;
 
@@ -273,29 +281,26 @@ class HouseHelper {
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
-		$reserveListRS = $mysqli->Execute($query);
 
-		if ($reserveListRS->RecordCount > 0) {
-			$reserveListRS->PageSize = $this->m_pageCount;
-			$reserveListRS->AbsolutePage = $curPage;
-			while(!($reserveListRS->EOF || $reserveListRS->BOF)) {
-				$reservInfo = new ReservationObject();
-				$reservInfo->Open($reserveListRS["reservationNo"]);
-			} 
-		} 
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$reserveInfo = new ReservationObject();
+				$reserveInfo->Open($row["reservationNo"]);
+			}
+		}
 
-		return $reservInfo;
+		return $reserveInfo;
 	} 
 
 	function getReservationList($query) {
-		$reserveListRS = $mysqli->Execute($query);
-
-		if (!$reserveListRS->Eof && !$reserveListRS->Bof) {
-			while(!($reserveListRS->EOF || $reserveListRS->BOF)) {
+		global $mysqli;
+		
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
 				$reserveInfo = new ReservationObject();
-				$reserveInfo->Open($reserveListRS["reservationNo"]);
-			} 
-		} 
+				$reserveInfo->Open($row["reservationNo"]);
+			}
+		}
 
 		return $reserveInfo;
 	} 
