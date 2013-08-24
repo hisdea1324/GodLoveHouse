@@ -164,48 +164,31 @@ class RoomObject {
 			
 			/* close statement */
 			$stmt->close();
-
-
+			
+			
+			$imgArray = array();
 			if ($this->record['imageId1'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId1']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[0] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId1'];
+			}
 			if ($this->record['imageId2'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId2']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[1] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId2'];
+			}
 			if ($this->record['imageId3'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId3']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[2] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId3'];
+			}
 			if ($this->record['imageId4'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId4']."'";
+				$imgArray[] = $this->record['imageId4'];
+			}
+			
+			if (count($imgArray) > 0) {
+				$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
 				if ($result = $mysqli->query($query)) {
 				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[3] = $finfo->name;
+				    while ($finfo = $result->fetch_array()) {
+				    	$this->image[] = $finfo["name"];				    	
 				    }
-				    $result->close();
 				}
-			} 
+			}
 		}
 		
 	} 

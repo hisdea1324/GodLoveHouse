@@ -23,7 +23,7 @@ showFooter();
 
 function body() {
 	global $codes, $regionCode, $page, $strPage;
-	global $houses, $houseId, $rooms;
+	global $h_Helper, $houses, $houseId, $rooms;
 	global $fromDate, $toDate;
 ?>
 		<!-- //content -->
@@ -42,22 +42,19 @@ function body() {
 			print "<option value='".$codeObj->Code."'>".$codeObj->Name."</option>";
 		} 
 	}
-
 ?>
 				</select>
 				<select name="houseId" id="houseId" onchange="selectHouse()">
 					<option value=''>-- 선교관선택 --</option>
 			<?php 
-	for ($i=0; $i<=count($houses)-1; $i = $i+1) {
+	for ($i = 0; $i<=count($houses)-1; $i = $i+1) {
 		$houseObj = $houses[$i];
-		$houseName = StrFormatByLength($houseObj->HouseName, 12);
+		$houseName = StrFormatByLength($houseObj->HouseName, 20);
 		if (strlen($houseId) > 0 && $houseId==($houseObj->HouseID)) {
 			print "<option value='".$houseObj->HouseID."' selected>".$houseName."</option>";
 		} else {
 			print "<option value='".$houseObj->HouseID."'>".$houseName."</option>";
 		} 
-
-
 	}
 
 ?>

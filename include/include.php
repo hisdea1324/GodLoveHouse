@@ -40,8 +40,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RoomObject.php");
 #require "dataFormat/ReservationObject.php";
 #require "dataFormat/BoardObject.php";
 #require "dataFormat/BoardGroup.php";
-// error_reporting(-1);
-// ini_set('display_errors', 'On');
+error_reporting(-1);
+ini_set('display_errors', 'On');
 
 function MoveToPage($page) {
 	//header("Location: ".$page);

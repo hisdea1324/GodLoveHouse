@@ -50,13 +50,12 @@ class HouseHelper {
 	#  method : return one Object
 	# ***********************************************
 	function getHouseInfoById($houseId) {
-		$house = new HouseObject();
-
-		if ($house->Open($houseId) == false) {
-			$this->m_eHandler->ignoreError("House Not Found.");
+		if ($house = new HouseObject($houseId)) {
+			return $house;
 		} 
 
-		return $house;
+		$this->m_eHandler->ignoreError("House Not Found.");
+		return null;
 	} 
 
 	function getRoomInfoById($roomId) {
@@ -72,7 +71,7 @@ class HouseHelper {
 	#  method : Return Object List
 	# ************************************************************
 	function setCondition($houseId,$regionCode,$fromDate,$toDate) {
-		$strWhere=" WHERE B.status = 'S2002' AND A.houseId = B.houseId ";
+		$strWhere = " WHERE B.status = 'S2002' AND A.houseId = B.houseId ";
 		if (strlen($houseId) > 0) {
 			$strWhere = $strWhere." AND A.houseId = '{$houseId}'";
 		} 
@@ -87,7 +86,7 @@ class HouseHelper {
 			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate <= '{$toDate}')";
 		} 
 
-		return $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function setEtcCondition($regionCode) {
@@ -95,12 +94,12 @@ class HouseHelper {
 		if (strlen($regionCode) > 0) {
 			$strWhere = $strWhere." AND B.regionCode = '{$regionCode}'";
 		} 
-		return $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
 		global $mysqli;
-		$query = "SELECT COUNT(*) AS recordCount FROM room A, house B".$this->m_StrConditionQuery;
+		$query = "SELECT COUNT(*) AS recordCount FROM room A, house B ".$this->m_StrConditionQuery;
 
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
@@ -120,26 +119,24 @@ class HouseHelper {
 
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
-				$roomInfo = new RoomObject();
-				$roomInfo->Open($row["roomId"]);
-				$rooms[] = $roomInfo;
+				$rooms[] = new RoomObject($row["roomId"]);
 			}
 		}
-
+		
 		return $rooms;
 	} 
 
 	function getHouseList($query) {
 		global $mysqli;
 
+		$houses = array();
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
-				$houseInfo = new HouseObject();
-				$houseInfo->Open($row["houseId"]);
+				$houses[] = new HouseObject($row["houseId"]);
 			}
 		}
 
-		return $houseInfo;
+		return $houses;
 	} 
 
 	function getHouseListByEtc() {
@@ -172,19 +169,19 @@ class HouseHelper {
 	function setReservationListConditionWithHouse($search,$houseId) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."'";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."'";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."'";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."'";
 				break;
 			default:
-				$m_StrConditionQuery=" AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."'";
 				break;
 		} 
 	} 
@@ -192,19 +189,19 @@ class HouseHelper {
 	function setReservationListConditionWithDate($search,$houseId,$roomId) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			default:
-				$m_StrConditionQuery=" AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 		} 
 	} 
@@ -212,19 +209,19 @@ class HouseHelper {
 	function setReservationListCondition_n($search,$houseId,$roomId) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 			default:
-				$m_StrConditionQuery=" AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 		} 
 	} 
@@ -232,19 +229,19 @@ class HouseHelper {
 	function setReservationListCondition($search) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' ";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' ";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002' ";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0002' ";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003' ";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0003' ";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004' ";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0004' ";
 				break;
 			default:
-				$m_StrConditionQuery=" AND C.reservStatus <> 'S0004' ";
+				$this->m_StrConditionQuery = " AND C.reservStatus <> 'S0004' ";
 				break;
 		} 
 	} 

@@ -51,12 +51,12 @@ function titleFormat($title,$length) {
 	return $retString;
 } 
 
-function StrFormatByLength($str,$length) {
-	if ((strlen($str) >= $length)) {
-		$retString=substr($str,0,$length-2)."‥";
+function StrFormatByLength($str, $length) {
+	if (strlen($str) >= $length) {
+		$retString = mb_substr($str, 0, $length - 2, 'UTF-8')."‥";
 	} else {
 		$retString = $str;
-	} 
+	}
 
 	return $retString;
 } 

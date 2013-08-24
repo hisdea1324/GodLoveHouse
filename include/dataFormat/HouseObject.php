@@ -29,6 +29,14 @@ class HouseObject {
 				return $this->record['houseId'];
 			case "HouseName":
 				return $this->record['houseName'];
+			case "AssocName":
+				return $this->record['assocName'];
+			case "Address1":
+				return $this->record['address1'];
+			case "Address2":
+				return $this->record['address2'];
+			case "Manager1":
+				return $this->record['manager1'];
 			case "contact1":
 			case "contact2":
 				$value = explode("-", $this->record[$name]);
