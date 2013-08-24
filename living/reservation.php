@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $regionCode = (isset($_REQUEST["region"])) ? trim($_REQUEST["region"]) : "";

@@ -1,4 +1,4 @@
-﻿<script language="JavaScript">
+<script language="JavaScript">
 if (window.XMLHttpRequest) {xmlhttp = new XMLHttpRequest();
 }
 else //internet Explore 5/6

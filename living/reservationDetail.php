@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";

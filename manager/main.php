@@ -6,13 +6,13 @@ checkAuth();
 showAdminHeader("관리툴 - 메인","","","");
 ?>
 	<div class="sub">
-	<a href="member/editForm.php?mode=addUser">회원등록</a> | 
-	<a href="member/index.php?userLv=0">전체목록</a> | 
-	<a href="member/index.php?userLv=1">일반회원</a> | 
-	<a href="member/index.php?userLv=3">선교사</a> | 
-	<a href="member/index.php?userLv=7">선교관관리자</a>	
-	</div>		
-	</div>	
+	<a href="member/editForm.php?mode=addUser">회원등록</a> |
+	<a href="member/index.php?userLv=0">전체목록</a> |
+	<a href="member/index.php?userLv=1">일반회원</a> |
+	<a href="member/index.php?userLv=3">선교사</a> |
+	<a href="member/index.php?userLv=7">선교관관리자</a>
+	</div>
+	</div>
 	<div id="wrap">
 		<div class="lSec">
 		<ul>

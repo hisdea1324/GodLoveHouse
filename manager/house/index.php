@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -159,4 +159,3 @@ if ($status == "S2002") {
 </script>	
 
 <?php } ?>
-
