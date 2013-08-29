@@ -46,7 +46,7 @@ class HouseObject {
 					return array("", "", "");
 				}
 			case "zipcode": case "Zipcode":
-				return strsub_replace($this->record['zipcode'], "-", 3, 0);
+				return substr_replace($this->record['zipcode'], "-", 3, 0);
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "roomCount": 
@@ -81,6 +81,12 @@ class HouseObject {
 			case "status": case "StatusCode":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
+			case "RoomList":
+				$rooms = array();
+				foreach ($this->mRoom as $room) {
+					$rooms[] = new RoomObject($room);
+				} 
+				return $rooms; 
 			default:
 				if (isset($this->record[$name])) {
 					return $this->record[$name];
@@ -180,7 +186,6 @@ class HouseObject {
 				$this->mDocument = $this->record["document"];
 			} 
 			
-			/*
 			$roomId = -1;
 			if ($this->record['houseId'] > -1) {
 				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
@@ -188,14 +193,12 @@ class HouseObject {
 				$stmt->execute();
 				$stmt->bind_result($roomId);
 				while ($stmt->fetch()) {
-					$room = new RoomObject($roomId);
-					$this->mRoom[] = $room;
+					$this->mRoom[] = $roomId;
 				}
    				$stmt->close();
 			}
-			*/
 		}
-	} 
+	}
 	
 	function Update() {
 		global $mysqli;
@@ -211,14 +214,14 @@ class HouseObject {
 
 			# New Data
 			$stmt->bind_param("ssssssssssssiissiisi", 
-				$this->record['assocName'], 
-				$this->record['address1'], 
-				$this->record['address2'], 
-				$this->record['zipcode'], 
-				$this->record['regionCode'], 
-				$this->record['explain'], 
-				$this->record['userId'], 
-				$this->record['manager1'], 
+				$this->record['assocName'],
+				$this->record['address1'],
+				$this->record['address2'],
+				$this->record['zipcode'],
+				$this->record['regionCode'],
+				$this->record['explain'],
+				$this->record['userId'],
+				$this->record['manager1'],
 				$this->record['contact1'], 
 				$this->record['manager2'], 
 				$this->record['contact2'], 

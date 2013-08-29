@@ -33,9 +33,7 @@ function body() {
 			<select name="room" id="room" onchange="selectRoom()">
 				<option value=''>-- 객실선택 --</option>
 <?php 
-	$rooms = $house->RoomList;
-	for ($i = 1; $i <= count($rooms); $i++) {
-		$roomInfo = $rooms[$i];
+	foreach ($house->RoomList as $roomInfo) {
 		if (trim($roomId) == trim($roomInfo->RoomID)) {
 ?>
 				<option value='<?php echo $roomInfo->RoomID;?>' selected><?php echo $roomInfo->RoomName;?></option>
@@ -200,7 +198,7 @@ function body() {
 	
 	function reserveSubmit() {
 <?php 
-if ($sessions->UserLevel <= 1) {
+if (isset($_SESSION['UserLv']) && $_SESSION['UserLv'] <= 1) {
 ?>
 			alert('선교사 혹은 선교관리자 회원이 되어야 예약이 가능합니다.');
 			return;

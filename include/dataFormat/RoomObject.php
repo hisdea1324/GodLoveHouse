@@ -165,7 +165,6 @@ class RoomObject {
 			/* close statement */
 			$stmt->close();
 			
-			
 			$imgArray = array();
 			if ($this->record['imageId1'] > 0) {
 				$imgArray[] = $this->record['imageId1'];
@@ -182,10 +181,11 @@ class RoomObject {
 			
 			if (count($imgArray) > 0) {
 				$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
+				$cnt = 0;
 				if ($result = $mysqli->query($query)) {
 				    /* Get field information for all columns */
 				    while ($finfo = $result->fetch_array()) {
-				    	$this->image[] = $finfo["name"];				    	
+				    	$this->image[$cnt++] = $finfo["name"];				    	
 				    }
 				}
 			}
@@ -206,7 +206,6 @@ class RoomObject {
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
-			print_r($this->record);
 			$stmt->bind_param("isissssiiiii", 
 				$this->record['houseId'], 
 				$this->record['roomName'], 

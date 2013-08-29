@@ -1,6 +1,6 @@
 <?php
 //TEST를 위해서 다음줄 주석 처리 나중에 다시 주석부분을 풀어야 함 
-//session_start();
+session_start();
 require_once($_SERVER['DOCUMENT_ROOT']."/include/config.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 #require "class/dbHelper.php";
