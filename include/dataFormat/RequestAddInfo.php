@@ -10,9 +10,6 @@ class RequestAddInfo {
 	protected $record = array();
 	protected $items = array();
 
-
-
-
 	public function __set($name,$value) { 
 		$this->record[$name] = $value;
 	}
@@ -23,11 +20,11 @@ class RequestAddInfo {
 
 	public function __isset($name) {
 		return isset($this->record[$name]); 
-    }
+  }
 
-    function __construct() {
+  function __construct() {
 		$this->record['reqId'] = -1;
-		$this->record['due'] = "";
+		$this->record['dueDate'] = "";
 		$this->record['nick'] = "";
 		$this->record['nation'] = "";
 		$this->record['currentCost'] = 0;
@@ -90,9 +87,15 @@ class RequestAddInfo {
 
 			$regItemColumn = array();
 			$query = "SELECT reqItemId FROM requestItem WHERE reqId = ? ";
+			
+			$stmt = $mysqli->prepare($query);
 			$stmt->bind_param("i", $value);
 			$stmt->execute();
+			$stmt->bind_result($regItemColumn);
 			
+			
+			
+			/*
 			$metaResults = $stmt->result_metadata();
 			$fields = $metaResults->fetch_fields();
 			$statementParams='';
@@ -109,7 +112,7 @@ class RequestAddInfo {
 
 			$statment = "\$stmt->bind_result($statementParams);";
 			eval($statment);
-			
+			*/
 
 
 			while($stmt->fetch()){
