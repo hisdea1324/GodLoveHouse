@@ -120,11 +120,12 @@ class SupportHelper {
 	} 
 
 	function makePagingHTML($curPage) {
+		global $mysqli;
 		$query = "SELECT COUNT(*) AS recordCount from supportInfo".$this->record["strConditionQuery"];
-		$countRS = $mysqli->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
-
+		$stmt = $mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($this->record['recordCount']);
+	
 		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $total);
 	} 
 
