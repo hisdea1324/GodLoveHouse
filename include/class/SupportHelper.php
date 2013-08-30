@@ -130,19 +130,22 @@ class SupportHelper {
 	} 
 
 	function getSupporterList($curPage) {
+		global $mysqli;
 		$topNum = $this->record["pageCount"] * $curPage;
 
 		$query = "SELECT * FROM supportInfo ".$this->record["strConditionQuery"].$this->record["strOrderQuery"]." LIMIT $topNum, ".$this->record["pageCount"];
+		$stmt = $mysqli->prepare($query);
+		$stmt->execute();
+		
+		
+		/*
 		$listRS = $mysqli->Execute($query);
-
-
-
 
 		if ($listRS->RecordCount > 0) {
 			$listRS->PageSize = $this->record["pageCount"];
 			$listRS->AbsolutePage = $curPage;
 		} 
-
+		*/
 
 		return $mysqli->Execute($query);
 	} 
@@ -159,10 +162,13 @@ class SupportHelper {
 	} 
 
 	function makePagingHTMLRequestInfo($curPage) {
+		global $mysqli;
 		$query = "SELECT COUNT(*) AS recordCount from requestInfo WHERE supportType = '03001'".$this->record["strConditionQuery"];
-		$countRS = $mysqli->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+		$stmt = $mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($this->record['recordCount']);
+		//$total = $countRS["recordCount"];
+		//$countRS = null;
 
 		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $total);
 	} 
