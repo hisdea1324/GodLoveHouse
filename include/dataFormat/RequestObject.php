@@ -29,9 +29,7 @@ class RequestObject {
 				if ((strlen($this->record["fileImage"])==0)) {
 					$this_record["fileImage"] = "noimg.gif";
 				} 
-				else {
-					$this_record["fileImage"] = "/upload/support/".$this->record["fileImage"];
-				}
+				$this_record["fileImage"] = "/upload/support/".$value;
 				break;
 
 			default :
@@ -54,17 +52,16 @@ class RequestObject {
 
 	public function __isset($name) {
 		return isset($this->record[$name]); 
-    }
+  }
 
-    function __construct() {
-    	$c_Helper = new CodeHelper();
-
+ 	function __construct() {
+    $c_Helper = new CodeHelper();
 
 		$this->record['regId'] = -1;
 		$this->record['title'] = "";
 		$this->record['explain'] = "";
 		$this->record['supportType'] = $c_Helper->getSupportCode(2);
-		$this->record['regDate'] = "";
+		$this->record['regDate'] = -1;
 		$this->record['imageId'] = -1;
 		$this->record['fileImage'] = "noimg.gif";
 	}
@@ -116,9 +113,10 @@ class RequestObject {
 				$stmt->execute();
 				$stmt->bind_result($this->record["fileImage"]);
 				$stmt->close();
-			} else {
-				$this->mDocument = $this->record["fileImage"];
 			} 
+			//else {
+			//	$this->mDocument = $this->record["fileImage"];
+			//} 
 		}
 	}
 
@@ -128,7 +126,7 @@ class RequestObject {
 
 		if ($this->record['id'] == -1) {
 			$query = "INSERT INTO requestInfo (`title`, `explain`, `supportType`, 'imageId') VALUES ";
-			$query = $query."(?, ?, ?, ?);";
+			$query = $query."(?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
 
