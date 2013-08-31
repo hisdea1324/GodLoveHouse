@@ -19,6 +19,11 @@ $order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "reqId";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
 
+
+//임시 코드 
+$CurUrl = $_SERVER['PHP_SELF'];
+
+
 //조건문 작성 
 $strWhere=makeCondition($supId,$reqId,$field,$keyword,$wait);
 
@@ -86,7 +91,7 @@ function makeCondition($supId,$reqId,$field,$keyword,$wait) {
 
 function body() {
 	global $keyword, $field;
-	global $htmlTable, $strPage;
+	global $htmlTable, $strPage, $CurUrl;
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
