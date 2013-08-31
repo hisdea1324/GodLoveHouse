@@ -2,9 +2,18 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
-$hospitalId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["hospitalId"]) : "";
+$hospitalId = (isset($_REQUEST["hospitalId"])) ? trim($_REQUEST["hospitalId"]) : "";
 $yValue = trim($_REQUEST["year"]);
 $mValue = trim($_REQUEST["month"]);
+
+$prevYear = ($yValue - 1).", ".$mValue;
+$nextYear = ($yValue + 1).", ".$mValue;
+
+$prevMon = ($mValue == 1) ? ($yValue - 1).", 12" : $yValue.", ".($mValue - 1);
+$nextMon = ($mValue == 12) ? ($yValue + 1).", 1" : $nextMon = $yValue.", ".($mValue + 1);
+
+$start_timestamp = mktime(0, 0, 0, $mValue, 1, $yValue);
+$end_timestamp = mktime(0, 0, 0, $mValue + 1, 1, $yValue);
 
 if ($roomId) {
 	$query = "SELECT * FROM reservation WHERE roomId = $roomId";
@@ -17,15 +26,6 @@ if ($roomId) {
 	$query = "";
 	exit();
 }
-
-$prevYear = ($yValue - 1).", ".$mValue;
-$nextYear = ($yValue + 1).", ".$mValue;
-
-$prevMon = ($mValue == 1) ? ($yValue - 1).", 12" : $yValue.", ".($mValue - 1);
-$nextMon = ($mValue == 12) ? ($yValue + 1).", 1" : $nextMon = $yValue.", ".($mValue + 1);
-
-$start_timestamp = mktime(0, 0, 0, $mValue, 1, $yValue);
-$end_timestamp = mktime(0, 0, 0, $mValue + 1, 1, $yValue);
 
 global $mysqli;
 $date_set = array();
