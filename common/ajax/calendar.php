@@ -42,8 +42,7 @@ if ($result = $mysqli->query($query)) {
 	}
 }
 
-$date_set[$start_timestamp] = true;
-
+//print_r($date_set);
 ?>
 <p>
 <img src='/images/board/btn_pre_02.gif' border="0" style="cursor:pointer" onclick="callPage(<?php echo $prevYear;?>);" />
@@ -79,7 +78,7 @@ $date_set[$start_timestamp] = true;
 		if ($month != $mValue) {
 			echo "<td></td>";
 		} else {
-			echo "<td class='$day_of_week' $select>$day</td>\n";
+			echo "<td class='$day_of_week $select'>$day</td>\n";
 		}
 		
 		if ($day_of_week == "sat") {
