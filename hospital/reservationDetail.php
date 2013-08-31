@@ -149,10 +149,10 @@ function body() {
 	}
 	
 	function callPage(y, m) {
-		var url = 'ajax.php?mode=getCalendar&hospitalId=<?php echo $hospitalId;?>&year='+y+'&month='+m;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar]);
+		var url = '/common/ajax/calendar.php?hospitalId=<?php echo $hospitalId;?>&year='+y+'&month='+m;
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
 	}
-
+	
 	function insertCalendar(reqResult) {
 		var addHtml = reqResult.responseText;
 		document.getElementById("reservationCal").innerHTML = addHtml;

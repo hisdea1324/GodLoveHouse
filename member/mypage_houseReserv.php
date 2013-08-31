@@ -377,8 +377,8 @@ function body() {
 		}
 		
 		function callPage(y, m) {
-				var url = 'ajax.php?mode=getCalendar&roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
-				var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar]);
+			var url = '/common/ajax/calendar.php?roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
+			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
 		}
 
 		function insertCalendar(reqResult) {
