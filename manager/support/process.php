@@ -2,44 +2,46 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
+
 
 switch (($mode)) {
 	case "editRequest":
-editRequest();
+		editRequest();
 		break;
 	case "deleteRequest":
-deleteRequest();
+		deleteRequest();
 		break;
 	case "editRequestDetail":
-editRequestDetail();
+		editRequestDetail();
 		break;
 	case "deleteRequestDetail":
-deleteRequestDetail();
+		deleteRequestDetail();
 		break;
 	case "statusChange":
-statusChange();
+		statusChange();
 		break;
 } 
 
 function editRequest() {
 	$requestObj = new RequestObject();
 
-	$supportType = $_REQUEST["supportType"];
-	$requestObj->RequestID = $_REQUEST["reqId"];
-	$requestObj->SupportType = $supportType;
-	$requestObj->Title = $_REQUEST["title"];
-	$requestObj->Explain = $_REQUEST["explain"];
-	$requestObj->ImageID = $_REQUEST["idImageFile"];
+	$supportType = (isset($_REQUEST["supportType"])) ? trim($_REQUEST["supportType"]) : "";
+	$requestObj->reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : -1;
+	$requestObj->supportType = $supportType;
+	$requestObj->title = (isset($_REQUEST["title"])) ? trim($_REQUEST["title"]) : "";
+	$requestObj->explain = (isset($_REQUEST["explain"])) ? trim($_REQUEST["explain"]) : "";
+	$requestObj->imageId = (isset($_REQUEST["idImageFile"])) ? trim($_REQUEST["idImageFile"]) : -1;
 	$requestObj->Update();
+	
 
 	switch (($supportType)) {
 		case "03001":
 			$requestAdd = new RequestAddInfo();
-			$requestAdd->RequestID = $requestObj->RequestID;
-			$requestAdd->UserID = $_REQUEST["userId"];
-			$requestAdd->Due = $_REQUEST["dueDate"];
-			$requestAdd->NationCode = $_REQUEST["nationCode"];
+			$requestAdd->reqId = $requestObj->reqId;
+			$requestAdd->userID = (isset($_REQUEST["userId"])) ? trim($_REQUEST["userId"]) : -1;
+			$requestAdd->dueDate = (isset($_REQUEST["dueDate"])) ? trim($_REQUEST["dueDate"]) : -1;
+			$requestAdd->nationCode = (isset($_REQUEST["nationCode"])) ? trim($_REQUEST["nationCode"]) : "";
 			$requestAdd->Update();
 			$retURL="index.php";
 			break;
@@ -64,11 +66,13 @@ function editRequest() {
 } 
 
 function deleteRequest() {
-	$supportType = trim($_REQUEST["supportType"]);
+	$supportType = (isset($_REQUEST["supportType"])) ? trim($_REQUEST["supportType"]) : "";
+	
 	switch (($supportType)) {
 		case "03001":
 			$requestAdd = new RequestAddInfo();
-			$requestAdd->Open($_REQUEST["reqId"]);
+			$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : -1;
+			$requestAdd->Open($reqId);
 			$requestAdd->Delete();
 			$retURL="index.php";
 			break;
@@ -79,14 +83,15 @@ function deleteRequest() {
 			$retURL="service.php";
 			break;
 		default:
-			print "에러";
+			print "Error";
 			exit();
 
 			break;
 	} 
 
 	$requestObj = new RequestObject();
-	$requestObj->Open($_REQUEST["reqId"]);
+	$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : -1;
+	$requestObj->Open($reqId);
 	$requestObj->Delete();
 
 	$requestObj = null;
@@ -98,12 +103,14 @@ function deleteRequest() {
 
 function editRequestDetail() {
 	$requestItemObj = new RequestItemObject();
-	$requestItemObj->RequestItemID = $_REQUEST["id"];
-	$requestItemObj->RequestID = $_REQUEST["reqId"];
-	$requestItemObj->RequestItem = $_REQUEST["item"];
-	$requestItemObj->Descript = $_REQUEST["descript"];
-	$requestItemObj->Cost = $_REQUEST["cost"];
-	$requestItemObj->Status = $_REQUEST["status"];
+	
+	
+	$requestItemObj->reqItemId = (isset($_REQUEST["reqItemId"])) ? trim($_REQUEST["reqItemId"]) : -1;
+	$requestItemObj->reqId = (isset($_REQUEST["reqItemId"])) ? trim($_REQUEST["reqItemId"]) : -1;
+	$requestItemObj->item = (isset($_REQUEST["item"])) ? trim($_REQUEST["item"]) : "";
+	$requestItemObj->descript = (isset($_REQUEST["descript"])) ? trim($_REQUEST["descript"]) : "";
+	$requestItemObj->cost = (isset($_REQUEST["cost"])) ? trim($_REQUEST["cost"]) : 0;
+	$requestItemObj->status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "";
 	$requestItemObj->Update();
 
 	header("Location: "."subRequest.php?reqId=".$requestItemObj->RequestID);
@@ -113,16 +120,20 @@ function editRequestDetail() {
 
 function deleteRequestDetail() {
 	$requestItemObj = new RequestItemObject();
-	$requestItemObj->Open($_REQUEST["id"]);
+	$idx = (isset($_REQUEST["id"])) ? trim($_REQUEST["id"]) : -1;
+	$requestItemObj->Open($idx);
 	$requestItemObj->Delete();
 
-	header("Location: "."subRequest.php?reqId=".$requestItemObj->RequestID);
+	header("Location: "."subRequest.php?reqId=".$requestItemObj->reqItemId);
 } 
 
 function statusChange() {
-	$support = new SupportObject();
-	$support->OpenWithSupId($_REQUEST["supId"]);
+	$supId = (isset($_REQUEST["supId"])) ? trim($_REQUEST["supId"]) : -1;
+	$wait = (isset($_REQUEST["wait"])) ? trim($_REQUEST["wait"]) : 0;
+	
+	$support = new SupportObject();	
+	$support->OpenWithSupId($supId);
 	$support->ChangeStatus();
-	header("Location: "."supportList.php?wait=".$_REQUEST["wait"]);
+	header("Location: "."supportList.php?wait=".$wait);
 } 
 ?>
