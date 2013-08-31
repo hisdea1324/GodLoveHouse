@@ -4,11 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $mode = trim($_REQUEST["mode"]);
 switch ($mode) {
 	case "getCalendar":
-	getCalendar();
+		getCalendar();
 		break;
 	default:
 		break;
-} 
+}
 
 function getCalendar() {
 	$roomId = trim($_REQUEST["roomId"]);
@@ -17,51 +17,36 @@ function getCalendar() {
 
 	$prevYear = ($yValue - 1).", ".$mValue;
 	$nextYear = ($yValue + 1).", ".$mValue;
-	if ($mValue == 1) {
-		$prevMon=($yValue-1).", 12";
-	} else {
-		$prevMon = $yValue.", ".($mValue-1);
-	} 
+	
+	$prevMon = ($mValue == 1) ? ($yValue - 1).", 12" : $yValue.", ".($mValue - 1);
+	$nextMon = ($mValue == 12) ? ($yValue + 1).", 1" : $nextMon = $yValue.", ".($mValue + 1);
 
-	if ($mValue == 12) {
-		$nextMon = ($yValue + 1).", 1";
-	} else {
-		$nextMon = $yValue.", ".($mValue + 1);
-	} 
-
-	$lastDay = getLastDay($yValue,$mValue);
-	$start = strftime("%w", $yValue."-".$mValue."-1") + 1;
-
-	$monthStart = $yValue."-".$mValue."-1";
-	$monthEnd = $yValue."-".$mValue."-".$lastDay;
+	$start_timestamp = mktime(0, 0, 0, $mValue, 1, $yValue);
+	$end_timestamp = mktime(0, 0, 0, $mValue + 1, 1, $yValue);
+	
+	global $mysqli;
+	$date_set = array();
+	
 	$query = "SELECT * FROM reservation WHERE roomId = ".$roomId;
-	$query = $query." AND endDate >= '".$monthStart."' AND startDate <= '".$monthEnd."' AND reservStatus <> 'S0004'";
-
-	for ($i=1; $i<=32; $i = $i+1) {
-		$dateSet[$i]=true;
-	}
-
-	while (false) {
-		for ($i = substr($dateRS["startDate"],strlen($dateRS["startDate"])-(2)); $i <= substr($dateRS["endDate"],strlen($dateRS["endDate"])-(2)); $i++) {
-			$dateSet[$i]=false;
-
+	$query = $query." AND endDate >= $start_timestamp AND startDate <= $end_timestamp AND reservStatus <> 'S0004'";
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_array()) {
+			$start = $row["startDate"];
+			$end = $row["endDate"];
+			
+			while ($start <= $end) {
+				$date_set[$start] = true;
+				$start += 24 * 60 * 60;
+			}
 		}
-
-		$dateRS->MoveNext;
-	} 
-	$dateRS = null;
-
+	}
+	
+	$date_set[$start_timestamp] = true;
 ?>
 	<p>
 	<img src='../images/board/btn_pre_02.gif' border="0" style="cursor:pointer" onclick="callPage(<?php echo $prevYear;?>);" />
 	<img src="../images/board/btn_pre_01.gif" border="0" class="r15" style="cursor:pointer" onclick="callPage(<?php echo $prevMon;?>);" />
-<?php
-	if ((strlen($mValue)<2)) {
-		print $yValue.".0".$mValue;
-	} else {
-		print $yValue.".".$mValue;
-	} 
-?>
+	<?php echo date('Y-m', $start_timestamp + 7 * 86400);?>
 	<img src="../images/board/btn_next_01.gif" border="0" class="l15" style="cursor:pointer" onclick="callPage(<?php echo $nextMon;?>);" />
 	<img src='../images/board/btn_next_02.gif' border="0" style="cursor:pointer" onclick="callPage(<?php echo $nextYear;?>);" />
 	</p>
@@ -75,59 +60,34 @@ function getCalendar() {
 	<th>금</th>
 	<th class="sat th02">토</th>
 	</tr>
-<?php 
-	$vDate=1;
-	for ($i=1; $i<=6; $i = $i+1) {
-		print "<tr>".chr(13);
-		for ($j=1; $j<=7; $j = $j+1) {
-			if (($j==1)) {
-				$strClass="sun";
-			} else if (($j==7)) {
-				$strClass="sat";
-			} else {
-				$strClass="";
-			} 
-
-			if (($i==1 && $j<$start)) {
-				print "<td>&nbsp;</td>".chr(13);
-			} else if (($vDate <= $lastDay)) {
-				if (($dateSet[$vDate]==false)) {
-					$strClass=" class = '".$strClass." select'";
-				} else {
-					$strClass=" class = '".$strClass."'";
-				} 
-
-				print "<td".$strClass.">".$vDate."</td>".chr(13);
-				$vDate = $vDate+1;
-			} else {
-				print "<td>&nbsp;</td>".chr(13);
-			}
+<?php
+	$start_timestamp = $start_timestamp - date("w", $start_timestamp) * 86400;
+	while ($start_timestamp < $end_timestamp) {
+		$day_of_week = strtolower(date("D", $start_timestamp));
+		$select = (isset($date_set[$start_timestamp])) ? "select" : "";
+		
+		$day = date("d", $start_timestamp);
+		$month = date("m", $start_timestamp);
+		
+		if ($day_of_week == "sun") {
+			echo "<tr>\n";
 		}
-		print "</tr>".chr(13);
-	}
 
+		if ($month != $mValue) {
+			echo "<td></td>";
+		} else {
+			echo "<td class='$day_of_week' $select>$day</td>\n";
+		}
+		
+		if ($day_of_week == "sat") {
+			echo "</tr>\n";
+		}
+		
+		$start_timestamp += 86400;
+	}
 ?>
 	</table>
 	<span><img src="../images/board/txt_select.gif"></span>
 <?php 
-} 
-
-function getLastDay($yValue,$mValue) {
-	$last = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-
-	if (($yValue % 4 == 0)) {
-		$leap = true;
-	} 
-	if (($yValue % 100 == 0)) {
-		$leap = false;
-	} 
-	if (($yValue % 400 == 0)) {
-		$leap = true;
-	} 
-	if (($leap == true)) {
-		$last[2] = 29;
-	} 
-
-	return $last[$mValue - 1];
 } 
 ?>
