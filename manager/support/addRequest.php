@@ -99,7 +99,7 @@ function body() {
 			<dt>
 				마감일
 			<dd>
-				<input type="text" name="dueDate" size="20" maxlength=30 value="<?php echo $requestAdd->due;?>" /> (특별후원일 경우만 입력, 입력형식:2010-04-01)
+				<input type="text" name="dueDate" size="20" maxlength=30 value="<?php echo $requestAdd->dueDate;?>" /> (특별후원일 경우만 입력, 입력형식:2010-04-01)
 			<dt>
 				선교지코드
 			<dd>
