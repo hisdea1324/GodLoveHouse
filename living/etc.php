@@ -1,15 +1,14 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$regionCode = trim($_REQUEST["region"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+$regionCode = (isset($_REQUEST["region"])) ? trim($_REQUEST["region"]) : "";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
 $c_Helper = new CodeHelper();
 $h_Helper = new HouseHelper();
-$h_Helper->PAGE_UNIT=10; //하단 페이징 단위 $h_Helper->PAGE_COUNT=7; //한페이지에 보여줄 리스트 갯수 $h_Helper->setEtcCondition($regionCode); // 조건문 작성
+$h_Helper->PAGE_UNIT = 10; //하단 페이징 단위 
+$h_Helper->PAGE_COUNT = 7; //한페이지에 보여줄 리스트 갯수 
+$h_Helper->setEtcCondition($regionCode); // 조건문 작성
 $strPage = $h_Helper->makePagingHTML($page);
 $codes = $c_Helper->getLocalCodeList();
 $houses = $h_Helper->getHouseListByRegion($regionCode);
@@ -20,6 +19,9 @@ body();
 showFooter();
 
 function body() {
+	global $page, $strPage;
+	global $codes, $rooms, $regionCode;
+	global $h_Helper, $c_Helper;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -29,9 +31,8 @@ function body() {
 				<select name="region" id="region" onchange="selectRegion()">
 					<option value=''>-- 지역선택 --</option>
 <?php
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
-		$codeObj = $codes[$i];
-		if (($regionCode == $codeObj->Code)) {
+	foreach ($codes as $codeObj) {
+		if ($regionCode == $codeObj->Code) {
 			print "<option value='".$codeObj->Code."' selected>".$codeObj->Name."</option>";
 		} else {
 			print "<option value='".$codeObj->Code."'>".$codeObj->Name."</option>";
@@ -59,7 +60,7 @@ function body() {
 						<th class="th01">내용</th>
 					</tr>
 <?php
-	if ((count($rooms)==0)) {
+	if (count($rooms) == 0) {
 ?>
 					<tr>
 						<td colspan="4">
@@ -68,40 +69,32 @@ function body() {
 					</tr>
 <?php
 	} else {
-		for ($i=0; $i<=count($rooms)-1; $i = $i+1) {
-			$roomObj = $rooms[$i];
-			$houseObj = $h_Helper->getHouseInfoById;
-			$roomObj->HouseID;
+		$i = -1;
+		foreach ($rooms as $roomObj) {
+			$i++;
+			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
-					<tr>
-				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT)+($i+1);?></td>
-						<td>
+			<tr>
+				<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
+				<td>
+					<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?>">
+					<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
+							<td>
+					<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?>">
+					<?php echo $houseObj->HouseName;?><br />(<?php echo $roomObj->RoomName;?>)
+					</a>
+				</td>
+				<td class="ltd">
+					<ul class="intro">
+						<li><b>운영</b> : <?php echo $houseObj->AssocName;?></li>
+						<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1.$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1." ".$houseObj->Address2;?></a></li>
+						<li><b>담당자</b> : <?php echo $houseObj->Manager1;?></li>
+						<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
+					</ul>
+				</td>
+			</tr>
 <?php 
-			if ((strlen($toDate)>0)) {
-				$searchDateValue = $searchDateValue."&toDate=".$toDate;
-			}
-			if ((strlen($fromDate)>0)) {
-				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
-			}
-		} 
-?>
-				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
-				<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
-						<td>
-				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
-				<?php echo $houseObj->HouseName;?><br />(<?php echo $roomObj->RoomName;?>)
-				</a>
-			</td>
-						<td class="ltd">
-							<ul class="intro">
-								<li><b>운영</b> : <?php echo $houseObj->AssocName;?></li>
-								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1.$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1." ".$houseObj->Address2;?></a></li>
-								<li><b>담당자</b> : <?php echo $houseObj->Manager1;?></li>
-								<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
-							</ul>
-						</td>
-					</tr>
-<?php 
+		}
 	}
 ?>
 				</table>

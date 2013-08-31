@@ -10,7 +10,7 @@ $page = (isset($_REQUEST["region"])) ? trim($_REQUEST["page"]) : 1;
 $c_Helper = new CodeHelper();
 $h_Helper = new HouseHelper();
 $h_Helper->PAGE_UNIT = 10; #하단 페이징 단위
-$h_Helper->PAGE_COUNT=7; #한페이지에 보여줄 리스트 갯수 
+$h_Helper->PAGE_COUNT = 7; #한페이지에 보여줄 리스트 갯수 
 $h_Helper->setCondition($houseId, $regionCode, $fromDate, $toDate); # 조건문 작성
 $strPage = $h_Helper->makePagingHTML($page);
 $codes = $c_Helper->getLocalCodeList();
