@@ -99,6 +99,7 @@ function body() {
 				<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
 						<td>
 <?php 
+			$searchDateValue = "";
 			if (strlen($toDate) > 0) {
 				$searchDateValue = $searchDateValue."&toDate=".$toDate;
 			}
