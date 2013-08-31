@@ -33,7 +33,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");
 #require "dataFormat/SupportItemObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestAddInfo.php");
-#require "dataFormat/RequestItemObject.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestItemObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HouseObject.php");
 #require "dataFormat/HospitalObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RoomObject.php");

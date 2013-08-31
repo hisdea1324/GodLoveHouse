@@ -2,8 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+
+
 $supportType = (isset($_REQUEST["supportType"])) ? trim($_REQUEST["supportType"]) : "";
-$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : 0;
+$reqId = (isset($_REQUEST["reqId"])) ? trim($_REQUEST["reqId"]) : -1;
 $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
@@ -12,10 +14,13 @@ $gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
 
 $c_Helper = new CodeHelper();
 $s_Helper = new SupportHelper();
-$requestObj = $s_Helper->getRequestInfoByReqID($reqId);
+//$requestObj = $s_Helper->getRequestInfoByReqID($reqId);
+//나중에 위에 헬퍼를 이용해서 바꾸어야함 
+$requestObj = new RequestObject($reqId);
 $requestAdd = $s_Helper->getRequestAddInfoByReqID($reqId);
 $nationCodes = $c_Helper->getNationCodeList();
 $supportCodes = $c_Helper->getSupportCodeList();
+
 
 checkAuth();
 
@@ -25,6 +30,7 @@ showAdminFooter();
 
 function body() {
 	global $field, $gotoPage, $requestObj, $keyword, $supportCodes, $requestAdd, $nationCodes;
+	
 ?>
 	<div class="sub">
 	<a href="addRequest.php">후원추가</a> | 
