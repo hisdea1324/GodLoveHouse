@@ -29,7 +29,7 @@ class RequestObject {
 				if ((strlen($this->record["fileImage"])==0)) {
 					$this_record["fileImage"] = "noimg.gif";
 				} 
-				$this_record["fileImage"] = "/upload/support/".$value;
+				$this_record["fileImage"] = "/upload/support/".$m_fileImage;
 				break;
 
 			default :
@@ -53,8 +53,17 @@ class RequestObject {
 	public function __isset($name) {
 		return isset($this->record[$name]); 
   }
+  
+  
+  function __construct($idx = -1) {
+    	if ($idx == -1) {
+    		$this->initialize();
+    	} else {
+    		$this->Open($idx);
+    	}
+	}
 
- 	function __construct() {
+ 	function initialize() {
     $c_Helper = new CodeHelper();
 
 		$this->record['regId'] = -1;
