@@ -34,6 +34,20 @@ function editRequest() {
 	$requestObj->imageId = (isset($_REQUEST["idImageFile"])) ? trim($_REQUEST["idImageFile"]) : -1;
 	$requestObj->Update();
 	
+	/*
+	echo "<br>";
+	echo $supportType;
+	echo "<br>";
+	echo $requestObj->reqId;
+	echo "<br>";
+	echo $requestObj->title;
+	echo "<br>";
+	echo $requestObj->explain;
+	echo "<br>";
+	echo $requestObj->imageId;
+	echo "<br>";
+	exit();
+	*/
 
 	switch (($supportType)) {
 		case "03001":
