@@ -8,7 +8,7 @@ $keyword = trim($_REQUEST["keyword"]);
 $page = trim($_REQUEST["page"]);
 $groupId = trim($_REQUEST["groupId"]);
 
-if ((strlen($page)==0)) {
+if (strlen($page) == 0) {
 	$page=1;
 } 
 
@@ -63,6 +63,8 @@ $b_Helper = null;
 
 
 function body() {
+	global $groupId, $keyword, $field, $page;
+	global $strPage, $boardList;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -71,8 +73,8 @@ function body() {
 		<input type="hidden" name="groupId" id="groupId" value="<?php echo $groupId;?>">
 			<div id="search"> <img src="../images/board/img_search.gif" class="r10" align="absmiddle">
 				<select name="field" id="field">
-					<option value="title" <?php if (($field=="title")) { print "selected"; } ?>>제목</option>
-					<option value="userId" <?php if (($field=="userId")) { print "selected"; } ?>>작성자</option>
+					<option value="title" <?php if ($field == "title") { print "selected"; } ?>>제목</option>
+					<option value="userId" <?php if ($field == "userId") { print "selected"; } ?>>작성자</option>
 				</select>
 				<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?php echo $keyword;?>">
 				<img src="../images/board/btn_search.gif" border="0" align="absmiddle" onclick="frmSubmit();" style="cursor:hand"></div>
@@ -94,20 +96,20 @@ function body() {
 						<th class="th01">조회</th>
 					</tr>
 <?php 
-	if ((count($boardList)==0)) {
+	if (count($boardList) == 0) {
 ?>
 					<tr>
 						<td colspan="5">작성된 글이 없습니다.</td>
 					</tr>
 <?php 
 	} else {
-		$num=count($boardList);
+		$num = count($boardList);
 		$remain = $b_Helper->TOTAL_COUNT%$b_Helper->PAGE_COUNT;
 		if (($remain==0)) {
 			$remain = $b_Helper->PAGE_COUNT;
 		}
-		$num=(round($b_Helper->TOTAL_COUNT / $b_Helper->PAGE_COUNT,5)-$page+1)*$b_Helper->PAGE_COUNT+$remain;
-		for ($i=0; $i<=count($boardList)-1; $i = $i+1) {
+		$num = (round($b_Helper->TOTAL_COUNT / $b_Helper->PAGE_COUNT,5) - $page + 1) * $b_Helper->PAGE_COUNT + $remain;
+		for ($i = 0; $i <= count($boardList) - 1; $i++) {
 			$boardObj = $boardList[$i];
 ?>
 				<tr>
@@ -118,11 +120,8 @@ function body() {
 				<td><?php echo $boardObj->CountView;?></td>
 				</tr>
 				<?php 
-
 		}
-
 	} 
-
 ?>
 				</table>
 			</div>

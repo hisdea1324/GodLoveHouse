@@ -1,9 +1,9 @@
 <?php
 require "include/include.php";
 
-$mode = trim($_REQUEST["mode"]);
+$mode = (trim($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
 
-switch (($mode)) {
+switch ($mode) {
 	case "board":
 		shortList();
 		break;
@@ -12,22 +12,19 @@ switch (($mode)) {
 } 
 
 function shortList() {
-	global $Application;
+	global $Application, $mysqli;
 	
-	$groupId = trim($_REQUEST["groupId"]);
+	$groupId = (trim($_REQUEST["groupId"])) ? trim($_REQUEST["groupId"]) : "";
 	$query = "SELECT top 3 * FROM board WHERE groupId = '".$groupId."' ORDER BY regDate DESC";
 
-	if ($listRS->EOF || $listRS->BOF) {
-		print "<li>작성된 글이 없습니다.</li>";
-	} else {
-		while(false) {
-			print "<li><span>".dateFormat($listRS["regDate"], 1)."</span> ";
-			print "<a href='".$Application["WebRoot"]."community/view.php?groupId=".$groupId."&id=".$listRS["id"]."'>".$titleFormat[$listRS["title"]][18];
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetched_array()) {
+			print "<li><span>".dateFormat($row["regDate"], 1)."</span> ";
+			print "<a href='http://".$_SERVER['SERVER_NAME']."/community/view.php?groupId=".$groupId."&id=".$row["id"]."'>".titleFormat($row["title"], 18);
 			print "</a></li>";
-			$listRS->MoveNext;
-		} 
-	} 
-
-	$listRS = null;
+		}
+	} else {
+		print "<li>작성된 글이 없습니다.</li>";
+	}
 } 
 ?>
