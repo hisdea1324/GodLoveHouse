@@ -13,8 +13,6 @@ function alert($msg) {
 } 
 
 function alertBack($msg) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Alert & History Back</title></head><body>
 	<script language="javascript">

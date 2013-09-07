@@ -14,7 +14,7 @@ $codeStatus = $c_Helper->getHouseStatusCodeList();
 $h_helper = new HouseHelper();
 $houseObj = $h_helper->getHouseInfoById($houseId);
 
-if ($_SESSION["UserID"] <> houseObj.UserID) {
+if (!isset($_SESSION["UserID"]) || $_SESSION["UserID"] <> houseObj.UserID) {
 	alertBack("본인 소유의 선교관이 아닙니다.");
 }
 
