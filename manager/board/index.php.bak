@@ -2,16 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-
-//페이징 갯수 
-$PAGE_COUNT=15;
-$PAGE_UNIT=10;
-
-
-$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 checkAuth();
-$topNum = $PAGE_COUNT * ($page - 1);
+
 $query = "select * from boardGroup";
+$listRS = $db->Execute($query);
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -20,13 +14,15 @@ $objTable->setColumn(array("GroupId","관리자아이디","읽기권한","쓰기
 $objTable->setField(array("groupId","managerId","authReadLv","authWriteLv","countList","name"));
 $objTable->setKeyValue(array("groupId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($query);
+$htmlTable = $objTable->getTable($listRS);
+$htmlPaging = $objTable->displayListPage();
 
 showAdminHeader("관리툴 - 게시판관리","","","");
 //call showAdminMenu()
 body();
 showAdminFooter();
 
+$listRS = null;
 
 $objTable = null;
 
