@@ -81,7 +81,7 @@ class RequestObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT 'reqId', 'title', 'explain', 'supportType', 'regDate', 'imageId' FROM requestInfo WHERE 'reqId' = ? ";
+		$query = "SELECT `reqId`, `title`, `explain`, `supportType`, `regDate`, `imageId` FROM requestInfo WHERE `reqId` = ? ";
 
 		if ($stmt = $mysqli->prepare($query)) {
 
@@ -117,7 +117,7 @@ class RequestObject {
 
 
 			if ($this->record['imageId'] > 0) {
-				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
+				$stmt = $mysqli->prepare("SELECT `name` FROM attachFile WHERE `id` = ?");
 				$stmt->bind_param("i", $this->record['imageId']);
 				$stmt->execute();
 				$stmt->bind_result($this->record["fileImage"]);
