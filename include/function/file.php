@@ -1,21 +1,17 @@
 <?php 
-function readHtmlFile($fileName) {
-	global $Application;
-	
+function readHtmlFile($fileName) {	
 	$readString="";
 	# $fs is of type "Scripting.FileSystemObject"
-	$objFile=fopen($Application["FileRoot"].$fileName,"r");
-	while(feof($objFile)!=true) {
+	$objFile = fopen($_SERVER["DOCUMENT_ROOT"].$fileName,"r");
+	while (feof($objFile) != true) {
 		$readString = $readString.fgets($objFile).chr(13);
 	} 
 	return $readString;
 } 
 
 function makeExcelFile($fileName,$objrs) {
-	global $Application;
-
 	# $fs is of type "Scripting.FileSystemObject"
-	$objFile=fopen($Application["FileRoot"]."upload\\board".$fileName,"r");
+	$objFile = fopen($_SERVER["DOCUMENT_ROOT"]."/upload/board".$fileName,"r");
 
 	$tf->write("BTS_ID,PCX_ID,BSC_NO,BTS_NO,BTS_NAME,CLUSTER_NAME,ADDR_PROV,ADDR_SI,ADDR_GU,ADDR_DONG,ADDR_ADDR,BLD_NAME,FA_COUNT,SECTOR_COUNT,PN_A,PN_B,PN_G,BTS_TYPE,LATITUDE,LONGITUDE,BTS_MAKER,ANGLE_A,ANGLE_B,ANGLE_G,PRIVATE_LINE,SID");
 	$tf->writeline("");

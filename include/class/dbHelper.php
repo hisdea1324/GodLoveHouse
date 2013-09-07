@@ -9,12 +9,13 @@ class dbHelper {
 
 	#클래스 생성자	
 	function __construct() {
-		global $Application;
 		$this->mysqli = null;
-		$this->m_host = $Application["DBSource"];
-		$this->m_name = $Application["DBName"];
-		$this->m_user = $Application["DBUser"];
-		$this->m_pass = $Application["DBPass"];
+		/*
+		$this->m_host = 
+		$this->m_name = 
+		$this->m_user = 
+		$this->m_pass = 
+		*/
 	} 
 
 	#클래스 소멸자
