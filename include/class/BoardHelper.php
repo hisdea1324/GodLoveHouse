@@ -15,25 +15,6 @@ class BoardHelper {
 
 	# property
 	#***********************************************
-	function PAGE_UNIT() {
-		return $this->m_pageUnit;
-	} 
-
-	function PAGE_COUNT() {
-		return $this->m_pageCount;
-	} 
-
-	function TOTAL_COUNT() {
-		return $this->m_total;
-	} 
-
-	function PAGE_UNIT($value) {
-		$this->m_pageUnit = $value;
-	} 
-
-	function PAGE_COUNT($value) {
-		$this->m_pageCount = $value;
-	} 
 
 	function __construct() {
 		$this->m_eHandler = new ErrorHandler();
@@ -88,37 +69,31 @@ class BoardHelper {
 	} 
 
 	function makePagingHTML($curPage) {
+		global $mysqli;
 		$query = "SELECT COUNT(*) AS recordCount from board".$this->m_StrConditionQuery;
-		$countRS = $mysqli->Execute($query);
-		$this->m_total = $countRS["recordCount"];
+		if ($result = $mysqli->query($query)) {
+			while($row = $result->fetch_array()) {
+				$this->m_total = $row["recordCount"];
+			}
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $this->m_total);
 	} 
 
 	function getBoardListWithPaging($curPage) {
-		$topNum = $htis->m_pageCount * $curPage;
+		global $mysqli;
+		
+		$topNum = $this->m_pageCount * $curPage;
+		$board = array();
 
-		$query = "SELECT top {$topNum} * FROM board ".$this->m_StrConditionQuery." ORDER BY answerId DESC, answerNum DESC";
-		$boardRS = $mysqli->Execute($query);
-		if ($boardRS->RecordCount > 0) {
-			$boardRS->PageSize = $this->m_pageCount;
-			$boardRS->AbsolutePage = $curPage;
-		} 
-
-		$retValue = 0;
-		if (!$boardRS->Eof && !$boardRS->Bof) {
-			while(!($boardRS->EOF || $boardRS->BOF)) {
-				$board = new BoardObject();
-				$board->Open($boardRS["id"]);
-				$index = count($retValue);
-				$retValue = $index;
-				echo $board;
-
-				$boardRS->MoveNext;
-			} 
-		} 
-
-		return $retValue;
+		$query = "SELECT * FROM board {$this->m_StrConditionQuery} ORDER BY answerId DESC, answerNum DESC LIMIT {$topNum}, {$this->m_pageCount}";
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$board[] = new BoardObject($row["id"]);
+			}
+		}
+		
+		return $board;
 	} 
 } 
 ?>

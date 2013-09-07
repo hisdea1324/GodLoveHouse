@@ -7,7 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/ErrorHandler.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/tableBuilder.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/DataManager.php");
-#require "class/BoardHelper.php";
+//require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
 #require "class/CommentHelper.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/SupportHelper.php");
