@@ -1,14 +1,13 @@
 ﻿<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/HospitalHelper.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HospitalObject.php");
 
-$regionCode = trim($_REQUEST["region"]);
-$hospitalId = trim($_REQUEST["hospitalId"]);
-$fromDate = trim($_REQUEST["fromDate"]);
-$toDate = trim($_REQUEST["toDate"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+$regionCode = isset($_REQUEST["region"]) ? trim($_REQUEST["region"]) : "";
+$hospitalId = isset($_REQUEST["region"]) ? trim($_REQUEST["hospitalId"]) : "";
+$fromDate = isset($_REQUEST["region"]) ? trim($_REQUEST["fromDate"]) : "";
+$toDate = isset($_REQUEST["region"]) ? trim($_REQUEST["toDate"]) : "";
+$page = isset($_REQUEST["region"]) ? trim($_REQUEST["page"]) : 1;
 
 $c_Helper = new CodeHelper();
 $h_Helper = new HospitalHelper();
@@ -24,6 +23,10 @@ body();
 showFooter();
 
 function body() {
+	global $fromDate, $toDate;
+	global $codes, $regionCode;
+	global $hospitals, $strPage, $page;
+	global $h_Helper;
 ?>
 		<!-- # content -->
 		<div id="content">
@@ -33,9 +36,9 @@ function body() {
 				<select name="region" id="region" onchange="selectRegion()">
 					<option value=''>-- 지역선택 --</option>
 <?php 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
+	for ($i = 0; $i <= count($codes)-1; $i++) {
 		$codeObj = $codes[$i];
-		if (($regionCode == $codeObj->Code)) {
+		if ($regionCode == $codeObj->Code) {
 			print "<option value='".$codeObj->Code."' selected>".$codeObj->Name."</option>";
 		} else {
 			print "<option value='".$codeObj->Code."'>".$codeObj->Name."</option>";
@@ -66,7 +69,7 @@ function body() {
 						<th class="th01">내용</th>
 					</tr>
 <?php
-	if ((count($hospitals)==0)) {
+	if (count($hospitals) == 0) {
 ?>
 					<tr>
 						<td colspan="4">
@@ -75,17 +78,17 @@ function body() {
 					</tr>
 <?php
 	} else {
-		for ($i=0; $i<=count($hospitals)-1; $i = $i+1) {
+		for ($i = 0; $i <= count($hospitals) - 1; $i++) {
 			$hospitalObj = $hospitals[$i];
 ?>
 					<tr>
-				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT)+($i+1);?></td>
+				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT) + ($i + 1);?></td>
 						<td>
 <?php 
-			if ((strlen($toDate)>0)) {
+			if (strlen($toDate) > 0) {
 				$searchDateValue = $searchDateValue."&toDate=".$toDate;
 			}
-			if ((strlen($fromDate)>0)) {
+			if (strlen($fromDate) > 0) {
 				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
 			}
 ?>

@@ -11,14 +11,103 @@ class HospitalObject {
 	protected $record = array();
 	protected $image = array();
 
-	public function __set($name,$value) { 
-		$this->record[$name] = $value;
+	public function __set($name, $value) { 
+		switch ($name) {
+			case "contact1":
+			case "contact2":
+			case "zipcode":
+				$this->record[$name] = join("-", $value); 
+				break;
+			default:
+				$this->record[$name] = $value; 
+				break;
+		}
 	}
-
+	
 	public function __get($name) { 
-		return $this->record[$name];
+		switch ($name) {
+			case "HospitalID":
+				return $this->record['hospitalId'];
+			case "HospitalName":
+				return $this->record['hospitalName'];
+			case "AssocName":
+				return $this->record['assocName'];
+			case "Address1":
+				return $this->record['address1'];
+			case "Address2":
+				return $this->record['address2'];
+			case "Manager1":
+				return $this->record['manager1'];
+			case "UserID":
+				return $this->record['userId'];
+			case "contact1":
+			case "contact2":
+				$value = explode("-", $this->record[$name]);
+				if (count($value) == 3) {
+					return $value;
+				} else {
+					return array("", "", "");
+				}
+			case "zipcode": case "Zipcode":
+				return substr_replace($this->record['zipcode'], "-", 3, 0);
+			case "explain":
+				return str_replace(chr(13), "<br>", $this->record[$name]);
+			case "document_link": 
+				if (strlen($this->record['document']) > 0) {
+					return "<a href='/upload/room/".$this->record[$name]."'>".$this->record[$name]."</a>";
+				}
+				return "없음"; 
+			case "homepage":
+				if (strlen($this->record[$name]) == 0) {
+					return "없음";
+				} else if (substr($this->record[$name],0,"4") != "http") {
+					return "<a href='http://".$this->record[$name]."' target='_blank'>http://".$this->record[$name]."</a>";
+				} else {
+					return "<a href='".$this->record[$name]."' target='_blank'>".$this->record[$name]."</a>";
+				} 
+			case "region":
+				$c_Helper = new CodeHelper();
+				return $c_Helper->getCodeName($this->record['regionCode']);
+			case "status": case "StatusCode":
+				$c_Helper = new CodeHelper();
+				return $c_Helper->getCodeName($this->record['status']);
+			case "image1": case "Image1";
+				if (strlen($this->image[0]) > 0) {
+					return "/upload/room/".$this->image[0];
+				}
+				return "/upload/room/ex_01.gif";
+			case "image2": case "Image2":
+				if (strlen($this->image[1]) > 0) {
+					return "/upload/room/".$this->image[1];
+				}
+				return "/upload/room/ex_01.gif";
+			case "image3": case "Image3":
+				if (strlen($this->image[2]) > 0) {
+					return "/upload/room/".$this->image[2];
+				}
+				return "/upload/room/ex_01.gif";
+			case "image4": case "Image4":
+				if (strlen($this->image[3]) > 0) {
+					return "/upload/room/".$this->image[3];
+				}
+				return "/upload/room/ex_01.gif";
+			case "ImageID1":
+				return $this->record["imageId1"];
+			case "ImageID2":
+				return $this->record["imageId2"];
+			case "ImageID3":
+				return $this->record["imageId3"];
+			case "ImageID4":
+				return $this->record["imageId4"];
+			default:
+				if (isset($this->record[$name])) {
+					return $this->record[$name];
+				} else {
+					return "";
+				}
+		}
 	}
-
+	
 	public function __isset($name) {
 		return isset($this->record[$name]); 
     }
@@ -274,8 +363,6 @@ class HospitalObject {
 		return $retString;
 	} 
 
-
-
 	function showFee() {
 		if (($this->record['price'] > 0)) {
 			$retString = priceFormat($this->record['id'], 1)."/일";
@@ -284,87 +371,11 @@ class HospitalObject {
 		} 
 		return $retString;
 	}
-
-
 }	
-
-
 
 /*
 
-
-
-
 class HospitalObject {
-	var $hospitalRS;
-	var $attachRS;
-
-	#  class member variable
-	# ***********************************************
-	var $m_hospitalId;
-	var $m_hospitalName;
-	var $m_assocName;
-	var $m_userId;
-	var $m_manager1;
-	var $m_manager2;
-	var $m_contact1;
-	var $m_contact2;
-	var $m_price;
-	var $m_zipcode;
-	var $m_address1;
-	var $m_address2;
-	var $m_explain;
-	var $m_regionCode;
-	var $m_regDate;
-	var $m_status;
-	var $m_homepage;
-	var $m_personLimit;
-	var $m_document;
-	var $m_documentId;
-	var $m_image;
-	var $m_imageId;
-
-	#  Get property
-	# ***********************************************
-	function HospitalID() {
-		$HospitalID = $m_hospitalId;
-	} 
-
-	function HospitalName() {
-		$HospitalName = $m_hospitalName;
-	} 
-
-	function AssocName() {
-		$AssocName = $m_assocName;
-	} 
-
-	function UserID() {
-		$UserID = $m_userId;
-	} 
-
-	function Manager1() {
-		$Manager1 = $m_manager1;
-	} 
-
-	function Contact1() {
-		if ((count($m_contact1)!=2)) {
-			$m_contact1 = array("","","");
-		} 
-
-		$Contact1 = $m_contact1;
-	} 
-
-	function Manager2() {
-		$Manager2 = $m_manager2;
-	} 
-
-	function Contact2() {
-		if ((count($m_contact2)!=2)) {
-			$m_contact2 = array("","","");
-		} 
-
-		$Contact2 = $m_contact2;
-	} 
 
 	function Price() {
 		$Price = $m_price;
@@ -784,37 +795,5 @@ class HospitalObject {
 			$objDB->execute_command($query);
 		} 
 	} 
-
-	function Delete() {
-		if (($m_hospitalId>-1)) {
-			$query = "DELETE FROM hospital WHERE hospitalId = ".$mssqlEscapeString[$m_hospitalId];
-			$objDB->execute_command($query);
-		} 
-	} 
-
-	function showContactInfo() {
-		$cont1 = $join[$m_contact1]["-"];
-		$cont2 = $join[$m_contact2]["-"];
-		if ((strlen($cont1)>10)) {
-			$retString = $m_manager1." ".$cont1;
-		} 
-
-		if ((strlen($cont2)>10)) {
-			$retString = $retString." / ".$m_manager2." ".$cont2;
-		} 
-
-		return $retString;
-	} 
-
-	function showFee() {
-		if (($m_price>0)) {
-			$retString = priceFormat($m_price, 1)."/일";
-		} else {
-			$retString = "무료";
-		} 
-
-		return $retString;
-	}
-} 
 */
 ?>
