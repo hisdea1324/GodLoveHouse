@@ -34,8 +34,7 @@ function body() {
 				<select name="region" id="region" onchange="selectRegion()">
 					<option value=''>-- 지역선택 --</option>
 <?php 
-	for ($i = 0; $i <= count($codes) - 1; $i++) {
-		$codeObj = $codes[$i];
+	foreach ($codes as $codeObj) {
 		if ($regionCode == $codeObj->Code) {
 			print "<option value='".$codeObj->Code."' selected>".$codeObj->Name."</option>";
 		} else {
@@ -47,8 +46,7 @@ function body() {
 				<select name="houseId" id="houseId" onchange="selectHouse()">
 					<option value=''>-- 선교관선택 --</option>
 			<?php 
-	for ($i = 0; $i<=count($houses)-1; $i = $i+1) {
-		$houseObj = $houses[$i];
+	foreach ($houses as $houseObj) {
 		$houseName = StrFormatByLength($houseObj->HouseName, 20);
 		if (strlen($houseId) > 0 && $houseId==($houseObj->HouseID)) {
 			print "<option value='".$houseObj->HouseID."' selected>".$houseName."</option>";
@@ -95,9 +93,9 @@ function body() {
 			$roomObj = $rooms[$i];
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
-					<tr>
-				<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
-						<td>
+			<tr>
+			<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
+			<td>
 <?php 
 			$searchDateValue = "";
 			if (strlen($toDate) > 0) {
@@ -108,8 +106,10 @@ function body() {
 			}
 ?>
 				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
-				<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
-						<td>
+				<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img">
+				</a>
+			</td>
+			<td>
 				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
 				<?php echo $houseObj->HouseName;?><br />(<?php echo $roomObj->RoomName;?>)
 				</a>

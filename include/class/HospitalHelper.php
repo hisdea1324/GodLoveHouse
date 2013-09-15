@@ -106,7 +106,7 @@ class HospitalHelper {
 		$hospitals = array();
 
 		$topNum = $this->m_pageCount * ($curPage - 1);
-		$query = "SELECT hospitalId FROM hospital B {$this->m_StrConditionQuery} ORDER BY price ASC LIMIT {$topNum}, {$this->m_pageCount}";
+		$query = "SELECT hospitalId FROM hospital {$this->m_StrConditionQuery} ORDER BY price ASC LIMIT {$topNum}, {$this->m_pageCount}";
 
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {

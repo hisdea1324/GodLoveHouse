@@ -112,7 +112,15 @@ class HospitalObject {
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
+	function __construct($hospitalId = -1) {
+		if ($hospitalId == -1) {
+			$this->initialize();
+		} else {
+			$this->Open($hospitalId);
+		}
+	}
+	
+	private function initialize() {
 		$this->record['hospitalId'] = -1;
 		$this->record['hospitalName'] = -1;
 		$this->record['assocName'] = "";
@@ -137,6 +145,8 @@ class HospitalObject {
 		$this->record['imageId2'] = -1;
 		$this->record['imageId3'] = -1;
 		$this->record['imageId4'] = -1;
+
+		$this->image = array("ex_01.gif","ex_01.gif","ex_01.gif","ex_01.gif");
 	}
 
 	function Open($value) {
@@ -181,46 +191,31 @@ class HospitalObject {
 			$stmt->close();
 
 
+			
+			$imgArray = array();
 			if ($this->record['imageId1'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId1']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[0] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId1'];
+			}
 			if ($this->record['imageId2'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId2']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[1] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId2'];
+			}
 			if ($this->record['imageId3'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId3']."'";
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[2] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			} 
+				$imgArray[] = $this->record['imageId3'];
+			}
 			if ($this->record['imageId4'] > 0) {
-				$query = "SELECT name FROM attachFile WHERE id = '".$this->record['imageId4']."'";
+				$imgArray[] = $this->record['imageId4'];
+			}
+			
+			if (count($imgArray) > 0) {
+				$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
+				$cnt = 0;
 				if ($result = $mysqli->query($query)) {
 				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->image[3] = $finfo->name;
+				    while ($finfo = $result->fetch_array()) {
+				    	$this->image[$cnt++] = $finfo["name"];				    	
 				    }
-				    $result->close();
 				}
-			} 
+			}
 		}
 	}
 
