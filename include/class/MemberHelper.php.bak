@@ -170,7 +170,7 @@ class MemberHelper {
 		global $mysqli;
 		$recordCount = 0;
 		
-		$query = "SELECT COUNT(*) AS `recordCount` FROM missionary ".$this->record['strConditionQuery'];
+		$query = "SELECT CNT(*) AS `recordCount` FROM missionary ".$this->record['strConditionQuery'];
 		$stmt = $mysqli->prepare($query);
 		$stmt->execute();
 		$stmt->bind_result($recordCount);

@@ -1,11 +1,11 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-
-
-$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
-$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
-$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
-
+$field = trim($_REQUEST["field"]);
+$keyword = trim($_REQUEST["keyword"]);
+$page = trim($_REQUEST["page"]);
+if ((strlen($page)==0)) {
+	$page=1;
+} 
 
 // 선교사 정보
 $m_Helper = new MemberHelper();
@@ -18,8 +18,6 @@ body();
 showFooter();
 
 function body() {
-	global $field, $keyword, $page, $strPage;
-	global $missions;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -66,26 +64,26 @@ function body() {
 ?>
 				<tr>
 					<td><?php echo ($i+1);?></td>
-					<td><a href="familyDetail.php?userId=<?php echo $mission->userId;?>"><img src="<?php echo $mission->fileImage;?>" width="120" height="75" border="0" class="img"></a></td>
-					<td><?php echo $mission->nation;?></td>
+					<td><a href="familyDetail.php?userId=<?php echo $mission->UserId;?>"><img src="<?php echo $mission->Image;?>" width="120" height="75" border="0" class="img"></a></td>
+					<td><?php echo $mission->Nation;?></td>
 					<td class="ltd">
-						<p class="b"><?php echo $mission->missionName;?></p>
+						<p class="b"><?php echo $mission->MissionName;?></p>
 						<p>
 <?php 
-			if ((strlen($mission->memo)<150)) {
-				print $textFormat[$mission->memo][1];
+			if ((strlen($mission->Memo)<150)) {
+				print $textFormat[$mission->Memo][1];
 			} else {
-				print substr($textFormat[$mission->memo][1],0,150)."...";
+				print substr($textFormat[$mission->Memo][1],0,150)."...";
 			} 
 
 ?>
 						</p>
 					</td>
-					<td><?php echo $mission->ngo;?></td>
+					<td><?php echo $mission->Ngo;?></td>
 				</tr>
 				<tr>
 					<td colspan="5" class="total">
-						<?php $count = $mission->familyCount;?>
+						<?php $count = $mission->FamilyCount;?>
 						가족참여 회원수 : <?php echo $count[0];?> 명 / 정기후원 회원수 : <?php echo $count[1];?> 명
 					</td>
 				</tr>

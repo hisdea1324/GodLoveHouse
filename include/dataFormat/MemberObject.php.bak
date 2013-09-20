@@ -30,7 +30,7 @@ class MemberObject {
     }
 
     // 멤버 오브젝트 초기화 함수  
-  function __construct($userId = -1) {
+    function __construct($userId = -1) {
     	if ($userId == -1) {
     		$this->isNew = true;
     		$this->initialize();
@@ -46,17 +46,17 @@ class MemberObject {
 		$this->record['password'] = "a";
 		$this->record['passQuest'] = 0;
 		$this->record['passAnswer'] = "a";
-		$this->record['memo'] = "memoTest";
-		$this->record['name'] = "nameTest";
-		$this->record['nick'] = "nickTest";
-		$this->record['userLv'] = 1;
-		$this->record['email'] = "lovehouse@gmail.com";
-		$this->record['jumin'] = "820906-0000000";
+		$this->record['memo'] = "a";
+		$this->record['name'] = "a";
+		$this->record['nick'] = "a";
+		$this->record['userLv'] = 0;
+		$this->record['email'] = "a";
+		$this->record['jumin'] = "0000000000000";
 		$this->record['address1'] = "a";
 		$this->record['address2'] = "a";
-		$this->record['zipcode'] = "000-000";
-		$this->record['phone'] = "010-0000-0000";
-		$this->record['mobile'] = "010-0000-0000";
+		$this->record['zipcode'] = "000000";
+		$this->record['phone'] = "a";
+		$this->record['mobile'] = "a";
 		$this->record['msgOk'] = 0;
 	}
 
@@ -228,6 +228,7 @@ class MemberObject {
 			$stmt->close();
 		}
 	} 
+
 
 
 }
