@@ -8,21 +8,27 @@ class MemberHelper {
 
 	#  property
 	# ***********************************************
-	function PAGE_UNIT() {
-		return $this->m_pageUnit;
-	} 
+	public function __set($name, $value) { 
+		switch ($name) {
+			case "PAGE_UNIT":
+				$this->m_pageUnit = $value;
+				break;
+			case "PAGE_COUNT":
+				$this->m_pageCount = $value;
+				break;
+		}
+	}
 
-	function PAGE_COUNT() {
-		return $this->m_pageCount;
-	} 
-
-	function PAGE_UNIT($value) {
-		$this->m_pageUnit = $value;
-	} 
-
-	function PAGE_COUNT($value) {
-		$this->m_pageCount = $value;
-	} 
+	public function __get($name) { 
+		switch ($name) {
+			case "PAGE_UNIT":
+				return $this->m_pageUnit;
+			case "PAGE_COUNT":
+				return $this->m_pageCount;
+			default:
+				return "";
+		}
+	}
 
 	#  creater
 	# ***********************************************
@@ -40,12 +46,11 @@ class MemberHelper {
 	#  method
 	# ***********************************************
 	function getMemberByUserId($userId) {
-		$member = new MemberObject();
+		$member = new MemberObject($userId);
 
-		if ($member->Open($userId)==false) {
+		if (isset($member->userid)) {
 			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
-
 
 		return $member;
 	} 
@@ -76,7 +81,7 @@ class MemberHelper {
 		$account = new AccountObject();
 
 		if ($account->Open($userId) == false) {
-			$m_eHandler->ignoreError("Account Not Found.");
+			$this->m_eHandler->ignoreError("Account Not Found.");
 		} 
 
 
@@ -87,7 +92,7 @@ class MemberHelper {
 		$support = new SupportObject();
 
 		if ($support->Open($userId) == false) {
-			$m_eHandler->ignoreError("Supporter Not Found.");
+			$this->m_eHandler->ignoreError("Supporter Not Found.");
 		} 
 
 
@@ -199,26 +204,26 @@ class MemberHelper {
 	} 
 
 	function getMissionList($query) {
-		$memberListRS = $db->Execute($query);
+		$mission_list = array();
 
-		if (!$memberListRS->Eof && !$memberListRS->Bof) {
-			while(!($memberListRS->EOF || $memberListRS->BOF)) {
-				$memberInfo = new MissionObject();
-				$memberInfo->Open($memberListRS["userId"]);
-			} 
-		} 
+		global $mysqli;
+		$result = $mysqli->query($query);
 
-		return $memberInfo;
+		while ($row = $result->fetch_array()) {
+			$mission_list[] = new MissionObject($row["userid"]);
+		}
+
+		return $mission_list;
 	} 
 
 	function getMemberListByPrayer($userId) {
-		$query = "SELECT userId FROM family WHERE familyType = 'F0002' AND followUserId = '".$userId."'";
-		return getMissionList($query);
+		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$userId."'";
+		return $this->getMissionList($query);
 	} 
 
 	function getMemberListByRegular($userId) {
-		$query = "SELECT userId FROM family WHERE familyType = 'F0001' AND followUserId = '".$userId."'";
-		return getMissionList($query);
+		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$userId."'";
+		return $this->getMissionList($query);
 	} 
 } 
 ?>

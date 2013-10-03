@@ -17,16 +17,42 @@ class MemberObject {
 	protected $record = array();
 	protected $isNew = false;
 
-	public function __set($name,$value) { 
-		$this->record[$name] = $value; 
+	public function __set($name, $value) { 
+		$name = strtolower($name);
+		switch($name) {
+			default:
+				$this->record[$name] = $value; 
+				break;
+		}
 	}
 
-	public function __get($name) { 
-		return $this->record[$name];
+	public function __get($name) { 		
+		$name = strtolower($name);
+
+		switch($name) {
+			case "zipcode":
+				return array(substr($this->record["zipcode"], 0, 3), substr($this->record["zipcode"], 3, 3));
+			case "phone":
+				return explode('-', $this->record["phone"]);
+			case "mobile":
+				return explode('-', $this->record["mobile"]);
+			case "email":
+				return explode('@', $this->record["email"]);
+			case "level":
+				return $this->record["userlv"];				
+			default:
+				return $this->record[$name];
+		}
 	}
 
 	public function __isset($name) {
-		return isset($this->record[$name]); 
+		$name = strtolower($name);
+		switch($name) {
+			case "level":
+				return isset($this->record["userlv"]);
+			default:
+				return isset($this->record[$name]); 
+		}
     }
 
     // 멤버 오브젝트 초기화 함수  
@@ -38,18 +64,19 @@ class MemberObject {
     		$this->isNew = false;
     		$this->Open($userId);
     	}
+
+    	print_r($this->record);
 	}
 
-
 	private function initialize() {
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['password'] = "a";
-		$this->record['passQuest'] = 0;
-		$this->record['passAnswer'] = "a";
+		$this->record['passquest'] = 0;
+		$this->record['passanswer'] = "a";
 		$this->record['memo'] = "a";
 		$this->record['name'] = "a";
 		$this->record['nick'] = "a";
-		$this->record['userLv'] = 0;
+		$this->record['userlv'] = 0;
 		$this->record['email'] = "a";
 		$this->record['jumin'] = "0000000000000";
 		$this->record['address1'] = "a";
@@ -57,19 +84,19 @@ class MemberObject {
 		$this->record['zipcode'] = "000000";
 		$this->record['phone'] = "a";
 		$this->record['mobile'] = "a";
-		$this->record['msgOk'] = 0;
+		$this->record['msgok'] = 0;
 	}
 
 
-	function Open($userId) {
+	function Open($userid) {
 		global $mysqli;
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from member WHERE userId = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * from users WHERE userid = ?")) {
 
 			/* bind parameters for markers */
-			$stmt->bind_param("s", $userId);
+			$stmt->bind_param("s", $userid);
 
 			/* execute query */
 			$stmt->execute();
@@ -106,7 +133,7 @@ class MemberObject {
 
 		$column = array();
 		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from member WHERE nick = ?")) {
+		if ($stmt = $mysqli->prepare("SELECT * FROM member WHERE nick = ?")) {
 
 			/* bind parameters for markers */
 			$stmt->bind_param("s", $userNick);
@@ -147,24 +174,24 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->isNew) {
-			$query = "INSERT INTO `member` (`userId`, `password`, `passQuest`, `passAnswer`, ";
-			$query = $query."`memo`, `name`, `nick`, `userLv`, ";
+			$query = "INSERT INTO `member` (`userid`, `password`, `passquest`, `passanswer`, ";
+			$query = $query."`memo`, `name`, `nick`, `userlv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
-			$query = $query."`zipcode`, `phone`, `mobile`, `msgOk`) VALUES ";
+			$query = $query."`zipcode`, `phone`, `mobile`, `msgok`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			if ($stmt = $mysqli->prepare($query)) {
 
 				# New Data
 				$stmt->bind_param("isissssisssssssi", 
-					$this->record['userId'], 
-					crypt($this->record['password'], $this->record['userId']),
-					$this->record['passQuest'], 
-					$this->record['passAnswer'], 
+					$this->record['userid'], 
+					crypt($this->record['password'], $this->record['userid']),
+					$this->record['passquest'], 
+					$this->record['passanswer'], 
 					$this->record['memo'], 
 					$this->record['name'], 
 					$this->record['nick'], 
-					$this->record['userLv'], 
+					$this->record['userlv'], 
 					$this->record['email'], 
 					$this->record['jumin'], 
 					$this->record['address1'], 
@@ -172,7 +199,7 @@ class MemberObject {
 					$this->record['zipcode'],
 					$this->record['phone'],
 					$this->record['mobile'],
-					$this->record['msgOk']);
+					$this->record['msgok']);
 	
 				# execute query
 				$stmt->execute();
@@ -184,7 +211,7 @@ class MemberObject {
 
 			$query = "UPDATE member SET ";
 			$updateData = "`nick` = ?, ";
-			$updateData.= "`userLv` = ?, ";
+			$updateData.= "`userlv` = ?, ";
 			$updateData.= "`email` = ?, ";
 			$updateData.= "`jumin` = ?, ";
 			$updateData.= "`address1` = ?, ";
@@ -192,15 +219,15 @@ class MemberObject {
 			$updateData.= "`zipcode` = ?, ";
 			$updateData.= "`phone` = ?, ";
 			$updateData.= "`mobile` = ?, ";
-			$updateData.= "`msgOk` = ? ";
-			$query .= $updateData." WHERE `userId` = ?";
+			$updateData.= "`msgok` = ? ";
+			$query .= $updateData." WHERE `userid` = ?";
 
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sssssssssi", 
 				$this->record['nick'], 
-				$this->record['userLv'], 
+				$this->record['userlv'], 
 				$this->record['email'], 
 				$this->record['jumin'], 
 				$this->record['address1'], 
@@ -208,7 +235,7 @@ class MemberObject {
 				$this->record['zipcode'], 
 				$this->record['phone'], 
 				$this->record['mobile'], 
-				$this->record['msgOk']);
+				$this->record['msgok']);
 				
 			# execute query
 			$stmt->execute();
@@ -221,9 +248,9 @@ class MemberObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM member WHERE userId = ?");
-			$stmt->bind_param("i", $this->record['userId']);
+		if ($this->record['userid'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM member WHERE userid = ?");
+			$stmt->bind_param("i", $this->record['userid']);
 			$stmt->execute();
 			$stmt->close();
 		}

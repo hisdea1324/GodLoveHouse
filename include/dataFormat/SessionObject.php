@@ -5,7 +5,7 @@
 #  editor : Sookbun Lee 
 #  last update date : 2010.03.04
 # ************************************************************
-class __construct {
+class SessionObject {
 	var $m_type;
 	var $m_userLevel;
 	var $m_userid;
@@ -100,13 +100,14 @@ class __construct {
 	} 
 
 	#  return Value 성공: 0, 인증실패: 1, InputData오류: 2
-	function setBasicInfo($userid,$password) {
+	function setBasicInfo($userid, $password) {
 		if (strlen($userid)==0 || strlen($password)==0) {
 			$retValue=2;
 		} 
+		global $mysqli;
 
-		$query = "SELECT nick, name, userLv FROM users WHERE userid = '".$mssqlEscapeString[$userid]."' AND password = '".$mssqlEscapeString[$Encrypt[$password]]."'";
-		$rs = $objDB->execute_query($query);
+		$query = "SELECT nick, name, userLv FROM users WHERE userid = '".mysql_escape_string($userid)."' AND password = '".mysql_escape_string(Encrypt($password))."'";
+		$rs = $mysqli->query($query);
 
 		if (!$Rs->eof || !$Rs->bof) {
 			$_SESSION['userId'] = $userid;
@@ -120,7 +121,7 @@ class __construct {
 		} 
 
 		return $retValue;
-	} 
+	}
 
 	function getBasicInfo($userid,$password) {
 

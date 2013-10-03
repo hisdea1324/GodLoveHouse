@@ -30,27 +30,26 @@ class SupportHelper {
 
 	#  method : return one Support Object
 	# ***********************************************
-	function getSupportByUserId($userId,$supType) {
+	function getSupportByUserId($userId, $supType) {
 		$support = new SupportObject();
 
 		if ($support->Open($userId, $supType) == false) {
 			$eHandler->ignoreError("Supporter Not Found.");
 		} 
 
-
 		return $support;
 	} 
 
 	function getSpecialSupportByUserId($userId) {
-		return getSupportByUserId($userId,"03001");
+		return $this->getSupportByUserId($userId,"03001");
 	} 
 
 	function getCenterSupportByUserId($userId) {
-		return getSupportByUserId($userId,"03002");
+		return $this->getSupportByUserId($userId,"03002");
 	} 
 
 	function getServiceSupportByUserId($userId) {
-		return getSupportByUserId($userId,"03003");
+		return $this->getSupportByUserId($userId,"03003");
 	} 
 
 	function getSupportBySupId($supId) {

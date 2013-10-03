@@ -2,40 +2,42 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
-switch (($mode)) {
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
+
+switch ($mode) {
 	case "login":
-login();
+		login();
 		break;
 	case "logout":
-logout();
+		logout();
 		break;
 	case "editUser":
-editUser();
+		editUser();
 		break;
 	case "deleteFamily":
-deleteFamily();
+		deleteFamily();
 		break;
 	case "withdrawal":
-deleteUser();
+		deleteUser();
 		break;
 	case "changeReservStatus":
-changeReservStatus();
+		changeReservStatus();
 		break;
 	case "reservation":
-		$needUserLv[1];
-reservation();
+		needUserLv(1);
+		reservation();
 		break;
 	case "editRoom":
-editRoom();
+		editRoom();
 		break;
 	case "deleteRoom":
-deleteRoom();
+		deleteRoom();
 		break;
 	default:
 		header("Location: "."../index.php");
 		break;
 } 
+debugFooter();
 
 function editRoom() {
 	$room = new RoomObject();
@@ -95,7 +97,7 @@ function editUser() {
 	} 
 
 
-alertGoPage("가입 되었습니다.",$returnURL);
+	alertGoPage("가입 되었습니다.",$returnURL);
 } 
 
 function editUserNormal() {
@@ -207,32 +209,48 @@ function deleteUser() {
 } 
 
 function login() {
+	$userid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
+	$password = isset($_REQUEST["password"]) ? trim($_REQUEST["password"]) : "";
+	$backURL = isset($_REQUEST["backURL"]) ? trim($_REQUEST["backURL"]) : "";
 
-	$userid = trim($_REQUEST["userid"]);
-	$password = trim($_REQUEST["password"]);
-	$backURL = trim($_REQUEST["backURL"]);
+	global $mysqli;
+	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".mysql_escape_string($userid)."' AND password = '".mysql_escape_string(Encrypt($password))."'";
+	$result = $mysqli->query($query);
 
-	$loginSession = new __construct();
-	$result = $loginSession->setBasicInfo($userid, $password);
+	if ($result->num_rows == 0) {
+		if (strlen($backURL) > 0) {
+			header("Location: ".URLDecode($backURL));
+		} else {
+			header("Location: "."../index.php");
+		} 
+		return;
+	}
 
-//값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.	
-	switch ($result) {
-		case 0:
-			if ((strlen($backURL)>0)) {
-				header("Location: ".$URLDecode[$backURL]);
-			} else {
-				header("Location: "."../index.php");
-			} 
+	while ($row = $result->fetch_array()) {
+		$_SESSION['userid'] = $userid;
+		$_SESSION['userNick'] = $row["nick"];
+		$_SESSION['userName'] = $row["name"];
+		$_SESSION['userLv'] = $row["userLv"];
 
-			break;
-		case 1:
-			header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
-			break;
-		default:
-			header("Location: "."login.php");
-			break;
-	} 
+		switch ($_SESSION['userLv']) {
+			case 9:
+				$_SESSION['userTitle'] = "Super";
+				break;
+			case 7:
+				$_SESSION['userTitle'] = "Manager";
+				break;
+			case 3:
+				$_SESSION['userTitle'] = "Missionary";
+				break;
+			default:
+				$_SESSION['userTitle'] = "Normal";
+				break;
+		} 
+		header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
+		return;
+	}
 
+	//값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.	
 	header("Location: "."../index.php");
 } 
 
@@ -252,12 +270,13 @@ function deleteFamily() {
 } 
 
 function logout() {
-	global $Application;
-	
-	$loginSession = new __construct();
-	$loginSession->expireSession();
+	$_SESSION['userid'] = '';
+	$_SESSION['userNick'] = '';
+	$_SESSION['userName'] = '';
+	$_SESSION['userLv'] = '';
+	$_SESSION['userTitle'] = '';
 
-	header("Location: ".$Application["WebRoot"]."index.php");
+	header("Location: http://".$_SERVER["HTTP_HOST"]."/index.php");
 } 
 
 function changeReservStatus() {
