@@ -57,8 +57,9 @@ body();
 showFooter();
 
 function body() {
-	global $houseId, $roomId, $houseList1;
-	global $StartYear, $calendar;
+	global $mysqli, $h_Helper;
+	global $search, $page, $houseId, $roomId, $houseList1;
+	global $StartYear, $calendar, $dailySupport;
 ?>
 		<!-- //content -->
 		<!-- //정보 -->
@@ -140,115 +141,103 @@ function body() {
 					<tr>
 <?php 
 
-//--------------// 달력만드는 순서// 1. 이번달 1일의 요일을 계산한다.// 2. 이번달의 마지막 날짜를 계산한다. (이번달 날짜수 = 다음달 1일 - 이번달 1일)// 3. 이번 달 1일의 요일을 계산해서 해당셀에 1부터 차례대로 날짜수 만큼 뿌린다.//---------------
-//1일부터 마지막날까지 요일정보 //------------------------------	print " <tr>".chr(13);
+	//--------------
+	// 달력만드는 순서
+	// 1. 이번달 1일의 요일을 계산한다.
+	// 2. 이번달의 마지막 날짜를 계산한다. (이번달 날짜수 = 다음달 1일 - 이번달 1일)
+	// 3. 이번 달 1일의 요일을 계산해서 해당셀에 1부터 차례대로 날짜수 만큼 뿌린다.
+	//---------------
+	//1일부터 마지막날까지 요일정보 
+	//------------------------------
+	print " <tr>".chr(13);
 	print "<td>room name</td>";
-	for ($i=1; $i <= $calendar->LastDate; $i = $i+1) {
+	for ($i = 1; $i <= $calendar->LastDate; $i++) {
 		print "<td>".$calendar->getWeekName($i)." <br /></td>";
-
 	}
 
 	print " </tr>".chr(13);
 
-//1일부터 마지막날까지 달력생성//------------------------------	print " <tr>".chr(13);
+	//1일부터 마지막날까지 달력생성
+	//------------------------------
+	print " <tr>".chr(13);
 	print "<td> </td>";
-	for ($i=1; $i <= $calendar->LastDate; $i = $i+1) {
-		$sumPrice="<br />";
+	for ($i = 1; $i <= $calendar->LastDate; $i++) {
+		$sumPrice = "<br />";
+		$timestamp = $calendar->firstday + (($i - 1) * 24 * 60 * 60);
 
-		$ymd = $calendar->CYear.$calendar->CMonth.$calendar->DataFormat($i);
-
-		if (($dailySupport->Exists($ymd))) {
-			$sumPrice = priceFormat($dailySupport->Item($ymd), 2)."<br />";
+		if (isset($dailySupport[$timestamp])) {
+			$sumPrice = priceFormat($dailySupport[$timestamp], 2)."<br />";
 		} 
 
-
-//토요일이면 줄을 바꾼다.		
-		if (($calendar->IsWeekStart($i))) {
+		//토요일이면 줄을 바꾼다.	
+		if ($calendar->IsWeekStart($i)) {
 			print "<td><font color='red'>".$i." </font><br /></td>";
-		} elseif (($calendar->IsWeekEnd($i))) {
+		} elseif ($calendar->IsWeekEnd($i)) {
 			print "<td><font color='blue'>".$i." </font><br /></td>";
 		} else {
 			print "<td>".$i." <br /></td>";
 		} 
-
-
 	}
 
 	print " </tr>".chr(13);
 
-//방별 예약 정보//------------------------------	$monthStart = $calendar->CYear."-".$calendar->CMonth."-"."01";
-	if (($calendar->CMonth<12)) {
-		$monthEnd = $calendar->CYear."-".($calendar->CMonth+1)."-"."01";
-	} else {
-		$monthEnd = ($calendar->CYear+1)."-".$calendar->CMonth."-"."01";
-	} 
-
-	for ($i=1; $i<=count($roomList); $i = $i+1) {
-		$roomObj = $roomList[$i];
-		for ($j=1; $j <= $calendar->LastDate; $j = $j+1) {
-			$dateSet[$j]="";
-
+	//방별 예약 정보
+	//------------------------------
+	foreach ($roomList as $roomObj) {
+		for ($j = 1; $j <= $calendar->LastDate; $j++) {
+			$dateSet[$j] = "";
 		}
 
-
-//------------------------// 룸 예약 정보 받아오기 //------------------------		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$roomObj->RoomID."' AND B.roomId = C.roomId ";
-		$query = $query." AND ((endDate >= '".$monthStart."' AND startDate < '".$monthEnd."') ";
-		$query = $query." OR (startDate < '".$monthStart."' AND endDate >= '".$monthEnd."')) ";
+		//------------------------
+		// 룸 예약 정보 받아오기 
+		//------------------------
+		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$roomObj->RoomID."' AND B.roomId = C.roomId ";
+		$query = $query." AND ((endDate >= '".$calendar->firstday."' AND startDate < '".$calendar->lastday."') ";
+		$query = $query." OR (startDate < '".$calendar->firstday."' AND endDate >= '".$calendar->lastday."')) ";
 		$query = $query." ORDER BY startDate";
-//	response.write query		$dateRS = $db->Execute($query);
-		while(!($dateRS->EOF || $dateRS->BOF)) {
-			if (substr($dateRS["startDate"],5,2) == $calendar->CMonth) {
-				$fromDate=substr($dateRS["startDate"],strlen($dateRS["startDate"])-(2));
-			} else {
-				$fromDate=1;
-			} 
 
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				if (date('m', $row["startDate"]) == date('m', $calendar->firstday)) {
+					$fromDate = date('d', $row["startDate"]);
+				} else {
+					$fromDate = 1;
+				}
 
-			if (substr($dateRS["endDate"],5,2) == $calendar->CMonth) {
-				$toDate=substr($dateRS["endDate"],strlen($dateRS["endDate"])-(2));
-			} else {
-				$toDate=31;
-			} 
+				if (date('m', $row["endDate"]) == date('m', $calendar->firstday)) {
+					$toDate = date('d', $row["endDate"]);
+				} else {
+					$toDate = date('d', $calendar->lastday);
+				} 
 
-
-			for ($j = $fromDate; $j <= $toDate; $j = $j+1) {
-				$dateSet[$j] = $dateRS["reservStatus"];
-
+				for ($j = $fromDate; $j <= $toDate; $j++) {
+					$dateSet[$j] = $row["reservStatus"];
+				}
 			}
-
-			$dateRS->MoveNext;
-		} 
-		$dateRS = null;
-
+			$result->close();
+		}
 
 		print " <tr>".chr(13);
 		print "<td>".$roomObj->RoomName."</td>";
-		for ($j=1; $j <= $calendar->LastDate; $j = $j+1) {
-			if ($dateSet[$j]=="S0001") {
+		for ($j = 1; $j <= $calendar->LastDate; $j++) {
+			if ($dateSet[$j] == "S0001") {
 				print "<td style=\"background-color:yellow\">W<br /></td>";
-			} elseif ($dateSet[$j]=="S0002") {
+			} else if ($dateSet[$j] == "S0002") {
 				print "<td style=\"background-color:green\">B<br /></td>";
-			}
-				else
-			if ($dateSet[$j]=="S0003") {
+			} else if ($dateSet[$j] == "S0003") {
 				print "<td style=\"background-color:darkgray\">C<br /></td>";
-			}
-				else
-			if ($dateSet[$j]=="S0004") {
+			} else if ($dateSet[$j] == "S0004") {
 				print "<td style=\"background-color:red\">R<br /></td>";
 			} else {
 				print "<td style=\"background-color:white\"> <br /></td>";
 			} 
-
-
 		}
 
 		print " </tr>".chr(13);
-
 	}
 
-
-//테이블 닫기	print " <tr>".chr(13);
+	//테이블 닫기
+	print " <tr>".chr(13);
 ?>
 					</tr>
 				</table>
@@ -259,7 +248,12 @@ function body() {
 			<h2 style="margin-top:30px"><img src="../images/board/stit_ok.gif"></h2>
 				<!-- //search -->
 <?php 
-//query = "SELECT * FROM house A, room B, reservation C WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.UserId = '"& member.UserId & "' AND startDate >= '" & monthStart & "' AND endDate < '" & monthEnd & "' ORDER BY startDate"//response.write query//reservList = h_Helper.getReservationList(query)	$h_Helper->PAGE_UNIT=10; //하단 페이징 단위	 $h_Helper->PAGE_COUNT=30; //한페이지에 보여줄 리스트 갯수	 $h_Helper->setReservationListConditionWithHouse$search	$houseId;
+//query = "SELECT * FROM house A, room B, reservation C WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.UserId = '"& member.UserId & "' AND startDate >= '" & monthStart & "' AND endDate < '" & monthEnd & "' ORDER BY startDate"
+//response.write query
+//reservList = h_Helper.getReservationList(query)
+	$h_Helper->PAGE_UNIT = 10; //하단 페이징 단위
+	$h_Helper->PAGE_COUNT = 30; //한페이지에 보여줄 리스트 갯수
+	$h_Helper->setReservationListConditionWithHouse($search, $houseId);
 	$strPage = $h_Helper->makeReservationListPagingHTML($page);
 	$reservList = $h_Helper->getReservationListWithPaging($page);
 ?>
@@ -430,7 +424,7 @@ function body() {
 		if (oProfile.style.visibility == "hidden") {
 			var url = 'ajax.php?mode=getUserProfile&userid='+oId.innerText;
 
-			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile]);
+			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
 			oProfile.style.left = e.clientX;
 			oProfile.style.top = e.clientY;
 			oProfile.style.visibility = "visible";

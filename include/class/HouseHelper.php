@@ -249,12 +249,11 @@ class HouseHelper {
 	function makeReservationListPagingHTML($curPage) {
 		global $mysqli;
 		
-		$sessions = new Session();
 		$query = "SELECT COUNT(*) AS recordCount FROM house A, room B, reservation C ";
-		if ($sessions->UserID == "lovehouse") {
+		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$_SESSION['userid']."' ".$this->m_StrConditionQuery;
 		} 
 
 		if ($result = $mysqli->query($query)) {
@@ -269,23 +268,24 @@ class HouseHelper {
 	function getReservationListWithPaging($curPage) {
 		global $mysqli;
 		
-		$sessions = new Session();
+		$reserveInfo = array();
 		$topNum = $this->m_pageCount * $curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM house A, room B, reservation C ";
-		if ($sessions->UserID == "lovehouse") {
+
+		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."' ".$this->m_StrConditionQuery;
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
 
 		if ($result = $mysqli->query($query)) {
-			while ($row = $result->fetch_array()) {
-				$reserveInfo = new ReservationObject();
-				$reserveInfo->Open($row["reservationNo"]);
+			while ($row = $result->fetch_assoc()) {
+				$reserveInfo[] = new ReservationObject($row["reservationNo"]);
 			}
+			$result->close();
 		}
 
 		return $reserveInfo;
@@ -306,10 +306,10 @@ class HouseHelper {
 
 	function getReservationListByManager($curPage) {
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
+		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId";
 		} else {
-			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$sessions->UserID."'";
+			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$_SESSION['userid']."'";
 		} 
 
 		return getReservationList($query);
@@ -317,7 +317,7 @@ class HouseHelper {
 
 	function getReservationListByUser($curPage) {
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
-		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$sessions->UserID."' ";
+		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$_SESSION['userid']."' ";
 		$query = $query."ORDER BY C.regDate DESC";
 		return getReservationList($query);
 	} 

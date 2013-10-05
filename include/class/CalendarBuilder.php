@@ -2,10 +2,14 @@
 class CalendarBuilder {
 	public $year;
 	public $month;
+	public $firstday;
+	public $lastday;
 
 	function __construct() {
 		$this->year = strftime("%Y", time());
 		$this->month = strftime("%m", time());
+		$this->firstday = mktime(0, 0, 0, $this->month, 1, $this->year);
+		$this->lastday = mktime(0, 0, 0, $this->month + 1, 1, $this->year) - 24 * 60 * 60;
 	} 
 
 	function __destruct() {
@@ -31,22 +35,18 @@ class CalendarBuilder {
 			case "FirstDay":
 				# 이번달 1일의 요일계산
 				# ---------------------------------	
-				# 1:일요일 2:월요일 ....7:토요일
-				return strftime("%w", $this->year."-".$this->month."-1") + 1; 
+				# 0:일요일 1:월요일 ....6:토요일
+				return date("w", $this->firstday); 
 			case "LastDate":
 				# 이번달 마지막날 찾기
 				# --------------------------------	
 				# (다음달 1일) - (이번달 1일 ) = 이번달 마지막날짜		
-				$v_thisMonth = $this->year."-".$this->month."-1";
-				$v_nextMonth = DateAdd("m", 1, $v_thisMonth);
-				return DateDiff("y", $v_thisMonth, $v_nextMonth);
+				return date("d", $this->lastday);
 			case "LastDay":
 				# 이번달 마지막날의 요일 찾기
 				# --------------------------------	
-				$LastDay = strftime("%w", $this->year."-".$this->month."-".$this->LastDate()) + 1; 
-				# 1:일요일 2:월요일 ....7:토요일		 
-				return $LastDay;
-
+				# 0:일요일 1:월요일 ....6:토요일
+				return date("w", $this->lastday);
 		}
 	}
 
@@ -68,29 +68,29 @@ class CalendarBuilder {
 	#  Method
 	# ***********************************************
 	function getWeekName($value) {
-		$weekEndDate = (8 - $this->FirstDay) % 7;
-		$weekNumber = ($weekEndDate + 7 - (($value) % 7)) % 7;
+		$timestamp = $this->firstday + (($value - 1) * 24 * 60 * 60);
+		$weekNumber = date('w', $timestamp);
 		switch ($weekNumber) {
-			case 5:
-				$weekName="<font color='black'>월 </font>";
-				break;
-			case 4:
-				$weekName="<font color='black'>화 </font>";
-				break;
-			case 3:
-				$weekName="<font color='black'>수 </font>";
+			case 1:
+				$weekName = "<font color='black'>월 </font>";
 				break;
 			case 2:
-				$weekName="<font color='black'>목 </font>";
+				$weekName = "<font color='black'>화 </font>";
 				break;
-			case 1:
-				$weekName="<font color='black'>금 </font>";
+			case 3:
+				$weekName = "<font color='black'>수 </font>";
 				break;
-			case 0:
-				$weekName="<font color='blue'>토 </font>";
+			case 4:
+				$weekName = "<font color='black'>목 </font>";
+				break;
+			case 5:
+				$weekName = "<font color='black'>금 </font>";
+				break;
+			case 6:
+				$weekName = "<font color='blue'>토 </font>";
 				break;
 			default:
-				$weekName="<font color='red'>일 </font>";
+				$weekName = "<font color='red'>일 </font>";
 				break;
 		} 
 
@@ -98,13 +98,15 @@ class CalendarBuilder {
 	} 
 
 	function IsWeekStart($value) {
-		$weekEndDate = (8 - $this->FirstDay) % 7;
-		return ($weekEndDate == (($value - 1) % 7));
+		$timestamp = $this->firstday + (($value - 1) * 24 * 60 * 60);
+		$weekNumber = date('w', $timestamp);
+		return ($weekNumber == 0);
 	} 
 
 	function IsWeekEnd($value) {
-		$weekEndDate = (8 - $this->FirstDay) % 7;
-		return ($weekEndDate == ($value % 7));
+		$timestamp = $this->firstday + (($value - 1) * 24 * 60 * 60);
+		$weekNumber = date('w', $timestamp);
+		return ($weekNumber == 6);
 	} 
 
 	function DataFormat($value) {
