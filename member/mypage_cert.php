@@ -1,29 +1,35 @@
 ﻿<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
-$toDate = trim($_REQUEST["toDate"]);
-$fromDate = trim($_REQUEST["fromDate"]);
 
-$sessions = new __construct();
+$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
+$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
+
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
-$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
 
+// 계좌정보
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+
+// 후원 내역 
 $s_Helper = new SupportHelper();
-$supporter = $s_Helper->getServiceSupportByUserId($sessions->UserId);
+$supporter = $s_Helper->getServiceSupportByUserId($_SESSION["userid"]);
 
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_manager","tit_0803.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_missionary","tit_0803.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_manager","tit_0803.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_missionary","tit_0803.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_normal","tit_0803.gif");
+	showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_normal","tit_0803.gif");
 } 
 
 body();
 showFooter();
 
 function body() {
+	global $member, $account;
+	global $s_Helper, $supporter;
+	global $fromDate, $toDate;
 ?>
 		<!-- //content -->
 		<div id="content">

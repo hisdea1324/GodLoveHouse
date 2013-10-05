@@ -34,6 +34,7 @@ showFooter();
 
 function body() {
 	global $member, $account, $missionList1, $missionList2;
+	global $centerSupportInfo, $serviceSupportInfo, $s_Helper;
 	global $fromDate, $toDate;
 ?>
 	<!-- //content -->
@@ -82,6 +83,7 @@ function body() {
 				<td>
 <?php 
 	foreach ($missionList1 as $mission) {
+		if (!isset($mission->userid)) continue;
 ?>
 					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>)</p>
 <?php 
@@ -96,6 +98,7 @@ function body() {
 				<td>
 <?php 
 	foreach ($missionList2 as $mission) {
+		if (!isset($mission->userid)) continue;
 ?>
 					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>)</p>
 <?php 
@@ -107,22 +110,20 @@ function body() {
 			</tr>
 		</table>
 <?php 
-	if (($centerSupportInfo->SupportID>0)) {
+	if ($centerSupportInfo->SupportID > 0) {
 ?>
 		<p class="hi"><strong>선교사역 후원 </strong></p>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 			<col width="20%" />
 			<col />
 <?php 
-		$centerItem = $centerSupportInfo->SupportItem;
-		for ($i=0; $i<=count($centerItem); $i = $i+1) {
-			$centerInfo = $centerItem[$i];
+		foreach ($centerSupportInfo->SupportItem as $centerInfo) {
 			$reqObj = $s_Helper->getRequestInfoByReqID($centerInfo->RequestId);
 ?>
 			<tr>
 				<td><strong><?php echo $reqObj->Title;?></strong></td>
 				<td>
-					<p><?php echo $centerInfo->showPrice;?> </p>
+					<p><?php echo $centerInfo->showPrice();?> </p>
 				</td>
 			</tr>
 <?php 
@@ -135,7 +136,7 @@ function body() {
 	} 
 
 
-	$specialList = $s_Helper->getReqListForSpecial($sessions->UserID);
+	$specialList = $s_Helper->getReqListForSpecial($_SESSION["userid"]);
 	if ((count($specialList)>0)) {
 ?>
 		<p class="hi"><strong>특별후원 </strong></p>
@@ -176,7 +177,7 @@ function body() {
 	} 
 
 
-	if (($serviceSupportInfo->SupportID>0)) {
+	if ($serviceSupportInfo->SupportID > 0) {
 ?>
 		<p class="hi"><strong>자원봉사참여 </strong></p>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
@@ -186,9 +187,7 @@ function body() {
 				<td><strong>참여내역</strong></td>
 				<td>
 <?php 
-		$serviceItem = $serviceSupportInfo->SupportItem;
-		for ($i=0; $i<=count($serviceItem); $i = $i+1) {
-			$serviceInfo = $serviceItem[$i];
+		foreach ($serviceSupportInfo->SupportItem as $serviceInfo) {
 			$reqObj = $s_Helper->getRequestInfoByReqID($serviceInfo->RequestId);
 ?>
 					<p><?php echo $reqObj->Title;?> </p>

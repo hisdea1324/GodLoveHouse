@@ -9,9 +9,10 @@
 class RequestObject {
 	protected $record = array();
 
-	public function __set($name,$value) { 
+	public function __set($name, $value) { 
+		$name = strtolower($name);
 		switch($name) {
-			case "supportType" : 
+			case "supporttype" : 
 				switch (($value)) {
 					case "03001":
 						$value="특별후원";
@@ -25,11 +26,11 @@ class RequestObject {
 				} 
 				break;
 
-			case "fileImage" :
-				if ((strlen($this->record["fileImage"])==0)) {
-					$this_record["fileImage"] = "noimg.gif";
+			case "fileimage" :
+				if (strlen($value) == 0) {
+					$this->record["fileimage"] = "noimg.gif";
 				} 
-				$this_record["fileImage"] = "/upload/support/".$m_fileImage;
+				$this->record["fileimage"] = "/upload/support/".$value;
 				break;
 
 			default :
@@ -40,9 +41,8 @@ class RequestObject {
 
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		switch($name) {
-			case "fileImage":
-				return $this->record["fileImage"];
 			default : 
 				return $this->record[$name];
 		}
@@ -50,7 +50,11 @@ class RequestObject {
 
 
 	public function __isset($name) {
-		return isset($this->record[$name]); 
+		$name = strtolower($name);
+		switch($name) {
+			default : 
+				return isset($this->record[$name]); 
+		}
   }
   
   
@@ -63,7 +67,7 @@ class RequestObject {
 	}
 
  	function initialize() {
-    $c_Helper = new CodeHelper();
+	    $c_Helper = new CodeHelper();
 
 		$this->record['regId'] = -1;
 		$this->record['title'] = "";

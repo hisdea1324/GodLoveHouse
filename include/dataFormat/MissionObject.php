@@ -31,8 +31,6 @@ class MissionObject {
     	} else {
     		$this->Open($value);
     	}
-
-    	print_r($this->record);
 	}
 
     private function initialize() {
@@ -60,11 +58,12 @@ class MissionObject {
 		$this->flagfamily = "";
 	}
 
-	function Open($userId) {
+	function Open($userid) {
 		global $mysqli;
 
 		$query = "SELECT A.*, B.name AS nation FROM missionary A, code B ";
-		$query.= "WHERE A.userid = ".$mysqli->real_escape_string($userid)." AND A.nationcode = B.code";
+		$query.= "WHERE A.userid = '".$mysqli->real_escape_string($userid)."' AND A.nationcode = B.code";
+		echo $query;
 
 		$result = $mysqli->query($query);
 		if (!$result) return;
@@ -88,11 +87,9 @@ class MissionObject {
 			$this->memo = $row['memo'];
 			$this->praylist = $row['praylist'];
 			$this->familycount = $row['familycount'];
-			$this->fileimage = $row['fileimage'];
 			$this->imageid = $row['imageid'];
 			$this->approval = $row['approval'];
 			$this->flagfamily = $row['flagfamily'];
-			$this->family = $row['family'];	
 		}
 	    $result->close();
 
@@ -109,7 +106,7 @@ class MissionObject {
 		
 		//나중에 확인 해볼 것 
 		if (isset($this->familycount) && $this->familycount > 0) {
-			$query = "SELECT `id` FROM missionary_family WHERE `userid` = ".$mysqli->real_escape_string($this->userid);
+			$query = "SELECT `id` FROM missionary_family WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
 			if ($result = $mysqli->query($query)) {
 			    while ($row = $result->fetch_assoc()) {
 					$this->family[] = new MissionaryFamily($row['id']);;

@@ -199,30 +199,31 @@ class MemberHelper {
 			} 
 		} 
 
-
 		return $mission;
 	} 
 
 	function getMissionList($query) {
-		$mission_list = array();
-
 		global $mysqli;
-		$result = $mysqli->query($query);
 
-		while ($row = $result->fetch_array()) {
-			$mission_list[] = new MissionObject($row["userid"]);
+		$mission_list = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$mission_list[] = new MissionObject($row["userid"]);
+			}
 		}
 
 		return $mission_list;
 	} 
 
 	function getMemberListByPrayer($userId) {
-		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$userId."'";
+		global $mysqli;
+		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$mysqli->real_escape_string($userId)."'";
 		return $this->getMissionList($query);
 	} 
 
 	function getMemberListByRegular($userId) {
-		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$userId."'";
+		global $mysqli;
+		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$mysqli->real_escape_string($userId)."'";
 		return $this->getMissionList($query);
 	} 
 } 

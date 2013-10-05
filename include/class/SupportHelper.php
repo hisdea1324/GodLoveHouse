@@ -167,32 +167,27 @@ class SupportHelper {
 	} 
 
 	function getRequestList($query) {
+		global $mysqli;
 
-		$listRS = $mysqli->Execute($query);
-
-		if (!$listRS->eof && !$listRS->bof) {
-			while(!($listRS->eof || $listRS->bof)) {
-				$requestInfo = new RequestObject();
-				$requestInfo->Open($listRS["reqId"]);
+		$requestInfo = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$requestInfo[] = new RequestObject($row["reqId"]);
 			} 
 		} 
-
 
 		return $requestInfo;
 	} 
 
-	function getRequestListWithPaging($query,$curPage) {
-		$listRS = $mysqli->Execute($query);
+	function getRequestListWithPaging($query, $curPage) {
+		global $mysqli;
 
-		if ($listRS->RecordCount > 0) {
-			$listRS->PageSize = $this->record["pageCount"];
-			$listRS->AbsolutePage = $curPage;
-			while(!($listRS->eof || $listRS->bof)) {
-				$requestInfo = new RequestObject();
-				$requestInfo->Open($listRS["reqId"]);
+		$requestInfo = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$requestInfo[] = new RequestObject($row["reqId"]);
 			} 
-		} 
-
+		}
 
 		return $requestInfo;
 	} 
@@ -201,52 +196,53 @@ class SupportHelper {
 		$topNum = $this->record["pageCount"] * $curPage;
 		$query = "SELECT TOP ".$topNum." A.reqId FROM requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.supportType = '03001'".$this->record["strConditionQuery"]." ORDER BY A.regDate DESC";
 
-		return getRequestListWithPaging($query,$curPage);
+		return $this->getRequestListWithPaging($query,$curPage);
 	} 
 
 	function getCenterList() {
 		$query = "SELECT reqId FROM requestInfo WHERE supportType = '03002'";
-		return getRequestList($query);
+		return $this->getRequestList($query);
 	} 
 
 	function getCenterListWithCond($services) {
 		$query = "SELECT reqId FROM requestInfo WHERE supportType = '03002' AND reqId IN (".$services.")";
-		return getRequestList($query);
+		return $this->getRequestList($query);
 	} 
 
 	function getServiceList() {
 		$query = "SELECT reqId FROM requestInfo WHERE supportType = '03003'";
-		return getRequestList($query);
+		return $this->getRequestList($query);
 	} 
 
 	function getReqListForCenter($userId) {
-		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03002' AND A.userId = '{$userId}'";
-		return getRequestList($query);
+		global $mysqli;
+		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03002' AND A.userId = '".$mysqli->real_escape_string($userId)."'";
+		return $this->getRequestList($query);
 	} 
 
 	function getReqListForService($userId) {
-		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03003' AND A.userId = '{$userId}'";
-		return getRequestList($query);
+		global $mysqli;
+		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03003' AND A.userId = '".$mysqli->real_escape_string($userId)."'";
+		return $this->getRequestList($query);
 	} 
 
 	function getReqListForSpecial($userId) {
-		$query = "SELECT DISTINCT A.reqId FROM requestInfo A, requestItem B WHERE A.reqId = B.reqId AND A.supportType = '03001' AND B.userId = '{$userId}'";
-		return getRequestList($query);
+		global $mysqli;
+		$query = "SELECT DISTINCT A.reqId FROM requestInfo A, requestItem B WHERE A.reqId = B.reqId AND A.supportType = '03001' AND B.userId = '".$mysqli->real_escape_string($userId)."'";
+		return $this->getRequestList($query);
 	} 
 
 	#  method : Return Object Request Item List
 	# ************************************************************
 	function getRequestItemList($query) {
+		global $mysqli;
 
-		$listRS = $mysqli->Execute($query);
-
-		if (!$listRS->eof && !$listRS->bof) {
-			while(!($listRS->eof || $listRS->bof)) {
-				$requestItem = new RequestItemObject();
-				$requestItem->Open($listRS["reqItemId"]);
+		$requestItem = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$requestItem[] = new RequestItemObject($row["reqItemId"]);
 			} 
 		} 
-
 
 		return $requestItem;
 	} 
