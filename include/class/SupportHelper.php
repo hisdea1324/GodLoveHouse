@@ -31,13 +31,7 @@ class SupportHelper {
 	#  method : return one Support Object
 	# ***********************************************
 	function getSupportByUserId($userId, $supType) {
-		$support = new SupportObject();
-
-		if ($support->Open($userId, $supType) == false) {
-			$eHandler->ignoreError("Supporter Not Found.");
-		} 
-
-		return $support;
+		return new SupportObject($userId, $supType);
 	} 
 
 	function getSpecialSupportByUserId($userId) {

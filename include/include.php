@@ -34,7 +34,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MissionObject.php");
 #require "dataFormat/MissionaryFamily.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/AccountObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/SupportObject.php");
-#require "dataFormat/SupportItemObject.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/SupportItemObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestAddInfo.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RequestItemObject.php");

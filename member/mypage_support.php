@@ -34,6 +34,7 @@ showFooter();
 
 function body() {
 	global $member, $account, $missionList1, $missionList2;
+	global $fromDate, $toDate;
 ?>
 	<!-- //content -->
 	<!-- //정보 -->
@@ -80,8 +81,7 @@ function body() {
 				<td><strong>기도후원자</strong></td>
 				<td>
 <?php 
-	for ($i=0; $i<=count($missionList1)-1; $i = $i+1) {
-		$mission = $missionList1[$i];
+	foreach ($missionList1 as $mission) {
 ?>
 					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>)</p>
 <?php 
@@ -95,8 +95,7 @@ function body() {
 				<td><strong>정기후원자</strong></td>
 				<td>
 <?php 
-	for ($i=0; $i<=count($missionList2)-1; $i = $i+1) {
-		$mission = $missionList2[$i];
+	foreach ($missionList2 as $mission) {
 ?>
 					<p><?php echo $mission->MissionName;?> (<?php echo $mission->Nation;?>)</p>
 <?php 
