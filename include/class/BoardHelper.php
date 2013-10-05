@@ -6,14 +6,6 @@
 # last update date : 2009/12/30
 #************************************************************
 class BoardHelper {
-	/*
-	var $m_eHandler;
-
-	var $m_total;
-	var $m_pageCount;
-	var $m_pageUnit;
-	var $m_StrConditionQuery;
-	*/
 	protected $record = array();
 
 	# property
@@ -66,11 +58,11 @@ class BoardHelper {
 		$board = new BoardObject();
 		$replyBoard = new BoardObject();
 		$board->Open($index);
-		$replyBoard->AnswerId = $board->AnswerId;
-		$replyBoard->AnswerNum = $board->AnswerNum - 1;
-		$replyBoard->AnswerLv = $board->AnswerLv + 1;
-		$replyBoard->Title="[Re]".$board->Title;
-		$replyBoard->Contents="<P>===================================================================</P>".$board->Contents."<P>==================================================================</P>";
+		$replyBoard->answerId = $board->answerId;
+		$replyBoard->answerNum = $board->answerNum - 1;
+		$replyBoard->answerLv = $board->answerLv + 1;
+		$replyBoard->title="[Re]".$board->title;
+		$replyBoard->contents="<P>===================================================================</P>".$board->Contents."<P>==================================================================</P>";
 
 		return $replyBoard;
 	} 
@@ -90,7 +82,7 @@ class BoardHelper {
 			$strWhere = $strWhere." AND ".$field." LIKE '%{$keyword}%'";
 		} 
 
-		$this->m_StrConditionQuery = $strWhere;
+		$this->record['strConditionQuery'] = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
@@ -98,7 +90,7 @@ class BoardHelper {
 		$query = "SELECT COUNT(*) AS recordCount from board".$this->record['strConditionQuery'];
 		if ($result = $mysqli->query($query)) {
 			while($row = $result->fetch_array()) {
-				$this->m_total = $row["recordCount"];
+				$this->record['total'] = $row["recordCount"];
 			}
 		}
 

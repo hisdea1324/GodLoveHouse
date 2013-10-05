@@ -1,21 +1,20 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$needUserLv[1];
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardObject.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardGroup.php");
+//$needUserLv[1];
 
-$id = trim($_REQUEST["id"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$groupId = trim($_REQUEST["groupId"]);
-$mode = trim($_REQUEST["mode"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($mode)==0)) {
-	$mode="editPost";
-} 
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+$needUserLv = 3;
 
-$sessions = new __construct();
+$id = (isset($_REQUEST["id"])) ? trim($_REQUEST["id"]) : 0;
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$groupId = (isset($_REQUEST["groupId"])) ? trim($_REQUEST["groupId"]) : 0;
+$mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "editPost";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
+
+//$sessions = new __construct();
 $b_Helper = new BoardHelper();
 $boardGrp = $b_Helper->getBoardGroupByGroupId($groupId);
 if ((strcmp($mode,"replyPost")==0)) {
@@ -27,11 +26,15 @@ if ((strcmp($mode,"replyPost")==0)) {
 } 
 
 # 쓰기권한 체크
-if ((!$boardGrp->WritePermission)) {
+
+
+
+if (!$boardGrp->WritePermission()) {
 	alertGoPage("쓰기 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } else if ((!$boardInfo->checkEditPermission())) {
 	alertGoPage("수정 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
+
 
 
 switch (($groupId)) {
@@ -82,6 +85,7 @@ $boardInfo = null;
 
 
 function body() {
+	global $boardInfo;
 ?>
 	<link href="css/default.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -93,36 +97,36 @@ function body() {
 			<form name="writeForm" id="writeForm" method="post" action="process.php">
 		<input type="hidden" name="mode" id="mode" value="<?php echo $mode;?>" />
 		<input type="hidden" name="groupId" id="groupId" value="<?php echo $groupId;?>" />
-		<input type="hidden" name="id" id="id" value="<?php echo $boardInfo->BoardID;?>" />
-		<input type="hidden" name="answerId" id="answerId" value="<?php echo $boardInfo->AnswerID;?>" />
-		<input type="hidden" name="answerNum" id="answerNum" value="<?php echo $boardInfo->AnswerNum;?>" />
-		<input type="hidden" name="answerLv" id="answerLv" value="<?php echo $boardInfo->AnswerLv;?>" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $sessions->UserId;?>" />
+		<input type="hidden" name="id" id="id" value="<?php echo $boardInfo->id;?>" />
+		<input type="hidden" name="answerId" id="answerId" value="<?php echo $boardInfo->answerId;?>" />
+		<input type="hidden" name="answerNum" id="answerNum" value="<?php echo $boardInfo->answerNum;?>" />
+		<input type="hidden" name="answerLv" id="answerLv" value="<?php echo $boardInfo->answerLv;?>" />
+		<input type="hidden" name="userId" id="userId" value="<?php echo $sessions->userId;?>" />
 			<col width="15%">
 		<col />
 				<tr>
 					<td class="td01">제목</td>
 					<td>
-						<input type="text" id="title" name="title" style="width:600px" value="<?php echo $boardInfo->Title;?>">
+						<input type="text" id="title" name="title" style="width:600px" value="<?php echo $boardInfo->title;?>">
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">작성자</td>
-					<td><?php echo $boardInfo->UserId;?></td>
+					<td><?php echo $boardInfo->userId;?></td>
 				</tr>
-		<?php if (($boardInfo->BoardID>-1)) {
+		<?php if (($boardInfo->id>-1)) {
 ?>
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
-						<?php echo $sessions->UserID;?> (작성자는 수정한 사람 아이디로 바뀝니다.)
+						<?php echo $sessions->userId;?> (작성자는 수정한 사람 아이디로 바뀝니다.)
 					</td>
 				</tr>
 		<?php } ?>
 				<tr>
 					<td class="td01">내용</td>
 					<td>
-			<textarea name="contents" id="contents" style="width:600px; height:300px; display:none;"><?php echo $boardInfo->Contents;?></textarea>
+			<textarea name="contents" id="contents" style="width:600px; height:300px; display:none;"><?php echo $boardInfo->contents;?></textarea>
 					</td>
 				</tr>
 		<tr>
