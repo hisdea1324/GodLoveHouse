@@ -40,6 +40,8 @@ class SupportObject {
 				return explode('-', $this->record[$name]);
 			case 'post':
 				return explode('-', $this->record['zipcode']);
+			case 'supportitem':
+				return $this->items;
 			default : 
 				return $this->record[$name];
 		}
