@@ -80,9 +80,10 @@ class SupportObject {
 	function OpenQuery($query) {
 		global $mysqli;
 		$result = $mysqli->query($query);
+		if (!$result) return;
 
 	    while ($row = mysqli_fetch_assoc($result)) {
-			$this->supportid = $row['supId'];
+			$this->supportId = $row['supId'];
 			$this->userid = $row['userId'];
 			$this->name = $row['name'];
 			$this->jumin = $row['jumin'];
@@ -98,17 +99,19 @@ class SupportObject {
 	    }
 
 		$query = "SELECT SUM(cost) as sumprice FROM supportItem WHERE supId = '".$mysqli->real_escape_string($this->supportid)."'";
-		$result = $mysqli->query($query);
-	    while ($row = mysqli_fetch_assoc($result)) {
-			$this->sumprice = $row['sumprice'];
+		if ($result = $mysqli->query($query)) {
+		    while ($row = mysqli_fetch_assoc($result)) {
+				$this->sumprice = $row['sumprice'];
+		    }
 	    }
 
 		$query = "SELECT supItemId FROM supportItem WHERE supId = '".$mysqli->real_escape_string($this->supportid)."'";
-		$result = $mysqli->query($query);
-	    while ($row = mysqli_fetch_assoc($result)) {
-			$this->items[] = new SupportItemObject($row['supItemId']);
-	    }
-	} 
+		if ($result = $mysqli->query($query)) {
+		    while ($row = mysqli_fetch_assoc($result)) {
+				$this->items[] = new SupportItemObject($row['supItemId']);
+		    }
+		} 
+	}
 
 	function OpenWithSupId($supId) {
 		global $mysqli;
