@@ -108,7 +108,7 @@ class CalendarBuilder {
 	} 
 
 	function DataFormat($value) {
-		return substr("00".$value,strlen("00".$value) - (2));
+		return substr("00".$value, strlen("00".$value) - 2);
 	} 
 
 	# 참고할 사항

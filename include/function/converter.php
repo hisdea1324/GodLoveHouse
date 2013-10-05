@@ -124,6 +124,17 @@ function priceFormat($price,$stype) {
 	return $retString;
 } 
 
+function dateToTimestamp($date) {
+	if (strlen($date) == 8) {
+		$y = substr($date, 0, 4);
+		$m = substr($date, 4, 2);
+		$d = substr($date, 6, 2);
+		return mktime(0, 0, 0, $m, $d, $y);
+	}
+
+	return -1;
+}
+
 function mssqlEscapeString($str) {
 	$str=str_replace("'","''",$str); # 특수문자 제거
 	return $str;

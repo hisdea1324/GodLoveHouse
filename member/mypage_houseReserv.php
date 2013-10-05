@@ -38,7 +38,9 @@ if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
 } 
 
-//******************************************************************// 달력 세팅$StartYear=2012;
+//******************************************************************
+// 달력 세팅
+$StartYear = 2012;
 
 $calendar = new CalendarBuilder();
 $calendar->CYear = isset($_REQUEST["y"]) ? trim($_REQUEST["y"]) : "";
@@ -55,54 +57,47 @@ body();
 showFooter();
 
 function body() {
+	global $houseId, $roomId, $houseList1;
+	global $StartYear, $calendar;
 ?>
 		<!-- //content -->
 		<!-- //정보 -->
 		<div id="content">
 
 				<H2><img src="../images/board/stit_house.gif"></H2>
-			<?php if ((count($houseList1)>0)) {
-?>
 				<!-- //tab -->
 				<div class="Tab">
-				<?php 
-		for ($i=0; $i<=count($houseList1)-1; $i = $i+1) {
-			$houseObj = $houseList1[$i];
-			if (count($houseObj->RoomList)>0) {
-				if (strlen($houseId)==0 || trim($houseId) == trim($houseObj->HouseID)) {
+<?php 
+	if (count($houseList1) > 0) { 
+		$roomList = array();
+		foreach ($houseList1 as $houseObj) {
+			if (count($houseObj->RoomList) > 0) {
+				if (strlen($houseId) == 0 || trim($houseId) == trim($houseObj->HouseID)) {
 					$houseId = $houseObj->HouseID;
 					$roomList = $houseObj->RoomList;
 					$house = $houseObj;
-					print "<a href=\"#\" class=\"on\" title=\"".$houseObj->HouseName."\"><span>".$StrFormatByLength[$houseObj->HouseName][10]."</span></a>";
-				}
-					else
-				{
-					print "<a href=\"mypage_houseReserv.php?houseId=".$houseObj->HouseID."&y=".$calendar->CYear."&m=".$calendar->CMonth."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$houseObj->HouseName."\"><span>".$StrFormatByLength[$houseObj->HouseName][10]."</span></a>";
+					print "<a href=\"#\" class=\"on\" title=\"".$houseObj->HouseName."\"><span>".StrFormatByLength($houseObj->HouseName, 9)."</span></a>";
+				} else {
+					print "<a href=\"mypage_houseReserv.php?houseId=".$houseObj->HouseID."&y=".$calendar->CYear."&m=".$calendar->CMonth."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$houseObj->HouseName."\"><span>".StrFormatByLength($houseObj->HouseName, 9)."</span></a>";
 				} 
 
 			} 
-
-//response.write "<a href=""mypage_houseReserv_a.php?houseId=" & houseObj.HouseID & """ class=""off"" onmouseover=""this.className='on'"" onmouseout=""this.className='off'"" title=""" & houseObj.HouseName & """><span>" & StrFormatByLength(houseObj.HouseName, 10) & "</span></a>"
 		}
-
 ?>
 				</div>
 				<div class="sTab">&nbsp;
 					<a href="#" class="on"><span>::</span></a>
-		<?php 
-		if ((strlen($roomId)==0)) {
-			$roomId = $roomList[1]->$RoomID;
+<?php 
+		if (count($roomList) > 0 && strlen($roomId) == 0) {
+			$roomId = $roomList[0]->RoomID;
 		}
-		for ($i=1; $i<=count($roomList); $i = $i+1) {
-			$roomObj = $roomList[$i];
-			print "<a href=\"mypage_houseReserv_a.php?houseId=".$houseId."&roomId=".$roomObj->RoomID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$houseObj->HouseName." - ".$roomObj->RoomName."\"><span>".$StrFormatByLength[$roomObj->RoomName][8]."</span></a>";
-
+		foreach ($roomList as $roomObj) {
+			print "<a href=\"mypage_houseReserv_a.php?houseId=".$houseId."&roomId=".$roomObj->RoomID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$houseObj->HouseName." - ".$roomObj->RoomName."\"><span>".StrFormatByLength($roomObj->RoomName, 8)."</span></a>";
 		}
-
+	}
 ?>
 				</div>
 				<!-- tab// -->
-			<?php } ?>
 
 			<!-- //search -->
 			<div id="search">
@@ -111,8 +106,8 @@ function body() {
 				<span class="fc_01"><strong>년도</strong></span>
 				<select name="y">
 					<option value="">-- 년도를 선택하세요 --</option>
-					<?	 for ($i = $StartYear-3; $i<=strftime("%Y",time())+3; $i = $i+1) { ?>
-					<option value="<?php echo $i;?>"<?		 if ((intval($calendar->CYear)==intval($i))) { ?> selected <?php } ?>><?php echo $i;?></option>
+					<? for ($i = $StartYear-3; $i<=strftime("%Y",time())+3; $i = $i+1) { ?>
+					<option value="<?php echo $i;?>"<? if ((intval($calendar->CYear)==intval($i))) { ?> selected <?php } ?>><?php echo $i;?></option>
 					<?php } ?>
 				</select>
 				
@@ -120,7 +115,7 @@ function body() {
 				<select name="m">
 					<option value="">-- 월을 선택하세요 --</option>
 					<?	 for ($i=1; $i<=12; $i = $i+1) { ?>
-					<option value="<?php echo $i;?>"<?		 if ((intval($calendar->CMonth)==intval($i))) { ?> selected <?php } ?>><?php echo $i;?>월</option>
+					<option value="<?php echo $i;?>"<? if ((intval($calendar->CMonth)==intval($i))) { ?> selected <?php } ?>><?php echo $i;?>월</option>
 					<?php } ?>
 				</select>				
 				<input type="submit" value="검색" style="cursor:pointer" />

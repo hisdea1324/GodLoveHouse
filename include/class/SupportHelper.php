@@ -259,14 +259,17 @@ class SupportHelper {
 		#  $objDic is of type "Scripting.Dictionary"
 		global $mysqli;
 
+		$objDic = array();
 		$query = "SELECT LEFT(CONVERT(char(8), regDate, 112), 6) AS sumDate, SUM(sumPrice) AS sumTotal FROM supportInfo ";
 		$query = $query."WHERE regDate > '".strftime("%Y", "0101' AND regDate < '".(strftime("%Y",+1))."0101' GROUP BY Left(CONVERT(char(8), regDate, 112), 6)");
 		echo $query;
-		$result = $mysqli->query($query);
-
-		while(!($dateSumRS->Eof || $dateSumRS->Bof)) {
-			$objDic[($dateSumRS["sumDate"])]=($dateSumRS["sumTotal"]);
-		} 
+		
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$objDic[$row["sumDate"]] = $row["sumTotal"];
+			} 
+			$result->close();
+		}
 
 		return $objDic;
 	} 
@@ -275,35 +278,47 @@ class SupportHelper {
 		#  $objDic is of type "Scripting.Dictionary"
 		global $mysqli;
 
-		$query = "SELECT CONVERT(char(8), regDate, 112) AS sumDate, SUM(sumPrice) AS sumTotal FROM supportInfo ";
-		$query = $query."WHERE regDate > '".$fromDate."' AND regDate < '".$toDate."' GROUP BY CONVERT(char(8), regDate, 112)";
-		$dateSumRS = $mysqli->Execute($query);
-
-		while(!(($dateSumRS->Eof || $dateSumRS->Bof))) {
-			$objDic[($dateSumRS["sumDate"])]=($dateSumRS["sumTotal"]);
-		} 
+		$objDic = array();
+		$query = "SELECT regDate, SUM(sumPrice) AS sumTotal FROM supportInfo ";
+		$query = $query."WHERE regDate > '".dateToTimestamp($fromDate)."' AND regDate < '".dateToTimestamp($toDate)."' GROUP BY regDate";
+		
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$objDic[$row["regDate"]] = $row["sumTotal"];
+			} 
+			$result->close();
+		}
 
 		return $objDic;
 	} 
 
-	function getSender($fromDate,$toDate) {
-		$query = "SELECT userid FROM supportInfo WHERE regDate > '".$fromDate."' AND regDate < '".$toDate."' GROUP BY userid";
-		$listRS = $mysqli->Execute($query);
+	function getSender($fromDate, $toDate) {
+		global $mysqli;
 
-		if ($listRS->RecordCount > 0) {
-			while(!($listRS->eof || $listRS->bof)) {
-				$senderInfo = new MemberObject();
-				$senderInfo->Open($listRS["userid"]);
+		$senderInfo = array();
+		$query = "SELECT userid FROM supportInfo WHERE regDate > '".$mysqli->real_escape_string($fromDate)."' AND regDate < '".$mysqli->real_escape_string($toDate)."' GROUP BY userid";
+
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$senderInfo = new MemberObject($row["userid"]);
 			} 
-		} 
+			$result->close();
+		}
+
 		return $senderInfo;
 	} 
 
 	#  method : Support Item Delete
 	# ************************************************************
 	function delSupItemListBySupId($supId) {
-		$query = "DELETE FROM supportItem WHERE supId = '".$supId."'";
-		$mysqli->Execute($query);
+		global $mysqli;
+
+		$query = "DELETE FROM supportItem WHERE supId = '".$mysqli->real_escape_string($supId)."'";
+		if ($result = $mysqli->query($query)) {
+			$result->close();
+		} else {
+			echo "delSupItemListBySupId function no data";
+		}
 	}
 } 
 ?>
