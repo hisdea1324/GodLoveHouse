@@ -1,6 +1,5 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-
 $houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
 
 if (strlen($houseId) > 0) {
@@ -14,7 +13,7 @@ $codeStatus = $c_Helper->getHouseStatusCodeList();
 $h_helper = new HouseHelper();
 $houseObj = $h_helper->getHouseInfoById($houseId);
 
-if (!isset($_SESSION["UserID"]) || $_SESSION["UserID"] <> houseObj.UserID) {
+if (!needUserLv(9) && (!isset($_SESSION["userid"]) || $_SESSION["userid"] <> $houseObj->UserID)) {
 	alertBack("본인 소유의 선교관이 아닙니다.");
 }
 
@@ -23,7 +22,7 @@ body();
 showFooter();
 
 function body() {
-	global $codes;
+	global $codes, $houseObj;
 ?>
 		<!-- //content -->
 		<div id="content">

@@ -154,7 +154,7 @@ class HouseHelper {
 		return $this->getHouseList($query);
 	} 
 
-	function getHouseListByUserId($userId,$houseType) {
+	function getHouseListByUserId($userId, $houseType) {
 		if ($userId == "lovehouse") {
 			$query = "SELECT houseId FROM house WHERE status = 'S2002'";
 		} elseif ($houseType == 1) {

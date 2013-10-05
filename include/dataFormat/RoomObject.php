@@ -10,93 +10,51 @@ class RoomObject {
 	protected $image = array();
 
 	public function __set($name, $value) { 
+		$name = strtolower($name);
 		switch ($name) {
-			case 'RoomID': case 'RoomId': 
-				$this->record['roomId'] = $value;
-				break;
-			case "HouseID":
-				$this->record['houseId'] = $value;
-				break;
-			case "RoomName":
-				$this->record['roomName'] = $value;
-				break;
-			case "Network":
-				$this->record['network'] = $value;
-				break;
-			case "Kitchen":
-				$this->record['kitchen'] = $value;
-				break;
-			case "Laundary":
-				$this->record['laundary'] = $value;
-				break;
-			case "Fee":
-				$this->record['fee'] = $value;
-				break;
-			case "Limit":
-				$this->record['limit'] = $value;
-				break;
 			default:
-				$this->record[$name] = $value; 
+				$this->record[$name] = $value;
 				break;
 		}
 	}
 	
 	public function __get($name) {
+		$name = strtolower($name);
 		switch ($name) {
-			case "RoomID": case "RoomId": 
-				return $this->record['roomId'];
-			case "HouseID":
-				return $this->record['houseId'];
-			case "RoomName":
-				return $this->record['roomName'];
-			case "Network":
-				return $this->record['network'];
-			case "Kitchen":
-				return $this->record['kitchen'];
-			case "Laundary":
-				return $this->record['laundary'];
-			case "Fee":
-				return $this->record['fee'];
-			case "Limit":
-				return $this->record['limit'];
 			case "explain":
-				return str_replace(chr(13), "<br>", $this->record['explain']);
-			case "image1": case "Image1";
+				return str_replace(chr(13), "<br>", $this->record[$name]);
+			case "image1":
 				if (strlen($this->image[0]) > 0) {
 					return "/upload/room/".$this->image[0];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image2": case "Image2":
+			case "image2":
 				if (strlen($this->image[1]) > 0) {
 					return "/upload/room/".$this->image[1];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image3": case "Image3":
+			case "image3":
 				if (strlen($this->image[2]) > 0) {
 					return "/upload/room/".$this->image[2];
 				}
 				return "/upload/room/ex_01.gif";
-			case "image4": case "Image4":
+			case "image4":
 				if (strlen($this->image[3]) > 0) {
 					return "/upload/room/".$this->image[3];
 				}
 				return "/upload/room/ex_01.gif";
-			case "ImageID1":
-				return $this->record["imageId1"];
-			case "ImageID2":
-				return $this->record["imageId2"];
-			case "ImageID3":
-				return $this->record["imageId3"];
-			case "ImageID4":
-				return $this->record["imageId4"];
 			default:
-				echo $name;
 				return $this->record[$name];
 		}
 	}
 	
 	public function __isset($name) {
-		return isset($this->record[$name]); 
+		$name = strtolower($name);
+		switch ($name) {
+			default:
+				return isset($this->record[$name]); 
+				break;
+		}
     }
 
 	#  class initialize
@@ -110,19 +68,19 @@ class RoomObject {
 	}
 	
 	private function initialize() {
-		$this->record['roomId'] = -1;
-		$this->record['houseId'] = -1;
-		$this->record['roomName'] = null;
-		$this->record['limit'] = 0;
-		$this->record['explain'] = null;
-		$this->record['network'] = null;
-		$this->record['kitchen'] = null;
-		$this->record['laundary'] = null;
-		$this->record['fee'] = 0;
-		$this->record['imageId1'] = -1;
-		$this->record['imageId2'] = -1;
-		$this->record['imageId3'] = -1;
-		$this->record['imageId4'] = -1;
+		$this->roomid = -1;
+		$this->houseid = -1;
+		$this->roomName = null;
+		$this->limit = 0;
+		$this->explain = null;
+		$this->network = null;
+		$this->kitchen = null;
+		$this->laundary = null;
+		$this->fee = 0;
+		$this->imageId1 = -1;
+		$this->imageId2 = -1;
+		$this->imageId3 = -1;
+		$this->imageId4 = -1;
 
 		$this->image = array("ex_01.gif","ex_01.gif","ex_01.gif","ex_01.gif");
 	} 
@@ -165,29 +123,29 @@ class RoomObject {
 			/* close statement */
 			$stmt->close();
 			
-			$imgArray = array();
-			if ($this->record['imageId1'] > 0) {
-				$imgArray[] = $this->record['imageId1'];
-			}
-			if ($this->record['imageId2'] > 0) {
-				$imgArray[] = $this->record['imageId2'];
-			}
-			if ($this->record['imageId3'] > 0) {
-				$imgArray[] = $this->record['imageId3'];
-			}
-			if ($this->record['imageId4'] > 0) {
-				$imgArray[] = $this->record['imageId4'];
-			}
-			
-			if (count($imgArray) > 0) {
-				$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
-				$cnt = 0;
-				if ($result = $mysqli->query($query)) {
-				    /* Get field information for all columns */
-				    while ($finfo = $result->fetch_array()) {
-				    	$this->image[$cnt++] = $finfo["name"];				    	
-				    }
-				}
+		}
+
+		$imgArray = array();
+		if ($this->imageId1 > 0) {
+			$imgArray[] = $this->imageId1;
+		}
+		if ($this->imageId2 > 0) {
+			$imgArray[] = $this->imageId2;
+		}
+		if ($this->imageId3 > 0) {
+			$imgArray[] = $this->imageId3;
+		}
+		if ($this->imageId4 > 0) {
+			$imgArray[] = $this->imageId4;
+		}
+		
+		if (count($imgArray) > 0) {
+			$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
+			if ($result = $mysqli->query($query)) {
+			    /* Get field information for all columns */
+			    while ($row = $result->fetch_assoc()) {
+			    	$this->image[] = $row["name"];				    	
+			    }
 			}
 		}
 		
@@ -196,7 +154,7 @@ class RoomObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->record['roomId'] == -1) {
+		if ($this->roomId == -1) {
 			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
 			$query = $query."`network`, `kitchen`, `laundary`, `fee`, ";
 			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
@@ -207,18 +165,18 @@ class RoomObject {
 
 			# New Data
 			$stmt->bind_param("isissssiiiii", 
-				$this->record['houseId'], 
-				$this->record['roomName'], 
-				$this->record['limit'], 
-				$this->record['explain'], 
-				$this->record['network'], 
-				$this->record['kitchen'], 
-				$this->record['laundary'], 
-				$this->record['fee'], 
-				$this->record['imageId1'], 
-				$this->record['imageId2'], 
-				$this->record['imageId3'], 
-				$this->record['imageId4']);
+				$this->houseId, 
+				$this->roomName, 
+				$this->limit, 
+				$this->explain, 
+				$this->network, 
+				$this->kitchen, 
+				$this->laundary, 
+				$this->fee, 
+				$this->imageId1, 
+				$this->imageId2, 
+				$this->imageId3, 
+				$this->imageId4);
 
 			# execute query
 			$stmt->execute();
@@ -226,9 +184,9 @@ class RoomObject {
 			# close statement
 			$stmt->close();
 			
-			$this->record['roomId'] = $mysqli->insert_id;
+			$this->roomId = $mysqli->insert_id;
 			
-			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->record['houseId']."'";
+			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->houseId."'";
 			$mysqli->query($query);
 			
 		} else {
@@ -251,19 +209,19 @@ class RoomObject {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("isissssiiiiii", 
-				$this->record['houseId'], 
-				$this->record['roomName'], 
-				$this->record['limit'], 
-				$this->record['explain'], 
-				$this->record['network'], 
-				$this->record['kitchen'], 
-				$this->record['laundary'], 
-				$this->record['fee'], 
-				$this->record['imageId1'], 
-				$this->record['imageId2'], 
-				$this->record['imageId3'], 
-				$this->record['imageId4'], 
-				$this->record['roomId']);
+				$this->houseId, 
+				$this->roomName, 
+				$this->limit, 
+				$this->explain, 
+				$this->network, 
+				$this->kitchen, 
+				$this->laundary, 
+				$this->fee, 
+				$this->imageId1, 
+				$this->imageId2, 
+				$this->imageId3, 
+				$this->imageId4, 
+				$this->roomId);
 				
 			# execute query
 			$stmt->execute();
@@ -276,20 +234,20 @@ class RoomObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['roomId'] > -1) {
+		if ($this->roomId > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM room WHERE roomId = ?");
-			$stmt->bind_param("i", $this->record['roomId']);
+			$stmt->bind_param("i", $this->roomId);
 			$stmt->execute();
 			$stmt->close();
 			
-			$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = '".$this->record['houseId']."'";
+			$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = '".$this->houseId."'";
 			$mysqli->real_query($query);
 		}
 	} 
 	
 	function showFee() {
-		if ($this->record['fee'] > 0) {
-			return priceFormat($this->record['fee'], 1)." / 일";
+		if ($this->fee > 0) {
+			return priceFormat($this->fee, 1)." / 일";
 		} else {
 			return "무료";
 		} 

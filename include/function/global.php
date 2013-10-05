@@ -37,7 +37,7 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	print $strHeader.$strSubMenu;
 }
 
-function showHeader($strNavi,$strSub,$strTitleImg) {
+function showHeader($strNavi, $strSub, $strTitleImg) {
 	global $Application;
 	
 	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/header.php");
@@ -105,13 +105,17 @@ function debugFooter() {
 }
 
 function needUserLv($level) {
-	if (isset($_SESSION['userId'])) {
+	if (!isset($_SESSION['userid'])) {
 		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
+		return false;
 	} 
 
 	if ($_SESSION['userLv'] < $level) {
 		alertBack("권한이 없습니다");
-	} 
+		return false;
+	}
+
+	return true;
 } 
 
 function checkUserLogin() {
