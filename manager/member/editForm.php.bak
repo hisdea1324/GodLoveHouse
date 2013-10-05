@@ -2,11 +2,11 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
-$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
-$userLv = (isset($_REQUEST["userLv"])) ? trim($_REQUEST["userLv"]) : 0;
-$gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
-$userId = (isset($_REQUEST["userId"])) ? trim($_REQUEST["userId"]) : 0;
+$field = trim($_REQUEST["field"]);
+$keyword = trim($_REQUEST["keyword"]);
+$gotoPage = trim($_REQUEST["gotoPage"]);
+$userLv = trim($_REQUEST["userLv"]);
+$userId = trim($_REQUEST["userId"]);
 
 $m_Helper = new MemberHelper();
 $member = $m_Helper->getMemberByUserId($userId);
@@ -15,7 +15,7 @@ $mission = $m_Helper->getMissionInfoByUserId($userId);
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
 
-if ($member->userLv != "3") {
+if ($member->Level!="3") {
 	$display="none";
 	$btnValue="선교사 정보 추가입력";
 	$churchContact = array("","","");
@@ -27,13 +27,13 @@ if ($member->userLv != "3") {
 } else {
 	$display="";
 	$btnValue="선교사 정보 입력취소";
-	$churchContact=explode("-",$mission->churchContact);
-	$ngoContact=explode("-",$mission->ngoContact);
-	$managerContact=explode("-",$mission->managerContact);
-	$managerEmail=explode("@",$mission->managerEmail);
-	$memo = $mission->memo;
-	$prayList = $mission->prayList;
-	$familyList = $mission->family;
+	$churchContact=explode("-",$mission->ChurchContact);
+	$ngoContact=explode("-",$mission->NgoContact);
+	$managerContact=explode("-",$mission->ManagerContact);
+	$managerEmail=explode("@",$mission->ManagerEmail);
+	$memo = $mission->Memo;
+	$prayList = $mission->PrayList;
+	$familyList = $mission->Family;
 } 
 
 
@@ -43,10 +43,6 @@ body();
 showAdminFooter();
 
 function body() {
-		global $field, $keyword, $gotoPage;
-		global $display, $btnValue, $churchContact, $ngoContect, $managerContact, $managerEmail, $memo, $prayList;
-		global $userId, $userLv;
-		global $member, $mission;
 ?>
 	<div class="sub">
 	<a href="editForm.php">회원등록</a> | 
@@ -85,7 +81,7 @@ function body() {
 				<dd>
 					<?php if ((strlen($userId)>0)) {
 ?>
-					<?php echo $member->userId;?> <input type="hidden" id="userId" name="userId" value="<?php echo $member->userId;?>" />
+					<?php echo $member->UserID;?> <input type="hidden" id="userId" name="userId" value="<?php echo $member->UserID;?>" />
 					<?	 } else {
 ?>
 					<input type="text" id="userId" name="userId" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userId;?>" />
@@ -94,49 +90,41 @@ function body() {
 				<dt>
 					닉네임 
 				<dd>
-					<input type="text" id="nickName" name="nickName" maxlength="30" tabindex="2" onclick="checkName();" readonly value="<?php echo $member->nick;?>" />
+					<input type="text" id="nickName" name="nickName" maxlength="30" tabindex="2" onclick="checkName();" readonly value="<?php echo $member->Nick;?>" />
 					<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_idcheck.gif" border="0" align="absmiddle" class="m2" onclick="checkName()" style="cursor:pointer" /></a>
 				<dt>
 					이름 
 				<dd>
-					<input type="text" id="name" name="name" size="20" maxlength="20" value="<?php echo $member->name;?>" />&nbsp;&nbsp;
+					<input type="text" id="name" name="name" size="20" maxlength="20" value="<?php echo $member->Name;?>" />&nbsp;&nbsp;
 					(공백없이 한글만 입력 가능)
 				<dt>
 					주민등록번호
 				<dd>
-					<?	
-							$jumin = explode("-",$member->jumin);
-					?>
+					<?	 $jumin = $member->Jumin;?>
 					<input type="text" id="jumin1" name="jumin1" size="8" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=6 value="<?php echo $jumin[0];?>" /> -
 					<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?php echo $jumin[1];?>" />
 				<dt>
 					E-mail
 				<dd>
-					<? 
-						$email = explode("@",$member->email);
-					?>
+					<?	 $email = $member->Email;?>
 					<input type="text" id="email1" name="email1" size="20" maxlength=20 style="ime-mode:disabled;" value="<?php echo $email[0];?>" />@
 					<input type="text" id="email2" name="email2" size="20" style="ime-mode:disabled;" value="<?php echo $email[1];?>" />
 				<dt>
 					우편번호
 				<dd>
-					<?
-						$zipcode = explode("-",$member->zipcode);
-					?>
+					<?	 $zipcode = $member->Zipcode;?>
 					<input type="text" id="post1" name="post1" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[0];?>" /> - 
 					<input type="text" id="post2" name="post2" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[1];?>" />&nbsp;
 					<img src="/images/board/btn_zipcode.gif" border=0 align="absmiddle" name="Btn_search" onclick="PostPopup();" style="cursor:pointer;" />
 				<dt>
 					주소
 				<dd>
-					<input type="text" id="addr1" name="addr1" size="50" readonly onclick="PostPopup();" value="<?php echo $member->address1;?>" />
-					<input type="text" id="addr2" name="addr2" size="20" value="<?php echo $member->address2;?>" />
+					<input type="text" id="addr1" name="addr1" size="50" readonly onclick="PostPopup();" value="<?php echo $member->Address1;?>" />
+					<input type="text" id="addr2" name="addr2" size="20" value="<?php echo $member->Address2;?>" />
 				<dt>
 					전화번호
 				<dd>
-					<?	
-						$phone = explode("-",$member->phone);
-					?>
+					<?	 $phone = $member->Phone;?>
 					<select id="tel1" name="tel1">
 						<option value="02" <?php if (($phone[0]=="02")) { print "selected"; } ?>>02</option>
 						<option value="031" <?php if (($phone[0]=="031")) { print "selected"; } ?>>031</option>
@@ -161,9 +149,7 @@ function body() {
 				<dt>
 					휴대폰번호
 				<dd>
-					<?	
-						$mobile = explode("-",$member->mobile);
-					?>
+					<?	 $mobile = $member->Mobile;?>
 					<select id="hp1" name="hp1">
 						<option value="010" <?php if (($mobile[0]=="010")) { print "selected"; } ?>>010</option>
 						<option value="011" <?php if (($mobile[0]=="011")) { print "selected"; } ?>>011</option>
@@ -177,7 +163,7 @@ function body() {
 				<dt>
 					SMS 수신동의
 				<dd>
-					<input type="checkbox" id="smsOk" name="smsOk" <?php if (($member->msgOk()==1)) { print "checked"; } ?> />
+					<input type="checkbox" id="smsOk" name="smsOk" <?php if (($member->IsEnabledMessage()==true)) { print "checked"; } ?> />
 					<input type="hidden" id="msgOk" name="msgOk" value="<?php echo $msgOk;?>" />
 				<dt>
 					&nbsp;
@@ -195,15 +181,15 @@ function body() {
 					<div id="showimage" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 					<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'Profile', 'mission_pic')" style="cursor:pointer" /> (190 x 120)<br />
 					<input type="hidden" name="idProfile" id="idProfile" value="<?php echo $mission->ImageID;?>" />
-					<img src="<?php echo $mission->fileImage;?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
+					<img src="<?php echo $mission->Image;?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
 				<dt>
 					선교사명
 				<dd>
-					<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?php echo $mission->missionName;?>" />
+					<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?php echo $mission->MissionName;?>" />
 				<dt>
 					파송교회
 				<dd>
-					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?php echo $mission->church;?>" />
+					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?php echo $mission->Church;?>" />
 				<dt>
 					파송교회 연락처
 				<dd>
@@ -233,7 +219,7 @@ function body() {
 				<dt>
 					파송선교단체
 				<dd>
-					<input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?php echo $mission->ngo;?>">
+					<input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?php echo $mission->Ngo;?>">
 				<dt>
 					파송단체 연락처
 				<dd>
@@ -267,10 +253,10 @@ function body() {
 					<?php 
 	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
 		$codeObj = $codes[$i];
-		if (($codeObj->code == $mission->nationCode)) {
-			print "<option value=\"".$codeObj->code."\" selected>".$codeObj->name."</option>";
+		if (($codeObj->Code == $mission->NationCode)) {
+			print "<option value=\"".$codeObj->Code."\" selected>".$codeObj->Name."</option>";
 		} else {
-			print "<option value=\"".$codeObj->code."\">".$codeObj->name."</option>";
+			print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
 		} 
 
 
@@ -281,11 +267,11 @@ function body() {
 				<dt>
 					홈페이지 주소
 				<dd>
-					<input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?php echo $mission->homepage;?>">
+					<input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?php echo $mission->Homepage;?>">
 				<dt>
 					파송관리자 이름
 				<dd>
-					<input type="text" name="manager" id="manager" maxlength="20" value="<?php echo $mission->manager;?>">
+					<input type="text" name="manager" id="manager" maxlength="20" value="<?php echo $mission->Manager;?>">
 				<dt>
 					파송관리자 연락처
 				<dd>
@@ -328,15 +314,15 @@ function body() {
 				<dt>
 					후원 계좌번호
 				<dd>
-					<input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" style="ime-mode:disabled" value="<?php echo $mission->accountNo;?>">
+					<input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" style="ime-mode:disabled" value="<?php echo $mission->AccountNo;?>">
 				<dt>
 					은행명
 				<dd>
-					<input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?php echo $mission->bank;?>">
+					<input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?php echo $mission->Bank;?>">
 				<dt>
 					예금주
 				<dd>
-					<input type="text" name="accountName" id="accountName" maxlength="20" value="<?php echo $mission->accountName;?>">
+					<input type="text" name="accountName" id="accountName" maxlength="20" value="<?php echo $mission->AccountName;?>">
 				<dt>
 					기타메모
 				<dd>
@@ -357,8 +343,8 @@ function body() {
 			$familyObj = $familyList[$num];
 ?>
 						<tr id="trFamily" align="center">
-							<input type="hidden" name="familyId" id="familyId" value="<?php echo $familyObj->familyId;?>" />
-							<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?php echo $familyObj->name;?>" /></td>
+							<input type="hidden" name="familyId" id="familyId" value="<?php echo $familyObj->familyID;?>" />
+							<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?php echo $familyObj->Name;?>" /></td>
 							<td><select name="familyAge" id="familyAge">
 							<?php 
 			for ($i=0; $i<=99; $i = $i+1) {
@@ -377,20 +363,20 @@ function body() {
 							</select></td>
 							<td>
 								<select name="familySex" id="familySex">
-									<option value="남자" <?php if (($familyObj->sex="남자")) { print "selected"; } ?>>남자</option>
-									<option value="여자" <?php if (($familyObj->sex=="여자")) { print "selected"; } ?>>여자</option>
+									<option value="남자" <?php if (($familyObj->Sex=="남자")) { print "selected"; } ?>>남자</option>
+									<option value="여자" <?php if (($familyObj->Sex=="여자")) { print "selected"; } ?>>여자</option>
 								</select>
 							</td>
 							<td>
 								<select name="familyRelation" id="familyRelation">
-									<option value="부모" <?php if (($familyObj->relation=="부모")) { print "selected"; } ?>>부모</option>
-									<option value="배우자" <?php if (($familyObj->relation=="배우자")) { print "selected"; } ?>>배우자</option>
-									<option value="자녀" <?php if (($familyObj->relation=="자녀")) { print "selected"; } ?>>자녀</option>
-									<option value="형제" <?php if (($familyObj->relation=="형제")) { print "selected"; } ?>>형제</option>
-									<option value="기타" <?php if (($familyObj->relation=="기타")) { print "selected"; } ?>>기타</option>
+									<option value="부모" <?php if (($familyObj->Relation=="부모")) { print "selected"; } ?>>부모</option>
+									<option value="배우자" <?php if (($familyObj->Relation=="배우자")) { print "selected"; } ?>>배우자</option>
+									<option value="자녀" <?php if (($familyObj->Relation=="자녀")) { print "selected"; } ?>>자녀</option>
+									<option value="형제" <?php if (($familyObj->Relation=="형제")) { print "selected"; } ?>>형제</option>
+									<option value="기타" <?php if (($familyObj->Relation=="기타")) { print "selected"; } ?>>기타</option>
 								</select>
 							</td>
-							<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?php echo $familyObj->familyId?>)" /></td>
+							<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?php echo $familyObj->familyID;?>)" /></td>
 						</tr>
 					<?php 
 
@@ -433,20 +419,20 @@ function body() {
 				<dt>
 					가족사항 공개여부
 				<dd>
-					<input name="flagFamily" id="flagFamily" type="radio" value="1" class="chk" <?php if (($mission->flagFamily==1)) {
+					<input name="flagFamily" id="flagFamily" type="radio" value="1" class="chk" <?php if (($mission->FlagFamily==1)) {
 		print "checked";
 	} ?>> 공개 &nbsp;&nbsp;&nbsp;&nbsp;
-					<input name="flagFamily" id="flagFamily" type="radio" value="0" class="chk" <?php if (($mission->flagFamily==0)) {
+					<input name="flagFamily" id="flagFamily" type="radio" value="0" class="chk" <?php if (($mission->FlagFamily==0)) {
 		print "checked";
 	} ?>> 비공개
 				<dt>
 					선교사 승인
 				<dd>
 					<select name="approval" id="approval">
-						<option value="0" <?php if ((!$mission->approval)) {
+						<option value="0" <?php if ((!$mission->Approval)) {
 		print "selected";
 	} ?>>미승인</option>
-						<option value="1" <?php if (($mission->approval)) {
+						<option value="1" <?php if (($mission->Approval)) {
 		print "selected";
 	} ?>>승인</option>
 					</select>
@@ -471,7 +457,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-<?php if ($member->userLv!="3") { ?>
+<?php if ($member->Level!="3") { ?>
 	var chkMission = false;
 <?php } else { ?>
 	var chkMission = true;

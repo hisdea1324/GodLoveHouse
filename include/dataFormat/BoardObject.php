@@ -19,10 +19,10 @@ class BoardObject {
 
 	public function __isset($name) {
 		return isset($this->record[$name]); 
-    }
+  }
 
-    function __construct() {
-    	$sessions = new __construct();
+  function __construct() {
+    //$sessions = new __construct();
 
 		$this->record['id'] = -1;
 		$this->record['groupId'] = "";
@@ -31,7 +31,7 @@ class BoardObject {
 		$this->record['password'] = "";
 		$this->record['regDate'] = "";
 		$this->record['editDate'] = "";
-		$this->record['userId'] = $sessions->UserID;
+		$this->record['userId'] = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
 		$this->record['countView'] = 0;
 		$this->record['countCommnent'] = 0;
 		$this->record['answerId'] = -1;
@@ -188,8 +188,8 @@ class BoardObject {
 
 
 	function AddView() {
-		$sessions = new __construct();
-		if (($this->record['id'] > -1 && !$sessions->checkReadList($this->record['id']))) {
+		//$sessions = new __construct();
+		if ($this->record['id'] > -1) {
 			$query = "UPDATE board SET `countView` = `countView` + 1 WHERE `id` = ? ";
 			$stmt = $mysqli->prepare($query);
 			$stmt->bind_param("i", $this->record['id']);
@@ -215,7 +215,8 @@ class BoardObject {
 
 	function checkEditPermission() {
 		$sessions = new __construct();
-		if (($this->record['id'] == -1 || strcmp($sessions->UserID, $this->record['userId'])==0 || $sessions->UserLevel==9)) {
+		$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : "";
+		if (($this->record['id'] == -1 || $this->record['userId'] ==0 || $userLevel==9)) {
 			return true;
 		} else {
 			return false;
