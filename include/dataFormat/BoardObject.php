@@ -214,7 +214,6 @@ class BoardObject {
 
 
 	function checkEditPermission() {
-		$sessions = new __construct();
 		$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : "";
 		if (($this->record['id'] == -1 || $this->record['userId'] ==0 || $userLevel==9)) {
 			return true;
