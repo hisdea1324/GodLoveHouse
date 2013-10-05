@@ -63,7 +63,6 @@ class MissionObject {
 
 		$query = "SELECT A.*, B.name AS nation FROM missionary A, code B ";
 		$query.= "WHERE A.userid = '".$mysqli->real_escape_string($userid)."' AND A.nationcode = B.code";
-		echo $query;
 
 		$result = $mysqli->query($query);
 		if (!$result) return;

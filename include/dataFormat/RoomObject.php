@@ -88,42 +88,27 @@ class RoomObject {
 	function Open($roomId) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from room WHERE roomId = ?")) {
+		$query = "SELECT * from room WHERE roomId = ".$mysqli->real_escape_string($roomId);
+		$result = $mysqli->query($query);
+		if (!$result) return; 
 
-			/* bind parameters for markers */
-			$stmt->bind_param("i", $roomId);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
-			
+		while ($row = $result->fetch_assoc()) {
+			$this->roomid = $row['roomId'];
+			$this->houseid = $row['houseId'];
+			$this->roomName = $row['roomName'];
+			$this->limit = $row['limit'];
+			$this->explain = $row['explain'];
+			$this->network = $row['network'];
+			$this->kitchen = $row['kitchen'];
+			$this->laundary = $row['laundary'];
+			$this->fee = $row['fee'];
+			$this->imageId1 = $row['imageId1'];
+			$this->imageId2 = $row['imageId2'];
+			$this->imageId3 = $row['imageId3'];
+			$this->imageId4 = $row['imageId4'];
 		}
+
+		$result->close();
 
 		$imgArray = array();
 		if ($this->imageId1 > 0) {

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //***************************************************************
 // member edit page//
@@ -76,9 +76,9 @@ function body() {
 			if (trim($houseId) == trim($house->HouseID)) {
 				$house_selected = $house;
 				$roomList = $house->RoomList;
-				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"on\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 10)."</span></a>";
+				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"on\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 9)."</span></a>";
 			} else {
-				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 10)."</span></a>";
+				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 9)."</span></a>";
 			} 
 		}
 		?>
@@ -97,7 +97,7 @@ function body() {
 			} 
 		} 
 
-		if ($house_selected->RoomCount==0 || $_REQUEST["mode"]=="new") {
+		if ($house_selected->RoomCount == 0 || (isset($_REQUEST["mode"]) && $_REQUEST["mode"] == "new")) {
 			$room_selected = new RoomObject();
 		} 
 		?>

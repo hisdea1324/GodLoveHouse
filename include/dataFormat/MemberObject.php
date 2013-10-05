@@ -64,8 +64,6 @@ class MemberObject {
     		$this->isNew = false;
     		$this->Open($userId);
     	}
-
-    	print_r($this->record);
 	}
 
 	private function initialize() {

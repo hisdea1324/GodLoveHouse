@@ -49,8 +49,8 @@ class HouseObject {
 				return substr_replace($this->record['zipcode'], "-", 3, 0);
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record[$name]);
-			case "roomCount": 
-				return count($this->mRoom);
+			case "roomCount": case "RoomCount": 
+				return $this->record['roomCount'];
 			case "document_link": 
 				if (strlen($this->record['document']) > 0) {
 					return "<a href='/upload/room/".$this->record[$name]."'>".$this->record[$name]."</a>";
