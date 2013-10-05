@@ -10,13 +10,19 @@ class ReservationObject {
 	protected $image = array();
 
 	public function __set($name,$value) { 
-		$this->record[$name] = $value; 
+		$name = strtolower($name);
+		switch ($name) {
+			default : 
+				$this->record[$name] = $value;
+				break;
+		}
 	}
 	
 	public function __get($name) { 
+		$name = strtolower($name);
 		switch ($name) {
-			case 'Status': 
-				switch (($this->record['reservStatus'])) {
+			case 'status': 
+				switch ($this->record['reservStatus']) {
 					case "S0001":
 						return "신규예약";
 					case "S0002":
@@ -32,65 +38,57 @@ class ReservationObject {
 	}
 	
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
     }
 	
 	
 	#  class initialize
 	# ***********************************************
-	function __construct() {
-		$this->record['reservationNo'] = -1;
-		$this->record['userId'] = null;
-		$this->record['roomId'] = -1;
-		$this->record['hospitalId'] = -1;
-		$this->record['reservStatus'] = "S0001";
-		$this->record['startDate'] = null;
-		$this->record['endDate'] = null;
-		$this->record['regDate'] = null;
-	} 
+    function __construct($reservationNo = -1) {
+		$this->initialize();
+		if ($reservationNo > -1) {
+			$this->Open($reservationNo);
+		}
+	}
 
 	function __destruct() {
+	} 
+
+	private function initialize() {
+		$this->reservationNo = -1;
+		$this->userId = null;
+		$this->roomId = -1;
+		$this->hospitalId = -1;
+		$this->reservStatus = "S0001";
+		$this->startDate = null;
+		$this->endDate = null;
+		$this->regDate = null;
 	} 
 
 	function Open($number) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
 		$query = "SELECT A.*, B.houseName, C.roomName from reservation A, house B, room C ";
-		$query = $query."WHERE A.roomId = C.roomId AND C.houseId = B.houseId AND A.reservationNo = ?";
-		if ($stmt = $mysqli->prepare($query)) {
+		$query = $query."WHERE A.roomId = C.roomId AND C.houseId = B.houseId AND A.reservationNo = '".$mysqli->real_escape_string($number)."'";
 
-			/* bind parameters for markers */
-			$stmt->bind_param("i", $number);
+		$result = $mysqli->query($query);
+		if (!$result) return;
 
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while ($stmt->fetch()) {
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		while ($row = $result->fetch_assoc()) {
+			$this->reservationNo = $row['reservationNo'];
+			$this->userId = $row['userId'];
+			$this->roomId = $row['roomId'];
+			$this->hospitalId = $row['hospitalId'];
+			$this->reservStatus = $row['reservStatus'];
+			$this->startDate = $row['startDate'];
+			$this->endDate = $row['endDate'];
+			$this->regDate = $row['regDate'];
+			$this->houseName = $row['houseName'];
+			$this->roomName = $row['roomName'];
 		}
+
+		$result->close();
 	} 
 
 	function OpenHospitalReserv($number) {
@@ -99,39 +97,24 @@ class ReservationObject {
 		$column = array();
 		/* create a prepared statement */
 		$query = "SELECT A.*, B.hospitalName from reservation A, hospital B ";
-		$query = $query."WHERE A.hospitalId = B.hospitalId AND A.reservationNo = ?";
-		if ($stmt = $mysqli->prepare($query)) {
+		$query = $query."WHERE A.hospitalId = B.hospitalId AND A.reservationNo = '".$mysqli->real_escape_string($number)."'";
 
-			/* bind parameters for markers */
-			$stmt->bind_param("i", $number);
+		$result = $mysqli->query($query);
+		if (!$result) return;
 
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while ($stmt->fetch()) {
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		while ($row = $result->fetch_assoc()) {
+			$this->reservationNo = $row['reservationNo'];
+			$this->userId = $row['userId'];
+			$this->roomId = $row['roomId'];
+			$this->hospitalId = $row['hospitalId'];
+			$this->reservStatus = $row['reservStatus'];
+			$this->startDate = $row['startDate'];
+			$this->endDate = $row['endDate'];
+			$this->regDate = $row['regDate'];
+			$this->houseName = $row['houseName'];
 		}
+
+		$result->close();
 	} 
 
 	function Update() {
@@ -146,13 +129,13 @@ class ReservationObject {
 
 			# New Data
 			$stmt->bind_param("iiisiii", 
-				$this->record['userId'], 
-				$this->record['roomId'], 
-				$this->record['hospitalId'], 
-				$this->record['reservStatus'], 
-				$this->record['startDate'], 
-				$this->record['endDate'], 
-				$this->record['regDate']);
+				$this->userId, 
+				$this->roomId, 
+				$this->hospitalId, 
+				$this->reservStatus, 
+				$this->startDate, 
+				$this->endDate, 
+				$this->regDate);
 
 			# execute query
 			$stmt->execute();
@@ -160,7 +143,7 @@ class ReservationObject {
 			# close statement
 			$stmt->close();
 			
-			$this->record['reservationNo'] = $mysqli->insert_id;
+			$this->reservationNo = $mysqli->insert_id;
 			
 		} else {
 			$query = "UPDATE reservation SET ";
@@ -176,13 +159,13 @@ class ReservationObject {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("iiisiii", 
-				$this->record['userId'], 
-				$this->record['roomId'], 
-				$this->record['hospitalId'], 
-				$this->record['reservStatus'], 
-				$this->record['startDate'], 
-				$this->record['endDate'], 
-				$this->record['reservationNo']);
+				$this->userId, 
+				$this->roomId, 
+				$this->hospitalId, 
+				$this->reservStatus, 
+				$this->startDate, 
+				$this->endDate, 
+				$this->reservationNo);
 				
 			# execute query
 			$stmt->execute();
@@ -195,20 +178,23 @@ class ReservationObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['reservationNo'] > -1) {
-			$stmt = $mysqli->prepare("delete from reservation where reservationNo = ?");
-			$stmt->bind_param("i", $this->record['reservationNo']);
-			$stmt->execute();
-			$stmt->close();
+		if ($this->reservationNo > -1) {
+			$query = "DELETE FROM reservation WHERE reservationNo = '".$mysqli->real_escape_string($number)."'";
+			if ($result = $mysqli->query($query)) {
+				$result->close();
+				return true;
+			}
 		}
+
+		return false;
 	} 
 
 	function checkId() {
-		return (strlen($this->record['userId']) != 0 && strlen($this->record['roomId']) != 0);
+		return (strlen($this->userId) != 0 && strlen($this->roomId) != 0);
 	} 
 
 	function checkDate() {
-		return (strlen($this->record['startDate']) != 0 && strlen($this->record['endDate']) != 0);
+		return (strlen($this->startDate) != 0 && strlen($this->endDate) != 0);
 	} 
 	
 } 

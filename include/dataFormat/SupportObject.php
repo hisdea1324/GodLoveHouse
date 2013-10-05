@@ -53,9 +53,8 @@ class SupportObject {
     }
 
     function __construct($userId = -1, $supId = -1) {
-		if ($userId == -1 || $supId == -1) {
-			$this->initialize();
-		} else {
+		$this->initialize();
+		if ($userId > -1 && $supId > -1) {
 			$this->Open($userId, $supId);
 		}
 	}

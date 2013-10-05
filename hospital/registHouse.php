@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $hospitalId = (isset($_REQUEST["hospitalId"])) ? trim($_REQUEST["hospitalId"]) : 0;

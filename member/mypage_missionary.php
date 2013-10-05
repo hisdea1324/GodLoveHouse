@@ -1,37 +1,43 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CalendarBuilder.php");
-//***************************************************************// member edit page//// last update date : 2009.12.28// updated by blackdew// To do List//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함//	 - 자바 스크립트 추가 & update process 진행//***************************************************************checkUserLogin();
-$toDate = trim($_REQUEST["toDate"]);
-$fromDate = trim($_REQUEST["fromDate"]);
-$houseId = trim($_REQUEST["houseId"]);
-$roomId = trim($_REQUEST["roomId"]);
-$search = trim($_REQUEST["search"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+//***************************************************************
+// member edit page//
+// last update date : 2009.12.28
+// updated by blackdew
+// To do List
+//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함
+//	 - 자바 스크립트 추가 & update process 진행
+//***************************************************************
+checkUserLogin();
 
-$sessions = new __construct();
+$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
+$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
+$houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
+$roomId = isset($_REQUEST["roomId"]) ? trim($_REQUEST["roomId"]) : "";
+$search = isset($_REQUEST["search"]) ? trim($_REQUEST["search"]) : "";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
 
 $h_Helper = new HouseHelper();
 $reservList = $h_Helper->getReservationListByUser(1);
 
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 예약정보","mypage_missionary","tit_0801.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_missionary","tit_0801.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
-} 
-
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
+}
 
 body();
 showFooter();
 
 function body() {
+	global $search;
+	global $reservList, $member;
 ?>
 		<!-- //content -->
 		<!-- //정보 -->
@@ -43,10 +49,10 @@ function body() {
 			<img src="../images/board/img_search.gif" class="r5" align="absmiddle" /><span class="fc_01"><strong>예약 처리 상황</strong></span>
 			<select name="status" id="status" onchange="search(this.value)">
 				<option value="0">전체</option>
-				<option value="1" <?php if (($search=="1")) { ?> selected <?php } ?>>신규예약</option>
-				<option value="2" <?php if (($search=="2")) { ?> selected <?php } ?>>승인</option>
-				<option value="3" <?php if (($search=="3")) { ?> selected <?php } ?>>완료</option>
-				<option value="4" <?php if (($search=="4")) { ?> selected <?php } ?>>거절</option>
+				<option value="1" <?php if ($search == "1") { ?> selected <?php } ?>>신규예약</option>
+				<option value="2" <?php if ($search == "2") { ?> selected <?php } ?>>승인</option>
+				<option value="3" <?php if ($search == "3") { ?> selected <?php } ?>>완료</option>
+				<option value="4" <?php if ($search == "4") { ?> selected <?php } ?>>거절</option>
 			</select>
 		</div>
 		<!-- search// -->
@@ -62,15 +68,14 @@ function body() {
 				<th class="th01" width="20%">승인여부</th>
 			</tr>
 <?php 
-	if ((count($reservList)==0)) {
+	if (count($reservList) == 0) {
 ?>
 			<tr>
 				<td colspan="4">리스트가 없습니다</td>
 			</tr>
 <?php 
 	} else {
-		for ($i=0; $i<=count($reservList)-1; $i = $i+1) {
-			$reservObj = $reservList[$i];
+		foreach ($reservList as $reservObj) {
 ?>
 			<tr>
 				<td><?php echo $reservObj->RegDate;?></td>
@@ -80,16 +85,12 @@ function body() {
 				</td>
 				<td><?php echo $reservObj->HouseName;?> / <?php echo $reservObj->RoomName;?></td>
 				<td><?php echo $reservObj->StartDate;?> ~ <?php echo $reservObj->EndDate;?> <!--a href="#"><img src="../images/board/btn_modify_date.gif" align="absmiddle"></a--></td>
-				<td><?php echo $reservObj->Status;?> <?			 if ($reservObj->Status=="신규예약") {
-?><a href="#" onclick="deny(<?php echo $reservObj->BookNo;?>)" >[취소]</a><?			 } ?>
+				<td><?php echo $reservObj->Status;?> <?	if ($reservObj->Status=="신규예약") { ?><a href="#" onclick="deny(<?php echo $reservObj->BookNo;?>)" >[취소]</a><? } ?>
 				</td>
 			</tr>
 <?php 
-
 		}
-
 	} 
-
 ?>
 			</table>
 		</div>
@@ -129,7 +130,7 @@ function body() {
 		if (oProfile.style.visibility == "hidden") {
 			var url = 'ajax.php?mode=getUserProfile&userid='+oId.innerText;
 
-			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile]);
+			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
 			oProfile.style.left = e.clientX;
 			oProfile.style.top = e.clientY;
 			oProfile.style.visibility = "visible";

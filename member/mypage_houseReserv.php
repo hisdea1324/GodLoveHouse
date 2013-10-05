@@ -345,57 +345,53 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-		calendar_init();
-		
-		var date = new Date;
-		var year = date.getFullYear();
-		var month = date.getMonth();
-		callPage(year, month + 1);
-		
-		function selectRoom() {
-				var room = document.getElementById("room").value;
-				if (room.length == 0) {
-						return;
-				}
-				
-				location.href = "reservationDetail.php?houseId=<?php echo $houseId;?>&roomId=" + room;
+	calendar_init();
+	
+	var date = new Date;
+	var year = date.getFullYear();
+	var month = date.getMonth();
+	callPage(year, month + 1);
+	
+	function selectRoom() {
+		var room = document.getElementById("room").value;
+		if (room.length == 0) {
+				return;
 		}
 		
-		function goRoomList() {
-				history.back(-1);
-				//location.href = "reservation.php?houseId=<?php echo $houseId;?>";
-		}
-		
-		function changeImage(imgName) {
-				document.getElementById("mainImage").src = imgName;
-		}
-		
-		function callPage(y, m) {
-			var url = '/common/ajax/calendar.php?roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
-			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
+		location.href = "reservationDetail.php?houseId=<?php echo $houseId;?>&roomId=" + room;
+	}
+	
+	function goRoomList() {
+		history.back(-1);
+		//location.href = "reservation.php?houseId=<?php echo $houseId;?>";
+	}
+	
+	function callPage(y, m) {
+		var url = '/common/ajax/calendar.php?roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
+	}
+
+	function insertCalendar(reqResult) {
+		var addHtml = reqResult.responseText;
+		document.getElementById("reservationCal").innerHTML = addHtml;
+	}
+	
+	function reserveSubmit() {
+		var endDate = document.getElementById("endDate").value;
+		var startDate = document.getElementById("startDate").value;
+
+		if (startDate.length == 0 || endDate.length == 0) {
+			alert('숙박 기간을 정확히 입력해 주세요');
+			return;
 		}
 
-		function insertCalendar(reqResult) {
-				var addHtml = reqResult.responseText;
-				document.getElementById("reservationCal").innerHTML = addHtml;
+		if (startDate.replace(/-/g,'') >= endDate.replace(/-/g,'')) {
+			alert('기간이 잘못되었습니다.');
+			return;
 		}
-		
-		function reserveSubmit() {
-				var endDate = document.getElementById("endDate").value;
-				var startDate = document.getElementById("startDate").value;
 
-				if (startDate.length == 0 || endDate.length == 0) {
-						alert('숙박 기간을 정확히 입력해 주세요');
-						return;
-				}
-
-				if (startDate.replace(/-/g,'') >= endDate.replace(/-/g,'')) {
-						alert('기간이 잘못되었습니다.');
-						return;
-				}
-
-				document.getElementById("frmReserve").submit();
-		}
+		document.getElementById("frmReserve").submit();
+	}
 		
 	function allow(value) {
 		if (confirm('예약을 승인합니다.'))

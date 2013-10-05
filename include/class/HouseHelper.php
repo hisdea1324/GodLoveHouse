@@ -305,21 +305,25 @@ class HouseHelper {
 	} 
 
 	function getReservationListByManager($curPage) {
+		global $mysqli;
+
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
 		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId";
 		} else {
-			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$_SESSION['userid']."'";
+			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."'";
 		} 
 
-		return getReservationList($query);
+		return $this->getReservationList($query);
 	} 
 
 	function getReservationListByUser($curPage) {
+		global $mysqli;
+
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
-		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$_SESSION['userid']."' ";
+		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."' ";
 		$query = $query."ORDER BY C.regDate DESC";
-		return getReservationList($query);
+		return $this->getReservationList($query);
 	} 
 } 
 ?>
