@@ -60,9 +60,8 @@ class RoomObject {
 	#  class initialize
 	# ***********************************************
 	function __construct($roomId = -1) {
-		if ($roomId == -1) {
-			$this->initialize();
-		} else {
+		$this->initialize();
+		if ($roomId > -1) {
 			$this->Open($roomId);
 		}
 	}

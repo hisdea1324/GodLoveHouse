@@ -1,43 +1,48 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CalendarBuilder.php");
-//***************************************************************// member edit page//// last update date : 2009.12.28// updated by blackdew// To do List//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함//	 - 자바 스크립트 추가 & update process 진행//***************************************************************checkUserLogin();
-$toDate = trim($_REQUEST["toDate"]);
-$fromDate = trim($_REQUEST["fromDate"]);
-$houseId = trim($_REQUEST["houseId"]);
-$roomId = trim($_REQUEST["roomId"]);
-$search = trim($_REQUEST["search"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+//***************************************************************
+// member edit page//
+// last update date : 2009.12.28
+// updated by blackdew
+// To do List
+//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함
+//	 - 자바 스크립트 추가 & update process 진행
+//***************************************************************
 
-$sessions = new __construct();
+checkUserLogin();
+
+$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
+$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
+$houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
+$roomId = isset($_REQUEST["roomId"]) ? trim($_REQUEST["roomId"]) : "";
+$search = isset($_REQUEST["search"]) ? trim($_REQUEST["search"]) : "";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
-$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
-$mission = $m_Helper->getMissionInfoByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
 
 $h_Helper = new HouseHelper();
-$houseList1 = $h_Helper->getHouseListByUserId($sessions->UserID);
-//if (Len(houseId) = 0) then //houseId = houseList1(0).HouseID //end if
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_missionary","tit_0801.gif");
-} else {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
-} 
+$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
 
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_missionary","tit_0801.gif");
+} else {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
+} 
 
 //******************************************************************// 달력 세팅$StartYear=2012;
 
 $calendar = new CalendarBuilder();
-$calendar->CYear = trim($_REQUEST["y"]);
-$calendar->CMonth = trim($_REQUEST["m"]);
+$calendar->CYear = isset($_REQUEST["y"]) ? trim($_REQUEST["y"]) : "";
+$calendar->CMonth = isset($_REQUEST["m"]) ? trim($_REQUEST["m"]) : "";
 
 $fromDate = $calendar->CurrentMonth.$calendar->DataFormat(1);
 $toDate = $calendar->NextMonth.$calendar->DataFormat(1);

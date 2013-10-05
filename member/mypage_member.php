@@ -24,7 +24,7 @@ body();
 showFooter();
 
 function body() {
-	global $member, $account;
+	global $member, $account, $mission;
 ?>
 		<!-- //content -->
 	<!-- //정보 -->
@@ -166,7 +166,7 @@ function body() {
 				</tr>
 			</table>
 			<p class="right b10">
-				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex=22"<?php if ($member->Level=="3") {
+				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="22"<?php if ($member->Level=="3") {
 ?> checked<?php } ?> />
 				<span class="fc_01 b">선교사일 경우 추가입력</span></p>
 			<!-- //write -->
@@ -485,9 +485,9 @@ function body() {
 //<![CDATA[
 	var familyNum = 1;
 	
-		function checkNick(nick) {
+	function checkNick(nick) {
 		var url = 'ajax.php?mode=checkNick&nick='+nick;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNick]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNick});
 	}
 	
 	function resultNick(reqResult) {
@@ -499,7 +499,7 @@ function body() {
 		var nid1 = document.getElementById("jumin1").value;
 		var nid2 = document.getElementById("jumin2").value;
 		var url = 'ajax.php?mode=checkNID&nid1='+nid1+'&nid2='+nid2;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNID]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNID});
 	}
 	
 	function resultNID(reqResult) {

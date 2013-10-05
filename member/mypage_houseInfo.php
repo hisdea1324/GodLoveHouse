@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //***************************************************************
 // member edit page//
@@ -48,7 +48,7 @@ showFooter();
 function body() {
 	global $houseId, $roomId, $toDate, $fromDate;
 	global $member, $account;
-	global $houseList1, $houseList2;
+	global $houseList1, $houseList2, $roomList;
 ?>
 		<!-- //content -->
 	<!-- //정보 -->
@@ -77,6 +77,7 @@ function body() {
 		<!-- //tab -->
 		<div class="Tab">
 		<?php 
+		$roomList = array();
 		if (count($houseList1) > 0 && strlen($houseId) == 0) {
 			$houseId = $houseList1[0]->HouseID;
 		}
@@ -84,18 +85,17 @@ function body() {
 			if (trim($houseId) == trim($house->HouseID)) {
 				$house_selected = $house;
 				$roomList = $house->RoomList;
-				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"on\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 10)."</span></a>";
+				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"on\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 9)."</span></a>";
 			} else {
-				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 10)."</span></a>";
+				print "<a href=\"mypage_houseInfo.php?houseId=".$house->HouseID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$house->HouseName."\"><span>".StrFormatByLength($house->HouseName, 9)."</span></a>";
 			}
 		}
-
-?>
+		?>
 			</div>
 		<div class="sTab">
 		<?php 
-		if (strlen($roomId) == 0) {
-			$roomId = $roomList[1]->RoomID;
+		if (count($roomList) > 0 && strlen($roomId) == 0) {
+			$roomId = $roomList[0]->RoomID;
 		}
 		foreach ($roomList as $room) {
 			if (trim($roomId) == trim($room->RoomID)) {
@@ -105,12 +105,12 @@ function body() {
 				print "<a href=\"mypage_houseInfo.php?houseId=".$houseId."&roomId=".$room->RoomID."\" class=\"off\" onmouseover=\"this.className='on'\" onmouseout=\"this.className='off'\" title=\"".$house_selected->HouseName." - ".$room->RoomName."\"><span>".StrFormatByLength($room->RoomName, 8)."</span></a>";
 			} 
 		}
-?>
+		?>
 		</div>
 		<!-- tab// -->
 
 		<a href="../living/registHouse.php?houseId=<?php echo $houseId;?>" class="on">[선교관 수정]</a>
-				<a href="mypage_houseInfo_edit.php?mode = new&houseId=<?php echo $houseId;?>" class="on">[방 추가]</a>		
+				<a href="mypage_houseInfo_edit.php?mode=new&houseId=<?php echo $houseId;?>" class="on">[방 추가]</a>		
 		<a href="mypage_houseInfo_edit.php?houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>" class="on"><span>[방정보 수정]</span></a> 
 		<a href="process.php?mode=deleteRoom&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>" class="on"><span>[방정보 삭제]</span></a> 
 		<H2><img src="../images/board/stit_reserve_01.gif"></H2>
@@ -176,7 +176,7 @@ function body() {
 			<tr>
 				<td class="td01">주소</td>
 				<td colspan="5">
-					<?		 $zipcode = $house_selected->Zipcode;?>
+					<? $zipcode = $house_selected->Zipcode;?>
 					[<?php echo $zipcode[0];?>-<?php echo $zipcode[1];?>]
 					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($house_selected->Address1.$house_selected->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $house_selected->Address1;?> <?php echo $house_selected->Address2;?></A>
 				</td>
@@ -255,4 +255,3 @@ function body() {
 	}
 //]]>
 </script>
-

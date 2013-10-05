@@ -248,18 +248,21 @@ class SupportHelper {
 	} 
 
 	function getReqItemListByReqId($reqId) {
-		$query = "SELECT reqItemId FROM RequestItem WHERE reqId = ".$reqId;
-		return getRequestItemList($query);
+		global $mysqli;
+		$query = "SELECT reqItemId FROM RequestItem WHERE reqId = '".$mysqli->real_escape_string($reqId)."'";
+		return $this->getRequestItemList($query);
 	} 
 
 	#  method : Support Statistics
 	# ************************************************************
 	function getMonthlySupport($year) {
 		#  $objDic is of type "Scripting.Dictionary"
+		global $mysqli;
 
 		$query = "SELECT LEFT(CONVERT(char(8), regDate, 112), 6) AS sumDate, SUM(sumPrice) AS sumTotal FROM supportInfo ";
 		$query = $query."WHERE regDate > '".strftime("%Y", "0101' AND regDate < '".(strftime("%Y",+1))."0101' GROUP BY Left(CONVERT(char(8), regDate, 112), 6)");
-		$dateSumRS = $mysqli->Execute($query);
+		echo $query;
+		$result = $mysqli->query($query);
 
 		while(!($dateSumRS->Eof || $dateSumRS->Bof)) {
 			$objDic[($dateSumRS["sumDate"])]=($dateSumRS["sumTotal"]);
@@ -268,8 +271,9 @@ class SupportHelper {
 		return $objDic;
 	} 
 
-	function getDailySupport($fromDate,$toDate) {
+	function getDailySupport($fromDate, $toDate) {
 		#  $objDic is of type "Scripting.Dictionary"
+		global $mysqli;
 
 		$query = "SELECT CONVERT(char(8), regDate, 112) AS sumDate, SUM(sumPrice) AS sumTotal FROM supportInfo ";
 		$query = $query."WHERE regDate > '".$fromDate."' AND regDate < '".$toDate."' GROUP BY CONVERT(char(8), regDate, 112)";

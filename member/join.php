@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
@@ -167,7 +167,7 @@ function body() {
 			</table>
 			<!-- write// -->
 			<p class="right b10">
-				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex=22" />
+				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="22" />
 				<span class="fc_01 b">선교사일 경우 추가입력</span></p>
 			<!-- //write -->
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write" id="frmMission" style="visibility:hidden;display: none;">
@@ -252,13 +252,10 @@ function body() {
 					<td class="td01">선교지</td>
 					<td>
 						<select name="nation" id="nation" tabindex="32">
-			<?php 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
-		$codeObj = $codes[$i];
+<?php 
+	foreach ($codes as $codeObj) {
 		print "<option value=\"".$codeObj->Code."\">".$codeObj->Name."</option>";
-
 	}
-
 ?>
 						</select>
 					</td>
@@ -419,9 +416,9 @@ function body() {
 //<![CDATA[
 	var familyNum = 1;
 	
-		function checkUserId(userId) {
+	function checkUserId(userId) {
 		var url = 'ajax.php?mode=checkUserId&userId='+userId;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultUserId]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultUserId});
 	}
 	
 	function resultUserId(reqResult) {
@@ -429,9 +426,9 @@ function body() {
 		document.getElementById("resultMessage1").innerHTML = addHtml;
 	}
 	
-		function checkNick(nick) {
+	function checkNick(nick) {
 		var url = 'ajax.php?mode=checkNick&nick='+nick;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNick]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNick});
 	}
 	
 	function resultNick(reqResult) {
@@ -443,7 +440,7 @@ function body() {
 		var nid1 = document.getElementById("jumin1").value;
 		var nid2 = document.getElementById("jumin2").value;
 		var url = 'ajax.php?mode=checkNID&nid1='+nid1+'&nid2='+nid2;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNID]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultNID});
 	}
 	
 	function resultNID(reqResult) {
@@ -455,7 +452,7 @@ function body() {
 		var pw1 = document.getElementById("password").value;
 		var pw2 = document.getElementById("password_confirm").value;
 		var url = 'ajax.php?mode=checkPassword&pw1='+pw1+'&pw2='+pw2;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultPassword]);
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultPassword});
 	}
 	
 	function resultPassword(reqResult) {

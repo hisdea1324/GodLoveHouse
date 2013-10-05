@@ -11,12 +11,8 @@ class HouseObject {
 	public $mDocument = "";
 
 	public function __set($name, $value) { 
+		$name = strtolower($name);
 		switch ($name) {
-			case "contact1":
-			case "contact2":
-			case "zipcode":
-				$this->record[$name] = join("-", $value); 
-				break;
 			default:
 				$this->record[$name] = $value; 
 				break;
@@ -24,29 +20,12 @@ class HouseObject {
 	}
 	
 	public function __get($name) { 
+		$name = strtolower($name);
 		switch ($name) {
-			case "HouseID":
-				return $this->record['houseId'];
-			case "HouseName":
-				return $this->record['houseName'];
-			case "AssocName":
-				return $this->record['assocName'];
-			case "Address1":
-				return $this->record['address1'];
-			case "Address2":
-				return $this->record['address2'];
-			case "Manager1":
-				return $this->record['manager1'];
 			case "contact1":
 			case "contact2":
-				$value = explode("-", $this->record[$name]);
-				if (count($value) == 3) {
-					return $value;
-				} else {
-					return array("", "", "");
-				}
-			case "zipcode": case "Zipcode":
-				return substr_replace($this->record['zipcode'], "-", 3, 0);
+			case "zipcode":
+				return explode("-", $this->record[$name]);
 			case "explain":
 				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "roomCount": case "RoomCount": 
@@ -59,13 +38,13 @@ class HouseObject {
 			case "homepage":
 				if (strlen($this->record[$name]) == 0) {
 					return "없음";
-				} else if (substr($this->record[$name],0,"4") != "http") {
+				} else if (substr($this->record[$name], 0, "4") != "http") {
 					return "<a href='http://".$this->record[$name]."' target='_blank'>http://".$this->record[$name]."</a>";
 				} else {
 					return "<a href='".$this->record[$name]."' target='_blank'>".$this->record[$name]."</a>";
 				} 
 			case "buildingTypeValue":
-				switch ($this->record[$name]) {
+				switch ($this->record['buildingtype']) {
 					case 1:
 						return "아파트";
 					case 2:
@@ -77,16 +56,16 @@ class HouseObject {
 				}
 			case "region":
 				$c_Helper = new CodeHelper();
-				return $c_Helper->getCodeName($this->record['regionCode']);
+				return $c_Helper->getCodeName($this->record['regioncode']);
 			case "status": case "StatusCode":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
-			case "RoomList":
+			case "roomlist":
 				$rooms = array();
 				foreach ($this->mRoom as $room) {
 					$rooms[] = new RoomObject($room);
 				} 
-				return $rooms; 
+				return $rooms;
 			default:
 				if (isset($this->record[$name])) {
 					return $this->record[$name];
@@ -97,43 +76,43 @@ class HouseObject {
 	}
 	
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]);
     }
 
 	#  class initialize
 	# ***********************************************
 	function __construct($houseId = -1) {
-		if ($houseId == -1) {
-			$this->initialize();
-		} else {
+		$this->initialize();
+		if ($houseId > -1) {
 			$this->Open($houseId);
 		}
 	}
 	
 	private function initialize() {
-		$this->record['houseId'] = -1;
-		$this->record['assocName'] = null;
-		$this->record['address1'] = null;
-		$this->record['address2'] = null;
-		$this->record['zipcode'] = "000-000";
-		$this->record['regionCode'] = "S0000";
-		$this->record['explain'] = null;
-		$this->record['userId'] = null;
-		$this->record['manager1'] = null;
-		$this->record['contact1'] = null;
-		$this->record['manager2'] = null;
-		$this->record['contact2'] = null;
-		$this->record['price'] = "무료";
-		$this->record['personLimit'] = 0;
-		$this->record['roomLimit'] = 0;
-		$this->record['houseName'] = null;
-		$this->record['homepage'] = null;
-		$this->record['roomCount'] = 0;
-		$this->record['documentId'] = -1;
-		$this->record['document'] = null;
-		$this->record['buildingType'] = 1;
-		$this->record['status'] = "S2001";
-		$this->record['regDate'] = "";
+		$this->houseid = -1;
+		$this->assocname = null;
+		$this->address1 = null;
+		$this->address2 = null;
+		$this->zipcode = "-";
+		$this->regioncode = "S0000";
+		$this->explain = null;
+		$this->userid = null;
+		$this->manager1 = null;
+		$this->contact1 = "--";
+		$this->manager2 = null;
+		$this->contact2 = "--";
+		$this->price = "무료";
+		$this->personlimit = 0;
+		$this->roomlimit = 0;
+		$this->housename = null;
+		$this->homepage = null;
+		$this->roomcount = 0;
+		$this->documentid = -1;
+		$this->document = null;
+		$this->buildingtype = 1;
+		$this->status = "S2001";
+		$this->regdate = "";
 	}
 	
 	#  class method
@@ -141,61 +120,54 @@ class HouseObject {
 	public function Open($houseId) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from house WHERE houseId = ?")) {
+		$query = "SELECT * from house WHERE houseId = '".$mysqli->real_escape_string($houseId)."'";
+		$result = $mysqli->query($query);
+		if (!$result) return;
 
-			/* bind parameters for markers */
-			$stmt->bind_param("i", $houseId);
+		while ($row = $result->fetch_assoc()) {
+			$this->houseid = $row['houseId'];
+			$this->assocname = $row['assocName'];
+			$this->address1 = $row['address1'];
+			$this->address2 = $row['address2'];
+			$this->zipcode = $row['zipcode'];
+			$this->regioncode = $row['regionCode'];
+			$this->explain = $row['explain'];
+			$this->userid = $row['userId'];
+			$this->manager1 = $row['manager1'];
+			$this->contact1 = $row['contact1'];
+			$this->manager2 = $row['manager2'];
+			$this->contact2 = $row['contact2'];
+			$this->price = $row['price'];
+			$this->personlimit = $row['personLimit'];
+			$this->roomlimit = $row['roomLimit'];
+			$this->housename = $row['houseName'];
+			$this->homepage = $row['homepage'];
+			$this->roomcount = $row['roomCount'];
+			$this->documentid = $row['documentId'];
+			$this->document = $row['document'];
+			$this->buildingtype = $row['buildingType'];
+			$this->status = $row['status'];
+			$this->regdate = $row['regDate'];
+		}
+		$result->close();
 
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
+		if (isset($this->documentId) && $this->documentId > 0) {
+			$query = "SELECT name FROM attachFile WHERE id = '".$mysqli->real_escape_string($this->documentId)."'";
+			if ($result = $mysqli->query($query)) {
+				while ($row = $result->fetch_assoc()) {
+					$this->document = $row["name"];
 				}
+				$result->close();
 			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			// $statment: $stmt->bind_result($colomn['a'], $column['b']...)
-			eval($statment);
-			
-			while ($stmt->fetch()) {
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
-
-			if (isset($this->record['documentId']) && $this->record['documentId'] > 0) {
-				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
-				$stmt->bind_param("i", $this->record['documentId']);
-				$stmt->execute();
-				$stmt->bind_result($this->record["document"]);
-				$stmt->close();
-			} else {
-				$this->mDocument = -1;
-			} 
-			
-			$roomId = -1;
-			if (isset($this->record['houseId']) && $this->record['houseId'] > -1) {
-				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
-				$stmt->bind_param("i", $this->record['houseId']);
-				$stmt->execute();
-				$stmt->bind_result($roomId);
-				while ($stmt->fetch()) {
-					$this->mRoom[] = $roomId;
+		}
+		
+		if (isset($this->houseId) && $this->houseId > -1) {
+			$query = "SELECT `roomId` FROM room WHERE `houseId` = '".$mysqli->real_escape_string($this->houseId)."'";
+			if ($result = $mysqli->query($query)) {
+				while ($row = $result->fetch_assoc()) {
+					$this->mRoom[] = $row["roomId"];
 				}
-   				$stmt->close();
+				$result->close();
 			}
 		}
 	}
@@ -203,7 +175,7 @@ class HouseObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->record['houseId'] == -1) {
+		if ($this->houseId == -1) {
 			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userId`, ";
 			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
@@ -214,26 +186,26 @@ class HouseObject {
 
 			# New Data
 			$stmt->bind_param("ssssssssssssiissiisi", 
-				$this->record['assocName'],
-				$this->record['address1'],
-				$this->record['address2'],
-				$this->record['zipcode'],
-				$this->record['regionCode'],
-				$this->record['explain'],
-				$this->record['userId'],
-				$this->record['manager1'],
-				$this->record['contact1'], 
-				$this->record['manager2'], 
-				$this->record['contact2'], 
-				$this->record['price'], 
-				$this->record['personLimit'], 
-				$this->record['roomLimit'], 
-				$this->record['houseName'], 
-				$this->record['homepage'], 
-				$this->record['roomCount'], 
-				$this->record['documentId'], 
-				$this->record['document'], 
-				$this->record['buildingType']);
+				$this->assocName,
+				$this->address1,
+				$this->address2,
+				$this->zipcode,
+				$this->regionCode,
+				$this->explain,
+				$this->userId,
+				$this->manager1,
+				$this->contact1, 
+				$this->manager2, 
+				$this->contact2, 
+				$this->price, 
+				$this->personLimit, 
+				$this->roomLimit, 
+				$this->houseName, 
+				$this->homepage, 
+				$this->roomCount, 
+				$this->documentId, 
+				$this->document, 
+				$this->buildingType);
 		
 			# execute query
 			$stmt->execute();
@@ -241,7 +213,7 @@ class HouseObject {
 			# close statement
 			$stmt->close();
 			
-			$this->record['houseId'] = $mysqli->insert_id;
+			$this->houseId = $mysqli->insert_id;
 			
 		} else {
 			$query = "UPDATE house SET ";
@@ -271,27 +243,27 @@ class HouseObject {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sssssssssssiiissiisii", 
-				$this->record['assocName'], 
-				$this->record['address1'], 
-				$this->record['address2'], 
-				$this->record['zipcode'], 
-				$this->record['regionCode'], 
-				$this->record['explain'], 
-				$this->record['userId'], 
-				$this->record['manager1'], 
-				$this->record['contact1'], 
-				$this->record['manager2'], 
-				$this->record['contact2'], 
-				$this->record['price'], 
-				$this->record['personLimit'], 
-				$this->record['roomLimit'], 
-				$this->record['houseName'], 
-				$this->record['homepage'], 
-				$this->record['roomCount'], 
-				$this->record['documentId'], 
-				$this->record['document'], 
-				$this->record['buildingType'], 
-				$this->record['houseId']);
+				$this->assocName, 
+				$this->address1, 
+				$this->address2, 
+				$this->zipcode, 
+				$this->regionCode, 
+				$this->explain, 
+				$this->userId, 
+				$this->manager1, 
+				$this->contact1, 
+				$this->manager2, 
+				$this->contact2, 
+				$this->price, 
+				$this->personLimit, 
+				$this->roomLimit, 
+				$this->houseName, 
+				$this->homepage, 
+				$this->roomCount, 
+				$this->documentId, 
+				$this->document, 
+				$this->buildingType, 
+				$this->houseId);
 				
 			# execute query
 			$stmt->execute();
@@ -304,9 +276,9 @@ class HouseObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['houseId'] > -1) {
+		if ($this->houseId > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM house WHERE `houseId` = ?");
-			$stmt->bind_param("d", $this->record['houseId']);
+			$stmt->bind_param("d", $this->houseId);
 			$stmt->execute();
 			$stmt->close();
 		}
