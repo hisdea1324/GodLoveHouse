@@ -1,18 +1,16 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
 
-# 페이징 갯수 $PAGE_COUNT=15;
+# 페이징 갯수 
+$PAGE_COUNT = 15;
 $PAGE_UNIT = 10;
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
-$groupId = trim($_REQUEST["groupId"]);
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1; 
+$groupId = isset($_REQUEST["groupId"]) ? trim($_REQUEST["groupId"]) : ""; 
 
-if (strlen($page) == 0) {
-	$page=1;
-} 
-
-switch (($groupId)) {
+switch ($groupId) {
 	case "notice":
 		$headerSet = array("HOME > 커뮤니티 > 공지사항","community","tit_0601.gif");
 		break;
@@ -44,7 +42,7 @@ switch (($groupId)) {
 		$headerSet = array("HOME > 동역자소식 > 후원자소식","fiscal","tit_0505n.gif");
 		break;
 	default:
-		alertGoPage("잘못된 접근입니다",$Application["WebRoot"]."index.php");
+		alertGoPage("잘못된 접근입니다", $_SERVER['DOCUMENT_ROOT']."/index.php");
 		break;
 } 
 
@@ -55,12 +53,9 @@ $b_Helper->setCondition($field, $keyword, $groupId); # 조건문 작성
 $strPage = $b_Helper->makePagingHTML($page);
 $boardList = $b_Helper->getBoardListWithPaging($page);
 
-showHeader($headerSet[0],$headerSet[1],$headerSet[2]);
+showHeader($headerSet[0], $headerSet[1], $headerSet[2]);
 body();
 showFooter();
-
-$b_Helper = null;
-
 
 function body() {
 	global $groupId, $keyword, $field, $page;
@@ -105,7 +100,7 @@ function body() {
 	} else {
 		$num = count($boardList);
 		$remain = $b_Helper->TOTAL_COUNT%$b_Helper->PAGE_COUNT;
-		if (($remain==0)) {
+		if ($remain == 0) {
 			$remain = $b_Helper->PAGE_COUNT;
 		}
 		$num = (round($b_Helper->TOTAL_COUNT / $b_Helper->PAGE_COUNT,5) - $page + 1) * $b_Helper->PAGE_COUNT + $remain;

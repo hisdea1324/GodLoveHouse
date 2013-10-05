@@ -6,7 +6,6 @@ body();
 showFooter();
 
 function body() {
-	global $Application;
 ?>
 		<div id="content">
 			<H3>함께하는 기업</H3>

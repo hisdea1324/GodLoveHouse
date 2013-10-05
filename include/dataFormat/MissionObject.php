@@ -1,154 +1,158 @@
-<?php
+<?php 
+# ************************************************************
+#  Object : MissionObject
+# 
+#  editor : Sookbun Lee 
+#  last update date : 2010.03.04
+# ************************************************************
+
 class MissionObject {
 	protected $record = array();
 	protected $family = array();
-	
-	public function __set($name,$value) { 
+
+	public function __set($name, $value) { 
+		$name = strtolower($name);
 		$this->record[$name] = $value; 
 	}
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		return $this->record[$name];
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
-  }
-  
-  function __construct($idx = -1) {
-  	if ($idx == -1) {
-  		$this->initialize();
-  	} else {
-  		$this->Open($idx);
-  	}
+    }
+
+    function __construct($value = -1) {
+    	if ($value == -1) {
+    		$this->initialize();
+    	} else {
+    		$this->Open($value);
+    	}
+
+    	print_r($this->record);
 	}
 
-	function initialize() {
-		$this->record['userId'] = "";
-		$this->record['missionName'] = "";
-		$this->record['church'] = "";
-		$this->record['churchContact'] = "";
-		$this->record['ngo'] = "";
-		$this->record['ngoContact'] = "";
-		$this->record['nationCode'] = "";
-		$this->record['nation'] = "";
-		$this->record['accountNo'] = "";
-		$this->record['bank'] = "";
-		$this->record['accountName'] = "";
-		$this->record['homepage'] = "";
-		$this->record['manager'] = "";
-		$this->record['managerContact'] = "";
-		$this->record['managerEmail'] = "";
-		$this->record['memo'] = "";
-		$this->record['prayList'] = "";
-		$this->record['familyCount'] = "";
-		$this->record['fileImage'] = "noimg.gif";
-		$this->record['imageId'] = 0;
-		$this->record['approval'] = 0;
-		$this->record['flagFamily'] = "";
-		$this->record['family'] = "";
+    private function initialize() {
+		$this->userid = "";
+		$this->missionname = "";
+		$this->church = "";
+		$this->churchcontact = "";
+		$this->ngo = "";
+		$this->ngocontact = "";
+		$this->nationcode = "";
+		$this->nation = "";
+		$this->accountno = "";
+		$this->bank = "";
+		$this->accountname = "";
+		$this->homepage = "";
+		$this->manager = "";
+		$this->managercontact = "";
+		$this->manageremail = "";
+		$this->memo = "";
+		$this->praylist = "";
+		$this->familycount = "";
+		$this->fileimage = "noimg.gif";
+		$this->imageid = 0;
+		$this->approval = 0;
+		$this->flagfamily = "";
 	}
-	
+
 	function Open($userId) {
 		global $mysqli;
 
-		$column = array();
-		$query = "SELECT A.*, B.name AS nation";
-		$query.= " FROM missionary A, code B ";
-		$query.= " WHERE A.userId = ? AND A.nationCode = B.code";
+		$query = "SELECT A.*, B.name AS nation FROM missionary A, code B ";
+		$query.= "WHERE A.userid = ".$mysqli->real_escape_string($userid)." AND A.nationcode = B.code";
 
-		if ($stmt = $mysqli->prepare($query)) {
-			$stmt->bind_param("s", $userId);
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
+		$result = $mysqli->query($query);
+		if (!$result) return;
 
+		while ($row = $result->fetch_assoc()) {
+			$this->userid = $row['userid'];
+			$this->missionname = $row['missionname'];
+			$this->church = $row['church'];
+			$this->churchcontact = $row['churchcontact'];
+			$this->ngo = $row['ngo'];
+			$this->ngocontact = $row['ngocontact'];
+			$this->nationcode = $row['nationcode'];
+			$this->nation = $row['nation'];
+			$this->accountno = $row['accountno'];
+			$this->bank = $row['bank'];
+			$this->accountname = $row['accountname'];
+			$this->homepage = $row['homepage'];
+			$this->manager = $row['manager'];
+			$this->managercontact = $row['managercontact'];
+			$this->manageremail = $row['manageremail'];
+			$this->memo = $row['memo'];
+			$this->praylist = $row['praylist'];
+			$this->familycount = $row['familycount'];
+			$this->fileimage = $row['fileimage'];
+			$this->imageid = $row['imageid'];
+			$this->approval = $row['approval'];
+			$this->flagfamily = $row['flagfamily'];
+			$this->family = $row['family'];	
+		}
+	    $result->close();
 
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-
-			$stmt->close();
-
-
-			if($this->record['imageId'] > 0) {
-				$query = "SELECT `name` FROM attachFile WHERE `id` = '" . $this->record['imageId'] . "'";
-
-				if ($result = $mysqli->query($query)) {
-
-				    while ($finfo = $result->fetch_field()) {
-				    	$this->record['fileImage'] = $finfo->name;
-				    }
-				    $result->close();
-				}
-			}
-			
-			//나중에 확인 해볼 것 
-			$familyId = -1;
-			if (($this->record['familyCount'] > 0)) {
-				$stmt = $mysqli->prepare("SELECT `id` FROM missionary_family WHERE `userId` = ?");
-				$stmt->bind_param("s", $this->record['userId']);
-				$stmt->execute();
-				$stmt->bind_result($familyId);
-				while ($stmt->fetch()) {
-//					$mFamily->Open($familyId);
-					$this->family[] = new MissionaryFamily($familyId);;
-				}
-   				$stmt->close();
+		if (isset($this->imageid) && $this->imageid > 0) {
+			$query = "SELECT `name` FROM attachFile WHERE `id` = '" . $mysqli->real_escape_string($this->imageid) . "'";
+			if ($result = $mysqli->query($query)) {
+			    /* Get field information for all columns */
+			    while ($row = $result->fetch_assoc()) {
+			    	$this->fileimage = $row['name'];
+			    }
+			    $result->close();
 			}
 		}
+		
+		//나중에 확인 해볼 것 
+		if (isset($this->familycount) && $this->familycount > 0) {
+			$query = "SELECT `id` FROM missionary_family WHERE `userid` = ".$mysqli->real_escape_string($this->userid);
+			if ($result = $mysqli->query($query)) {
+			    while ($row = $result->fetch_assoc()) {
+					$this->family[] = new MissionaryFamily($row['id']);;
+				}
+			    $result->close();
+			}
+		}		
 	}
-	
+
 	function Update() {
 		global $mysqli;
 
-
-		if (($this->record['userId'] == "")) {
-			$query = "INSERT INTO missionary (`userId`, `missionName`, `church`, `churchContact`, ";
-			$query = $query."`ngo`, `ngoContact`, `nationCode`, `accountNo`, ";
-			$query = $query."`bank`, `accountName`, `homepage`, `manager`, ";	
-			$query = $query."`managerContact`, `managerEmail`, `memo`, `prayList`, ";
-			$query = $query."`approval`, `imageId`, `flagFamily`) VALUES ";
+		if ($this->userId == "") {
+			$query = "INSERT INTO missionary (`userid`, `missionname`, `church`, `churchcontact`, ";
+			$query = $query."`ngo`, `ngocontact`, `nationcode`, `accountno`, ";
+			$query = $query."`bank`, `accountname`, `homepage`, `manager`, ";	
+			$query = $query."`managercontact`, `manageremail`, `memo`, `praylist`, ";
+			$query = $query."`approval`, `imageid`, `flagfamily`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
 			$stmt->bind_param("ssssssssssssssssiss", 
-				$this->record['userId'], 
-				$this->record['missionName'], 
-				$this->record['church'], 
-				$this->record['churchContact'], 
-				$this->record['ngo'], 
-				$this->record['ngoContact'], 
-				$this->record['nationCode'], 
-				$this->record['accountNo'], 
-				$this->record['bank'], 
-				$this->record['accountName'], 
-				$this->record['homepage'], 
-				$this->record['manager'],
-				$this->record['managerContact'],
-				$this->record['managerEmail'],
-				$this->record['memo'],
-				$this->record['prayList'],
-				$this->record['approval'],
-				$this->record['imageId'],
-				$this->record['flagFamily']);
+				$this->userid, 
+				$this->missionname, 
+				$this->church, 
+				$this->churchcontact, 
+				$this->ngo, 
+				$this->ngocontact, 
+				$this->nationcode, 
+				$this->accountno, 
+				$this->bank, 
+				$this->accountname, 
+				$this->homepage, 
+				$this->manager,
+				$this->managercontact,
+				$this->manageremail,
+				$this->memo,
+				$this->praylist,
+				$this->approval,
+				$this->imageid,
+				$this->flagfamily);
 
 			# execute query
 			$stmt->execute();
@@ -159,49 +163,49 @@ class MissionObject {
 		} else {
 
 			$query = "UPDATE missionary SET ";
-			$updateData = "`missionName` = ?, ";
+			$updateData = "`missionname` = ?, ";
 			$updateData.= "`church` = ?, ";
-			$updateData.= "`churchContact` = ?, ";
+			$updateData.= "`churchcontact` = ?, ";
 			$updateData.= "`ngo` = ?, ";
-			$updateData.= "`ngoContact` = ?, ";
-			$updateData.= "`nationCode` = ?, ";
-			$updateData.= "`accountNo` = ?, ";
+			$updateData.= "`ngocontact` = ?, ";
+			$updateData.= "`nationcode` = ?, ";
+			$updateData.= "`accountno` = ?, ";
 			$updateData.= "`bank` = ?, ";
-			$updateData.= "`accountName` = ?, ";
+			$updateData.= "`accountname` = ?, ";
 			$updateData.= "`homepage` = ?, ";
 			$updateData.= "`manager` = ?, ";
-			$updateData.= "`managerContact` = ?, ";
-			$updateData.= "`managerEmail` = ?, ";
+			$updateData.= "`managercontact` = ?, ";
+			$updateData.= "`manageremail` = ?, ";
 			$updateData.= "`memo` = ?, ";
-			$updateData.= "`prayList` = ?, ";
+			$updateData.= "`praylist` = ?, ";
 			$updateData.= "`approval` = ?, ";
-			$updateData.= "`imageId` = ?, ";
-			$updateData.= "`flagFamily` = ? ";
-			$query .= $updateData." WHERE `userId` = ?";
+			$updateData.= "`imageid` = ?, ";
+			$updateData.= "`flagfamily` = ? ";
+			$query .= $updateData." WHERE `userid` = ?";
 
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("ssssssssssssssssiss", 
-				$this->record['missionName'], 
-				$this->record['church'], 
-				$this->record['churchContact'], 
-				$this->record['ngo'], 
-				$this->record['ngoContact'], 
-				$this->record['nationCode'], 
-				$this->record['accountNo'], 
-				$this->record['bank'], 
-				$this->record['accountName'], 
-				$this->record['homepage'], 
-				$this->record['manager'],
-				$this->record['managerContact'],
-				$this->record['managerEmail'],
-				$this->record['memo'],
-				$this->record['prayList'],
-				$this->record['approval'],
-				$this->record['imageId'],
-				$this->record['flagFamily']);
-				$this->record['userId'];
+				$this->missionname, 
+				$this->church, 
+				$this->churchcontact, 
+				$this->ngo, 
+				$this->ngocontact, 
+				$this->nationcode, 
+				$this->accountno, 
+				$this->bank, 
+				$this->accountname, 
+				$this->homepage, 
+				$this->manager,
+				$this->managercontact,
+				$this->manageremail,
+				$this->memo,
+				$this->praylist,
+				$this->approval,
+				$this->imageid,
+				$this->flagfamily);
+				$this->userid;
 				
 			# execute query
 			$stmt->execute();
@@ -210,34 +214,33 @@ class MissionObject {
 			$stmt->close();
 		}
 	} 
-	
+
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM missionary WHERE `userId` = ?");
-			$stmt->bind_param("s", $this->record['userId']);
-			$stmt->execute();
-			$stmt->close();
+		if ($this->userid > -1) {
+			$query = "DELETE FROM missionary WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
+			$result = $mysqli->query($query);
 		}
 	} 
-	
+
 	function GetFamilyPrayCount($userId) {
-		$resultCount = -1;
+		global $mysqli;
+		$coust_array = array(0, 0);
+
 		$query = "SELECT ";
-		$query.= " SUM(CASE WHEN `familyType` = 'F0001' THEN 1 ELSE 0 END) AS FamilyPrayCnt ";
-		$query.= " FROM family WHERE `userId` = ? ";
-		$stmt = $mysqli->prepare($query);
-		$stmt->bind_param("s", $this->record['userId']);
-		$stmt->execute();
-		$stmt->bind_result($resultCount);
-		$stmt->close();
+		$query.= " SUM(CASE WHEN `familytype` = 'F0001' THEN 1 ELSE 0 END) AS familypraycnt, ";
+		$query.= " SUM(CASE WHEN `familytype` = 'F0002' THEN 1 ELSE 0 END) AS familyfarecnt ";
+		$query.= " FROM family WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
+		$result = $mysqli->query($query);
+
+		while ($row = $result->fetch_array()) {
+			$coust_array[0] = $row['familypraycnt'];
+			$coust_array[1] = $row['familyfarecnt'];
+		}
 
 		return $resultCount;
 	}
-
-
-	
-  
 }
+
 ?>

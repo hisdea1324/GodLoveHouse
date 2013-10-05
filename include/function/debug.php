@@ -25,11 +25,8 @@ function public() {
 # == 변수 : sQuery(String) 
 # == 반환 : none 
 # ===================================================================
-function public() {	
-	write_query_in_debug($sQuery);
-	if (($Application["QueryDebug"])) {
-		$db->Execute("INSERT INTO debug_query_list (query) VALUES ('".$mssqlEscapeString[$sQuery]."')");
-	} 
+function write_query_in_debug($sQuery) {
+	$mysqli->query("INSERT INTO debug_query_list (query) VALUES ('".mysql_escape_string($sQuery)."')");
 } 
 
 # ===================================================================
@@ -38,9 +35,7 @@ function public() {
 # == 변수 : oReq(object) 
 # == 반환 : none 
 # =================================================================== 
-function public() {	
-	print_request_object($oReq);
-
+function print_request_object($oReq) {
 	foreach ($oReq as $item) {
 		println("#############");
 		println($item." : ".$oReq[$item]);
@@ -54,9 +49,8 @@ function public() {
 # == 변수 : iStatus(integer)
 # == 반환 : none 
 # ===================================================================
-function public() {	
-	error_message($iStatus);
-	switch (($iStatus)) {
+function error_message($iStatus) {
+	switch ($iStatus) {
 		case 101:
 			println("Error: DataManager Error 1");
 			break;
@@ -97,8 +91,7 @@ function public() {
 # == 변수 : sText(String)
 # == 반환 : none 
 # =================================================================== 
-function public() {	
-	println($sText);
+function println($sText) {
 	print $sText."<br>";
 } 
 
@@ -108,8 +101,7 @@ function public() {
 # == 변수 : none
 # == 반환 : none 
 # =================================================================== 
-function public() {	
-	close();
+function close() {
 	exit();
 } 
 ?>

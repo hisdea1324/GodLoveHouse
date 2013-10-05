@@ -9,14 +9,15 @@ class AccountObject {
 	protected $record = array();
 
 	public function __set($name,$value) { 
-		switch($name) {
+		$name = strtolower($name);
+		switch ($name) {
 			case "method" :
 				if($value == "CM5")
-					$this->record[$name] = 1;
+					$this->record['method'] = 1;
 				else if($value == "DIRECT")
-					$this->record[$name] = 2;
+					$this->record['method'] = 2;
 				else if($value == "ZIRO")
-					$this->record[$name] = 3;
+					$this->record['method'] = 3;
 				break;
 
 			case "jumin" : 
@@ -28,13 +29,19 @@ class AccountObject {
 	}
 
 	public function __get($name) { 
-		switch($name) {
+		$name = strtolower($name);
+		switch ($name) {
 			case "method" :
-				if($this->record['name'] == 1) return "CMS";
-				else if($this->record['name'] == 2) return "DIRECT";
-				else if($this->record['name'] == 3) return "GIRO";
-
-			case "jumin" : return explode("-", $this->record[$name]);
+				if ($this->record[$name] == 1) 
+					return "CMS";
+				else if ($this->record[$name] == 2) 
+					return "DIRECT";
+				else if ($this->record[$name] == 3) 
+					return "GIRO";
+				else
+					return "";
+			case "jumin" : 
+				return explode("-", $this->record[$name]);
 
 			default : 
 				return $this->record[$name];
@@ -57,15 +64,15 @@ class AccountObject {
 
     function initialize() {
 		$this->record['id'] = -1;
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['name'] = "";
 		$this->record['bank'] = "";
 		$this->record['method'] = "";
 		$this->record['number'] = "";
 		$this->record['jumin'] = "";
-		$this->record['sendDate'] = 5;
-		$this->record['expectDate'] = 1;
-		$this->record['regDate'] = "";
+		$this->record['senddate'] = 5;
+		$this->record['expectdate'] = 1;
+		$this->record['regdate'] = "";
 	}
 
 	function Open($userId) {
@@ -73,7 +80,7 @@ class AccountObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT * from account WHERE userId = ? ";
+		$query = "SELECT * from account WHERE userid = ? ";
 
 		if ($stmt = $mysqli->prepare($query)) {
 
@@ -116,9 +123,9 @@ class AccountObject {
 		global $mysqli;
 
 
-		if (($this->record['userId'] == "")) {
-			$query = "INSERT INTO account (`userId`, `name`, `bank`, `method`, ";
-			$query = $query."`number`, `nid`, `sendDate`, `expectDate`) VALUES ";
+		if (($this->record['userid'] == "")) {
+			$query = "INSERT INTO account (`userid`, `name`, `bank`, `method`, ";
+			$query = $query."`number`, `nid`, `senddate`, `expectdate`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
@@ -131,8 +138,8 @@ class AccountObject {
 				$this->record['method'], 
 				$this->record['number'], 
 				$this->record['nid'], 
-				$this->record['sendDate'], 
-				$this->record['expectDate']);
+				$this->record['senddate'], 
+				$this->record['expectdate']);
 
 			# execute query
 			$stmt->execute();
@@ -148,22 +155,22 @@ class AccountObject {
 			$updateData.= "`method` = ?, ";
 			$updateData.= "`number` = ?, ";
 			$updateData.= "`nid` = ?, ";
-			$updateData.= "`sendDate` = ?, ";
-			$updateData.= "`expectDate` = ? ";
-			$query .= $updateData." WHERE `userId` = ?";
+			$updateData.= "`senddate` = ?, ";
+			$updateData.= "`expectdate` = ? ";
+			$query .= $updateData." WHERE `userid` = ?";
 
 			# create a prepared statement
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sssssssss", 
-				$this->record['expectDate'], 
+				$this->record['expectdate'], 
 				$this->record['name'], 
 				$this->record['bank'], 
 				$this->record['method'], 
 				$this->record['number'], 
 				$this->record['nid'], 
-				$this->record['sendDate'], 
-				$this->record['userId']);
+				$this->record['senddate'], 
+				$this->record['userid']);
 
 				
 			# execute query
@@ -177,9 +184,9 @@ class AccountObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userId'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM account WHERE userId = ?");
-			$stmt->bind_param("s", $this->record['userId']);
+		if ($this->record['userid'] > -1) {
+			$stmt = $mysqli->prepare("DELETE FROM account WHERE userid = ?");
+			$stmt->bind_param("s", $this->record['userid']);
 			$stmt->execute();
 			$stmt->close();
 		}

@@ -176,18 +176,18 @@ class HouseObject {
 			/* close statement */
 			$stmt->close();
 
-			if ($this->record['documentId'] > 0) {
+			if (isset($this->record['documentId']) && $this->record['documentId'] > 0) {
 				$stmt = $mysqli->prepare("SELECT name FROM attachFile WHERE id = ?");
 				$stmt->bind_param("i", $this->record['documentId']);
 				$stmt->execute();
 				$stmt->bind_result($this->record["document"]);
 				$stmt->close();
 			} else {
-				$this->mDocument = $this->record["document"];
+				$this->mDocument = -1;
 			} 
 			
 			$roomId = -1;
-			if ($this->record['houseId'] > -1) {
+			if (isset($this->record['houseId']) && $this->record['houseId'] > -1) {
 				$stmt = $mysqli->prepare("SELECT `roomId` FROM room WHERE `houseId` = ?");
 				$stmt->bind_param("i", $this->record['houseId']);
 				$stmt->execute();

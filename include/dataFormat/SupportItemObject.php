@@ -6,116 +6,110 @@
 #  last update date : 2010.03.04
 # ************************************************************
 class SupportItemObject {
-	var $m_supportItemId;
-	var $m_supportId;
-	var $m_requestId;
-	var $m_cost;
 
-	#  Get property
-	# ***********************************************
-	function SupportItemID() {
-		$SupportItemId = $m_supportItemId;
-	} 
+	protected $record = array();
+	protected $image = array();
 
-	function SupportID() {
-		$SupportId = $m_supportId;
-	} 
+	public function __set($name,$value) { 
+		$name = strtolower($name);
+		switch ($name) {
+			default : 
+				$this->record[$name] = $value;
+				break;
+		}
+	}
 
-	function RequestID() {
-		$RequestId = $m_requestId;
-	} 
+	public function __get($name) { 
+		$name = strtolower($name);
+		switch ($name) {
+			default : 
+				return $this->record[$name];
+		}
+	}
 
-	function Cost() {
-		$Cost = $m_cost;
-	} 
+	public function __isset($name) {
+		$name = strtolower($name);
+		return isset($this->record[$name]); 
+    }
 
-	#  Set property
-	# ***********************************************
-	function RequestID($value) {
-		$m_requestId=intval($value);
-	} 
+    function __construct($supId = -1) {
+		if ($supId == -1) {
+			$this->initialize();
+		} else {
+			$this->Open($supId);
+		}
+	}
 
-	function SupportID($value) {
-		$m_supportId=intval($value);
-	} 
-
-	function Cost($value) {
-		$m_cost = trim($value);
-	} 
-
-	#  class initialize
-	# ***********************************************
-	function __construct() {
-		$m_supportItemId=-1;
-		$m_supportId=-1;
-		$m_requestId=-1;
-		$m_cost=0;
-	} 
-
-	function __destruct() {
+	private function initialize() {
+		$this->supportItemId = -1;
+		$this->supportId = -1;
+		$this->requestId = -1;
+		$this->cost = 0;
 	} 
 
 	#  class method
 	# ***********************************************
 	function OpenByQuery($query) {
-		$supportRS = $objDB->execute_query($query);
-		if ((!$supportRS->eof && !$supportRS->bof)) {
-			$m_supportItemId=intval($supportRS["supItemId"]);
-			$m_supportId=intval($supportRS["supId"]);
-			$m_requestId=intval($supportRS["reqId"]);
-			$m_cost = $supportRS["cost"];
-		} 
+		global $mysqli;
+		$result = $mysqli->query($query);
 
-		$supportRS = null;
+	    while ($row = mysqli_fetch_assoc($result)) {
+			$this->supportItemId = $row['supItemId'];
+			$this->supportId = $row['supId'];
+			$this->requestId = $row['reqId'];
+			$this->cost = $row['cost'];
+		}
 	} 
 
 	function Open($supItemId) {
-		$query = "SELECT supItemId, supId, reqId, cost FROM supportItem WHERE supItemId = '".$mssqlEscapeString[$supItemId]."'";
-		OpenByQuery($query);
+		global $mysqli;
+		$query = "SELECT supItemId, supId, reqId, cost FROM supportItem WHERE supItemId = '".$mysqli->real_escape_string($supItemId)."'";
+		$this->OpenByQuery($query);
 	} 
 
-	function OpenWithIndex($supId,$reqId) {
+	function OpenWithIndex($supId, $reqId) {
+		global $mysqli;
+
 		$m_supportId = $supId;
 		$m_requestId = $reqId;
 		$query = "SELECT supItemId, supId, reqId, cost FROM supportItem ";
-		$query = $query."WHERE supId = '".$mssqlEscapeString[$supId]."' AND reqId = '".$mssqlEscapeString[$reqId]."'";
-		OpenByQuery($query);
-	} 
+		$query = $query."WHERE supId = '".$mysqli->real_escape_string($supId)."' AND reqId = '".$mysqli->real_escape_string($reqId)."'";
+		$this->OpenByQuery($query);
+	}
 
 	function Update() {
-		if (($m_supportItemId==-1)) {
+		global $mysqli;
+
+		if ($this->supportItemId == -1) {
 			# New Data
 			$query = "INSERT INTO supportItem (supId, reqId, cost) VALUES ";
-			$insertData="'".$m_supportId."', ";
-			$insertData = $insertData."'".$m_requestId."', ";
-			$insertData = $insertData."'".$m_cost."'";
+			$insertData="'".$this->supportId."', ";
+			$insertData = $insertData."'".$$this->requestId."', ";
+			$insertData = $insertData."'".$$this->cost."'";
 			$query = $query."(".$insertData.")";
-			$objDB->execute_command($query);
+			$result = $mysqli->query($query);
 
-			$query = "SELECT MAX(supItemId) AS maxSupItemId FROM supportItem WHERE supId = '".$m_supportId."' AND reqId = '".$m_requestId."'";
-			$supportRS = $objDB->execute_query($query);
-			if ((!$supportRS->eof && $supportRS->bof)) {
-				$m_supportItemId=intval($supportRS["maxSupItemId"]);
-			} 
+			// new id
+			$this->supportItemId = $mysqli->insert_id;
 		} else {
 			$query = "UPDATE supportItem SET ";
-			$updateData="supId = '".$m_supportId."', ";
-			$updateData = $updateData."reqId = ".$m_requestId.", ";
-			$updateData = $updateData."cost = ".$m_cost." ";
-			$query = $query.$updateData." WHERE supItemId = ".$m_supportItemId;
-			$objDB->execute_command($query);
+			$updateData="supId = '".$mysqli->real_escape_string($this->supportId)."', ";
+			$updateData = $updateData."reqId = ".$mysqli->real_escape_string($this->requestId).", ";
+			$updateData = $updateData."cost = ".$mysqli->real_escape_string($this->cost)." ";
+			$query = $query.$updateData." WHERE supItemId = ".$mysqli->real_escape_string($this->supportItemId);
+			$result = $mysqli->query($query);
 		} 
-
-		$supportRS = null;
 	} 
 
-	function Delete($supId,$reqId) {
-		$query = "DELETE FROM supportItem WHERE supId = '".$supId."' AND reqId = '".$reqId."'";
-		$objDB->execute_command($query);
+	function Delete($supId, $reqId) {
+		global $mysqli;
+
+		$query = "DELETE FROM supportItem WHERE supId = '".$mysqli->real_escape_string($supId)."' AND reqId = '".$mysqli->real_escape_string($reqId)."'";
+		$result = $mysqli->query($query);
 	} 
 
 	function showPrice() {
-		return priceFormat($m_cost, 1)." / 월";
+		return priceFormat($this->cost, 1)." / 월";
 	} 
 } 
 ?>

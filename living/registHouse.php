@@ -1,13 +1,12 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$houseId = trim($_REQUEST["houseId"]);
-if ((strlen($houseId)>0)) {
-	$needUserLv[1];
-} 
+$houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
 
+if (strlen($houseId) > 0) {
+	needUserLv(1);
+}
 
-$sessions = new __construct();
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getLocalCodeList();
 $codeStatus = $c_Helper->getHouseStatusCodeList();
@@ -15,15 +14,16 @@ $codeStatus = $c_Helper->getHouseStatusCodeList();
 $h_helper = new HouseHelper();
 $houseObj = $h_helper->getHouseInfoById($houseId);
 
-$sessions = new __construct();
-#if (sessions.userId <> houseObj.UserID) then
-#	Call alertBack("본인 소유의 선교관이 아닙니다.")
-#end if
+if (!isset($_SESSION["UserID"]) || $_SESSION["UserID"] <> houseObj.UserID) {
+	alertBack("본인 소유의 선교관이 아닙니다.");
+}
+
 showHeader("HOME > 선교관 > 선교관 등록요청","living","tit_0203.gif");
 body();
 showFooter();
 
 function body() {
+	global $codes;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -31,7 +31,7 @@ function body() {
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 		<form name="dataForm" id="dataForm" method="post">
 		<input type="hidden" name="mode" id="mode" value="regist" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $sessions->UserID;?>" />
+		<input type="hidden" name="userId" id="userId" value="<?php echo $_SESSION["UserID"];?>" />
 		<input type="hidden" name="houseId" id="houseId" value="<?php echo $houseObj->HouseID;?>" />
 				<col width="20%" />
 				<col />
@@ -106,7 +106,7 @@ function body() {
 			<select name="regionCode" id="regionCode" tabindex="8">
 						<option value=''>-- 지역선택 --</option>
 <?php 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
+	for ($i = 0; $i <= count($codes) - 1; $i++) {
 		$region = $codes[$i];
 		if (($houseObj->regionCode == $region->Code)) {
 			print "<option value='".$region->Code."' selected>".$region->Name."</option>";
@@ -161,7 +161,7 @@ function body() {
 				<tr>
 					<td class="td01"> 선교관 설명 </td>
 					<td>
-						<textarea name="explain" id="roomLimit" tabindex="15"><?php echo $textFormat[$houseObj->Explain][2];?></textarea>
+						<textarea name="explain" id="roomLimit" tabindex="15"><?php echo textFormat($houseObj->Explain, 2);?></textarea>
 					</td>
 				</tr>
 		</form>

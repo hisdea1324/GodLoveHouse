@@ -6,7 +6,6 @@ body();
 showFooter();
 
 function body() {
-	global $Application;
 ?>
 		<!-- //content -->
 		<div id="content">

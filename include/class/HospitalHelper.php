@@ -22,21 +22,28 @@ class HospitalHelper {
 	
 	#  property
 	# ***********************************************
-	function PAGE_UNIT() {
-		return $this->m_pageUnit;
-	} 
-
-	function PAGE_COUNT() {
-		return $this->m_pageCount;
-	} 
-
-	function PAGE_UNIT($value) {
-		$this->m_pageUnit = $value;
-	} 
-
-	function PAGE_COUNT($value) {
-		$this->m_pageCount = $value;
-	} 
+	public function __get($name) {
+		switch ($name) {
+			case "PAGE_UNIT":
+				return $this->m_pageUnit;
+			case "PAGE_COUNT":
+				return $this->m_pageCount;
+			default: 
+				return null;
+		}
+	}
+	
+	public function __set($name, $value) {
+ 		switch ($name) {
+			case "PAGE_UNIT" :
+				$this->m_pageUnit = $value;
+				break;
+			case "PAGE_COUNT" :
+				$this->m_pageCount = $value;
+				break;
+		}
+		 
+	}
 
 	#  method : return one Object
 	# ***********************************************
@@ -82,25 +89,45 @@ class HospitalHelper {
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount FROM hospital".$this->m_StrConditionQuery;
-		$countRS = $db->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+		global $mysqli;
+		$query = "SELECT COUNT(*) AS recordCount FROM hospital ".$this->m_StrConditionQuery;
+
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$total = $row["recordCount"];
+			}
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
+	
+	function getHospitalListWithPaging($curPage) {
+		global $mysqli;
+		$hospitals = array();
 
+		$topNum = $this->m_pageCount * ($curPage - 1);
+		$query = "SELECT hospitalId FROM hospital {$this->m_StrConditionQuery} ORDER BY price ASC LIMIT {$topNum}, {$this->m_pageCount}";
+
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$hospitals[] = new HospitalObject($row["hospitalId"]);
+			}
+		}
+
+		return $hospitals;
+	} 
+	
 	function getHospitalList($query) {
-		$hospitalListRS = $db->Execute($query);
-
-		if (!$hospitalListRS->Eof && !$hospitalListRS->Bof) {
-			while (!($hospitalListRS->EOF || $hospitalListRS->BOF)) {
-				$hospitalInfo = new HospitalObject();
-				$hospitalInfo->Open($hospitalListRS["hospitalId"]);
-			} 
-		} 
-
-		return $hospitalInfo;
+		global $mysqli;
+		
+		$hospital = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$hospital[] = new HospitalObject($row["hospitalId"]);
+			}
+		}
+		
+		return $hospital;
 	} 
 
 	function getHospitalListByEtc() {
@@ -109,32 +136,13 @@ class HospitalHelper {
 	} 
 
 	function getHospitalListByRegion($regionCode) {
-		if ((strlen($regionCode)==0)) {
+		if (strlen($regionCode) == 0) {
 			$query = "SELECT hospitalId FROM hospital";
 		} else {
 			$query = "SELECT hospitalId FROM hospital WHERE regionCode = '{$regionCode}";
 		} 
 
 		return getHospitalList($query);
-	} 
-
-	function getHospitalListWithPaging($curPage) {
-		$topNum = $this->m_pageCount * $curPage;
-
-		$query = "SELECT top ".$topNum." hospitalId FROM hospital ".$this->m_StrConditionQuery." ORDER BY price ASC";
-		$listRS = $mysqli->Execute($query);
-
-		if ($listRS->RecordCount > 0) {
-			$listRS->PageSize = $this->m_pageCount;
-			$listRS->AbsolutePage = $curPage;
-			
-			while(!(($listRS->EOF || $listRS->BOF))) {
-				$hospitalInfo = new HospitalObject();
-				$hospitalInfo->Open($listRS["hospitalId"]);
-			} 
-		} 
-
-		return $hospitalInfo;
 	} 
 
 	function getHospitalListByUserId($userId, $hospitalType) {

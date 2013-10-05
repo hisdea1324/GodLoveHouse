@@ -1,23 +1,22 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //***************************************************************// member edit page//// last update date : 2009.12.28// updated by blackdew// To do List//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함//	 - 자바 스크립트 추가 & update process 진행//***************************************************************
 checkUserLogin();
 
-$sessions = new __construct();
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
-$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
-$mission = $m_Helper->getMissionInfoByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
 
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_missionary","tit_0801.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_missionary","tit_0801.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
+	showHeader("HOME > 멤버쉽 > 개인정보","mypage_normal","tit_0801.gif");
 } 
 
 
@@ -25,6 +24,7 @@ body();
 showFooter();
 
 function body() {
+	global $member, $account;
 ?>
 		<!-- //content -->
 	<!-- //정보 -->
@@ -86,7 +86,7 @@ function body() {
 				</tr-->
 				<tr>
 					<td class="td01"> E-mail<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
-			<?	 $email = $member->Email;?>
+			<? $email = $member->Email;?>
 					<td>
 				<input type="text" name="email1" id="email1" style="ime-mode:disabled" tabindex="5" maxlength="30" value="<?php echo $email[0];?>" />
 			@

@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$hospitalId = trim($_REQUEST["hospitalId"]);
-$toDate = trim($_REQUEST["toDate"]);
-$fromDate = trim($_REQUEST["fromDate"]);
+$hospitalId = (isset($_REQUEST["hospitalId"])) ? trim($_REQUEST["hospitalId"]) : "";
+$toDate = (isset($_REQUEST["toDate"])) ? trim($_REQUEST["toDate"]) : "";
+$fromDate = (isset($_REQUEST["fromDate"])) ? trim($_REQUEST["fromDate"]) : "";
 
 $h_Helper = new HospitalHelper();
 $hospital = $h_Helper->getHospitalInfoById($hospitalId);
@@ -18,6 +18,8 @@ body();
 showFooter();
 
 function body() {
+	global $hospitalId, $fromDate, $toDate;
+	global $hospital;
 ?>
 	<!-- //content -->
 	<div id="content">

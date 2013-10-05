@@ -1,14 +1,11 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$regionCode = trim($_REQUEST["region"]);
-$hospitalId = trim($_REQUEST["hospitalId"]);
-$fromDate = trim($_REQUEST["fromDate"]);
-$toDate = trim($_REQUEST["toDate"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+$regionCode = isset($_REQUEST["region"]) ? trim($_REQUEST["region"]) : "";
+$hospitalId = isset($_REQUEST["region"]) ? trim($_REQUEST["hospitalId"]) : "";
+$fromDate = isset($_REQUEST["region"]) ? trim($_REQUEST["fromDate"]) : "";
+$toDate = isset($_REQUEST["region"]) ? trim($_REQUEST["toDate"]) : "";
+$page = isset($_REQUEST["region"]) ? trim($_REQUEST["page"]) : 1;
 
 $c_Helper = new CodeHelper();
 $h_Helper = new HospitalHelper();
@@ -24,6 +21,10 @@ body();
 showFooter();
 
 function body() {
+	global $fromDate, $toDate;
+	global $codes, $regionCode;
+	global $hospitals, $strPage, $page;
+	global $h_Helper;
 ?>
 		<!-- # content -->
 		<div id="content">
@@ -33,9 +34,8 @@ function body() {
 				<select name="region" id="region" onchange="selectRegion()">
 					<option value=''>-- 지역선택 --</option>
 <?php 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
-		$codeObj = $codes[$i];
-		if (($regionCode == $codeObj->Code)) {
+	foreach ($codes as $codeObj) {
+		if ($regionCode == $codeObj->Code) {
 			print "<option value='".$codeObj->Code."' selected>".$codeObj->Name."</option>";
 		} else {
 			print "<option value='".$codeObj->Code."'>".$codeObj->Name."</option>";
@@ -66,7 +66,7 @@ function body() {
 						<th class="th01">내용</th>
 					</tr>
 <?php
-	if ((count($hospitals)==0)) {
+	if (count($hospitals) == 0) {
 ?>
 					<tr>
 						<td colspan="4">
@@ -75,23 +75,26 @@ function body() {
 					</tr>
 <?php
 	} else {
-		for ($i=0; $i<=count($hospitals)-1; $i = $i+1) {
-			$hospitalObj = $hospitals[$i];
+		$searchDateValue = "";
+		$i = 0;
+		foreach ($hospitals as $hospitalObj) {
 ?>
-					<tr>
-				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT)+($i+1);?></td>
-						<td>
+			<tr>
+			<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT) + ($i + 1);?></td>
+			<td>
 <?php 
-			if ((strlen($toDate)>0)) {
+			if (strlen($toDate) > 0) {
 				$searchDateValue = $searchDateValue."&toDate=".$toDate;
 			}
-			if ((strlen($fromDate)>0)) {
+			if (strlen($fromDate) > 0) {
 				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
 			}
 ?>
 				<a href="reservationDetail.php?hospitalId=<?php echo $hospitalObj->HospitalID;?><?php echo $searchDateValue;?>">
-				<img src="<?php echo $hospitalObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
-						<td>
+				<img src="<?php echo $hospitalObj->Image1;?>" width="120" height="75" border="0" class="img">
+				</a>
+			</td>
+			<td>
 				<a href="reservationDetail.php?hospitalId=<?php echo $hospitalObj->HospitalID;?><?php echo $searchDateValue;?>">
 				<?php echo $hospitalObj->HospitalName;?><br />
 				</a>
@@ -99,7 +102,7 @@ function body() {
 						<td class="ltd">
 							<ul class="intro">
 								<li><b>운영</b> : <?php echo $hospitalObj->AssocName;?></li>
-								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($hospitalObj->Address1.$ospitalObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $hospitalObj->Address1;?> <?php echo $hospitalObj->Address2;?></a></li>
+								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($hospitalObj->Address1.$hospitalObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $hospitalObj->Address1;?> <?php echo $hospitalObj->Address2;?></a></li>
 								<li><b>담당자</b> : <?php echo $hospitalObj->Manager1;?></li>
 								<li><b>요금</b> : <?php echo $hospitalObj->showFee();?></li>
 							</ul>
@@ -107,6 +110,7 @@ function body() {
 					</tr>
 <?php 
 		}
+		$i++;
 	}
 ?>
 				</table>
@@ -120,7 +124,7 @@ function body() {
 <?php } ?>
 
 <script type="text/javascript">
-// <![CDATA[
+//<![CDATA[
 	calendar_init();
 	
 	function selectRegion() {
@@ -157,5 +161,5 @@ function body() {
 		var findFrm = document.getElementById("findFrm");
 		findFrm.submit();
 	}
-// ]]>
+//]]>
 </script>

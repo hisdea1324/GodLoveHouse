@@ -1,9 +1,9 @@
 <?php
 function authority($limitLevel) {
 	if ($_SESSION['userLv'] < $limitLevel) {
-		$retValue=false;
+		$retValue = false;
 	} else {
-		$retValue=true;
+		$retValue = true;
 	} 
 
 	return $retValue;
@@ -35,7 +35,7 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	$strSubMenu = str_replace("[NAVIGATION]",$strNavi,$strSubMenu);
 
 	print $strHeader.$strSubMenu;
-} 
+}
 
 function showHeader($strNavi,$strSub,$strTitleImg) {
 	global $Application;
@@ -45,7 +45,7 @@ function showHeader($strNavi,$strSub,$strTitleImg) {
 	$strHeader = str_replace("[WEBROOT]",$Application["WebRoot"],$strHeader);
 	$strHeader = str_replace("[CHARSET]",$Application["Charset"],$strHeader);
 
-	if (isset($_SESSION['userid'])) {
+	if (!isset($_SESSION['userid']) || $_SESSION['userid'] == "") {
 		$strHeader = str_replace("[LOGIN_STATUS1]","gm_01",$strHeader);
 		$strHeader = str_replace("[LOGIN_STATUS2]","gm_02",$strHeader);
 		$strHeader = str_replace("[LOGIN_VALUE1]","1",$strHeader);
@@ -90,13 +90,23 @@ function showFooter() {
 	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
 
 	print $strFooter;
+	debugFooter();
 } 
 
+function debugFooter() {
+	echo "<pre>";
+	echo "Server : ";
+	print_r($_SERVER);
+	echo "Session : ";
+	print_r($_SESSION);
+	echo "Request : ";
+	print_r($_REQUEST);
+	echo "</pre>";
+}
+
 function needUserLv($level) {
-	global $Application;
-	
 	if (isset($_SESSION['userId'])) {
-		header("Location: ".$Application["WebRoot"]."member/login.php");
+		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
 	} 
 
 	if ($_SESSION['userLv'] < $level) {
@@ -105,10 +115,8 @@ function needUserLv($level) {
 } 
 
 function checkUserLogin() {
-	global $Application;
-	
-	if (strlen($_SESSION['UserId']) == 0) {
-		header("Location: ".$Application["WebRoot"]."member/login.php");
+	if (!isset($_SESSION['userid'])) {
+		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
 	} 
 } 
 

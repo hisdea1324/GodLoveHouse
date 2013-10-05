@@ -1,86 +1,90 @@
 <?php 
 class MemberHelper {
-	protected $record = array();
-	//protected $eHandler = new ErrorHandler();
-	
-	public function __set($name,$value) { 
-		switch($name) {
-			case "PAGE_UNIT" :
-												$this->record['pageUnit'] = $value;
-												break;
-			case "PAGE_COUNT" :		
-												$this->record['pageCount'] = $value;						
-												break;
-			default : 
-						$this->record[$name] = $value;
-						break;
+	var $m_eHandler;
+	var $m_pageCount;
+	var $m_pageUnit;
+	var $m_StrConditionQuery;
+	var $m_StrOrderQuery;
+
+	#  property
+	# ***********************************************
+	public function __set($name, $value) { 
+		switch ($name) {
+			case "PAGE_UNIT":
+				$this->m_pageUnit = $value;
+				break;
+			case "PAGE_COUNT":
+				$this->m_pageCount = $value;
+				break;
 		}
 	}
-	
+
 	public function __get($name) { 
 		switch ($name) {
-			case "PAGE_UNIT" :
-												return $this->record['pageUnit'];
-			case "PAGE_COUNT" : 
-												return $this->record['pageCount'];
-			
-			default : 
-				return $this->record[$name];
+			case "PAGE_UNIT":
+				return $this->m_pageUnit;
+			case "PAGE_COUNT":
+				return $this->m_pageCount;
+			default:
+				return "";
 		}
 	}
-	
-	public function __isset($name) {
-		return isset($this->record[$name]); 
-  }
-  
-  
-  function __construct($idx = -1) {
-		$this->record['pageCount'] = 5;
-		$this->record['pageUnit'] = 10;
-		$this->record['strConditionQuery'] = "";
-		$this->record['strOrderQuery'] = "";
-	}
-	
-	function getMemberByUserId($userId) {
-		$member = new MemberObject();
 
-		if ($member->Open($userId)==false) {
-			//$this->eHandler->ignoreError("Member Not Found.");
-			echo "Member Not Found";
+	#  creater
+	# ***********************************************
+	function __construct() {
+		$this->m_eHandler = new ErrorHandler();
+		$this->m_pageCount=5;
+		$this->m_pageUnit=10;
+	} 
+
+	#  destoryer
+	# ***********************************************
+	function __destruct() {
+	} 
+
+	#  method
+	# ***********************************************
+	function getMemberByUserId($userId) {
+		$member = new MemberObject($userId);
+
+		if (isset($member->userid)) {
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
+
 		return $member;
 	} 
-	
+
 	function getMemberByUserNick($nick) {
 		$member = new MemberObject();
 
 		if ($member->OpenByNick($nick) == false) {
-			//$this->m_eHandler->ignoreError("Member Not Found.");
-			echo "Member Not Found.";
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
+
+
 		return $member;
 	} 
-	
+
 	function getMissionInfoByUserId($userId) {
 		$mission = new MissionObject();
 
 		if ($mission->Open($userId) == false) {
-			//$this->m_eHandler->ignoreError("Member Not Found.");
-			echo "Member Not Found";
+			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 
 		return $mission;
-	}
-	
-	
+	} 
+
 	function getAccountInfoByUserId($userId) {
 		$account = new AccountObject();
 
 		if ($account->Open($userId) == false) {
-			//$m_eHandler->ignoreError("Account Not Found.");
-			echo "Account Not Found.";
+			$this->m_eHandler->ignoreError("Account Not Found.");
 		} 
+
+
 		return $account;
 	} 
 
@@ -88,34 +92,36 @@ class MemberHelper {
 		$support = new SupportObject();
 
 		if ($support->Open($userId) == false) {
-			//$m_eHandler->ignoreError("Supporter Not Found.");
-			echo "Supporter Not Found.";
+			$this->m_eHandler->ignoreError("Supporter Not Found.");
 		} 
 
 
 		return $support;
-	} 	
+	} 
 
 	function getFamilyType($missionId,$userId) {
-		
-		global $mysqli;
-		$familyType = "";
+
 		if (strlen($userId) > 0) {
-			
-			$stmt = $mysqli->prepare("SELECT `familyType` FROM family WHERE `userId` = ? AND `followUserId` = ?");
-			$stmt->bind_param("ii", $userId, $missionId);
-			$stmt->execute();
-			$stmt->bind_result($familyType);
-			$stmt->close();
-		
-			if(strlen($familyType) > 0) {
-				return $familyType;
-			}
-			else 
-				return false;
-		}
-	}
-	
+			$query = "SELECT familyType FROM family WHERE userId = '".$missionId."' AND followUserId = '".$userId."'";
+			$familyRS = $db->Execute($query);
+			if (!$familyRS->EOF && !$familyRS->BOF) {
+				$retValue = $familyRS["familyType"];
+			} else {
+				$retValue=false;
+			} 
+
+			$familyRS = null;
+
+		} else {
+			$retValue=false;
+		} 
+
+
+		return $retValue;
+	} 
+
+	#  method list Helper
+	# *********************************************************
 	function setCondition($userLv,$field,$keyword) {
 		if ($userLv > 0) {
 			$strWhere=" WHERE userLv = '".$userLv."'";
@@ -129,131 +135,95 @@ class MemberHelper {
 
 		return $strWhere;
 	} 
-	
+
 	function setOrder($order) {
 		return " ORDER BY ".$order;
 	} 
 
 	function makePagingHTML($curPage) {
-		global $mysqli;
-		
-		$stmt = $mysqli->prepare("SELECT CNT(*) AS recordCount from users".$this->record['strConditionQuery']);
-		$stmt->execute();
-		$stmt->bind_result($total);
-		$stmt->close();
-		
-		return makePagingN($curPage, $this->record['pageCount'], $this->record['pageUnit'], $total);
-	} 
-	
-	function getMemberListWithPageing($curPage) {
-		global $mysqli;
-		
-		$topNum =  $this->record['pageCount'] * ($curPage - 1);
-		$query = "SELECT * FROM users ".$this->record['strConditionQuery'].$this->record['strOrderQuery']." LIMIT $topNum, ".$this->record['pageCount'];
-		$stmt = $mysqli->prepare($query);
-		$stmt->execute();
-		$stmt->close();
+		$query = "SELECT COUNT(*) AS recordCount from users".$this->m_StrConditionQuery;
+		$countRS = $mysqli->Execute($query);
+		$total = $countRS["recordCount"];
+		$countRS = null;
 
-		return $mysqli->prepare($query);
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
-	
+
+	function getMemberListWithPageing($curPage) {
+		$topNum = $this->m_pageCount * $curPage;
+
+		$query = "SELECT TOP ".$topNum." * FROM users ".$this->m_StrConditionQuery.$this->m_StrOrderQuery;
+		$listRS = $mysqli->Execute($query);
+		if ($listRS->RecordCount > 0) {
+			$listRS->PageSize = $this->m_pageCount;
+			$listRS->AbsolutePage = $curPage;
+		} 
+
+
+		return $mysqli->Execute($query);
+	} 
+
 	function setMissionListCondition($field,$keyword) {
-		$strWhere = "";
 		if (strlen($field) > 0 && strlen($keyword) > 0) {
 			$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 		} 
 
-		return "WHERE approval = 1 ".$strWhere;
+		return "WHERE approval = 1".$strWhere;
 	} 
-	
+
 	function makePagingMissionList($curPage) {
-		global $mysqli;
-		$recordCount = 0;
-		
-		$query = "SELECT COUNT(*) AS `recordCount` FROM missionary ".$this->record['strConditionQuery'];
-		$stmt = $mysqli->prepare($query);
-		$stmt->execute();
-		$stmt->bind_result($recordCount);
-		$stmt->close();
-		return makePagingN($curPage, $this->record['pageCount'], $this->record['pageUnit'], $recordCount);
+		$query = "SELECT COUNT(*) AS recordCount from missionary ".$this->m_StrConditionQuery;
+		$countRS = $db->Execute($query);
+		$total = $countRS["recordCount"];
+		$countRS = null;
+
+		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
-	
+
 	function getMissionListWithPageing($curPage) {
-		global $mysqli;
-		$userId = -1;
-		
-		$topNum =  $this->record['pageCount'] * ($curPage - 1);
-		$query = "SELECT `userid` FROM missionary ".$this->record['strConditionQuery']." ORDER BY `missionName` LIMIT $topNum, ".$this->record['pageCount'];;
-		$stmt = $mysqli->prepare($query);
-		$stmt->execute();
-		$stmt->bind_result($userId);
-		$stmt->close();
-		
-		
-		if($userId > 0) {
-			$mission = new MissionObject();
-			$mission->Open($userId);
-		}
-		else {
-			$mission = null;
-		}
-		
+
+		$topNum = $this->m_pageCount * $curPage;
+
+		$query = "SELECT top ".$topNum." userid FROM missionary ".$this->m_StrConditionQuery." ORDER BY missionName";
+		$missionRS = $mysqli->Execute($query);
+		if (($missionRS->RecordCount>0)) {
+			$missionRS->PageSize = $this->m_pageCount;
+			$missionRS->AbsolutePage = $curPage;
+		} 
+
+
+		if (!$missionRS->Eof && !$missionRS->Bof) {
+			while(!($missionRS->EOF || $missionRS->BOF)) {
+				$mission = new MissionObject();
+				$mission->Open($missionRS["userid"]);
+			} 
+		} 
+
+
 		return $mission;
 	} 
-	
+
 	function getMissionList($query) {
+		$mission_list = array();
+
 		global $mysqli;
-		$userId = -1;
-		$stmt = $mysqli->prepare($query);
-		$stmt->execute();
-		$stmt->bind_result($userId);
-		$stmt->close();
-		
-		
-		if($useId > 0) {
-			$mission = new MissionObject();
-			$mission->Open($useId);
+		$result = $mysqli->query($query);
+
+		while ($row = $result->fetch_array()) {
+			$mission_list[] = new MissionObject($row["userid"]);
 		}
-		
-		return $mission;
-	}
-	
-	
-	function getMemberListByPrayer($key) {
-		global $mysqli;
-		$userId = -1;
-		$query = "SELECT `userId` FROM family WHERE `familyType` = 'F0002' AND `followUserId` = ? ";
-		$stmt = $mysqli->prepare($query);
-		$stmt->bind_param("i", $key);
-		$stmt->execute();
-		$stmt->bind_result($userId);
-		$stmt->close();
-	
-		if($useId > 0) {
-			$mission = new MissionObject();
-			$mission->Open($useId);
-		}
-		
-		return $mission;
+
+		return $mission_list;
 	} 
 
-	function getMemberListByRegular($key) {
-		global $mysqli;
-		$userId = -1;
-		$query = "SELECT `userId` FROM family WHERE `familyType` = 'F0001' AND `followUserId` = ?";
-		$stmt = $mysqli->prepare($query);
-		$stmt->bind_param("i", $key);
-		$stmt->execute();
-		$stmt->bind_result($userId);
-		$stmt->close();
-	
-		if($useId > 0) {
-			$mission = new MissionObject();
-			$mission->Open($useId);
-		}
-		
-		return $mission;
+	function getMemberListByPrayer($userId) {
+		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$userId."'";
+		return $this->getMissionList($query);
 	} 
-}
 
+	function getMemberListByRegular($userId) {
+		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$userId."'";
+		return $this->getMissionList($query);
+	} 
+} 
 ?>

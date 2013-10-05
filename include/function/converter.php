@@ -136,15 +136,15 @@ function mssqlEscapeForLikeSearch($str) {
 	return $str;
 } 
 
-function Encrypt($string) {
-	$string="god".str_repeat("house");
-	for ($i=1; $i <= strlen(str_repeat()); $i = $i+1) {
-		$x=substr(str_repeat($i));
-		$tmp = $tmp.chr(ord($x)+1);
-
+function Encrypt($str) {
+	$tmp = "";
+	$str = "god".$str."house";
+	for ($i = 0; $i < strlen($str); $i++) {
+		$x = substr($str, $i, 1);
+		$tmp = $tmp.chr(ord($x) + 1);
 	}
 
-	$tmp=strrev($tmp);
+	$tmp = strrev($tmp);
 	return $tmp;
 } 
 

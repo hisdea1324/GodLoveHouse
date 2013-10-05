@@ -1,18 +1,21 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$userid = $_REQUEST["userid"];
-$backURL = trim($_REQUEST["backURL"]);
 
-if ((strlen($backURL)==0)) {
-	$backURL = $URLEncode[$_SERVER["HTTP_REFERER"]];
-} 
-
+$userid = (isset($_REQUEST["userid"])) ? $_REQUEST["userid"] : "";
+if (isset($_REQUEST["backURL"])) {
+	$backURL = URLEncode(trim($_REQUEST["backURL"]));
+} else if (isset($_SERVER["HTTP_REFERER"])) {
+	$backURL = URLEncode($_SERVER["HTTP_REFERER"]);
+} else {
+	$backURL = "1";
+}
 
 showHeader("HOME > 멤버쉽 > 로그인","member","tit_0702.gif");
 body();
 showFooter();
 
 function body() {
+	global $userid, $backURL;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -23,7 +26,7 @@ function body() {
 		<input type="hidden" name="backURL" value="<?php echo $backURL;?>">
 					<tr>
 						<td><img src="../images/sub/txt_id.gif">
-							<input type="text" name="userId" id="userId" style="width:150px" tabindex="1">
+							<input type="text" name="userid" id="userid" style="width:150px" tabindex="1">
 						</td>
 						<td rowspan="2"><a href="#" onclick="frmSubmit()"><img src="../images/sub/btn_login.gif" border="0" tabindex="3"></a></td>
 					</tr>
@@ -32,7 +35,7 @@ function body() {
 							<input type="password" name="password" id="password" style="width:150px" tabindex="2" onKeyPress="CheckEnter(event);">
 						</td>
 					</tr>
-			<?php if (strlen($userid)>0) {
+			<?php if (strlen($userid) > 0) {
 ?>
 					<tr>
 						<td>
