@@ -28,8 +28,12 @@ if ((strcmp($mode,"replyPost")==0)) {
 # 쓰기권한 체크
 
 
+//$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : 0;
+//echo "UserLevel ::: " . $userLevel;
 
-if (!$boardGrp->WritePermission()) {
+
+
+if ($boardGrp->WritePermission()) {
 	alertGoPage("쓰기 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } else if ((!$boardInfo->checkEditPermission())) {
 	alertGoPage("수정 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
@@ -126,7 +130,7 @@ function body() {
 				<tr>
 					<td class="td01">내용</td>
 					<td>
-			<textarea name="contents" id="contents" style="width:600px; height:300px; display:none;"><?php echo $boardInfo->contents;?></textarea>
+			<textarea name="contents" id="contents" style="width:600px; height:300px;"><?php echo $boardInfo->contents;?></textarea>
 					</td>
 				</tr>
 		<tr>
@@ -151,21 +155,22 @@ function body() {
 			</table>
 			<!-- write// -->
 		<p class="btn_right">
-		<img src="../images/board/btn_ok.gif" border="0" class="m2" onclick="frmSubmit(this)" style="cursor:pointer"> 
+		<img src="../images/board/btn_ok.gif" border="0" class="m2" onclick="javascript:frmSubmit(this)" style="cursor:pointer"> 
 		<a href="board.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="../images/board/btn_cancel.gif" border="0" class="m2"></a>
 		</p>
 		</div>
 		<!-- content// -->
 
 <script language="javascript">
+/*
 var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
+	nhn.husky.EZCreator.createInIFrame({
 	oAppRef: oEditors,
 	elPlaceHolder: "contents",
 	sSkinURI: "SEditorSkin.html",
 	fCreator: "createSEditorInIFrame"
 ]);
-
+*/
 function pasteHTMLDemo(){
 	image = "/upload/board/" + document.getElementById("txtboardImage").value;
 	sHTML = "<span style='color:#FF0000'><img src='" + image + "' /></span>";
@@ -175,15 +180,15 @@ function pasteHTMLDemo(){
 function pasteAttachFile(){
 	fileName = document.getElementById("txtboardFile").value;
 	sHTML = "<span style='color:#FF0000'><a href='/upload/board/" + fileName + "'>download : " + fileName + "</a></span>";
-	oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
+	//oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
 }
 
 function showHTML(){
-	alert(oEditors.getById["contents"].getIR());
+	//alert(oEditors.getById["contents"].getIR());
 }
 
 function frmSubmit(elClicked){
-	oEditors.getById["contents"].exec("UPDATE_IR_FIELD", []);
+	//oEditors.getById["contents"].exec("UPDATE_IR_FIELD", []);
 	
 	var theForm = document.getElementById("writeForm");
 	
