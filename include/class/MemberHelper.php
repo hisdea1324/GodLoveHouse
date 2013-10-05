@@ -73,7 +73,6 @@ class MemberHelper {
 			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
-
 		return $mission;
 	} 
 
@@ -163,41 +162,44 @@ class MemberHelper {
 		return $mysqli->Execute($query);
 	} 
 
-	function setMissionListCondition($field,$keyword) {
+	function setMissionListCondition($field, $keyword) {
+		global $mysqli;
+
+		$strWhere = "";
 		if (strlen($field) > 0 && strlen($keyword) > 0) {
-			$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
+			$strWhere = $strWhere." AND ".$mysqli->real_escape_string($field)." LIKE '%".$mysqli->real_escape_string($keyword)."%'";
 		} 
 
 		return "WHERE approval = 1".$strWhere;
 	} 
 
 	function makePagingMissionList($curPage) {
+		global $mysqli;
+
 		$query = "SELECT COUNT(*) AS recordCount from missionary ".$this->m_StrConditionQuery;
-		$countRS = $db->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$total = $row["recordCount"];
+			}
+			$result->close();
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getMissionListWithPageing($curPage) {
+		global $mysqli;
 
-		$topNum = $this->m_pageCount * $curPage;
-
-		$query = "SELECT top ".$topNum." userid FROM missionary ".$this->m_StrConditionQuery." ORDER BY missionName";
-		$missionRS = $mysqli->Execute($query);
-		if (($missionRS->RecordCount>0)) {
-			$missionRS->PageSize = $this->m_pageCount;
-			$missionRS->AbsolutePage = $curPage;
-		} 
-
-
-		if (!$missionRS->Eof && !$missionRS->Bof) {
-			while(!($missionRS->EOF || $missionRS->BOF)) {
-				$mission = new MissionObject();
-				$mission->Open($missionRS["userid"]);
-			} 
-		} 
+		$mission = array();
+		$start = $this->m_pageCount * ($curPage - 1);
+		$number = $this->m_pageCount;
+		$query = "SELECT userid FROM missionary ".$this->m_StrConditionQuery." ORDER BY missionName LIMIT {$start}, {$number}";
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$mission[] = new MissionObject($row["userid"]);
+			}
+			$result->close();
+		}
 
 		return $mission;
 	} 

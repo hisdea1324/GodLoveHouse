@@ -17,7 +17,14 @@ class MissionObject {
 
 	public function __get($name) { 
 		$name = strtolower($name);
-		return $this->record[$name];
+		switch ($name) {
+			case 'fileimage':
+				return "/upload/mission_pic/".$this->record[$name];
+			case 'familycount':
+				return count($this->family);
+			default: 
+				return $this->record[$name];
+		}
 	}
 
 	public function __isset($name) {
@@ -26,36 +33,34 @@ class MissionObject {
     }
 
     function __construct($value = -1) {
-    	if ($value == -1) {
-    		$this->initialize();
-    	} else {
+		$this->initialize();
+    	if ($value > -1) {
     		$this->Open($value);
     	}
 	}
 
     private function initialize() {
-		$this->userid = "";
-		$this->missionname = "";
+		$this->userId = "";
+		$this->missionName = "";
 		$this->church = "";
-		$this->churchcontact = "";
+		$this->churchContact = "";
 		$this->ngo = "";
-		$this->ngocontact = "";
-		$this->nationcode = "";
+		$this->ngoContact = "";
+		$this->nationCode = "";
 		$this->nation = "";
-		$this->accountno = "";
+		$this->accountNo = "";
 		$this->bank = "";
-		$this->accountname = "";
+		$this->accountName = "";
 		$this->homepage = "";
 		$this->manager = "";
-		$this->managercontact = "";
-		$this->manageremail = "";
+		$this->managerContact = "";
+		$this->managerEmail = "";
 		$this->memo = "";
-		$this->praylist = "";
-		$this->familycount = "";
-		$this->fileimage = "noimg.gif";
-		$this->imageid = 0;
+		$this->prayList = "";
+		$this->fileImage = "noimg.gif";
+		$this->imageId = 0;
 		$this->approval = 0;
-		$this->flagfamily = "";
+		$this->flagFamily = "";
 	}
 
 	function Open($userid) {
@@ -68,27 +73,26 @@ class MissionObject {
 		if (!$result) return;
 
 		while ($row = $result->fetch_assoc()) {
-			$this->userid = $row['userid'];
-			$this->missionname = $row['missionname'];
+			$this->userId = $row['userid'];
+			$this->missionName = $row['missionname'];
 			$this->church = $row['church'];
-			$this->churchcontact = $row['churchcontact'];
+			$this->churchContact = $row['churchcontact'];
 			$this->ngo = $row['ngo'];
-			$this->ngocontact = $row['ngocontact'];
-			$this->nationcode = $row['nationcode'];
+			$this->ngoContact = $row['ngocontact'];
+			$this->nationCode = $row['nationcode'];
 			$this->nation = $row['nation'];
-			$this->accountno = $row['accountno'];
+			$this->accountNo = $row['accountno'];
 			$this->bank = $row['bank'];
-			$this->accountname = $row['accountname'];
+			$this->accountName = $row['accountname'];
 			$this->homepage = $row['homepage'];
 			$this->manager = $row['manager'];
-			$this->managercontact = $row['managercontact'];
-			$this->manageremail = $row['manageremail'];
+			$this->managerContact = $row['managercontact'];
+			$this->managerEmail = $row['manageremail'];
 			$this->memo = $row['memo'];
-			$this->praylist = $row['praylist'];
-			$this->familycount = $row['familycount'];
-			$this->imageid = $row['imageid'];
+			$this->prayList = $row['praylist'];
+			$this->imageId = $row['imageid'];
 			$this->approval = $row['approval'];
-			$this->flagfamily = $row['flagfamily'];
+			$this->flagFamily = $row['flagfamily'];
 		}
 	    $result->close();
 

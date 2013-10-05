@@ -1,11 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-
 $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
-
 
 // 선교사 정보
 $m_Helper = new MemberHelper();
@@ -72,10 +70,10 @@ function body() {
 						<p class="b"><?php echo $mission->missionName;?></p>
 						<p>
 <?php 
-			if ((strlen($mission->memo)<150)) {
-				print $textFormat[$mission->memo][1];
+			if (strlen($mission->memo) < 150) {
+				print textFormat($mission->memo, 1);
 			} else {
-				print substr($textFormat[$mission->memo][1],0,150)."...";
+				print substr(textFormat($mission->memo, 1),0,150)."...";
 			} 
 
 ?>
