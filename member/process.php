@@ -218,11 +218,7 @@ function login() {
 	$result = $mysqli->query($query);
 
 	if ($result->num_rows == 0) {
-		if (strlen($backURL) > 0) {
-			header("Location: ".URLDecode($backURL));
-		} else {
-			header("Location: "."../index.php");
-		} 
+		header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
 		return;
 	}
 
@@ -246,7 +242,11 @@ function login() {
 				$_SESSION['userTitle'] = "Normal";
 				break;
 		} 
-		header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
+		if (strlen($backURL) > 0) {
+			header("Location: ".URLDecode($backURL));
+		} else {
+			header("Location: "."../index.php");
+		} 
 		return;
 	}
 
