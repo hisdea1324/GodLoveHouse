@@ -1,18 +1,16 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
 
-$sessions = new __construct();
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+
 $s_Helper = new SupportHelper();
 
-//페이징 갯수 $s_Helper->PAGE_COUNT=10;
-$s_Helper->PAGE_UNIT=10;
-if ((strlen($field) && strlen($keyword))) {
+//페이징 갯수 
+$s_Helper->PAGE_COUNT=10;
+$s_Helper->PAGE_UNIT = 10;
+if (strlen($field) && strlen($keyword)) {
 	$s_Helper->setConditionRequestInfo($field, $keyword);
 } 
 
@@ -24,6 +22,8 @@ body();
 showFooter();
 
 function body() {
+	global $keyword, $strPage;
+	global $requests;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -31,7 +31,7 @@ function body() {
 		<form name="findFrm" id="findFrm" action="special.php" method="get">
 		<div id="search"> <img src="../images/board/img_search.gif" class="r10" align="absmiddle">
 			<select name="field" id="field">
-				<option value="title"<?php if (($field=="title")) { ?> selected<?php } ?>>제목</option>
+				<option value="title"<?php if ($field == "title") { ?> selected<?php } ?>>제목</option>
 				<!--option value="C.nick"<?php if (($field=="C.nick")) { ?> selected<?php } ?>>선교사명</option-->
 			</select>
 			<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?php echo $keyword;?>">
@@ -56,15 +56,14 @@ function body() {
 				<th class="th01">후원마감일</th>
 			</tr>
 <?php 
-	if ((count($requests)==0)) {
+	if (count($requests) == 0) {
 ?>
 			<tr>
 				<td colspan="5">리스트가 없습니다</td>
 			</tr>
 <?php 
 	} else {
-		for ($i=0; $i<=count($requests)-1; $i = $i+1) {
-			$requestInfo = $requests[$i];
+		foreach ($requests as $requestInfo) {
 			$reqAddInfo = $s_Helper->getRequestAddInfoByReqID($requestInfo->RequestID);
 ?>
 			<tr>
@@ -75,7 +74,7 @@ function body() {
 				<td><?php echo $reqAddInfo->Nick;?>(<?php echo $reqAddInfo->Nation;?>)</td>
 				<td class="ltd">
 					<p class="b"><?php echo $requestInfo->Title;?></p>
-					<p><?php echo $textFormat[$requestInfo->Explain][1];?></p>
+					<p><?php echo textFormat($requestInfo->Explain, 1);?></p>
 				</td>
 				<td><?php echo $reqAddInfo->SupportRatio;?> %</td>
 				<td><?php echo dateFormat($reqAddInfo->Due, 1);?></td>

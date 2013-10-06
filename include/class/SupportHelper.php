@@ -156,14 +156,16 @@ class SupportHelper {
 
 	function makePagingHTMLRequestInfo($curPage) {
 		global $mysqli;
-		$query = "SELECT COUNT(*) AS recordCount from requestInfo WHERE supportType = '03001'".$this->record["strConditionQuery"];
-		$stmt = $mysqli->prepare($query);
-		$stmt->execute();
-		$stmt->bind_result($this->record['recordCount']);
-		//$total = $countRS["recordCount"];
-		//$countRS = null;
 
-		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $total);
+		$query = "SELECT COUNT(*) AS recordCount from requestInfo WHERE supportType = '03001'".$this->record["strConditionQuery"];
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_assoc()) {
+				$this->record['recordCount'] = $row['recordCount'];
+			}
+			$result->close();
+		}
+
+		return makePagingN($curPage, $this->record["pageCount"], $this->record["pageUnit"], $this->record['recordCount']);
 	} 
 
 	function getRequestList($query) {
