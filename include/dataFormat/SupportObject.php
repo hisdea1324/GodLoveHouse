@@ -22,6 +22,8 @@ class SupportObject {
 	public function __get($name) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'isnew':
+				return ($this->record['supportid'] == -1);
 			case 'supporttype':
 				switch ($this->record['suptype']) {
 					case "03001":

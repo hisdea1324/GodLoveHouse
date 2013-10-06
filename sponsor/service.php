@@ -1,9 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$sessions = new __construct();
 $s_Helper = new SupportHelper();
 
-$supporter = $s_Helper->getServiceSupportByUserId($sessions->UserId);
+$supporter = $s_Helper->getServiceSupportByUserId($_SESSION['userid']);
 $reqList = $s_Helper->getServiceList();
 
 showHeader("HOME > 후원 > 자원봉사 참여","sponsor","tit_0303.gif");
@@ -11,6 +10,7 @@ body();
 showFooter();
 
 function body() {
+	global $supporter, $reqList;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -30,25 +30,23 @@ function body() {
 				<th class="th01">체크</th>
 			</tr>
 <?php 
-	if ((count($reqList)==0)) {
+	if (count($reqList) == 0) {
 ?>
 			<tr>
 				<td colspan="3">리스트가 없습니다</td>
 			</tr>
 <?php 
 	} else {
-		for ($i=0; $i<=count($reqList)-1; $i = $i+1) {
-			$requestInfo = $reqList[$i];
+		foreach ($reqList as $requestInfo) {
 ?>
 			<tr>
 				<td>
 					<p class="b">[<?php echo $requestInfo->Title;?>]</p>
 					<img src="<?php echo $requestInfo->Image;?>" width="120" height="75" class="img">
 				</td>
-				<td class="ltd"><?php echo $textFormat[$requestInfo->Explain][1];?></td>
+				<td class="ltd"><?php echo textFormat($requestInfo->Explain, 1);?></td>
 				<td>
-					<input type="checkbox" name="check" id="check" value="<?php echo $requestInfo->RequestID;?>" class="chk"<?			 if (((!$supporter->IsNew()) && $supporter->Support($requestInfo->RequestID))) {
-?> checked<?			 } ?> />
+					<input type="checkbox" name="check" id="check" value="<?php echo $requestInfo->RequestID;?>" class="chk" <? if (!$supporter->IsNew && $supporter->Support($requestInfo->RequestID)) { ?> checked<? } ?> />
 				</td>
 			</tr>
 <?php 
