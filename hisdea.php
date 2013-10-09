@@ -25,5 +25,5 @@
 
 	//$testObject->Delete();
 
-
+test À±¼ºÈ¯
 ?>
