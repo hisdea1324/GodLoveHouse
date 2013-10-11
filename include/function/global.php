@@ -94,7 +94,7 @@ function showFooter() {
 } 
 
 function debugFooter() {
-	if ($_SERVER[REMOTE_ADDR] != $_SERVER["TEST_IP"]) return;
+	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
 
 	echo "<pre>";
 	echo "Server : ";
