@@ -18,4 +18,6 @@
 	$Application["server"]="localhost";
 
 	$Application["QueryDebug"]=true;
+	
+	$_SERVER["TEST_IP"] = "59.13.120.79";
 ?>
