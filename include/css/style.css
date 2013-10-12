@@ -96,7 +96,7 @@ img { border:none; }
 #topmenu ul .dot{background:url(../../images/common/topmenu_dot.gif) no-repeat; padding-left:10px}
 .submenu .list{padding:0px 15px 0px 15px; height:21px; background:#54741f url(../../images/common/submenu_bar.gif) no-repeat;}
 .submenu .list2{padding:0px 15px 0px 10px; height:21px; background-color:#54741f;}
-.submenu{height:21px;}
+.submenu .list3{height:21px;}
 
 .logo { margin:0px 0px 0px 30px; position:absolute}
 
@@ -282,6 +282,8 @@ H4 { background:url(../../images/common/bullet_sstit.gif) no-repeat 5px 5px; pad
 .bg_gray{background-color:#f8f8f8}
 .left{text-align:left !important;}
 .list{float:left; display:inline}
+.list2{float:left; display:inline}
+.list3{float:left; display:inline}
 .list li{float:left; display:inline; background:url(../../images/common/dot_gray.gif) no-repeat 2px 6px; padding-left:10px; width:150px}
 
 /* reply */
