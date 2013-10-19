@@ -2,10 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $regionCode = (isset($_REQUEST["region"])) ? trim($_REQUEST["region"]) : "";
-$houseId = (isset($_REQUEST["region"])) ? trim($_REQUEST["houseId"]) : "";
-$fromDate = (isset($_REQUEST["region"])) ? trim($_REQUEST["fromDate"]) : "";
-$toDate = (isset($_REQUEST["region"])) ? trim($_REQUEST["toDate"]) : "";
-$page = (isset($_REQUEST["region"])) ? trim($_REQUEST["page"]) : 1;
+$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+$fromDate = (isset($_REQUEST["fromDate"])) ? trim($_REQUEST["fromDate"]) : "";
+$toDate = (isset($_REQUEST["toDate"])) ? trim($_REQUEST["toDate"]) : "";
+$page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
 $c_Helper = new CodeHelper();
 $h_Helper = new HouseHelper();
@@ -89,12 +89,11 @@ function body() {
 					</tr>
 <?php
 	} else {
-		for ($i = 0; $i <= count($rooms) - 1; $i++) {
-			$roomObj = $rooms[$i];
+		foreach ($rooms as $roomObj) {
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
 			<tr>
-			<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
+			<td><?php echo $roomObj->roomId;?></td>
 			<td>
 <?php 
 			$searchDateValue = "";

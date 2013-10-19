@@ -127,8 +127,10 @@ class RoomObject {
 			$query = "SELECT name FROM attachFile WHERE id IN (".join($imgArray, ",").")";
 			if ($result = $mysqli->query($query)) {
 			    /* Get field information for all columns */
+			    $cnt = 0;
 			    while ($row = $result->fetch_assoc()) {
-			    	$this->image[] = $row["name"];				    	
+			    	$this->image[$cnt] = $row["name"];				    	
+			    	$cnt++;
 			    }
 			}
 		}
