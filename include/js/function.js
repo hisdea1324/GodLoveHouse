@@ -225,6 +225,9 @@ function clickTopNavi(num) {
 		case 12:
 			location.href = WebRoot + 'living/registHouse.php';
 			break;
+		case 13:
+			centerWinOpen(1200, 680, WebRoot + 'house_manager/index.php', "house_manager");
+			break;
 		default : location.href = webRoot;
 	}
 }

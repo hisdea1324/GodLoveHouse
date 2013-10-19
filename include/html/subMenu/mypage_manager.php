@@ -13,6 +13,7 @@
 			</ul>
 		</li>
 			<li>- <a href="#" onclick="clickTopNavi(11);">book Information</a></li>
+			<li>- <a href="#" onclick="clickTopNavi(13);">관리자</a></li>
 		</ul>
 	</div>
 	<div id="right">

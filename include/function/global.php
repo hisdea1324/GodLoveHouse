@@ -9,6 +9,24 @@ function authority($limitLevel) {
 	return $retValue;
 } 
 
+function showHouseManagerHeader() {
+	global $Application;
+	
+	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
+	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+
+	print $strMenu;
+}
+
+function showHouseManagerFooter() {
+	global $Application;
+	
+	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_footer.php");
+	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
+
+	print $strFooter;
+}
+
 function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	global $Application;
 	
