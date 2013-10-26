@@ -32,6 +32,8 @@ class MemberObject {
 		switch($name) {
 			case "zipcode":
 				return array(substr($this->record["zipcode"], 0, 3), substr($this->record["zipcode"], 3, 3));
+			case "jumin":
+				return explode('-', $this->record["jumin"]);
 			case "phone":
 				return explode('-', $this->record["phone"]);
 			case "mobile":
@@ -57,113 +59,89 @@ class MemberObject {
 
     // 멤버 오브젝트 초기화 함수  
     function __construct($userId = -1) {
-    	if ($userId == -1) {
-    		$this->isNew = true;
-    		$this->initialize();
-    	} else {
-    		$this->isNew = false;
-    		$this->Open($userId);
-    	}
+    	$this->isNew = true;
+    	$this->initialize();
+    	
+			if ($userId > -1) {
+				$this->isNew = false;
+				$this->Open($userId);
+			}
 	}
 
 	private function initialize() {
-		$this->record['userid'] = "";
-		$this->record['password'] = "a";
-		$this->record['passquest'] = 0;
-		$this->record['passanswer'] = "a";
-		$this->record['memo'] = "a";
-		$this->record['name'] = "a";
-		$this->record['nick'] = "a";
-		$this->record['userlv'] = 0;
-		$this->record['email'] = "a";
-		$this->record['jumin'] = "0000000000000";
-		$this->record['address1'] = "a";
-		$this->record['address2'] = "a";
-		$this->record['zipcode'] = "000000";
-		$this->record['phone'] = "a";
-		$this->record['mobile'] = "a";
-		$this->record['msgok'] = 0;
+		$this->userid = "";
+		$this->password = "a";
+		$this->passquest = 0;
+		$this->passanswer = "a";
+		$this->memo = "a";
+		$this->name = "a";
+		$this->nick = "a";
+		$this->userlv = 0;
+		$this->email = "a@gmail.com";
+		$this->jumin = "000000-0000000";
+		$this->address1 = "a";
+		$this->address2 = "a";
+		$this->zipcode = "000000";
+		$this->phone = "";
+		$this->mobile = "000-000-0000";
+		$this->msgok = 0;
 	}
 
 
 	function Open($userid) {
 		global $mysqli;
-
-		$column = array();
-		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * from users WHERE userid = ?")) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $userid);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		
+		$query = "SELECT * from users WHERE userid = '".$mysqli->real_escape_string($userid)."'";
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->userid = $row['userid'];
+			$this->password = $row['password'];
+			$this->passquest = $row['passquest'];
+			$this->passanswer = $row['passanswer'];
+			$this->memo = $row['memo'];
+			$this->name = $row['name'];
+			$this->nick = $row['nick'];
+			$this->userlv = $row['userlv'];
+			$this->email = $row['email'];
+			$this->jumin = $row['jumin'];
+			$this->address1 = $row['address1'];
+			$this->address2 = $row['address2'];
+			$this->zipcode = $row['zipcode'];
+			$this->phone = $row['phone'];
+			$this->mobile = $row['mobile'];
+			$this->msgok = $row['msgok'];
 		}
+		$result->close();
 	}
 
 	function OpenByNick($userNick) {
 		global $mysqli;
+		$query = "SELECT * from users WHERE nick = '".$mysqli->real_escape_string($userNick)."'";
 
-		$column = array();
-		/* create a prepared statement */
-		if ($stmt = $mysqli->prepare("SELECT * FROM member WHERE nick = ?")) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $userNick);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->userid = $row['userid'];
+			$this->password = $row['password'];
+			$this->passquest = $row['passquest'];
+			$this->passanswer = $row['passanswer'];
+			$this->memo = $row['memo'];
+			$this->name = $row['name'];
+			$this->nick = $row['nick'];
+			$this->userlv = $row['userlv'];
+			$this->email = $row['email'];
+			$this->jumin = $row['jumin'];
+			$this->address1 = $row['address1'];
+			$this->address2 = $row['address2'];
+			$this->zipcode = $row['zipcode'];
+			$this->phone = $row['phone'];
+			$this->mobile = $row['mobile'];
+			$this->msgok = $row['msgok'];
 		}
+		$result->close();
 	}
 
 
@@ -172,7 +150,7 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->isNew) {
-			$query = "INSERT INTO `member` (`userid`, `password`, `passquest`, `passanswer`, ";
+			$query = "INSERT INTO `users` (`userid`, `password`, `passquest`, `passanswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userlv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
 			$query = $query."`zipcode`, `phone`, `mobile`, `msgok`) VALUES ";
@@ -183,21 +161,21 @@ class MemberObject {
 				# New Data
 				$stmt->bind_param("isissssisssssssi", 
 					$this->record['userid'], 
-					crypt($this->record['password'], $this->record['userid']),
-					$this->record['passquest'], 
-					$this->record['passanswer'], 
-					$this->record['memo'], 
-					$this->record['name'], 
-					$this->record['nick'], 
-					$this->record['userlv'], 
-					$this->record['email'], 
-					$this->record['jumin'], 
-					$this->record['address1'], 
-					$this->record['address2'],
-					$this->record['zipcode'],
-					$this->record['phone'],
-					$this->record['mobile'],
-					$this->record['msgok']);
+					crypt($this->password, $this->userid),
+					$this->passquest, 
+					$this->passanswer, 
+					$this->memo, 
+					$this->name, 
+					$this->nick, 
+					$this->userlv, 
+					$this->email, 
+					$this->jumin, 
+					$this->address1, 
+					$this->address2,
+					$this->zipcode,
+					$this->phone,
+					$this->mobile,
+					$this->msgok);
 	
 				# execute query
 				$stmt->execute();
@@ -224,16 +202,16 @@ class MemberObject {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sssssssssi", 
-				$this->record['nick'], 
-				$this->record['userlv'], 
-				$this->record['email'], 
-				$this->record['jumin'], 
-				$this->record['address1'], 
-				$this->record['address2'], 
-				$this->record['zipcode'], 
-				$this->record['phone'], 
-				$this->record['mobile'], 
-				$this->record['msgok']);
+				$this->nick, 
+				$this->userlv, 
+				$this->email, 
+				$this->jumin, 
+				$this->address1, 
+				$this->address2, 
+				$this->zipcode, 
+				$this->phone, 
+				$this->mobile, 
+				$this->msgok);
 				
 			# execute query
 			$stmt->execute();
@@ -246,9 +224,9 @@ class MemberObject {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userid'] > -1) {
+		if ($this->userid > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM member WHERE userid = ?");
-			$stmt->bind_param("i", $this->record['userid']);
+			$stmt->bind_param("i", $this->userid);
 			$stmt->execute();
 			$stmt->close();
 		}

@@ -45,7 +45,7 @@ showAdminFooter();
 function body() {
 		global $field, $keyword, $gotoPage;
 		global $display, $btnValue, $churchContact, $ngoContect, $managerContact, $managerEmail, $memo, $prayList;
-		global $userId, $userLv;
+		global $userid, $userlv;
 		global $member, $mission;
 ?>
 	<div class="sub">
@@ -77,18 +77,16 @@ function body() {
 		<input type="hidden" id="gotoPage" name="gotoPage" value="<?php echo $gotoPage;?>" />
 		<input type="hidden" id="mode" name="mode" value="editUser" />
 		<input type="hidden" id="missionary" name="missionary" value="1" />
-		<input type="hidden" id="userLv" name="userLv" value="<?php echo $userLv;?>" />
+		<input type="hidden" id="userLv" name="userLv" value="<?php echo $userlv;?>" />
 		<div id="joinForm">
 			<dl>
 				<dt>
 					아이디 
 				<dd>
-					<?php if ((strlen($userId)>0)) {
-?>
+					<?php if ((strlen($userid)>0)) {?>
 					<?php echo $member->userId;?> <input type="hidden" id="userId" name="userId" value="<?php echo $member->userId;?>" />
-					<?	 } else {
-?>
-					<input type="text" id="userId" name="userId" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userId;?>" />
+					<?	 } else { ?>
+					<input type="text" id="userId" name="userId" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userid;?>" />
 					<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_idcheck.gif" border=0 align="absmiddle" onclick="checkId()" style="cursor:pointer" />
 					<?php } ?>
 				<dt>
@@ -105,7 +103,8 @@ function body() {
 					주민등록번호
 				<dd>
 					<?	
-							$jumin = explode("-",$member->jumin);
+							//$jumin = explode("-",$member->jumin);
+							$jumin = $member->jumin;
 					?>
 					<input type="text" id="jumin1" name="jumin1" size="8" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=6 value="<?php echo $jumin[0];?>" /> -
 					<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?php echo $jumin[1];?>" />
@@ -113,7 +112,8 @@ function body() {
 					E-mail
 				<dd>
 					<? 
-						$email = explode("@",$member->email);
+						//$email = explode("@",$member->email);
+						$email = $member->email;
 					?>
 					<input type="text" id="email1" name="email1" size="20" maxlength=20 style="ime-mode:disabled;" value="<?php echo $email[0];?>" />@
 					<input type="text" id="email2" name="email2" size="20" style="ime-mode:disabled;" value="<?php echo $email[1];?>" />
@@ -121,7 +121,8 @@ function body() {
 					우편번호
 				<dd>
 					<?
-						$zipcode = explode("-",$member->zipcode);
+						//$zipcode = explode("-",$member->zipcode);
+						$zipcode = $member->zipcode;
 					?>
 					<input type="text" id="post1" name="post1" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[0];?>" /> - 
 					<input type="text" id="post2" name="post2" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[1];?>" />&nbsp;
@@ -135,7 +136,8 @@ function body() {
 					전화번호
 				<dd>
 					<?	
-						$phone = explode("-",$member->phone);
+						//$phone = explode("-",$member->phone);
+						$phone = $member->phone;
 					?>
 					<select id="tel1" name="tel1">
 						<option value="02" <?php if (($phone[0]=="02")) { print "selected"; } ?>>02</option>
@@ -162,7 +164,21 @@ function body() {
 					휴대폰번호
 				<dd>
 					<?	
-						$mobile = explode("-",$member->mobile);
+						$mobile = $member->mobile;
+						
+						
+						echo "PHONE Number SIZE " . sizeof($mobile);
+						
+						
+						
+						if(sizeof($mobile) < 1){
+							
+							$mobile = array("010", "", "");
+							
+							//$mobile[0] = "010";
+							//$mobile[1] = "";
+							//$mobile[2] = "";
+						}
 					?>
 					<select id="hp1" name="hp1">
 						<option value="010" <?php if (($mobile[0]=="010")) { print "selected"; } ?>>010</option>
