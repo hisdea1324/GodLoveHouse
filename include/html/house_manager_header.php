@@ -34,21 +34,3 @@
 				<div class="outer">
 					<div class="inner">
 						<div class="conSec">
-							<!-- leftSec -->
-							<div id="leftSec">
-								<h2>선교관1</h2>
-								<ul>
-									<li><a href="#">샬롬관<div class="sColor c1"></div></a></li>
-									<li><a href="#">화평관<div class="sColor c2"></div></a></li>
-									<li class="on"><a href="#">미스바관<div class="sColor c3"></div></a></li>
-								</ul>
-								<h2>선교관2</h2>
-								<ul>
-									<li><a href="#">여호수아관<div class="sColor c4"></div></a></li>
-									<li><a href="#">모세관<div class="sColor c5"></div></a></li>
-									<li><a href="#">갈렙관<div class="sColor c6"></div></a></li>
-									<li class="c_g"><a href="mission_write2.php">방추가 +</a></li>
-								</ul>
-								<h2 class="c_g"><a href="mission_write.php">선교관 추가 +</a></h2>
-							</div>
-							<!-- // leftSec -->

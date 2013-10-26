@@ -11,16 +11,49 @@ function authority($limitLevel) {
 
 function showHouseManagerHeader() {
 	global $Application;
+
+	checkUserLogin();
+
+	$m_Helper = new MemberHelper();
+	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+	$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+
+	$c_Helper = new CodeHelper();
+	$codes = $c_Helper->getNationCodeList();
+
+	$h_Helper = new HouseHelper();
+	$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
+	$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 2);
 	
 	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
 	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
 
 	print $strMenu;
+
+	echo "<!-- leftSec -->";
+	echo "<div id=\"leftSec\">";
+	echo "	<h2>선교관1</h2>";
+	echo "	<ul>";
+	echo "		<li><a href=\"#\">샬롬관<div class=\"sColor c1\"></div></a></li>";
+	echo "		<li><a href=\"#\">화평관<div class=\"sColor c2\"></div></a></li>";
+	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
+	echo "	</ul>";
+	echo "	<h2>선교관2</h2>";
+	echo "	<ul>";
+	echo "		<li><a href=\"#\">여호수아관<div class=\"sColor c4\"></div></a></li>";
+	echo "		<li><a href=\"#\">모세관<div class=\"sColor c5\"></div></a></li>";
+	echo "		<li><a href=\"#\">갈렙관<div class=\"sColor c6\"></div></a></li>";
+	echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
+	echo "	</ul>";
+	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
+	echo "</div>";
+	echo "<!-- // leftSec -->";
 }
 
 function showHouseManagerFooter() {
 	global $Application;
-	
+
 	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_footer.php");
 	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
 
@@ -249,7 +282,7 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 			$queryString = $_SERVER["QUERY_STRING"]."&";
 		} 
 	} else {
-		$queryString="";
+		$queryString = "";
 	} 
 
 	$linkUrl = $pathInfo."?".$queryString;
