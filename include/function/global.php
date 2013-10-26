@@ -9,6 +9,59 @@ function authority($limitLevel) {
 	return $retValue;
 } 
 
+function showHouseManagerHeader() {
+	global $Application;
+
+	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
+	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+
+	print $strMenu;
+}
+
+function showHouseManagerLeft() {
+	checkUserLogin();
+
+	$m_Helper = new MemberHelper();
+	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+	$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+
+	$c_Helper = new CodeHelper();
+	$codes = $c_Helper->getNationCodeList();
+
+	$h_Helper = new HouseHelper();
+	$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
+	$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 2);
+	
+	echo "<!-- leftSec -->";
+	echo "<div id=\"leftSec\">";
+	$color_cnt = 0;
+	foreach ($houseList1 as $house) {
+		echo "	<h2>".$house->HouseName."</h2>";
+		echo "	<ul>";
+		foreach ($house->RoomList as $room) {
+			$color_cnt++;
+			//selected
+			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
+			echo "		<li><a href=\"#\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+		}
+		echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
+		echo "	</ul>";
+	}
+	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
+	echo "</div>";
+	echo "<!-- // leftSec -->";
+}
+
+function showHouseManagerFooter() {
+	global $Application;
+
+	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_footer.php");
+	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
+
+	print $strFooter;
+}
+
 function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	global $Application;
 	
@@ -94,6 +147,8 @@ function showFooter() {
 } 
 
 function debugFooter() {
+	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+
 	echo "<pre>";
 	echo "Server : ";
 	print_r($_SERVER);
@@ -229,7 +284,7 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 			$queryString = $_SERVER["QUERY_STRING"]."&";
 		} 
 	} else {
-		$queryString="";
+		$queryString = "";
 	} 
 
 	$linkUrl = $pathInfo."?".$queryString;

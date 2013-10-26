@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 showHeader("HOME > 갓러브하우스 > 후원자가이드","doorkeeper","tit_0104.gif");
