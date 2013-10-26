@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 showHouseManagerHeader();
+showHouseManagerLeft();
 body();
 showHouseManagerFooter();
 

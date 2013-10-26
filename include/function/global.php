@@ -12,6 +12,13 @@ function authority($limitLevel) {
 function showHouseManagerHeader() {
 	global $Application;
 
+	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
+	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+
+	print $strMenu;
+}
+
+function showHouseManagerLeft() {
 	checkUserLogin();
 
 	$m_Helper = new MemberHelper();
@@ -26,26 +33,21 @@ function showHouseManagerHeader() {
 	$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
 	$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 2);
 	
-	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
-	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
-
-	print $strMenu;
-
 	echo "<!-- leftSec -->";
 	echo "<div id=\"leftSec\">";
-	echo "	<h2>선교관1</h2>";
-	echo "	<ul>";
-	echo "		<li><a href=\"#\">샬롬관<div class=\"sColor c1\"></div></a></li>";
-	echo "		<li><a href=\"#\">화평관<div class=\"sColor c2\"></div></a></li>";
-	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
-	echo "	</ul>";
-	echo "	<h2>선교관2</h2>";
-	echo "	<ul>";
-	echo "		<li><a href=\"#\">여호수아관<div class=\"sColor c4\"></div></a></li>";
-	echo "		<li><a href=\"#\">모세관<div class=\"sColor c5\"></div></a></li>";
-	echo "		<li><a href=\"#\">갈렙관<div class=\"sColor c6\"></div></a></li>";
-	echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
-	echo "	</ul>";
+	$color_cnt = 0;
+	foreach ($houseList1 as $house) {
+		echo "	<h2>".$house->HouseName."</h2>";
+		echo "	<ul>";
+		foreach ($house->RoomList as $room) {
+			$color_cnt++;
+			//selected
+			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
+			echo "		<li><a href=\"#\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+		}
+		echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
+		echo "	</ul>";
+	}
 	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
 	echo "</div>";
 	echo "<!-- // leftSec -->";

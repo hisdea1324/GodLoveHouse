@@ -8,6 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //	 - 자바 스크립트 추가 & update process 진행
 //***************************************************************
 showHouseManagerHeader();
+showHouseManagerLeft();
 body();
 showHouseManagerFooter();
 
