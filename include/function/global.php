@@ -43,7 +43,7 @@ function showHouseManagerLeft() {
 			$color_cnt++;
 			//selected
 			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
-			echo "		<li><a href=\"#\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+			echo "		<li><a href=\"mission_write2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
 		}
 		echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
 		echo "	</ul>";
@@ -165,7 +165,7 @@ function debugFooter() {
 
 function setTestValue($value) {
 	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
-	
+
 	global $_TEST;
 	$_TEST = $value;
 }
