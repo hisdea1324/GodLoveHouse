@@ -7,6 +7,10 @@ body();
 showHouseManagerFooter();
 
 function body() {
+	$c_Helper = new CodeHelper();
+	$codeRegions = $c_Helper->getLocalCodeList();
+	$codeStatus = $c_Helper->getHouseStatusCodeList();
+
 	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
 	$h_helper = new HouseHelper();
 	$house = $h_helper->getHouseInfoById($houseId);
@@ -42,7 +46,7 @@ function body() {
 					<tr>
 						<th>담당자연락처1</th>
 						<td>
-							<select name="contact1" id="contact1">
+							<select name="contact11" id="contact11">
 								<option>031</option>
 								<option value="010" <?php if ($house->Contact1[0] == "010") { print "selected"; } ?>>010</option>
 								<option value="011" <?php if ($house->Contact1[0] == "011") { print "selected"; } ?>>011</option>
@@ -68,82 +72,178 @@ function body() {
 								<option value="064" <?php if ($house->Contact1[0] == "064") { print "selected"; } ?>>064</option>
 								<option value="070" <?php if ($house->Contact1[0] == "070") { print "selected"; } ?>>070</option>
 							</select> - 
-							<input type="text" name="contact2" id="contact2" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[1]?>" /> - 
-							<input type="text" name="contact3" id="contact3" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[2]?>" />
+							<input type="text" name="contact12" id="contact12" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[1]?>" /> - 
+							<input type="text" name="contact13" id="contact13" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[2]?>" />
 						</td>
 					</tr>
 					<tr>
 						<th>담당자연락처2</th>
-						<td><select><option>031</option></select> - 
-							<input type="text" class="inputTxt" size="10" value="" /> - 
-							<input type="text" class="inputTxt" size="10" value="" />
+						<td>
+							<select name="contact21" id="contact21">
+								<option>031</option>
+								<option value="010" <?php if ($house->Contact2[0] == "010") { print "selected"; } ?>>010</option>
+								<option value="011" <?php if ($house->Contact2[0] == "011") { print "selected"; } ?>>011</option>
+								<option value="016" <?php if ($house->Contact2[0] == "016") { print "selected"; } ?>>016</option>
+								<option value="017" <?php if ($house->Contact2[0] == "017") { print "selected"; } ?>>017</option>
+								<option value="018" <?php if ($house->Contact2[0] == "018") { print "selected"; } ?>>018</option>
+								<option value="019" <?php if ($house->Contact2[0] == "019") { print "selected"; } ?>>019</option>
+								<option value="02" <?php if ($house->Contact2[0] == "02") { print "selected"; } ?>>02</option>
+								<option value="031" <?php if ($house->Contact2[0] == "031") { print "selected"; } ?>>031</option>
+								<option value="032" <?php if ($house->Contact2[0] == "032") { print "selected"; } ?>>032</option>
+								<option value="033" <?php if ($house->Contact2[0] == "033") { print "selected"; } ?>>033</option>
+								<option value="041" <?php if ($house->Contact2[0] == "041") { print "selected"; } ?>>041</option>
+								<option value="042" <?php if ($house->Contact2[0] == "042") { print "selected"; } ?>>042</option>
+								<option value="043" <?php if ($house->Contact2[0] == "043") { print "selected"; } ?>>043</option>
+								<option value="051" <?php if ($house->Contact2[0] == "051") { print "selected"; } ?>>051</option>
+								<option value="052" <?php if ($house->Contact2[0] == "052") { print "selected"; } ?>>052</option>
+								<option value="053" <?php if ($house->Contact2[0] == "053") { print "selected"; } ?>>053</option>
+								<option value="054" <?php if ($house->Contact2[0] == "054") { print "selected"; } ?>>054</option>
+								<option value="055" <?php if ($house->Contact2[0] == "055") { print "selected"; } ?>>055</option>
+								<option value="061" <?php if ($house->Contact2[0] == "061") { print "selected"; } ?>>061</option>
+								<option value="062" <?php if ($house->Contact2[0] == "062") { print "selected"; } ?>>062</option>
+								<option value="063" <?php if ($house->Contact1[0] == "063") { print "selected"; } ?>>063</option>
+								<option value="064" <?php if ($house->Contact2[0] == "064") { print "selected"; } ?>>064</option>
+								<option value="070" <?php if ($house->Contact2[0] == "070") { print "selected"; } ?>>070</option>
+							</select> - 
+							<input type="text" name="contact22" id="contact22" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[1]?>" /> - 
+							<input type="text" name="contact33" id="contact33" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[2]?>" />
 						</td>
 					</tr>
 					<tr>
 						<th>주거형태</th>
 						<td>
-							<input type="radio" checked="checked" />아파트 
-							<input type="radio" class="ml20"/> 원룸 
-							<input type="radio" class="ml20"/> 빌라 
-							<input type="radio" class="ml20"/> 기타
+							<input type="radio" name="buildType" id="buildType" value="1" class="ml20" <?php if ($house->buildingType == 1) { print "checked"; } ?> />아파트 
+							<input type="radio" name="buildType" id="buildType" value="2" class="ml20" <?php if ($house->buildingType == 2) { print "checked"; } ?> /> 원룸 
+							<input type="radio" name="buildType" id="buildType" value="3" class="ml20" <?php if ($house->buildingType == 3) { print "checked"; } ?> /> 빌라 
+							<input type="radio" name="buildType" id="buildType" value="4" class="ml20" <?php if ($house->buildingType == 4) { print "checked"; } ?> /> 기타
 						</td>
 					</tr>
 					<tr>
 						<th>지역코드</th>
-						<td><select><option>지역선택</option></select></td>
+						<td>
+							<select name="region" id="region">
+								<option value=''>-- 지역선택 --</option>
+							<?php 
+								foreach ($codeRegions as $region) {
+									if ($house->regionCode == $region->code) {
+										print "<option value='".$region->code."' selected>".$region->name."</option>";
+									} else {
+										print "<option value='".$region->code."'>".$region->name."</option>";
+									} 
+
+
+								}
+							?>
+						</td>
 					</tr>
 					<tr>
 						<th>우편번호</th>
-						<td><input type="text" class="inputTxt" size="10" value="" /> - <input type="text" class="inputTxt" size="10" value="" /> <span class="btn1"><a href="#">우편번호찾기</a></span></td>
+						<td>
+							<input type="text" name="post1" id="post1" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[0];?>" />
+							-
+							<input type="text" name="post2" id="post2" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[1];?>" />
+							<span class="btn1"><a href="#" onclick="PostPopup();" style="cursor:pointer;">우편번호찾기</a></span>
+						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" class="inputTxt" size="100" value="" /></td>
+						<td>
+							<input type="text" name="addr1" id="addr1" class="inputTxt" size="100" readonly onclick="PostPopup();" value="<?=$house->address1;?>" />
+							<input type="text" name="addr2" id="addr2" class="inputTxt" size="100" value="<?=$house->address2;?>" />
+							<input type="text" class="inputTxt" size="100" value="" /></td>
 					</tr>
 					<tr>
 						<th>가격(1일기준)</th>
-						<td><input type="text" class="inputTxt" size="10" value="" /> 원 ~ <input type="text" class="inputTxt" size="10" value="" /> 원</td>
+						<td>
+							<input type="text" name="price" id="price" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price;?>" /> 원 ~
+							<input type="text" name="price1" id="price1" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price;?>" /> 원
+						</td>
 					</tr>
 					<tr>
 						<th>최대인원</th>
-						<td><input type="text" class="inputTxt" size="10" value="" /> 명 ~ <input type="text" class="inputTxt" size="10" value="" /> 명</td>
+						<td>
+							<input type="text" name="personLimit" id="personLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit;?>" /> 명 ~
+							<input type="text" name="personLimit1" id="personLimit1" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit;?>" />
+						</td>
 					</tr>
 					<tr>
 						<th>방갯수</th>
-						<td><input type="text" class="inputTxt" size="10" value="" /> 개</td>
+						<td>
+							<input type="text" name="roomLimit" id="roomLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->roomLimit;?>" /> 개
+						</td>
 					</tr>
 					<tr>
 						<th>선교관설명</th>
 						<td>
-							<p><strong>운영자 소개</strong></p>
-							<textarea cols="100" class="inputTxt"></textarea> 
-							<p><strong>방정보 소개</strong></p>
-							<textarea cols="100" class="inputTxt"></textarea> 
+							<textarea name="explain" id="explain" cols="100" rows="5">
+<?php 
+	if ($house->explain) {
+		echo textFormat($house->explain, 2);
+	} else {
+		echo "운영자 소개: \n\n방벙보 소개:\n\n";
+	}
+?>
+							</textarea>	
 						</td>
 					</tr>
 					<tr>
 						<th>홈페이지</th>
-						<td><input type="text" class="inputTxt" size="100" value="" /></td>
+						<td>
+							<input type="text" name="homepage" id="homepage" class="inputTxt" size="100" value="<?=$house->homepageNoLink;?>" />
+						</td>
 					</tr>
 					<tr>
 						<th>제출서류</th>
-						<td><input type="text" class="inputTxt" size="100" value="" /> <span class="btn1"><a href="#">파일업로드</a></span></td>
+						<td>
+							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
+							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="100" value="<?=$house->document;?>" /> <input type="button" name="imgUpload" id="imgUpload" value="파일 업로드" onclick="uploadImage(event, 'Document', 'room')" style="cursor:pointer" class="btn1" /> 
 					</tr>
 					<tr>
 						<th>상태코드</th>
 						<td>
-							<input type="radio" checked="checked" />공개 
-							<input type="radio" class="ml20"/> 비공개
+							<select name="status" id="status">
+							<?php 
+								foreach ($codeStatus as $status) {
+									if ($house->status == $status->code) {
+										print "<option value='".$status->code."' selected>".$status->name."</option>";
+									} else {
+										print "<option value='".$status->code."'>".$status->name."</option>";
+									} 
+								}
+							?>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="aRight mt20">
-				<span class="btn2"><a href="#">취소</a></span>
-				<span class="btn2"><a href="#">확인</a></span>
+				<span class="btn2"><a href="#" onclick="check();">취소</a></span>
+				<span class="btn2"><a href="#" onclick="history.back(-1);">확인</a></span>
 			</div>
 			<!-- // content -->
 		</div>
 	</div>
 	<!-- // rightSec -->
 <?php } ?>
+
+<script type="text/javascript">
+//<![CDATA[
+	function check() {
+		document.getElementById("dataForm").action="process.php";
+		document.getElementById("dataForm").submit();
+	}
+	
+	function frmSubmit() {
+		<?php 
+if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
+	$backURL = get_path_info();
+?>
+			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");
+			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
+		<?php } else { ?>
+			document.getElementById("dataForm").action="process.php";
+			document.getElementById("dataForm").submit();
+		<?php } ?>
+	}
+//]]>
+</script>
+
