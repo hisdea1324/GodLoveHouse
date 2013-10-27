@@ -37,7 +37,7 @@ function showHouseManagerLeft() {
 	echo "<div id=\"leftSec\">";
 	$color_cnt = 0;
 	foreach ($houseList1 as $house) {
-		echo "	<h2>".$house->HouseName."</h2>";
+		echo "	<h2><a href=\"mission_write.php?houseId=".$house->houseId."\">".$house->HouseName."</a></h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
 			$color_cnt++;
@@ -60,6 +60,7 @@ function showHouseManagerFooter() {
 	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
 
 	print $strFooter;
+	debugFooter();
 }
 
 function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
@@ -149,6 +150,7 @@ function showFooter() {
 function debugFooter() {
 	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
 
+	global $_TEST;
 	echo "<pre>";
 	echo "Server : ";
 	print_r($_SERVER);
@@ -156,7 +158,16 @@ function debugFooter() {
 	print_r($_SESSION);
 	echo "Request : ";
 	print_r($_REQUEST);
+	echo "Test Value : ";
+	print_r($_TEST);
 	echo "</pre>";
+}
+
+function setTestValue($value) {
+	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+	
+	global $_TEST;
+	$_TEST = $value;
 }
 
 function needUserLv($level) {
