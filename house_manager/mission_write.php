@@ -142,7 +142,7 @@ function body() {
 							<input type="text" name="post1" id="post1" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[0];?>" />
 							-
 							<input type="text" name="post2" id="post2" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[1];?>" />
-							<span class="btn1"><a href="#" onclick="PostPopup();" style="cursor:pointer;">우편번호찾기</a></span>
+							<span class="btn1"><a href="javascript:void(0)" onclick="PostPopup();" style="cursor:pointer;">우편번호찾기</a></span>
 						</td>
 					</tr>
 					<tr>
@@ -216,8 +216,8 @@ function body() {
 				</tbody>
 			</table>
 			<div class="aRight mt20">
-				<span class="btn2"><a href="#" onclick="check();">취소</a></span>
-				<span class="btn2"><a href="#" onclick="history.back(-1);">확인</a></span>
+				<span class="btn2"><a href="javascript:void(0)" onclick="check();">취소</a></span>
+				<span class="btn2"><a href="javascript:void(0)" onclick="history.back(-1);">확인</a></span>
 			</div>
 			<!-- // content -->
 		</div>

@@ -93,21 +93,39 @@ function body() {
 					<tr>
 						<th>이미지</th>
 						<td>
-							<span class="btn1"><a href="#">이미지등록</a></span> <span class="btn1g"><a href="#">+ 이미지추가</a></span><br />
-							<div class="img"></div>
-							<div class="img"></div>
-							<div class="img"></div>
-							<div class="img"></div>
+							<!--span class="btn1"><a href="#">이미지등록</a></span> <span class="btn1g"><a href="#">+ 이미지추가</a></span><br /-->
+							<input type="button" class="btn1" name="imgUpload" id="imgUpload" value="이미지등록" onclick="uploadImage(event, 'RoomImage1', 'room')" style="cursor:pointer" /><br />
+							<input type="hidden" name="idRoomImage1" id="idRoomImage1" value="<?php echo $room->ImageID1;?>" />
+							<img src="<?php echo $room->Image1;?>" id="imgRoomImage1" class="img" />
+							<input type="hidden" name="idRoomImage2" id="idRoomImage2" value="<?php echo $room->ImageID2;?>" />
+							<img src="<?php echo $room->Image2;?>" id="imgRoomImage2" class="img" />
+							<input type="hidden" name="idRoomImage3" id="idRoomImage3" value="<?php echo $room->ImageID3;?>" />
+							<img src="<?php echo $room->Image3;?>" id="imgRoomImage3" class="img" />
+							<input type="hidden" name="idRoomImage4" id="idRoomImage4" value="<?php echo $room->ImageID4;?>" />
+							<img src="<?php echo $room->Image4;?>" id="imgRoomImage4" class="img" />
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="aRight mt20">
-				<span class="btn2"><a href="#">수정</a></span>
-				<span class="btn2"><a href="#">삭제</a></span>
+				<span class="btn2"><a href="javascript:void(0)" onclick="check();">수정</a></span>
+				<span class="btn2"><a href="javascript:void(0)" onclick="history.back(-1);">삭제</a></span>
 			</div>
 			<!-- // content -->
 		</div>
 	</div>
 	<!-- // rightSec -->
 <?php } ?>
+
+<script type="text/javascript">
+//<![CDATA[
+	function check() {
+		document.getElementById("dataForm").action="process.php";
+		document.getElementById("dataForm").submit();
+	}
+
+	function closepreview(){
+		crossobj.style.visibility="hidden"
+	}
+//]]>
+</script>
