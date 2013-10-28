@@ -13,6 +13,8 @@ function body() {
 	$h_Helper = new HouseHelper();
 	$room = $h_Helper->getRoomInfoById($roomId);
 	$house = $h_Helper->getHouseInfoById($houseId);
+
+	setTestValue($room);
 ?>
 	<!-- rightSec -->
 	<div id="rightSec">
@@ -34,38 +36,44 @@ function body() {
 					</tr>
 					<tr>
 						<th>방이름</th>
-						<td><input type="text" class="inputTxt" size="50" value="" /></td>
+						<td>
+							<input type="text" name="roomName" class="inputTxt" size="50" maxlength="20" value="<?=$room->RoomName;?>" />
+						</td>
 					</tr>
 					<tr>
 						<th>인터넷 유무</th>
 						<td>
-							<input type="radio" /> 있음 
-							<input type="radio" class="ml20"/> 없음
+							<input type="radio" name="network" id="network" value="Y" class="ml20" <?php if ($house->Network == "Y") { print "checked"; } ?> /> 있음
+							<input type="radio" name="network" id="network" value="N" class="ml20" <?php if ($house->Network != "Y") { print "checked"; } ?> /> 없음 
 						</td>
 					</tr>
 					<tr>
 						<th>취사여부</th>
 						<td>
-							<input type="radio" /> 가능 
-							<input type="radio" class="ml20"/> 불가능
+							<input type="radio" name="kitchen" id="kitchen" value="Y" class="ml20" <?php if ($house->kitchen == "Y") { print "checked"; } ?> /> 가능
+							<input type="radio" name="kitchen" id="kitchen" value="N" class="ml20" <?php if ($house->kitchen != "Y") { print "checked"; } ?> /> 불가능 
 						</td>
 					</tr>
 					<tr>
 						<th>세탁여부</th>
 						<td>
-							<input type="radio" /> 가능 
-							<input type="radio" class="ml20"/> 불가능
+							<input type="radio" name="laundary" id="laundary" value="Y" class="ml20" <?php if ($house->laundary == "Y") { print "checked"; } ?> /> 가능
+							<input type="radio" name="laundary" id="laundary" value="N" class="ml20" <?php if ($house->laundary != "Y") { print "checked"; } ?> /> 불가능
 						</td>
 					</tr>
 					<tr>
 						<th>요금</th>
-						<td><input type="text" class="inputTxt" size="30" value="" /> 원</td>
+						<td>
+							<input type="text" name="fee" class="inputTxt" size="30" value="<?=$room->Fee;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 원
+						</td>
 					</tr>
 					<tr>
 						<th>방인원수</th>
-						<td><input type="text" class="inputTxt" size="30" value="" /> 명</td>
+						<td>
+							<input type="text" name="limit" class="inputTxt" size="30" value="<?php echo $room->Limit;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 명
+						</td>
 					</tr>
-					<tr>
+					<!--tr>
 						<th>색상선택</th>
 						<td>
 							<ul class="chart_c">
@@ -81,7 +89,7 @@ function body() {
 								<li><input type="radio" value="10"/><div class="color c10"></div></li>
 							</ul>
 						</td>
-					</tr>
+					</tr-->
 					<tr>
 						<th>이미지</th>
 						<td>
