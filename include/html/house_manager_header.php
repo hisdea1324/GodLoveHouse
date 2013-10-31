@@ -19,7 +19,7 @@
 							<div id="gnb">
 								<ul>
 									<li><a href="reserve_1.php">예약관리</a></li>
-									<li><a href="mission_write.php">선교관관리</a></li>
+									<!--li><a href="mission_write.php">선교관관리</a></li-->
 									<li><a href="admin_modify.php">관리자정보수정</a></li>
 									<li><a href="#">보고서</a></li>
 								</ul>

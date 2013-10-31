@@ -37,15 +37,15 @@ function showHouseManagerLeft() {
 	echo "<div id=\"leftSec\">";
 	$color_cnt = 0;
 	foreach ($houseList1 as $house) {
-		echo "	<h2><a href=\"mission_write.php?houseId=".$house->houseId."\">".$house->HouseName."</a></h2>";
+		echo "	<h2><a href=\"reserve_1.php?houseId=".$house->houseId."\">".$house->HouseName."</a></h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
 			$color_cnt++;
 			//selected
 			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
-			echo "		<li><a href=\"mission_write2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+			echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
 		}
-		echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
+		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
 		echo "	</ul>";
 	}
 	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
