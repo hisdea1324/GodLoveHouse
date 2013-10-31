@@ -196,7 +196,11 @@ function body() {
 						<th>제출서류</th>
 						<td>
 							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
-							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="100" value="<?=$house->document;?>" /> <input type="button" name="imgUpload" id="imgUpload" value="파일 업로드" onclick="uploadImage(event, 'Document', 'room')" style="cursor:pointer" class="btn1" /> 
+							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document;?>" />
+							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
+							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
+							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document;?>" /> 
+							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
 					</tr>
 					<tr>
 						<th>상태코드</th>

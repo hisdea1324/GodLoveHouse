@@ -45,7 +45,7 @@ function showHouseManagerLeft() {
 			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
 			echo "		<li><a href=\"mission_write2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
 		}
-		echo "		<li class=\"c_g\"><a href=\"mission_write2.php\">방추가 +</a></li>";
+		echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
 		echo "	</ul>";
 	}
 	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
@@ -148,7 +148,7 @@ function showFooter() {
 } 
 
 function debugFooter() {
-	//if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
 
 	global $_TEST;
 	echo "<pre>";
@@ -164,7 +164,7 @@ function debugFooter() {
 }
 
 function setTestValue($value) {
-	//if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
 
 	global $_TEST;
 	$_TEST = $value;
