@@ -9,10 +9,19 @@ class ReservationObject {
 	protected $record = array();
 	protected $image = array();
 
-	public function __set($name,$value) { 
+	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch ($name) {
 			default : 
+				$this->record[$name] = $value;
+				break;
+			case 'startdate':
+			case 'enddate':
+			case 'regdate':
+				if (strpos($value, '-') !== false) {
+					$time = explode('-', $value);
+					$value = mktime(0, 0, 0, $time[1], $time[2], $time[0]);
+				}
 				$this->record[$name] = $value;
 				break;
 		}
@@ -32,6 +41,11 @@ class ReservationObject {
 					case "S0004":
 						return "거절";
 				} 
+			case 'regdate':
+				if (!$this->record[$name]) {
+					$this->record[$name] = time();
+				}
+				return $this->record[$name];
 			default:
 				return $this->record[$name];
 		}
@@ -120,59 +134,42 @@ class ReservationObject {
 	function Update() {
 		global $mysqli;
 
-		if (($this->record['reservationNo'] == -1)) {
-			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`) VALUES ";
-			$query = "(?, ?, ?, ?, ?, ?, ?)";
+		if ($this->reservationNo == -1) {
+			$temp = "'".$mysqli->real_escape_string($this->userId)."'";
+			$temp = $temp.", ".$mysqli->real_escape_string($this->roomId);
+			$temp = $temp.", ".$mysqli->real_escape_string($this->hospitalId);
+			$temp = $temp.", '".$mysqli->real_escape_string($this->reservStatus)."'";
+			$temp = $temp.", ".$mysqli->real_escape_string($this->startDate);
+			$temp = $temp.", ".$mysqli->real_escape_string($this->endDate);
+			$temp = $temp.", ".$mysqli->real_escape_string($this->regDate);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
+			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`) VALUES ($temp)";
 
-			# New Data
-			$stmt->bind_param("iiisiii", 
-				$this->userId, 
-				$this->roomId, 
-				$this->hospitalId, 
-				$this->reservStatus, 
-				$this->startDate, 
-				$this->endDate, 
-				$this->regDate);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				echo $query; exit();
+				return false;
+			}
 			
 			$this->reservationNo = $mysqli->insert_id;
-			
 		} else {
 			$query = "UPDATE reservation SET ";
-			$updateData=" userId = ?, ";
-			$updateData = $updateData." roomId = ?, ";
-			$updateData = $updateData." hospitalId = ?, ";
-			$updateData = $updateData." reservStatus = ?, ";
-			$updateData = $updateData." startDate = ?, ";
-			$updateData = $updateData." endDate = ?";
-			$query = $query.$updateData." WHERE reservationNo = ?";
+			$updateData=" userId = '".$mysqli->real_escape_string($this->userId)."', ";
+			$updateData = $updateData." roomId = ".$mysqli->real_escape_string($this->roomId).", ";
+			$updateData = $updateData." hospitalId = ".$mysqli->real_escape_string($this->hospitalId).", ";
+			$updateData = $updateData." reservStatus = '".$mysqli->real_escape_string($this->reservStatus)."', ";
+			$updateData = $updateData." startDate = ".$mysqli->real_escape_string($this->startDate).", ";
+			$updateData = $updateData." endDate = ".$mysqli->real_escape_string($this->endDate)."";
+			$query = $query.$updateData." WHERE reservationNo = ".$mysqli->real_escape_string($this->reservationNo);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("iiisiii", 
-				$this->userId, 
-				$this->roomId, 
-				$this->hospitalId, 
-				$this->reservStatus, 
-				$this->startDate, 
-				$this->endDate, 
-				$this->reservationNo);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				echo $query; exit();
+				return false;
+			}
 		}
+
+		return true;
 	} 
 
 	function Delete() {

@@ -19,6 +19,10 @@ function showHouseManagerHeader() {
 }
 
 function showHouseManagerLeft() {
+	global $room_color;
+	if (!is_array($room_color)) {
+		$room_color = array();
+	}
 	checkUserLogin();
 
 	$m_Helper = new MemberHelper();
@@ -43,6 +47,7 @@ function showHouseManagerLeft() {
 			$color_cnt++;
 			//selected
 			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
+			$room_color[$room->roomId] = $color_cnt;
 			echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
 		}
 		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";

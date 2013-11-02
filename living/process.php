@@ -4,13 +4,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
 $mode = trim($_REQUEST["mode"]);
 
-switch (($mode)) {
+switch ($mode) {
 	case "regist":
-	registHouse();
+		registHouse();
 		break;
 	case "reservation":
-		$needUserLv[1];
-	reservation();
+		needUserLv(1);
+		reservation();
 		break;
 	default:
 		print "잘못된 접근";
@@ -48,7 +48,7 @@ function registHouse() {
 	$house->Update();
 	$house = null;
 
-	if ((strlen($_REQUEST["houseId"])>0)) {
+	if (strlen($_REQUEST["houseId"]) > 0) {
 		alertGoPage("선교관 정보수정이 처리 되었습니다.","/member/mypage_houseInfo.php");
 	} else {
 		alertGoPage("선교관 등록요청이 되었습니다.","registHouse.php");
@@ -56,18 +56,17 @@ function registHouse() {
 } 
 
 function reservation() {
-	$sessions = new __construct();
 	$book = new reservationObject();
 
 	$houseId = $_REQUEST["houseId"];
 	$book->StartDate = $_REQUEST["startDate"];
 	$book->EndDate = $_REQUEST["endDate"];
 	$book->RoomId = $_REQUEST["roomId"];
-	$book->UserId = $sessions->UserID;
+	$book->UserId = $_SESSION['userid'];
 
-	if ((!$book->checkId())) {
+	if (!$book->checkId()) {
 		header("Location: "."reservation.php?houseId=".$houseId);
-	} else if ((!$book->checkDate())) {
+	} else if (!$book->checkDate()) {
 		header("Location: "."reservationDetail.php?roomId=".$book->RoomId);
 	} 
 
@@ -76,13 +75,13 @@ function reservation() {
 	alertGoPage("예약요청 되었습니다.","reservation.php");
 
 	# SMS 메세지 보내기	
-	$house = new HouseObject();
-	$manager = new MemberObject();
-	$house->Open($houseId);
-	$manager->Open($house->UserID);
+	$house = new HouseObject($houseId);
+	$manager = new MemberObject($house->UserID);
+
 	$from_number = "01010041004";
 	$message = "선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
-	sendSMSMessage($from_number,$Join["01085916394"][""],$message);
-	sendSMSMessage($from_number,$Join[$manager->Mobile][""],$message);
+
+	sendSMSMessage($from_number, $Join["01085916394"][""], $message);
+	sendSMSMessage($from_number, $Join[$manager->Mobile][""], $message);
 } 
 ?>

@@ -10,6 +10,8 @@ $h_Helper = new HouseHelper();
 $room = $h_Helper->getRoomInfoById($roomId);
 $house = $h_Helper->getHouseInfoById($room->HouseID);
 
+setTestValue($house);
+
 if ($house->StatusCode == "S2002") {
 	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif");
 } else {
@@ -73,7 +75,7 @@ function body() {
 		</div>
 
 <?php
-	if ($house->StatusCode == "S2002") {
+	if ($house->status == "승인") {
 ?>
 		<form action="process.php" method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />

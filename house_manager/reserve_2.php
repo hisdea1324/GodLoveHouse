@@ -8,6 +8,7 @@ showHouseManagerFooter();
 
 function body() {
 	global $mysqli;
+	global $room_color;
 
 	$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
 	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
@@ -152,29 +153,36 @@ function body() {
 		$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate})) ";
 		$query = $query." ORDER BY startDate";
 
+		print "												<tr>\r\n";
+		print "												<th><strong>{$aRoom->roomName}</strong></th>\r\n";
+		print "												<td colspan=\"30\">\r\n";
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_assoc()) {
+				setTestValue($row);
 				if (date('m', $row["startDate"]) == $calendar['month']) {
-					$fromDate = date('d', $row["startDate"]);
+					$start = date('d', $row["startDate"]);
 				} else {
-					$fromDate = 1;
+					$start = 1;
 				}
 
 				if (date('m', $row["endDate"]) == $calendar['month']) {
-					$toDate = date('d', $row["endDate"]);
+					$end = date('d', $row["endDate"]);
 				} else {
-					$toDate = date('d', $toDate - 86400);
+					$end = date('d', $toDate - 86400);
+				}
+
+				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100;
+				$width = ($end - $start + 1) / date('d', $toDate - 86400) * 100;
+				if ($row["resv_name"]) {
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\">".$row["resv_name"]."</div>";
+				} else {
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\">".$row["userId"]."</div>";
 				}
 			}
+
 			$result->close();
 		}
-
-		$margin_left = ($fromDate - 1) / date('d', $toDate - 86400) * 100;
-		$width = ($toDate - $fromDate + 1) / date('d', $toDate - 86400) * 100;
-
-		print "												<tr>\r\n";
-		print "												<th><strong>{$aRoom->roomName}</strong></th>\r\n";
-		print "												<td colspan=\"30\"><div class=\"check cb1\" style=\"width:{$width}%; margin-left:{$margin_left}%\">정진화</div></td>\r\n";
+		print "												</td>\r\n";
 		print "												</tr>\r\n";
 	}
 	print "											</tbody>\r\n";
