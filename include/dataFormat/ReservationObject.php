@@ -142,8 +142,12 @@ class ReservationObject {
 			$temp = $temp.", ".$mysqli->real_escape_string($this->startDate);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->endDate);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->regDate);
+			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_name)."'";
+			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_phone)."'";
+			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_nation)."'";
+			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_assoc)."'";
 
-			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`) VALUES ($temp)";
+			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`, resv_name, resv_phone, resv_nation, resv_assoc) VALUES ($temp)";
 
 			$result = $mysqli->query($query);
 			if (!$result) {
@@ -160,6 +164,10 @@ class ReservationObject {
 			$updateData = $updateData." reservStatus = '".$mysqli->real_escape_string($this->reservStatus)."', ";
 			$updateData = $updateData." startDate = ".$mysqli->real_escape_string($this->startDate).", ";
 			$updateData = $updateData." endDate = ".$mysqli->real_escape_string($this->endDate)."";
+			$updateData = $updateData." resv_name = '".$mysqli->real_escape_string($this->resv_name)."', ";
+			$updateData = $updateData." resv_phone = '".$mysqli->real_escape_string($this->resv_phone)."', ";
+			$updateData = $updateData." resv_nation = '".$mysqli->real_escape_string($this->resv_nation)."', ";
+			$updateData = $updateData." resv_assoc = '".$mysqli->real_escape_string($this->resv_assoc)."', ";
 			$query = $query.$updateData." WHERE reservationNo = ".$mysqli->real_escape_string($this->reservationNo);
 
 			$result = $mysqli->query($query);

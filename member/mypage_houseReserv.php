@@ -248,9 +248,6 @@ function body() {
 			<h2 style="margin-top:30px"><img src="../images/board/stit_ok.gif"></h2>
 				<!-- //search -->
 <?php 
-//query = "SELECT * FROM house A, room B, reservation C WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.UserId = '"& member.UserId & "' AND startDate >= '" & monthStart & "' AND endDate < '" & monthEnd & "' ORDER BY startDate"
-//response.write query
-//reservList = h_Helper.getReservationList(query)
 	$h_Helper->PAGE_UNIT = 10; //하단 페이징 단위
 	$h_Helper->PAGE_COUNT = 30; //한페이지에 보여줄 리스트 갯수
 	$h_Helper->setReservationListConditionWithHouse($search, $houseId);

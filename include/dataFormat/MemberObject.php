@@ -70,14 +70,14 @@ class MemberObject {
 
 	private function initialize() {
 		$this->userid = "";
-		$this->password = "a";
+		$this->password = "";
 		$this->passquest = 0;
-		$this->passanswer = "a";
-		$this->memo = "a";
-		$this->name = "a";
-		$this->nick = "a";
+		$this->passanswer = "";
+		$this->memo = "";
+		$this->name = "";
+		$this->nick = "";
 		$this->userlv = 0;
-		$this->email = "a@gmail.com";
+		$this->email = "";
 		$this->jumin = "000000-0000000";
 		$this->address1 = "a";
 		$this->address2 = "a";

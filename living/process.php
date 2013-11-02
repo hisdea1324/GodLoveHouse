@@ -63,6 +63,10 @@ function reservation() {
 	$book->EndDate = $_REQUEST["endDate"];
 	$book->RoomId = $_REQUEST["roomId"];
 	$book->UserId = $_SESSION['userid'];
+	$book->resv_name = $_REQUEST['resv_name'];
+	$book->resv_phone = $_REQUEST['resv_phone'];
+	$book->resv_nation = $_REQUEST['resv_nation'];
+	$book->resv_assoc = $_REQUEST['resv_assoc'];
 
 	if (!$book->checkId()) {
 		header("Location: "."reservation.php?houseId=".$houseId);

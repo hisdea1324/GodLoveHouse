@@ -4,6 +4,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title> God Lovehouse 관리자화면 </title>
 		<link type="text/css" rel="stylesheet" href="css/design.css" media="all" />
+		<script language='javascript' src='[WEBROOT]include/js/calendar.js'></script>
 	</head>
 	<body class="bgSub">
 		<div id="wrapper">

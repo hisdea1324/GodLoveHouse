@@ -45,17 +45,17 @@ class MemberHelper {
 
 	#  method
 	# ***********************************************
-	function getMemberByUserId($userId) {
+	function getMemberByUserId($userId = "") {
 		$member = new MemberObject($userId);
 
-		if (isset($member->userid)) {
+		if ($member->userid != "") {
 			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 		return $member;
 	} 
 
-	function getMemberByUserNick($nick) {
+	function getMemberByUserNick($nick = "") {
 		$member = new MemberObject();
 
 		if ($member->OpenByNick($nick) == false) {
@@ -66,17 +66,17 @@ class MemberHelper {
 		return $member;
 	} 
 
-	function getMissionInfoByUserId($userId) {
-		$mission = new MissionObject();
+	function getMissionInfoByUserId($userId = "") {
+		$mission = new MissionObject($userId);
 
-		if ($mission->Open($userId) == false) {
+		if ($mission->userid != "") {
 			$this->m_eHandler->ignoreError("Member Not Found.");
 		} 
 
 		return $mission;
 	} 
 
-	function getAccountInfoByUserId($userId) {
+	function getAccountInfoByUserId($userId = "") {
 		$account = new AccountObject();
 
 		if ($account->Open($userId) == false) {

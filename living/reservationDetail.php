@@ -10,7 +10,16 @@ $h_Helper = new HouseHelper();
 $room = $h_Helper->getRoomInfoById($roomId);
 $house = $h_Helper->getHouseInfoById($room->HouseID);
 
-setTestValue($house);
+$m_Helper = new MemberHelper();
+if (isset($_SESSION["userid"])) {
+	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+} else {
+	$member = $m_Helper->getMemberByUserId();
+	$mission = $m_Helper->getMissionInfoByUserId();
+}
+
+setTestValue($member);
 
 if ($house->StatusCode == "S2002") {
 	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif");
@@ -23,7 +32,7 @@ showFooter();
 
 function body() {
 	global $roomId, $houseId, $fromDate, $toDate;
-	global $room, $house;
+	global $room, $house, $member, $mission;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -88,12 +97,44 @@ function body() {
 				<tr>
 					<td class="td01"><p class="reserve"><b>날짜입력</b></td>
 					<td>
-						<input type="text" name="startDate" id="startDate" value="<?php echo $fromDate;?>" class="input" readonly onclick="calendar('startDate')">
+						<input type="text" name="startDate" id="startDate" value="<?=$fromDate?>" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
-						<input type="text" name="endDate" id="endDate" class="input" value="<?php echo $toDate;?>" readonly onclick="calendar('endDate')">
+						<input type="text" name="endDate" id="endDate" class="input" value="<?=$toDate?>" readonly onclick="calendar('endDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate')">
-						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit()"></p>
 						<label class="fs11" type="text" name='resultMessage1' id='resultMessage1'></label>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>이름</b></td>
+					<td>
+						<input type="text" name="resv_name" id="resv_name" value="<?=$member->name?>" class="input">
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>연락처</b></td>
+					<td>
+						<input type="text" name="resv_phone" id="resv_phone" value="<?=$member->mobile[0]?>-<?=$member->mobile[1]?>-<?=$member->mobile[2]?>" class="input">
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>선교지</b></td>
+					<td>
+						<input type="text" name="resv_nation" id="resv_nation" value="<?=$mission->nation?>" class="input">
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>지원단체</b></td>
+					<td>
+						<? if ($mission->church) { ?>
+						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">
+						<? } else { ?>
+						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->ngo?>" class="input">
+						<? } ?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<img src="../images/board/btn_reserve.gif" border="0" align="right" align="absmiddle" class="m5" onclick="reserveSubmit()">
 					</td>
 				</tr>
 			</table>
