@@ -7,15 +7,36 @@ body();
 showHouseManagerFooter();
 
 function body() {
+	$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
+	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+
+	$h_helper = new HouseHelper();
+	$house = $h_helper->getHouseInfoById($houseId);
+
+	//******************************************************************
+	// 달력 세팅
+	$StartYear = 2012;
+
+	$calendar = new CalendarBuilder();
+	$calendar->CYear = isset($_REQUEST["y"]) ? trim($_REQUEST["y"]) : "";
+	$calendar->CMonth = isset($_REQUEST["m"]) ? trim($_REQUEST["m"]) : "";
+
+	$fromDate = $calendar->CurrentMonth.$calendar->DataFormat(1);
+	$toDate = $calendar->NextMonth.$calendar->DataFormat(1);
+	$s_Helper = new supportHelper();
+	$dailySupport = $s_Helper->getDailySupport($fromDate, $toDate);
+	$senders = $s_Helper->getSender($fromDate, $toDate);
+	//******************************************************************
+
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">
 								<div class="lnb">
-									<strong>Home</strong> &gt; 예약관리 &gt; 선교관1 &gt; 미스바관 &gt; 달력보기
+									<strong>Home</strong> &gt; 예약관리 &gt; <?=$house->houseName?>
 								</div>
 								<div id="content">
 									<!-- content -->
-									<h1>선교관 관리</h1>
+									<h1><?=$house->houseName?> <span class="btn1"><a href="mission_write.php?houseId=<?=$houseId?>">선교관 정보수정</a></span></h1>
 									<ul class="tabs mt30">
 										<li class="on"><a href="reserve_1.php">달력보기</a></li>
 										<li><a href="reserve_2.php">방전체보기</a></li>

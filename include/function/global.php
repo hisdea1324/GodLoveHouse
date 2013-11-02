@@ -148,7 +148,7 @@ function showFooter() {
 } 
 
 function debugFooter() {
-	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+	if (!isset($_REQUEST['_TEST'])) return;
 
 	global $_TEST;
 	echo "<pre>";
@@ -164,17 +164,21 @@ function debugFooter() {
 }
 
 function setTestValue($value) {
-	if ($_SERVER['REMOTE_ADDR'] != $_SERVER['TEST_IP']) return;
+	if (!isset($_REQUEST['_TEST'])) return;
 
 	global $_TEST;
-	$_TEST = $value;
+	if (!is_array($_TEST)) {
+		$_TEST = array();
+	}
+
+	$_TEST[] = $value;
 }
 
 function needUserLv($level) {
 	if (!isset($_SESSION['userid'])) {
 		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
 		return false;
-	} 
+	}
 
 	if ($_SESSION['userLv'] < $level) {
 		alertBack("권한이 없습니다");
@@ -182,7 +186,7 @@ function needUserLv($level) {
 	}
 
 	return true;
-} 
+}
 
 function checkUserLogin() {
 	if (!isset($_SESSION['userid'])) {

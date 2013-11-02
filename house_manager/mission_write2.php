@@ -19,11 +19,11 @@ function body() {
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
-			<strong>Home</strong> &gt; 선교관 관리 &gt; 등록하기
+			<strong>Home</strong> &gt; 예약관리 &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 정보수정
 		</div>
 		<div id="content">
 			<!-- content -->
-			<h1>선교관 관리</h1>
+			<h1>방 정보수정 - <?=$house->houseName?> :: <?=$room->roomName?></h1>
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />
