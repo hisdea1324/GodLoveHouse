@@ -256,148 +256,199 @@ function body() {
 } 
 ?>
 
-									<div class="search">
-										<span class="mr20"><strong>SEARCH ></strong></span>
-										<select><option>지역선택</option></select>
-										<select><option>선교관선택</option></select>
-										<input type="text" class="inputTxt" size="16" />
-										<a href="#"><img src="images/btn_calendar.gif" alt="날짜선택" /></a> - 
-										<input type="text" class="inputTxt" size="16" />
-										<a href="#"><img src="images/btn_calendar.gif" alt="날짜선택" /></a>
-										<span class="btn1"><a href="#">검색</a></span>
-									</div>
-									<div class="list mt10">
-										<div class="view" style="margin-left:18%; top:38px; display:none">
-											<div class="tit">
-												신청자 정보
-												<span class="btn1w" style="position:absolute; right:0px; top:-3px"><a href="#">상세보기</a></span>
-											</div>
-											<ul>
-												<li><p>성명</p> 오재호</li>
-												<li><p>생년월일</p> 2001.09.09</li>
-												<li><p>성별</p> 남</li>
-												<li><p>파송단체</p> 나눔교회</li>
-												<li><p>선교지</p> 대한민국</li>
-												<li><p>사역기간</p> 20년</li>
-												<li><p>가족</p> 성인 2명 / 청소년 1명 / 영유아 2명</li>
-												<li><p>연락처</p> 010-000-0000</li>
-												<li><p>이메일</p> asdf@naver.com</li>
-												<li><p>취소횟수</p> 3회</li>
-											</ul>
-										</div>
-										<table>
-											<colgroup>
-												<col width="10%" />
-												<col width="10%" />
-												<col width="20%" />
-												<col width="30%" />
-												<col width="30%" />
-											</colgroup>
-											<thead>
-												<tr>
-													<th>예약번호</th>
-													<th>이름</th>
-													<th>선교관/선교관 방이름</th>
-													<th>일정</th>
-													<th>상태</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-												<tr>
-													<td>123456</td>
-													<td>문지기</td>
-													<td>갓러브하우스/큰방</td>
-													<td>2013.08.08~2013.09.09</td>
-													<td>
-														<span class="btn1g"><a href="#">승인</a></span> 
-														<span class="btn1g"><a href="#">거절</a></span> 
-														<span class="btn1g"><a href="#">수정</a></span>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="paging">
-										<a href="#"><img src="images/btn_page_first.gif" alt="처음" /></a>
-										<a href="#"><img src="images/btn_page_prev.gif" alt="이전" /></a>
-										<a href="#"><strong>1</strong></a>
-										<a href="#">2</a>
-										<a href="#">3</a>
-										<a href="#">4</a>
-										<a href="#">5</a>
-										<a href="#">6</a>
-										<a href="#">7</a>
-										<a href="#">8</a>
-										<a href="#">9</a>
-										<a href="#">10</a>
-										<a href="#"><img src="images/btn_page_next.gif" alt="다음" /></a>
-										<a href="#"><img src="images/btn_page_last.gif" alt="마지막" /></a>
-									</div>
-									<!-- // content -->
-								</div>
-							</div>
-							<!-- // rightSec -->
-							<!-- // rightSec -->
+<?php 
+	$search = isset($_REQUEST["search"]) ? trim($_REQUEST["search"]) : "";
+	$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+
+	$h_Helper->PAGE_UNIT = 10; //하단 페이징 단위
+	$h_Helper->PAGE_COUNT = 30; //한페이지에 보여줄 리스트 갯수
+	$h_Helper->setReservationListConditionWithHouse($search, $houseId);
+	$strPage = $h_Helper->makeReservationListPagingHTML($page);
+	$reservList = $h_Helper->getReservationListWithPaging($page);
+?>
+
+		<div class="search">
+			<span class="mr20"><strong>SEARCH ></strong></span>
+			<select name="status" id="status">
+				<option value="0">전체</option>
+				<option value="1" <?php if (($search=="1")) { ?> selected <?php } ?>>신규예약</option>
+				<option value="2" <?php if (($search=="2")) { ?> selected <?php } ?>>승인</option>
+				<option value="3" <?php if (($search=="3")) { ?> selected <?php } ?>>완료</option>
+				<option value="4" <?php if (($search=="4")) { ?> selected <?php } ?>>거절</option>
+			</select>
+			<span class="btn1"><a href="javascript:void(0)" onclick="search(this.value);">검색</a></span>
+		</div>
+				
+		<!-- //list -->
+		<div class="list mt10">
+			<div class="view" style="margin-left:18%; top:38px; display:none">
+				<div class="tit">
+					신청자 정보
+					<span class="btn1w" style="position:absolute; right:0px; top:-3px"><a href="#">상세보기</a></span>
+				</div>
+				<ul>
+					<li><p>성명</p> 오재호</li>
+					<li><p>생년월일</p> 2001.09.09</li>
+					<li><p>성별</p> 남</li>
+					<li><p>파송단체</p> 나눔교회</li>
+					<li><p>선교지</p> 대한민국</li>
+					<li><p>사역기간</p> 20년</li>
+					<li><p>가족</p> 성인 2명 / 청소년 1명 / 영유아 2명</li>
+					<li><p>연락처</p> 010-000-0000</li>
+					<li><p>이메일</p> asdf@naver.com</li>
+					<li><p>취소횟수</p> 3회</li>
+				</ul>
+			</div>
+
+			<table>
+				<colgroup>
+					<col width="10%" />
+					<col width="10%" />
+					<col width="20%" />
+					<col width="30%" />
+					<col width="30%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th>예약번호</th>
+						<th>이름</th>
+						<th>선교관 / 선교관 방이름</th>
+						<th>일정</th>
+						<th>상태</th>
+					</tr>
+				</thead>
+				<tbody>
+<?php 
+	if (count($reservList) == 0) {
+		echo "			<tr>\r\n";
+		echo "				<td colspan=\"5\">리스트가 없습니다</td>\r\n";
+		echo "			</tr>\r\n";
+	} else {
+		foreach ($reservList as $aResv) {
+?>
+					<tr>
+						<td><?=$aResv->BookNo?></td>
+						<td>
+							<label id="profileId<?=$aResv->BookNo?>" onmouseover="showProfile('<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							if ($aResv->resv_name) { 
+								echo $aResv->resv_name; 
+							} else { 
+								echo $member->Nick;
+							} 
+							?></label>
+							<div id="profile<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
+						</td>
+						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
+						<td><?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?></td>
+						<td><?
+							// echo "<span class=\"btn\">{$aResv->Status}</span>";
+							if ($aResv->Status == "신규예약") {
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"allow({$aResv->BookNo})\">승인</a></span>\r\n";
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">거절</a></span>\r\n";
+							} else if ($aResv->Status == "승인") {
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"complete({$aResv->BookNo})\">완료</a></span>\r\n";
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">삭제</a></span>\r\n";
+							} else {
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">삭제</a></span>\r\n";
+							}
+						?></td>
+					</tr>
+<?
+		}
+	}
+?>
+				</tbody>
+			</table>
+		</div>
+		<!-- list// -->
+		<div class="paging">
+			<a href="#"><img src="images/btn_page_first.gif" alt="처음" /></a>
+			<a href="#"><img src="images/btn_page_prev.gif" alt="이전" /></a>
+			<a href="#"><strong>1</strong></a>
+			<a href="#">2</a>
+			<a href="#">3</a>
+			<a href="#">4</a>
+			<a href="#">5</a>
+			<a href="#">6</a>
+			<a href="#">7</a>
+			<a href="#">8</a>
+			<a href="#">9</a>
+			<a href="#">10</a>
+			<a href="#"><img src="images/btn_page_next.gif" alt="다음" /></a>
+			<a href="#"><img src="images/btn_page_last.gif" alt="마지막" /></a>
+		</div>
+		<!-- // content -->
+	</div>
+</div>
+<!-- // rightSec -->
+<!-- // rightSec -->
 <?php } ?>
 
 
 <script type="text/javascript">
 //<![CDATA[
 	calendar_init();
+
+	function reserveSubmit() {
+		var endDate = document.getElementById("endDate").value;
+		var startDate = document.getElementById("startDate").value;
+
+		if (startDate.length == 0 || endDate.length == 0) {
+			alert('숙박 기간을 정확히 입력해 주세요');
+			return;
+		}
+
+		if (startDate.replace(/-/g,'') >= endDate.replace(/-/g,'')) {
+			alert('기간이 잘못되었습니다.');
+			return;
+		}
+
+		document.getElementById("frmReserve").submit();
+	}
+
+	function allow(value) {
+		if (confirm('예약을 승인합니다.'))
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=2&bookNo=' + value;
+	}
+
+	function deny(value) {
+		if (confirm('예약을 거절합니다.'))
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=4&bookNo=' + value;
+	}
+
+	function complete(value) {
+		if (confirm('예약을 완료합니다.'))
+			location.href = 'process.php?mode=changeReservStatus&houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&status=3&bookNo=' + value;
+	}
+	
+	function search(value) {
+		location.href = 'mypage_houseReserv.php?houseId=<?php echo $houseId;?>&roomId=<?php echo $roomId;?>&search=' + value;
+	}
+
+	var obj_num;
+	function showProfile(num, e) {
+		obj_num = num;
+		var oProfile = document.getElementById('profile' + num);
+		var oId = document.getElementById('profileId' + num);
+		if (oProfile.style.visibility == "hidden") {
+			var url = 'ajax.php?mode=getUserProfile&userid='+oId.innerText;
+
+			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
+			oProfile.style.left = e.clientX;
+			oProfile.style.top = e.clientY;
+			oProfile.style.visibility = "visible";
+		}
+	}
+	
+	function resultProfile(reqResult) {
+		var addHtml = reqResult.responseText;
+		var oProfile = document.getElementById('profile' + obj_num);
+		oProfile.innerHTML = addHtml;
+	}
+	
+	function unshowProfile(num) {
+		oProfile = document.getElementById('profile' + num);
+		oProfile.style.visibility = "hidden";
+	}
 //]]>
 </script>

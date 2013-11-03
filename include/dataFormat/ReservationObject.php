@@ -80,6 +80,10 @@ class ReservationObject {
 		$this->startDate = null;
 		$this->endDate = null;
 		$this->regDate = null;
+		$this->resv_name = null;
+		$this->resv_phone = null;
+		$this->resv_nation = null;
+		$this->resv_assoc = null;
 	} 
 
 	function Open($number) {
@@ -102,6 +106,10 @@ class ReservationObject {
 			$this->regDate = $row['regDate'];
 			$this->houseName = $row['houseName'];
 			$this->roomName = $row['roomName'];
+			$this->resv_name = $row['resv_name'];
+			$this->resv_phone = $row['resv_phone'];
+			$this->resv_nation = $row['resv_nation'];
+			$this->resv_assoc = $row['resv_assoc'];
 		}
 
 		$result->close();
@@ -128,6 +136,10 @@ class ReservationObject {
 			$this->endDate = $row['endDate'];
 			$this->regDate = $row['regDate'];
 			$this->houseName = $row['houseName'];
+			$this->resv_name = $row['resv_name'];
+			$this->resv_phone = $row['resv_phone'];
+			$this->resv_nation = $row['resv_nation'];
+			$this->resv_assoc = $row['resv_assoc'];
 		}
 
 		$result->close();
