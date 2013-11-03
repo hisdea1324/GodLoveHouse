@@ -12,22 +12,6 @@ function body() {
 
 	$h_helper = new HouseHelper();
 	$house = $h_helper->getHouseInfoById($houseId);
-
-	//******************************************************************
-	// 달력 세팅
-	$StartYear = 2012;
-
-	$calendar = new CalendarBuilder();
-	$calendar->CYear = isset($_REQUEST["y"]) ? trim($_REQUEST["y"]) : "";
-	$calendar->CMonth = isset($_REQUEST["m"]) ? trim($_REQUEST["m"]) : "";
-
-	$fromDate = $calendar->CurrentMonth.$calendar->DataFormat(1);
-	$toDate = $calendar->NextMonth.$calendar->DataFormat(1);
-	$s_Helper = new supportHelper();
-	$dailySupport = $s_Helper->getDailySupport($fromDate, $toDate);
-	$senders = $s_Helper->getSender($fromDate, $toDate);
-	//******************************************************************
-
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">

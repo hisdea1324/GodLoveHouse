@@ -57,7 +57,7 @@ body();
 showFooter();
 
 function body() {
-	global $mysqli, $h_Helper;
+	global $mysqli, $h_Helper, $member;
 	global $search, $page, $houseId, $roomId, $houseList1;
 	global $StartYear, $calendar, $dailySupport;
 ?>
@@ -277,7 +277,7 @@ function body() {
 				<th class="th01" width="20%">&nbsp;</th>
 			</tr>
 <?php 
-	if ((count($reservList)==0)) {
+	if (count($reservList) == 0) {
 ?>
 			<tr>
 				<td colspan="4">리스트가 없습니다</td>
@@ -290,8 +290,8 @@ function body() {
 			<tr>
 				<td><?php echo $reservObj->BookNo;?></td>
 				<td class="ltd">
-					<label id="profileId<?php echo $i;?>" onmouseover="showProfile('<?php echo $i;?>', event)" onmouseout="unshowProfile('<?php echo $i;?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.UserID ?></label>
-					<div id="profile<?php echo $i;?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
+					<label id="profileId<?=$i?>" onmouseover="showProfile('<?=$i?>', event)" onmouseout="unshowProfile('<?=$i?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.UserID ?></label>
+					<div id="profile<?=$i?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
 				</td>
 				<td><?php echo $reservObj->HouseName;?> / <?php echo $reservObj->RoomName;?></td>
 				<td><?php echo $reservObj->StartDate;?> ~ <?php echo $reservObj->EndDate;?> <!--a href="#"><img src="../images/board/btn_modify_date.gif" align="absmiddle"></a--></td>

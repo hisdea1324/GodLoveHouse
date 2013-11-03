@@ -268,20 +268,18 @@ class HouseHelper {
 
 	function getReservationListWithPaging($curPage) {
 		global $mysqli;
-		
-		$reserveInfo = array();
-		$topNum = $this->m_pageCount * $curPage;
 
-		$query = "SELECT top ".$topNum." C.reservationNo FROM house A, room B, reservation C ";
-
+		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
 		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."' ".$this->m_StrConditionQuery;
 		} 
 
-		$query = $query." ORDER BY C.reservationNo DESC";
+		$start = $this->m_pageCount * ($curPage - 1);
+		$query = $query." ORDER BY C.reservationNo DESC LIMIT $start, {$this->m_pageCount}";
 
+		$reserveInfo = array();
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_assoc()) {
 				$reserveInfo[] = new ReservationObject($row["reservationNo"]);

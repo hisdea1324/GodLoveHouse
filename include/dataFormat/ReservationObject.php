@@ -30,8 +30,10 @@ class ReservationObject {
 	public function __get($name) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'bookno':
+				return $this->record['reservationno'];
 			case 'status': 
-				switch ($this->record['reservStatus']) {
+				switch ($this->record['reservstatus']) {
 					case "S0001":
 						return "신규예약";
 					case "S0002":

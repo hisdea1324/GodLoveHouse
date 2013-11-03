@@ -191,33 +191,6 @@ function body() {
 	}
 	print "											</tbody>\r\n";
 ?>
-
-											<!--tbody>
-												<tr>
-													<th><strong>샬롬관</strong></th>
-													<td colspan="30"><div class="check cb1" style="width:50%; margin-left:20%">정진화</div></td>
-												</tr>
-												<tr>
-													<th><strong>화평관</strong></th>
-													<td colspan="30"><div class="check cb2" style="width:50%; margin-left:10%">정진화</div></td>
-												</tr>
-												<tr>
-													<th><strong>미스바관</strong></th>
-													<td colspan="30"><div class="check cb3" style="width:50%; margin-left:20%">정진화</div></td>
-												</tr>
-												<tr>
-													<th><strong>샬롬관</strong></th>
-													<td colspan="30"><div class="check cb4" style="width:50%; margin-left:20%">정진화</div></td>
-												</tr>
-												<tr>
-													<th><strong>샬롬관</strong></th>
-													<td colspan="30"><div class="check cb5" style="width:50%; margin-left:10%">정진화</div></td>
-												</tr>
-												<tr>
-													<th><strong>샬롬관</strong></th>
-													<td colspan="30"><div class="check cb6" style="width:50%; margin-left:20%">정진화</div></td>
-												</tr>
-											</tbody-->
 										</table>
 									</div> <!-- // cal_month -->
 
