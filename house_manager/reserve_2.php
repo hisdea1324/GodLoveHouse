@@ -269,14 +269,14 @@ function body() {
 
 		<div class="search">
 			<span class="mr20"><strong>SEARCH ></strong></span>
-			<select name="status" id="status">
+			<select name="status" id="status" onchange="search(this.value)">
 				<option value="0">전체</option>
-				<option value="1" <?php if (($search=="1")) { ?> selected <?php } ?>>신규예약</option>
-				<option value="2" <?php if (($search=="2")) { ?> selected <?php } ?>>승인</option>
-				<option value="3" <?php if (($search=="3")) { ?> selected <?php } ?>>완료</option>
-				<option value="4" <?php if (($search=="4")) { ?> selected <?php } ?>>거절</option>
+				<option value="1" <?php if ($search == "1") { ?> selected <?php } ?>>신규예약</option>
+				<option value="2" <?php if ($search == "2") { ?> selected <?php } ?>>승인</option>
+				<option value="3" <?php if ($search == "3") { ?> selected <?php } ?>>완료</option>
+				<option value="4" <?php if ($search == "4") { ?> selected <?php } ?>>거절</option>
 			</select>
-			<span class="btn1"><a href="javascript:void(0)" onclick="search(this.value);">검색</a></span>
+			<!--span class="btn1"><a href="javascript:void(0)" onclick="search(this.value)">검색</a></span-->
 		</div>
 				
 		<!-- //list -->
@@ -361,7 +361,7 @@ function body() {
 			</table>
 		</div>
 		<!-- list// -->
-		<div class="paging">
+		<!--div class="paging">
 			<a href="#"><img src="images/btn_page_first.gif" alt="처음" /></a>
 			<a href="#"><img src="images/btn_page_prev.gif" alt="이전" /></a>
 			<a href="#"><strong>1</strong></a>
@@ -376,14 +376,13 @@ function body() {
 			<a href="#">10</a>
 			<a href="#"><img src="images/btn_page_next.gif" alt="다음" /></a>
 			<a href="#"><img src="images/btn_page_last.gif" alt="마지막" /></a>
-		</div>
+		</div-->
 		<!-- // content -->
 	</div>
 </div>
 <!-- // rightSec -->
 <!-- // rightSec -->
 <?php } ?>
-
 
 <script type="text/javascript">
 //<![CDATA[
