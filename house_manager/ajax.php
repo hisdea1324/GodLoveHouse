@@ -1,21 +1,22 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$mode = trim($_REQUEST["mode"]);
-switch (($mode)) {
+$mode = isset($_REQUEST["mode"]) ? trim($_REQUEST["mode"]) : "";
+
+switch ($mode) {
 	case "checkUserId":
-confirmUserId();
+		confirmUserId();
 		break;
 	case "checkNick":
-confirmNick();
+		confirmNick();
 		break;
 	case "checkNID":
-confirmNID();
+		confirmNID();
 		break;
 	case "checkPassword":
-confirmPassword();
+		confirmPassword();
 		break;
 	case "getUserProfile":
-getUserProfile();
+		getUserProfile2();
 		break;
 } 
 
@@ -97,7 +98,10 @@ function getUserProfile() {
 	$member = $m_helper->getMemberByUserId($trim[$_REQUEST["userid"]]);
 	$mission = $m_helper->getMissionInfoByUserId($trim[$_REQUEST["userid"]]);
 
-	print "<table width=200><tr><td>";
+	print "<div class=\"tit\">";
+	print "	신청자 정보";
+	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
+	print "</div>";
 	print "<ul>";
 	print "<li> 이름 : ".$member->Name."</li>";
 	print "<li> 선교사명 : ".$mission->MissionName."</li>";
@@ -105,13 +109,26 @@ function getUserProfile() {
 	print "<li> 파송교회 : ".$mission->Church."</li>";
 	print "<li> 파송단체 : ".$mission->Ngo."</li>";
 	print "</ul>";
-	print "</td></tr></table>";
 
 	$mission = null;
-
 	$member = null;
-
 	$m_helper = null;
-
 } 
+
+function getUserProfile2() {
+	$reservationNo = isset($_REQUEST["reservationNo"]) ? $_REQUEST["reservationNo"] : "";
+	$resv = new ReservationObject($reservationNo);
+
+	print "<div class=\"tit\">";
+	print "	신청자 정보";
+	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
+	print "</div>";
+	print "<ul>";
+	print "	<li><p>성명</p> {$resv->resv_name}</li>";
+	print "	<li><p>연락처</p> {$resv->resv_phone}</li>";
+	print "	<li><p>파송국가</p> {$resv->resv_nation}</li>";
+	print "	<li><p>지원단체</p> {$resv->resv_assoc}</li>";
+	print "</ul>";
+
+}
 ?>

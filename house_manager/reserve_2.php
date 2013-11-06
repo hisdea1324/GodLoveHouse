@@ -183,10 +183,12 @@ function body() {
 				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100;
 				$width = ($end - $start + 1) / date('d', $toDate - 86400) * 100;
 				if ($row["resv_name"]) {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\">".$row["resv_name"]."</div>";
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\">".$row["userId"]."</div>";
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userId"]."</div>\r\n";
 				}
+
+				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute;visibility:hidden;top:38px;\"></div>\r\n";
 			}
 
 			$result->close();
@@ -286,25 +288,6 @@ function body() {
 				
 		<!-- //list -->
 		<div class="list mt10">
-			<div class="view" style="margin-left:18%; top:38px; display:none">
-				<div class="tit">
-					신청자 정보
-					<span class="btn1w" style="position:absolute; right:0px; top:-3px"><a href="#">상세보기</a></span>
-				</div>
-				<ul>
-					<li><p>성명</p> 오재호</li>
-					<li><p>생년월일</p> 2001.09.09</li>
-					<li><p>성별</p> 남</li>
-					<li><p>파송단체</p> 나눔교회</li>
-					<li><p>선교지</p> 대한민국</li>
-					<li><p>사역기간</p> 20년</li>
-					<li><p>가족</p> 성인 2명 / 청소년 1명 / 영유아 2명</li>
-					<li><p>연락처</p> 010-000-0000</li>
-					<li><p>이메일</p> asdf@naver.com</li>
-					<li><p>취소횟수</p> 3회</li>
-				</ul>
-			</div>
-
 			<table>
 				<colgroup>
 					<col width="10%" />
@@ -334,14 +317,14 @@ function body() {
 					<tr>
 						<td><?=$aResv->BookNo?></td>
 						<td>
-							<label id="profileId<?=$aResv->BookNo?>" onmouseover="showProfile('<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							<label id="profileId<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
 							if ($aResv->resv_name) { 
 								echo $aResv->resv_name; 
 							} else { 
 								echo $member->Nick;
 							} 
 							?></label>
-							<div id="profile<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
+							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden;margin-left:18%; top:38px; "></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
 						<td><?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?></td>
@@ -429,13 +412,13 @@ function body() {
 		location.href = 'reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>&search=' + value;
 	}
 
-	var obj_num;
-	function showProfile(num, e) {
-		obj_num = num;
-		var oProfile = document.getElementById('profile' + num);
-		var oId = document.getElementById('profileId' + num);
+	var element_name;
+	function showProfile(element, num, e) {
+		element_name = element + num;
+		var oProfile = document.getElementById(element_name);
+		//var oId = document.getElementById('profileId' + num);
 		if (oProfile.style.visibility == "hidden") {
-			var url = 'ajax.php?mode=getUserProfile&userid='+oId.innerText;
+			var url = 'ajax.php?mode=getUserProfile&reservationNo='+num;
 
 			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
 			oProfile.style.left = e.clientX;
@@ -446,12 +429,12 @@ function body() {
 	
 	function resultProfile(reqResult) {
 		var addHtml = reqResult.responseText;
-		var oProfile = document.getElementById('profile' + obj_num);
+		var oProfile = document.getElementById(element_name);
 		oProfile.innerHTML = addHtml;
 	}
 	
-	function unshowProfile(num) {
-		oProfile = document.getElementById('profile' + num);
+	function unshowProfile(element, num) {
+		oProfile = document.getElementById(element + num);
 		oProfile.style.visibility = "hidden";
 	}
 //]]>
