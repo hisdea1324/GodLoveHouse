@@ -19,11 +19,16 @@ function body() {
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
-			<strong>Home</strong> &gt; 예약관리 &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 정보수정
+			<strong>Home</strong> &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 정보수정
 		</div>
 		<div id="content">
 			<!-- content -->
-			<h1>방 정보수정 - <?=$house->houseName?> :: <?=$room->roomName?></h1>
+			<h1><?=$house->houseName?> :: <?=$room->roomName?></h1>
+			<ul class="tabs mt30">
+				<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+				<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
+				<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+			</ul>
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />

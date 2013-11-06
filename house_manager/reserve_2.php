@@ -55,14 +55,15 @@ function body() {
 							<!-- rightSec -->
 							<div id="rightSec">
 								<div class="lnb">
-									<strong>Home</strong> &gt; 예약관리 &gt; <?=$house->houseName?> &gt; <?=$room->roomName?>
+									<strong>Home</strong> &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 예약 현황 보기
 								</div>
 								<div id="content">
 									<!-- content -->
-									<h1><?=$house->houseName?> :: <?=$room->roomName?> <span class="btn1"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">방 정보수정</a></span></h1>
+									<h1><?=$house->houseName?> :: <?=$room->roomName?> </h1>
 									<ul class="tabs mt30">
-										<li><a href="reserve_1.php">달력보기</a></li>
-										<li class="on"><a href="reserve_2.php">방전체보기</a></li>
+										<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+										<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
+										<li><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
 									</ul>
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
@@ -158,7 +159,11 @@ function body() {
 		$query = $query." ORDER BY startDate";
 
 		print "												<tr>\r\n";
-		print "												<th><strong>{$aRoom->roomName}</strong></th>\r\n";
+		if ($aRoom->roomId == $roomId) {
+			print "												<th bgcolor=\"#FFFFAA\"><strong><a href=\"reserve_2.php?houseId={$houseId}&roomId={$aRoom->roomId}\">{$aRoom->roomName}</a></strong></th>\r\n";
+		} else {
+			print "												<th><a href=\"reserve_2.php?houseId={$houseId}&roomId={$aRoom->roomId}\">{$aRoom->roomName}</th>\r\n";
+		}
 		print "												<td colspan=\"30\">\r\n";
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_assoc()) {
