@@ -191,7 +191,7 @@ class HouseHelper {
 		}
 	} 
 
-	function setReservationListConditionWithDate($search, $houseId, $roomId) {
+	function setReservationListConditionWithRoom($search, $houseId, $roomId, $fromDate = 0, $toDate = 0) {
 		switch ($search) {
 			case "1":
 				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
@@ -209,9 +209,13 @@ class HouseHelper {
 				$this->m_StrConditionQuery = " AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
 				break;
 		} 
+
+		if ($fromDate > 9) {
+			$this->m_StrConditionQuery.= " AND C.startDate <= {$toDate} AND C.endDate >= {$fromDate}";
+		}
 	} 
 
-	function setReservationListCondition_n($search,$houseId,$roomId) {
+	function setReservationListCondition_n($search, $houseId, $roomId) {
 		switch ($search) {
 			case "1":
 				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
