@@ -180,7 +180,7 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 .cal_month2 table thead th {height:30px; color:#fff; font-size:12px; background:#959aa2; font-weight:bold; font-family:'Tahoma'; border-right:solid 1px #aaa}
 .cal_month2 table tbody th{border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd; padding:10px}
 .cal_month2 table tbody td {border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd;}
-.cal_month2 .check{height:20px; text-align:center; line-height:20px; z-index:1}
+.cal_month2 .check{float:left; height:20px; text-align:center; line-height:20px; z-index:1}
 .cal_month2 table tbody td .view{position:absolute; background:#3b4047; z-index:1; width:250px; padding:10px 20px 10px 20px; color:#fff}
 .cal_month2 table tbody td .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff}
 .cal_month2 table tbody td .view ul li{line-height:18px; background:#3b4047; list-style:none}

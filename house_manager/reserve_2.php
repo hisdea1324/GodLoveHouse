@@ -166,6 +166,7 @@ function body() {
 		}
 		print "												<td colspan=\"30\">\r\n";
 		if ($result = $mysqli->query($query)) {
+			$prev_margin = 0;
 			while ($row = $result->fetch_assoc()) {
 				setTestValue($row);
 				if (date('m', $row["startDate"]) == $calendar['month']) {
@@ -180,15 +181,16 @@ function body() {
 					$end = date('d', $toDate - 86400);
 				}
 
-				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100;
+				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100 - $prev_margin;
 				$width = ($end - $start + 1) / date('d', $toDate - 86400) * 100;
+				$prev_margin += $margin_left + $width;
 				if ($row["resv_name"]) {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userId"]."</div>\r\n";
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userId"]."</div>\r\n";
 				}
 
-				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute;visibility:hidden;top:38px;\"></div>\r\n";
+				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\"></div>\r\n";
 			}
 
 			$result->close();
@@ -317,14 +319,14 @@ function body() {
 					<tr>
 						<td><?=$aResv->BookNo?></td>
 						<td>
-							<label id="profileId<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							<label id="_pf2_<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
 							if ($aResv->resv_name) { 
 								echo $aResv->resv_name; 
 							} else { 
 								echo $member->Nick;
 							} 
 							?></label>
-							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden;margin-left:18%; top:38px; "></div>
+							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px; "></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
 						<td><?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?></td>
@@ -415,14 +417,19 @@ function body() {
 	var element_name;
 	function showProfile(element, num, e) {
 		element_name = element + num;
+		var _oProfile = document.getElementById("_" + element_name);
 		var oProfile = document.getElementById(element_name);
 		//var oId = document.getElementById('profileId' + num);
 		if (oProfile.style.visibility == "hidden") {
 			var url = 'ajax.php?mode=getUserProfile&reservationNo='+num;
 
 			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
-			oProfile.style.left = e.clientX;
-			oProfile.style.top = e.clientY;
+			oProfile.style.left = _oProfile.offsetLeft + (_oProfile.offsetWidth / 2) - (oProfile.offsetWidth / 2) + "px";
+			if (element == "pf1_") {
+				oProfile.style.top = _oProfile.parentNode.offsetTop + _oProfile.parentNode.offsetHeight + "px";
+			} else {
+				oProfile.style.top = _oProfile.offsetTop + _oProfile.offsetHeight + 5 + "px";
+			}
 			oProfile.style.visibility = "visible";
 		}
 	}
