@@ -87,7 +87,7 @@ function body() {
 				<td class="ltd">
 					<ul class="intro">
 						<li><b>운영</b> : <?php echo $houseObj->AssocName;?></li>
-						<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1.$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1." ".$houseObj->Address2;?></a></li>
+						<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1.$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1;?></a></li>
 						<li><b>담당자</b> : <?php echo $houseObj->Manager1;?></li>
 						<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
 					</ul>

@@ -167,13 +167,14 @@ class MemberHelper {
 			$strWhere = $strWhere." AND ".$mysqli->real_escape_string($field)." LIKE '%".$mysqli->real_escape_string($keyword)."%'";
 		} 
 
-		return "WHERE approval = 1".$strWhere;
+		$this->m_StrConditionQuery = "WHERE approval = 1".$strWhere;
 	} 
 
 	function makePagingMissionList($curPage) {
 		global $mysqli;
 
 		$query = "SELECT COUNT(*) AS recordCount from missionary ".$this->m_StrConditionQuery;
+
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_assoc()) {
 				$total = $row["recordCount"];

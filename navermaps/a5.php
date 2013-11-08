@@ -31,7 +31,8 @@ $REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e
 	$xml->Open("GET", $REQUEST_URL, false);
 	$xml->SetRequestHeader("GET", $REQUEST_URL."HTTP/1.0");
 	$xml->Send();
-//	response.write xml.ResponseText	// $dom is of type "Microsoft.XMLDOM"
+//	response.write xml.ResponseText	
+// $dom is of type "Microsoft.XMLDOM"
 	$dom->async=false;
 	$dom->load();
 	$xml->responseBody;
@@ -59,7 +60,8 @@ $xml = null;
 
 $dom = null;
 
-//response.write "																 " & x & " " & y?>
+//response.write "																 " & x & " " & y
+?>
 
 <body style="margin:0px 0px 0px 0px">
 <script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=481c0483e27994558af69d54e9d76ee1">

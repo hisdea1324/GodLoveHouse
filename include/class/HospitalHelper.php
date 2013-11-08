@@ -77,7 +77,7 @@ class HospitalHelper {
 			$strWhere = $strWhere." AND hospitalId NOT IN (SELECT DISTINCT hospitalId FROM reservation WHERE startDate	<= '{$toDate}')";
 		}
 
-		$m_StrConditionQuery = $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function setEtcCondition($regionCode) {
@@ -85,7 +85,7 @@ class HospitalHelper {
 		if (strlen($regionCode) > 0) {
 			$strWhere = $strWhere." AND regionCode = '{$regionCode}'";
 		}
-		$m_StrConditionQuery = $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
@@ -162,19 +162,19 @@ class HospitalHelper {
 	function setReservationListCondition_n($search, $hospitalId) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001'	AND A.hospitalId = '".$hospitalId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0001'	AND A.hospitalId = '".$hospitalId."'";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002'	 AND A.hospitalId = '".$hospitalId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0002'	 AND A.hospitalId = '".$hospitalId."'";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003'	 AND A.hospitalId = '".$hospitalId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0003'	 AND A.hospitalId = '".$hospitalId."'";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004'	 AND A.hospitalId = '".$hospitalId."'";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0004'	 AND A.hospitalId = '".$hospitalId."'";
 				break;
 			default:
-				$m_StrConditionQuery=" AND A.hospitalId = '".$hospitalId."'";
+				$this->m_StrConditionQuery=" AND A.hospitalId = '".$hospitalId."'";
 				break;
 		} 
 	} 
@@ -182,19 +182,19 @@ class HospitalHelper {
 	function setReservationListCondition($search) {
 		switch ($search) {
 			case "1":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0001' ";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0001' ";
 				break;
 			case "2":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0002' ";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0002' ";
 				break;
 			case "3":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0003' ";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0003' ";
 				break;
 			case "4":
-				$m_StrConditionQuery=" AND C.reservStatus = 'S0004' ";
+				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0004' ";
 				break;
 			default:
-				$m_StrConditionQuery="";
+				$this->m_StrConditionQuery="";
 				break;
 		} 
 	} 

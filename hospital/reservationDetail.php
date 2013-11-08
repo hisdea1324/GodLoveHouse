@@ -107,8 +107,7 @@ function body() {
 			<tr>
 				<td class="td01">주소</td>
 				<td colspan="5">
-					<?php $zipcode = $hospital->Zipcode;?>
-					[<?php echo $zipcode[0];?>-<?php echo $zipcode[1];?>]
+					[<? echo $hospital->Zipcode[0];?>-<?php echo $hospital->Zipcode[1];?>]
 					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($hospital->Address1.$ospital->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $hospital->Address1;?> <?php echo $hospital->Address2;?></A>
 				</td>
 			</tr>

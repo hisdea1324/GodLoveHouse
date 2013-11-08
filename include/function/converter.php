@@ -105,10 +105,10 @@ function textFormat($text,$stype) {
 	return $retString;
 } 
 
-function priceFormat($price,$stype) {
+function priceFormat($price, $stype) {
 	switch (($stype)) {
 		case 1:
-			$retString="$".number_format($price,2);
+			$retString="$".number_format($price, 2);
 			$retString=substr($retString,strlen($retString)-(strlen($retString)-1))."원";
 			break;
 		case 2:

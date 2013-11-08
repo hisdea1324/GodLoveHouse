@@ -285,8 +285,16 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 	$linkUrl=str_replace("?&","?",str_replace("?&","?",$linkUrl));
 	$linkUrl=str_replace("&&","&",str_replace("&&","&",$linkUrl));
 
-	$totalPage = round($total / $pageCount);
-	$prevPage = round($page / $pageUnit) * 10 + 1;
+	if ($pageCount > 0) {
+		$totalPage = round($total / $pageCount + 0.5);
+	} else {
+		$totalPage = 1;
+	}
+	if ($pageUnit > 0) {
+		$prevPage = round($page / $pageUnit + 0.5) * 10 + 1;
+	} else {
+		$prevPage = 1;
+	}
 	$nextPage = $prevPage + 10;
 	if ($nextPage > $totalPage) {
 		$nextPage = $totalPage;

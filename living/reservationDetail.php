@@ -178,8 +178,8 @@ function body() {
 			<tr>
 				<td class="td01">주소</td>
 				<td colspan="5">
-					[<?php echo $house->Zipcode?>]
-					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($house->Address1.$house->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $house->Address1;?> <?php echo $house->Address2;?></A>
+					[<?php echo implode('-', $house->Zipcode);?>]
+					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($house->Address1.$house->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $house->Address1;?></A>
 				</td>
 			</tr>
 			<tr>

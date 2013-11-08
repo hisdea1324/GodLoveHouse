@@ -39,61 +39,60 @@ function body() {
 				<tr>
 					<td class="td01">병원 이름 </td>
 					<td>
-						<input type="text" name="hospitalName" id="hospitalName" maxlength="40" tabindex="1" value="<?php echo $hospitalObj->hospitalName;?>" />
+						<input type="text" name="hospitalName" id="hospitalName" maxlength="40" tabindex="1" value="<?php echo $hospitalObj->hospitalName;?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">운영단체</td>
 					<td>
-						<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2"	value="<?php echo $hospitalObj->assocName;?>" />
+						<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2"	value="<?php echo $hospitalObj->assocName;?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">담당자 이름 </td>
 					<td>
-						<input type="text" name="manager" id="manager" maxlength="30" tabindex="3" value="<?php echo $hospitalObj->manager1;?>" />
+						<input type="text" name="manager" id="manager" maxlength="30" tabindex="3" value="<?php echo $hospitalObj->manager1;?>" onFocus="checkLogin();" />
 					</td>
 				</tr>			 
 				<tr>
 					<td class="td01">담당자 연락처 </td>
 					<td>
-			<?	 $contact1 = $hospitalObj->contact1;?>
-						<select name="contact1" id="contact1" tabindex="4">
-				<option value="010" <?php if (($contact1[0]=="010")) { print "selected"; }?>>010</option>
-				<option value="011" <?php if (($contact1[0]=="011")) { print "selected"; }?>>011</option>
-				<option value="016" <?php if (($contact1[0]=="016")) { print "selected"; }?>>016</option>
-				<option value="017" <?php if (($contact1[0]=="017")) { print "selected"; }?>>017</option>
-				<option value="018" <?php if (($contact1[0]=="018")) { print "selected"; }?>>018</option>
-				<option value="019" <?php if (($contact1[0]=="019")) { print "selected"; }?>>019</option>
-				<option value="02" <?php if (($contact1[0]=="02")) { print "selected"; }?>>02</option>
-				<option value="031" <?php if (($contact1[0]=="031")) { print "selected"; }?>>031</option>
-				<option value="032" <?php if (($contact1[0]=="032")) { print "selected"; }?>>032</option>
-				<option value="033" <?php if (($contact1[0]=="033")) { print "selected"; }?>>033</option>
-				<option value="041" <?php if (($contact1[0]=="041")) { print "selected"; }?>>041</option>
-				<option value="042" <?php if (($contact1[0]=="042")) { print "selected"; }?>>042</option>
-				<option value="043" <?php if (($contact1[0]=="043")) { print "selected"; }?>>043</option>
-				<option value="051" <?php if (($contact1[0]=="051")) { print "selected"; }?>>051</option>
-				<option value="052" <?php if (($contact1[0]=="052")) { print "selected"; }?>>052</option>
-				<option value="053" <?php if (($contact1[0]=="053")) { print "selected"; }?>>053</option>
-				<option value="054" <?php if (($contact1[0]=="054")) { print "selected"; }?>>054</option>
-				<option value="055" <?php if (($contact1[0]=="055")) { print "selected"; }?>>055</option>
-				<option value="061" <?php if (($contact1[0]=="061")) { print "selected"; }?>>061</option>
-				<option value="062" <?php if (($contact1[0]=="062")) { print "selected"; }?>>062</option>
-				<option value="063" <?php if (($contact1[0]=="063")) { print "selected"; }?>>063</option>
-				<option value="064" <?php if (($contact1[0]=="064")) { print "selected"; }?>>064</option>
-				<option value="070" <?php if (($contact1[0]=="070")) { print "selected"; }?>>070</option>
+						<select name="contact1" id="contact1" tabindex="4" onFocus="checkLogin();">
+							<option value="010" <?php if (($hospitalObj->contact1[0]=="010")) { print "selected"; }?>>010</option>
+							<option value="011" <?php if (($hospitalObj->contact1[0]=="011")) { print "selected"; }?>>011</option>
+							<option value="016" <?php if (($hospitalObj->contact1[0]=="016")) { print "selected"; }?>>016</option>
+							<option value="017" <?php if (($hospitalObj->contact1[0]=="017")) { print "selected"; }?>>017</option>
+							<option value="018" <?php if (($hospitalObj->contact1[0]=="018")) { print "selected"; }?>>018</option>
+							<option value="019" <?php if (($hospitalObj->contact1[0]=="019")) { print "selected"; }?>>019</option>
+							<option value="02" <?php if (($hospitalObj->contact1[0]=="02")) { print "selected"; }?>>02</option>
+							<option value="031" <?php if (($hospitalObj->contact1[0]=="031")) { print "selected"; }?>>031</option>
+							<option value="032" <?php if (($hospitalObj->contact1[0]=="032")) { print "selected"; }?>>032</option>
+							<option value="033" <?php if (($hospitalObj->contact1[0]=="033")) { print "selected"; }?>>033</option>
+							<option value="041" <?php if (($hospitalObj->contact1[0]=="041")) { print "selected"; }?>>041</option>
+							<option value="042" <?php if (($hospitalObj->contact1[0]=="042")) { print "selected"; }?>>042</option>
+							<option value="043" <?php if (($hospitalObj->contact1[0]=="043")) { print "selected"; }?>>043</option>
+							<option value="051" <?php if (($hospitalObj->contact1[0]=="051")) { print "selected"; }?>>051</option>
+							<option value="052" <?php if (($hospitalObj->contact1[0]=="052")) { print "selected"; }?>>052</option>
+							<option value="053" <?php if (($hospitalObj->contact1[0]=="053")) { print "selected"; }?>>053</option>
+							<option value="054" <?php if (($hospitalObj->contact1[0]=="054")) { print "selected"; }?>>054</option>
+							<option value="055" <?php if (($hospitalObj->contact1[0]=="055")) { print "selected"; }?>>055</option>
+							<option value="061" <?php if (($hospitalObj->contact1[0]=="061")) { print "selected"; }?>>061</option>
+							<option value="062" <?php if (($hospitalObj->contact1[0]=="062")) { print "selected"; }?>>062</option>
+							<option value="063" <?php if (($hospitalObj->contact1[0]=="063")) { print "selected"; }?>>063</option>
+							<option value="064" <?php if (($hospitalObj->contact1[0]=="064")) { print "selected"; }?>>064</option>
+							<option value="070" <?php if (($hospitalObj->contact1[0]=="070")) { print "selected"; }?>>070</option>
 						</select>
 						-
-						<input type="text" name="contact2" id="contact2" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $contact1[1];?>" />
+						<input type="text" name="contact2" id="contact2" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $hospitalObj->contact1[1];?>" onFocus="checkLogin();" />
 						-
-						<input type="text" name="contact3" id="contact3" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $contact1[2];?>" />
+						<input type="text" name="contact3" id="contact3" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $hospitalObj->contact1[2];?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">지역코드 </td>
 					<td>
-			<select name="regionCode" id="regionCode" tabindex="8">
-						<option value=''>-- 지역선택 --</option>
+						<select name="regionCode" id="regionCode" tabindex="8" onFocus="checkLogin();">
+							<option value=''>-- 지역선택 --</option>
 <?php 
 	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
 		$region = $codes[$i];
@@ -105,46 +104,45 @@ function body() {
 	}
 
 ?>
-					</select>
+						</select>
 					</td>
 				</tr>				
 				<tr>
 					<td class="td01">우편번호</td>
 					<td>
-						<?php $zipcode = $hospitalObj->Zipcode;?>
-						<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="9" value="<?php echo $zipcode[0];?>" />
+						<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="9" value="<?php echo $hospitalObj->Zipcode[0];?>" onFocus="checkLogin();" />
 						-
-						<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?php echo $zipcode[1];?>" />
+						<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?php echo $hospitalObj->Zipcode[1];?>" onFocus="checkLogin();" />
 						<img src="../images/board/btn_zipcode.gif" border="0" align="absmiddle" class="m2" onclick="PostPopup();"></td>
 				</tr>
 				<tr>
 					<td class="td01">주소</td>
 					<td>
-						<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" tabindex="10" value="<?php echo $hospitalObj->address1;?>" />
+						<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" tabindex="10" value="<?php echo $hospitalObj->address1;?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="11" value="<?php echo $hospitalObj->address2;?>" />
+						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="11" value="<?php echo $hospitalObj->address2;?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">가격(1일 기준) </td>
 					<td>
-						<input type="text" name="price" id="price" style="width:100px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?php echo $hospitalObj->price;?>" /> 원
+						<input type="text" name="price" id="price" style="width:100px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?php echo $hospitalObj->price;?>" onFocus="checkLogin();" /> 원
 			</td>
 				</tr>
 				<tr>
 					<td class="td01">인일 진료 인원</td>
 					<td>
-						<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="13" value="<?php echo $hospitalObj->personLimit;?>" /> 명
+						<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="13" value="<?php echo $hospitalObj->personLimit;?>" onFocus="checkLogin();" /> 명
 					</td>
 				</tr>
 				<tr>
 					<td class="td01"> 병원 설명 </td>
 					<td>
-						<textarea name="explain" id="roomLimit" tabindex="15">
+						<textarea name="explain" id="roomLimit" tabindex="15" onFocus="checkLogin();">
 							<?php 
 								//echo $textFormat[$hospitalObj->explain][2];
 								echo $hospitalObj->explain;
@@ -162,15 +160,19 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	function frmSubmit() {
-<?php 
-	if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0 && false) {
-		# 로그인 안해도 등록할 수 있도록 수정함
+	function checkLogin() {
+	<?
+	if (!isset($_SESSION['userid']) || strlen($_SESSION['userid']) == 0) {
+		#로그인 안해도 등록할 수 있도록 수정함
 		$backURL = get_path_info();
-?>
+	?>
 			alert("병원등록은 로그인을 하신후에 할 수 있습니다.");
 			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
-<?php } else { ?>
+	<? } ?>
+	}
+
+	function frmSubmit() {
+		<? if (isset($_SESSION['userid']) && strlen($_SESSION['userid']) > 0) { ?>
 			if (document.getElementById("hospitalName").value == "") {
 				alert("병원 이름을 입력해주세요.");
 				document.getElementById("hospitalName").focus();
@@ -215,7 +217,7 @@ function body() {
 			}
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-<?php } ?>
+		<?php } ?>
 	}
 //]]>
 </script>
