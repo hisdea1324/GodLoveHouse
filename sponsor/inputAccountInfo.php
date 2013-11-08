@@ -17,9 +17,9 @@ $email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
 
 $m_Helper = new MemberHelper();
 $s_Helper = new SupportHelper();
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
-$supporter = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$supporter = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
 
 showHeader("HOME > 선교사후원 > 납입 방법 선택","sponsor","tit_0302.gif");
 body();

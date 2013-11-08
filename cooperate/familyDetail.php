@@ -2,8 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $needUserLv[1];
 
-$userId = trim($_REQUEST["userId"]);
-if (strlen($userId) == 0) {
+$userid = trim($_REQUEST["userid"]);
+if (strlen($userid) == 0) {
 	alertBack("잘못된 접근입니다.");
 } 
 
@@ -14,12 +14,12 @@ if ((strlen($page)==0)) {
 
 # 선교사 정보
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($userId);
-$mission = $m_Helper->getMissionInfoByUserId($userId);
+$member = $m_Helper->getMemberByuserid($userid);
+$mission = $m_Helper->getMissionInfoByuserid($userid);
 
 # 커멘트 정보
 $c_Helper = new CommentHelper();
-$c_Helper->HostUserId = $mission->UserId;
+$c_Helper->Hostuserid = $mission->userid;
 $comments = $c_Helper->getCommentList($page);
 $strPage = $c_Helper->makePagingHTML($page);
 
@@ -36,7 +36,7 @@ function body() {
 		<!-- //view -->
 		<p class="btn_right b5"><img src="../images/board/txt_family.gif" class="r5">
 <?php 
-	if ($m_Helper->getFamilyType($mission->UserId.$_SESSION["userId"]) == "F0002") {
+	if ($m_Helper->getFamilyType($mission->userid.$_SESSION["userid"]) == "F0002") {
 ?>
 		<img src="../images/board/btn_family_01.gif" border="0" class="m2" onclick="joinFamily(1)" />
 <?php 
@@ -127,7 +127,7 @@ function body() {
 				<span id="date<?php echo $comment->ID;?>"><?php echo dateFormat($comment->RegDate, 1);?></span>
 				<span id="button<?php echo $comment->ID;?>">
 <?php 
-			if ($comment->FollowId == $_SESSION["userId"]) {
+			if ($comment->FollowId == $_SESSION["userid"]) {
 ?> 
 				<img src="../images/board/btn_m_modify.gif" border="0" class="r5" onclick="edit_form(<?php echo $comment->ID;?>)" alt="의견수정" valign="absmiddle" />
 				<img src="../images/board/btn_m_del.gif" border="0" class="r5" onclick="delete_comment(<?php echo $comment->ID;?>)" alt="의견삭제" valign="absmiddle" />
@@ -185,7 +185,7 @@ function body() {
 					<span id="date<?php echo $replyComment->ID;?>"><?php echo dateFormat($replyComment->RegDate, 1);?></span>
 					<span id="button<?php echo $replyComment->ID;?>">
 <?php 
-					if ($replyComment->FollowId == $_SESSION["userId"]) {
+					if ($replyComment->FollowId == $_SESSION["userid"]) {
 ?> 
 					<img src="../images/board/btn_m_modify.gif" border="0" class="r5" onclick="edit_form(<?						 echo $replyComment->ID;?>)" alt="의견수정" valign="absmiddle" />
 					<img src="../images/board/btn_m_del.gif" border="0" class="r5" onclick="delete_comment(<?						 echo $replyComment->ID;?>)" alt="의견삭제" valign="absmiddle" />
@@ -237,7 +237,7 @@ function body() {
 		<input type="hidden" name="editComment" id="editComment" value="">
 		<input type="hidden" name="editSecret" id="editSecret" value="">
 		<input type="hidden" name="parentId" id="parentId" value="-1">
-		<input type="hidden" name="userId" id="userId" value="<?php echo $userId;?>">
+		<input type="hidden" name="userid" id="userid" value="<?php echo $userid;?>">
 	</form>
 	<!-- content// -->
 <?php } ?>
@@ -245,13 +245,13 @@ function body() {
 <script type="text/javascript">
 //<![CDATA[	
 	function joinFamily(type) {
-		<?php if ((strlen($_SESSION['userId'])==0)) { ?>
+		<?php if ((strlen($_SESSION['userid'])==0)) { ?>
 		alert('로그인한 후에 이용할 수 있습니다.');
 		<?php } else { ?>
 		if (type == 1) {
-			location.href = "process.php?mode=addFamily01&userId=<?php echo $userId;?>"
+			location.href = "process.php?mode=addFamily01&userid=<?php echo $userid;?>"
 		} else {
-			location.href = "process.php?mode=addFamily02&userId=<?php echo $userId;?>"
+			location.href = "process.php?mode=addFamily02&userid=<?php echo $userid;?>"
 		}
 		<?php } ?>
 	}

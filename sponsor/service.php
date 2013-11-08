@@ -2,7 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $s_Helper = new SupportHelper();
 
-$supporter = $s_Helper->getServiceSupportByUserId($_SESSION['userid']);
+$supporter = $s_Helper->getServiceSupportByuserid($_SESSION['userid']);
 $reqList = $s_Helper->getServiceList();
 
 showHeader("HOME > 후원 > 자원봉사 참여","sponsor","tit_0303.gif");

@@ -10,10 +10,10 @@ for ($i=0; $i<=count($IdList); $i = $i+1) {
 }
 
 $s_Helper = new SupportHelper();
-$member = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+$member = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
 if ($member->IsNew()) {
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 } 
 
 

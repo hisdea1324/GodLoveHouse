@@ -39,7 +39,7 @@ function editRequest() {
 		case "03001":
 			$requestAdd = new RequestAddInfo();
 			$requestAdd->reqId = $requestObj->reqId;
-			$requestAdd->userID = (isset($_REQUEST["userId"])) ? trim($_REQUEST["userId"]) : -1;
+			$requestAdd->userid = (isset($_REQUEST["userid"])) ? trim($_REQUEST["userid"]) : -1;
 			$requestAdd->dueDate = (isset($_REQUEST["dueDate"])) ? trim($_REQUEST["dueDate"]) : -1;
 			$requestAdd->nationCode = (isset($_REQUEST["nationCode"])) ? trim($_REQUEST["nationCode"]) : "";
 			$requestAdd->Update();

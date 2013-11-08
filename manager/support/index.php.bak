@@ -32,7 +32,7 @@ $objTable = new tableBuilder();
 $objTable->setButton(array("상세내역","후원자","수정","삭제"));
 $objTable->setColumn(array("후원코드","제목","회원아이디","상태코드","등록일","마감일"));
 $objTable->setOrder($order);
-$objTable->setField(array("reqId","title","userId","status","regDate","dueDate"));
+$objTable->setField(array("reqId","title","userid","status","regDate","dueDate"));
 $objTable->setKeyValue(array("reqId"));
 $objTable->setGotoPage($page);
 $htmlTable = $objTable->getTable($query);

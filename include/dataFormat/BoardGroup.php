@@ -29,7 +29,7 @@ class BoardGroup {
 		$this->record['password'] = "";
 		$this->record['regDate'] = "";
 		$this->record['editDate'] = "";
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['countView'] = 0;
 		$this->record['countComment'] = 0;
 		$this->record['countList'] = 0;
@@ -155,7 +155,7 @@ class BoardGroup {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userId'] > -1) {
+		if ($this->record['userid'] > -1) {
 			$stmt = $mysqli->prepare("DELETE FROM boardGroup WHERE groupId = ?");
 			$stmt->bind_param("s", $this->record['groupId']);
 			$stmt->execute();
@@ -170,7 +170,7 @@ class BoardGroup {
 	/*
 
 	function WritePermission() {
-		if (($m_authWriteLv <= $_SESSION["userId"])) {
+		if (($m_authWriteLv <= $_SESSION["userid"])) {
 			$WritePermission=true;
 		} else {
 			$WritePermission=false;
@@ -179,7 +179,7 @@ class BoardGroup {
 	} 
 
 	function ReadPermission() {
-		if (($m_authReadLv <= $_SESSION["userId"])) {
+		if (($m_authReadLv <= $_SESSION["userid"])) {
 			$ReadPermission=true;
 		} else {
 			$ReadPermission=false;
@@ -187,7 +187,7 @@ class BoardGroup {
 	} 
 
 	function CommentPermission() {
-		if ($m_authCommentLv <= $_SESSION["userId"]) {
+		if ($m_authCommentLv <= $_SESSION["userid"]) {
 			$CommentPermission=true;
 		} else {
 			$CommentPermission=false;

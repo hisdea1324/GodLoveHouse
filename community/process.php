@@ -30,7 +30,7 @@ function editPost() {
 	$board = $b_Helper->getBoardInfoById($_REQUEST["id"]);
 	$board->GroupID = $_REQUEST["groupId"];
 	$board->Title = $_REQUEST["title"];
-	$board->UserID = $_REQUEST["userId"];
+	$board->userid = $_REQUEST["userid"];
 	$board->Contents = $_REQUEST["contents"];
 
 	# 쓰기권한 체크	
@@ -57,7 +57,7 @@ function replyPost() {
 	$boardGrp = $b_Helper->getBoardGroupByGroupId($_REQUEST["groupId"]);
 	$board = $b_Helper->getBoardInfoById($_REQUEST["id"]);
 	$board->GroupID = $_REQUEST["groupId"];
-	$board->UserID = $_REQUEST["userId"];
+	$board->userid = $_REQUEST["userid"];
 	$board->Title = $_REQUEST["title"];
 	$board->Contents = $_REQUEST["contents"];
 	$board->AnswerID = $_REQUEST["answerId"];

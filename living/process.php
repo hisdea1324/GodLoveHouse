@@ -29,7 +29,7 @@ function registHouse() {
 
 	if ((strlen($_REQUEST["houseId"])>0)) {
 		$house->HouseID = $_REQUEST["houseId"];
-		$house->UserID = $_REQUEST["userId"];
+		$house->userid = $_REQUEST["userid"];
 	} 
 
 	$house->HouseName = $_REQUEST["houseName"];
@@ -62,7 +62,7 @@ function reservation() {
 	$book->StartDate = $_REQUEST["startDate"];
 	$book->EndDate = $_REQUEST["endDate"];
 	$book->RoomId = $_REQUEST["roomId"];
-	$book->UserId = $_SESSION['userid'];
+	$book->userid = $_SESSION['userid'];
 	$book->resv_name = $_REQUEST['resv_name'];
 	$book->resv_phone = $_REQUEST['resv_phone'];
 	$book->resv_nation = $_REQUEST['resv_nation'];
@@ -80,7 +80,7 @@ function reservation() {
 
 	# SMS 메세지 보내기	
 	$house = new HouseObject($houseId);
-	$manager = new MemberObject($house->UserID);
+	$manager = new MemberObject($house->userid);
 
 	$from_number = "01010041004";
 	$message = "선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];

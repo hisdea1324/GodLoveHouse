@@ -87,11 +87,11 @@ function editUser() {
 
 	$getURL = $_SERVER["HTTP_REFERER"];
 
-	$parsedURL = $ParsingURL[$getURL];
-	if ((strcmp($parsedURL->Item("path"),"/member/join.php")==0)) {
+	$parsedURL = ParsingURL($getURL);
+	if ((strcmp($parsedURL["path"],"/member/join.php")==0)) {
 		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
 	} else {
-		$returnURL = $parsedURL->Item("path");
+		$returnURL = $parsedURL["path"];
 	} 
 
 
@@ -101,7 +101,7 @@ function editUser() {
 function editUserNormal() {
 	$member = new MemberObject();
 
-	$member->UserID = $_REQUEST["userId"];
+	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
 	$member->Password = crypt($_REQUEST["password"]);
@@ -146,7 +146,7 @@ function editUserNormal() {
 function editUserMissionary() {
 	$mission = new MissionObject();
 
-	$mission->UserID = $_REQUEST["userId"];
+	$mission->userid = $_REQUEST["userid"];
 	$mission->Church = $_REQUEST["church"];
 	$mission->MissionName = $_REQUEST["missionName"];
 	$mission->Ngo = $_REQUEST["ngo"];
@@ -188,7 +188,7 @@ function editUserMissionary() {
 	$familyRelation=explode(",",$_REQUEST["familyRelation"]);
 	for ($i=0; $i<=count($familyName); $i = $i+1) {
 		$familyMember = new MissionaryFamily();
-		$familyMember->UserID = $_REQUEST["userId"];
+		$familyMember->userid = $_REQUEST["userid"];
 		$familyMember->familyID = $familyId[$i];
 		$familyMember->Name = $familyName[$i];
 		$familyMember->Age = $familyAge[$i];
@@ -254,7 +254,7 @@ function login() {
 
 function deleteFamily() {
 	$familyId = trim($_REQUEST["familyId"]);
-	$userId = trim($_REQUEST["userId"]);
+	$userid = trim($_REQUEST["userid"]);
 	$userLv = trim($_REQUEST["userLv"]);
 
 	$familyMember = new MissionaryFamily();
@@ -264,7 +264,7 @@ function deleteFamily() {
 	$ObjQuery = null;
 
 
-	header("Location: "."mypage_member.php?userLv=".$userLv."&userId=".$userId);
+	header("Location: "."mypage_member.php?userLv=".$userLv."&userid=".$userid);
 } 
 
 function logout() {
@@ -309,7 +309,7 @@ function reservation() {
 	$book->StartDate = isset($_REQUEST["startDate"]) ? $_REQUEST["startDate"] : "";
 	$book->EndDate = isset($_REQUEST["endDate"]) ? $_REQUEST["endDate"] : "";
 	$book->RoomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
-	$book->UserId = $_SESSION["userId"};
+	$book->userid = $_SESSION["userid"};
 
 	if (!$book->checkId()) {
 		header("Location: "."mypage_houseReserv.php?houseId=".$houseId);
@@ -321,7 +321,7 @@ function reservation() {
 
 // SMS 메세지 보내기alertGoPage("예약요청 되었습니다.","mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
 	$house = new HouseObject($houseId);
-	$manager = new MemberObject($house->UserID);
+	$manager = new MemberObject($house->userid);
 	$from_number="01010041004";
 	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
 	//sendSMSMessage($from_number, join($manager->Mobile, ""),$message);

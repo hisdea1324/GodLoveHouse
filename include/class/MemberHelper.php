@@ -45,8 +45,8 @@ class MemberHelper {
 
 	#  method
 	# ***********************************************
-	function getMemberByUserId($userId = "") {
-		$member = new MemberObject($userId);
+	function getMemberByuserid($userid = "") {
+		$member = new MemberObject($userid);
 
 		if ($member->userid != "") {
 			$this->m_eHandler->ignoreError("Member Not Found.");
@@ -66,8 +66,8 @@ class MemberHelper {
 		return $member;
 	} 
 
-	function getMissionInfoByUserId($userId = "") {
-		$mission = new MissionObject($userId);
+	function getMissionInfoByuserid($userid = "") {
+		$mission = new MissionObject($userid);
 
 		if ($mission->userid != "") {
 			$this->m_eHandler->ignoreError("Member Not Found.");
@@ -76,10 +76,10 @@ class MemberHelper {
 		return $mission;
 	} 
 
-	function getAccountInfoByUserId($userId = "") {
+	function getAccountInfoByuserid($userid = "") {
 		$account = new AccountObject();
 
-		if ($account->Open($userId) == false) {
+		if ($account->Open($userid) == false) {
 			$this->m_eHandler->ignoreError("Account Not Found.");
 		} 
 
@@ -87,10 +87,10 @@ class MemberHelper {
 		return $account;
 	} 
 
-	function getSupportByUserId($userId) {
+	function getSupportByuserid($userid) {
 		$support = new SupportObject();
 
-		if ($support->Open($userId) == false) {
+		if ($support->Open($userid) == false) {
 			$this->m_eHandler->ignoreError("Supporter Not Found.");
 		} 
 
@@ -98,10 +98,10 @@ class MemberHelper {
 		return $support;
 	} 
 
-	function getFamilyType($missionId,$userId) {
+	function getFamilyType($missionId,$userid) {
 
-		if (strlen($userId) > 0) {
-			$query = "SELECT familyType FROM family WHERE userId = '".$missionId."' AND followUserId = '".$userId."'";
+		if (strlen($userid) > 0) {
+			$query = "SELECT familyType FROM family WHERE userid = '".$missionId."' AND followuserid = '".$userid."'";
 			$familyRS = $db->Execute($query);
 			if (!$familyRS->EOF && !$familyRS->BOF) {
 				$retValue = $familyRS["familyType"];
@@ -217,15 +217,15 @@ class MemberHelper {
 		return $mission_list;
 	} 
 
-	function getMemberListByPrayer($userId) {
+	function getMemberListByPrayer($userid) {
 		global $mysqli;
-		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$mysqli->real_escape_string($userId)."'";
+		$query = "SELECT userid FROM family WHERE familytype = 'F0002' AND followuserid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getMissionList($query);
 	} 
 
-	function getMemberListByRegular($userId) {
+	function getMemberListByRegular($userid) {
 		global $mysqli;
-		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$mysqli->real_escape_string($userId)."'";
+		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getMissionList($query);
 	} 
 } 

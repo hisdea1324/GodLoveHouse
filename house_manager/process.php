@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+checkUserLogin();
+
 $mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
 
 switch ($mode) {
@@ -37,108 +39,88 @@ switch ($mode) {
 		header("Location: "."../index.php");
 		break;
 } 
+
 debugFooter();
 
 function editRoom() {
 	$room = new RoomObject();
 
-	$room->RoomID = $_REQUEST["roomId"];
-	$room->HouseID = $_REQUEST["houseId"];
-	$room->RoomName = $_REQUEST["roomName"];
-	$room->Network = $_REQUEST["network"];
-	$room->Kitchen = $_REQUEST["kitchen"];
-	$room->Laundary = $_REQUEST["laundary"];
-	$room->Limit = $_REQUEST["limit"];
-	$room->Fee = $_REQUEST["fee"];
+	$room->RoomID = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
+	$room->HouseID = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
+	$room->RoomName = isset($_REQUEST["roomName"]) ? $_REQUEST["roomName"] : "";
+	$room->Network = isset($_REQUEST["network"]) ? $_REQUEST["network"] : "";
+	$room->Kitchen = isset($_REQUEST["kitchen"]) ? $_REQUEST["kitchen"] : "";
+	$room->Laundary = isset($_REQUEST["laundary"]) ? $_REQUEST["laundary"] : "";
+	$room->bed = isset($_REQUEST["bed"]) ? $_REQUEST["bed"] : "";
+	$room->Limit = isset($_REQUEST["limit"]) ? $_REQUEST["limit"] : "";
+	$room->Fee = isset($_REQUEST["fee"]) ? $_REQUEST["fee"] : "";
 
-	$room->ImageID1 = $_REQUEST["idRoomImage1"];
-	$room->ImageID2 = $_REQUEST["idRoomImage2"];
-	$room->ImageID3 = $_REQUEST["idRoomImage3"];
-	$room->ImageID4 = $_REQUEST["idRoomImage4"];
-
+	$room->ImageID1 = isset($_REQUEST["idRoomImage1"]) ? $_REQUEST["idRoomImage1"] : "";
+	$room->ImageID2 = isset($_REQUEST["idRoomImage2"]) ? $_REQUEST["idRoomImage2"] : "";
+	$room->ImageID3 = isset($_REQUEST["idRoomImage3"]) ? $_REQUEST["idRoomImage3"] : "";
+	$room->ImageID4 = isset($_REQUEST["idRoomImage4"]) ? $_REQUEST["idRoomImage4"] : "";
 	$room->Update();
 
-	header("Location: "."mypage_houseInfo.php?houseId=".$_REQUEST["houseId"]."&roomId=".$_REQUEST["roomId"]);
+	header("Location: "."mission_write2.php?houseId=".$_REQUEST["houseId"]."&roomId=".$_REQUEST["roomId"]);
 } 
 
 function deleteRoom() {
-	$houseId = trim($_REQUEST["houseId"]);
-	$roomId = trim($_REQUEST["roomId"]);
+	global $mysqli;
 
-	$query = "DELETE FROM room WHERE roomId = ".$roomId;
-	$deleteRs = $db->Execute($query);
-	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$houseId;
-	$deleteRs = $db->Execute($query);
+	$houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
+	$roomId = isset($_REQUEST["roomId"]) ? trim($_REQUEST["roomId"]) : "";
 
-	$deleteRs = null;
+	$query = "DELETE FROM room WHERE roomId = ".$mysqli->real_escape_string($roomId);
+	$result = $mysqli->query($query);
 
-	header("Location: "."mypage_houseInfo.php?houseId=".$_REQUEST["houseId"]);
+	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$mysqli->real_escape_string($houseId);
+	$result = $mysqli->query($query);
+
+	header("Location: "."mypage_houseInfo.php?houseId=".$houseId);
 } 
 
 function editUser() {
 	# 비밀번호 체크, 아이디 체크 해야함
-	$missionary = trim($_REQUEST["missionary"]);
-
-	if (($missionary=="1")) {
-		editUserMissionary();
-	} 
-
 	editUserNormal();
 
 	$getURL = $_SERVER["HTTP_REFERER"];
 
-	$parsedURL = $ParsingURL[$getURL];
-	if ((strcmp($parsedURL->Item("path"),"/member/join.php")==0)) {
+	$parsedURL = ParsingURL($getURL);
+	if (strcmp($parsedURL["path"],"/member/join.php") == 0) {
 		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
 	} else {
-		$returnURL = $parsedURL->Item("path");
+		$returnURL = $parsedURL["path"];
 	} 
 
-
-	alertGoPage("가입 되었습니다.",$returnURL);
+	alertGoPage("변경 되었습니다.",$returnURL);
 } 
 
 function editUserNormal() {
-	$member = new MemberObject();
+	$member = new MemberObject($_REQUEST["userid"]);
 
-	$member->UserID = $_REQUEST["userId"];
-	$member->Name = $_REQUEST["name"];
-	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = crypt($_REQUEST["password"]);
-	$member->PasswordQuestion = $_REQUEST["password_quest"];
-	$member->PasswordAnswer = $_REQUEST["password_answer"];
+	$member->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
+	$member->Name = isset($_REQUEST["name"]) ? $_REQUEST["name"] : "";
+	$member->Nick = isset($_REQUEST["nickName"]) ? $_REQUEST["nickName"] : "";
 
-	$jumin[0] = $_REQUEST["jumin1"];
-	$jumin[1] = $_REQUEST["jumin2"];
-	$member->Jumin = $jumin;
+	$email[0] = isset($_REQUEST["email1"]) ? $_REQUEST["email1"] : "";
+	$email[1] = isset($_REQUEST["email2"]) ? $_REQUEST["email2"] : "";
+	$member->Email = $email[0]."@".$email[1];
 
-	$email[0] = $_REQUEST["email1"];
-	$email[1] = $_REQUEST["email2"];
-	$member->Email = $email;
+	$post[0] = isset($_REQUEST["post1"]) ? $_REQUEST["post1"] : "";
+	$post[1] = isset($_REQUEST["post2"]) ? $_REQUEST["post2"] : "";
+	$member->Post = $post[0]."-".$post[1];
+	$member->Address1 = isset($_REQUEST["addr1"]) ? $_REQUEST["addr1"] : "";
+	$member->Address2 = isset($_REQUEST["addr2"]) ? $_REQUEST["addr2"] : "";
 
-	$post[0] = $_REQUEST["post1"];
-	$post[1] = $_REQUEST["post2"];
-	$member->Post = $post;
-	$member->Address1 = $_REQUEST["addr1"];
-	$member->Address2 = $_REQUEST["addr2"];
+	$tel[0] = isset($_REQUEST["tel1"]) ? $_REQUEST["tel1"] : "";
+	$tel[1] = isset($_REQUEST["tel2"]) ? $_REQUEST["tel2"] : "";
+	$tel[2] = isset($_REQUEST["tel3"]) ? $_REQUEST["tel3"] : "";
+	$member->Phone = $tel[0]."-".$tel[1]."-".$tel[2];
 
-	$tel[0] = $_REQUEST["tel1"];
-	$tel[1] = $_REQUEST["tel2"];
-	$tel[2] = $_REQUEST["tel3"];
-	$member->Phone = $tel;
-
-	$mobile[0] = $_REQUEST["hp1"];
-	$mobile[1] = $_REQUEST["hp2"];
-	$mobile[2] = $_REQUEST["hp3"];
-	$member->Mobile = $mobile;
-
-	$member->CheckMessageOption = $_REQUEST["smsOk"];
-
-	$member->UserLevel = $_REQUEST["level"];
-	if (($_REQUEST["missionary"]=="1" && $_REQUEST["level"]==1)) {
-		$member->UserLevel=3;
-	} 
-
+	$hp[0] = isset($_REQUEST["hp1"]) ? $_REQUEST["hp1"] : "";
+	$hp[1] = isset($_REQUEST["hp2"]) ? $_REQUEST["hp2"] : "";
+	$hp[2] = isset($_REQUEST["hp3"]) ? $_REQUEST["hp3"] : "";
+	$member->Mobile = $hp[0]."-".$hp[1]."-".$hp[2];
 
 	$member->Update();
 } 
@@ -146,7 +128,7 @@ function editUserNormal() {
 function editUserMissionary() {
 	$mission = new MissionObject();
 
-	$mission->UserID = $_REQUEST["userId"];
+	$mission->userid = $_REQUEST["userid"];
 	$mission->Church = $_REQUEST["church"];
 	$mission->MissionName = $_REQUEST["missionName"];
 	$mission->Ngo = $_REQUEST["ngo"];
@@ -188,7 +170,7 @@ function editUserMissionary() {
 	$familyRelation=explode(",",$_REQUEST["familyRelation"]);
 	for ($i=0; $i<=count($familyName); $i = $i+1) {
 		$familyMember = new MissionaryFamily();
-		$familyMember->UserID = $_REQUEST["userId"];
+		$familyMember->userid = $_REQUEST["userid"];
 		$familyMember->familyID = $familyId[$i];
 		$familyMember->Name = $familyName[$i];
 		$familyMember->Age = $familyAge[$i];
@@ -254,7 +236,7 @@ function login() {
 
 function deleteFamily() {
 	$familyId = trim($_REQUEST["familyId"]);
-	$userId = trim($_REQUEST["userId"]);
+	$userid = trim($_REQUEST["userid"]);
 	$userLv = trim($_REQUEST["userLv"]);
 
 	$familyMember = new MissionaryFamily();
@@ -264,7 +246,7 @@ function deleteFamily() {
 	$ObjQuery = null;
 
 
-	header("Location: "."mypage_member.php?userLv=".$userLv."&userId=".$userId);
+	header("Location: "."mypage_member.php?userLv=".$userLv."&userid=".$userid);
 } 
 
 function logout() {
@@ -302,25 +284,30 @@ function changeReservStatus() {
 } 
 
 function reservation() {
-	$book = new reservationObject();
+	$book = new ReservationObject();
 
 	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
 	$book->StartDate = isset($_REQUEST["startDate"]) ? $_REQUEST["startDate"] : "";
 	$book->EndDate = isset($_REQUEST["endDate"]) ? $_REQUEST["endDate"] : "";
 	$book->RoomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
-	$book->UserId = $_SESSION["userId"};
+	$book->userid = $_SESSION["userid"];
+	$book->resv_name = isset($_REQUEST["resv_name"]) ? $_REQUEST["resv_name"] : "";
+	$book->resv_phone = isset($_REQUEST["resv_phone"]) ? $_REQUEST["resv_phone"] : "";
+	$book->resv_nation = isset($_REQUEST["resv_nation"]) ? $_REQUEST["resv_nation"] : "";
+	$book->resv_assoc = isset($_REQUEST["resv_assoc"]) ? $_REQUEST["resv_assoc"] : "";
 
 	if (!$book->checkId()) {
-		header("Location: "."mypage_houseReserv.php?houseId=".$houseId);
+		header("Location: "."reserve_2.php?houseId=".$houseId);
 	} else if (!$book->checkDate()) {
-		header("Location: "."mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
-	} 
+		header("Location: "."reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
+	}
 
 	$book->Update();
 
-// SMS 메세지 보내기alertGoPage("예약요청 되었습니다.","mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
+	// SMS 메세지 보내기
+	alertGoPage("예약요청 되었습니다.","reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
 	$house = new HouseObject($houseId);
-	$manager = new MemberObject($house->UserID);
+	$manager = new MemberObject($house->userid);
 	$from_number="01010041004";
 	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
 	//sendSMSMessage($from_number, join($manager->Mobile, ""),$message);

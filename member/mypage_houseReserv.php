@@ -20,15 +20,15 @@ $search = isset($_REQUEST["search"]) ? trim($_REQUEST["search"]) : "";
 $page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
-$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
 
 $h_Helper = new HouseHelper();
-$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
+$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
 
 if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 개인정보","mypage_manager","tit_0801.gif");
@@ -290,7 +290,7 @@ function body() {
 			<tr>
 				<td><?php echo $reservObj->BookNo;?></td>
 				<td class="ltd">
-					<label id="profileId<?=$i?>" onmouseover="showProfile('<?=$i?>', event)" onmouseout="unshowProfile('<?=$i?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.UserID ?></label>
+					<label id="profileId<?=$i?>" onmouseover="showProfile('<?=$i?>', event)" onmouseout="unshowProfile('<?=$i?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.userid ?></label>
 					<div id="profile<?=$i?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
 				</td>
 				<td><?php echo $reservObj->HouseName;?> / <?php echo $reservObj->RoomName;?></td>

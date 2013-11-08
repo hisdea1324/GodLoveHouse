@@ -25,7 +25,7 @@ class AttachFile {
     function __construct() {
 		$this->record['image'] = -1;
 		$this->record['id'] = "";
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['name'] = "";
 	}
 
@@ -79,14 +79,14 @@ class AttachFile {
 
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO attachFile (`userId`, `name`) VALUES ";
+			$query = "INSERT INTO attachFile (`userid`, `name`) VALUES ";
 			$query = $query."(?, ?)";
 
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
 			$stmt->bind_param("ss", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['name']);
 
 			# execute query
@@ -95,7 +95,7 @@ class AttachFile {
 			# close statement
 			$stmt->close();
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) AS new_id FROM attachFile WHERE `userId` = ?");
+			$stmt = $mysqli->prepare("SELECT MAX(id) AS new_id FROM attachFile WHERE `userid` = ?");
 			$stmt->bind_param("s", $this->record['code']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
@@ -106,7 +106,7 @@ class AttachFile {
 		} else {
 
 			$query = "UPDATE attachFile SET ";
-			$updateData = "`userId` = ?, ";
+			$updateData = "`userid` = ?, ";
 			$updateData.= "`name` = ?, ";
 			$query .= $updateData." WHERE `id` = ?";
 
@@ -114,7 +114,7 @@ class AttachFile {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("sss", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['name'], 
 				$this->record['id']);
 				
@@ -130,7 +130,7 @@ class AttachFile {
 		global $mysqli;
 
 		if ($this->record['id'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM attachFile WHERE `userId` = ?");
+			$stmt = $mysqli->prepare("DELETE FROM attachFile WHERE `userid` = ?");
 			$stmt->bind_param("s", $this->record['id']);
 			$stmt->execute();
 			$stmt->close();
@@ -156,8 +156,8 @@ class AttachFile {
 		$ImageID=intval($m_index);
 	} 
 
-	function UserID() {
-		$UserID = $m_userid;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function Name() {
@@ -170,7 +170,7 @@ class AttachFile {
 		$m_index=intval($value);
 	} 
 
-	function UserID($value) {
+	function userid($value) {
 		$m_userid = trim($value);
 	} 
 
@@ -203,13 +203,13 @@ class AttachFile {
 	function Update() {
 		if (($m_index==-1)) {
 			# New Data
-			$query = "INSERT INTO attachFile (userId, name) VALUES ";
+			$query = "INSERT INTO attachFile (userid, name) VALUES ";
 			$insertData="'".$m_userid."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_name]."'";
 			$query = $query."(".$insertData.")";
 			$objDB->execute_command($query);
 
-			$query = "SELECT MAX(id) AS new_id FROM attachFile WHERE userId = '".$m_userId."'";
+			$query = "SELECT MAX(id) AS new_id FROM attachFile WHERE userid = '".$m_userid."'";
 			$rs_image = $objDB->execute_query($query);
 			if ((!$rs_image->eof && !$rs_image->bof)) {
 				$m_index=intval($rs_image["new_id"]);
@@ -217,7 +217,7 @@ class AttachFile {
 
 		} else {
 			$query = "UPDATE attachFile SET ";
-			$updateData="userId = '".$m_userid."', ";
+			$updateData="userid = '".$m_userid."', ";
 			$updateData = $updateData."name = '".$mssqlEscapeString[$m_name]."' ";
 			$query = $query.$updateData." WHERE id = ".$m_index;
 			$objDB->execute_command($query);

@@ -38,8 +38,8 @@ class HospitalObject {
 				return $this->record['address2'];
 			case "Manager1":
 				return $this->record['manager1'];
-			case "UserID":
-				return $this->record['userId'];
+			case "userid":
+				return $this->record['userid'];
 			case "contact1":
 			case "contact2":
 				$value = explode("-", $this->record[$name]);
@@ -124,7 +124,7 @@ class HospitalObject {
 		$this->record['hospitalId'] = -1;
 		$this->record['hospitalName'] = "";
 		$this->record['assocName'] = "";
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['manager1'] = "";
 		$this->record['manager2'] = "";
 		$this->record['contact1'] = "";
@@ -225,7 +225,7 @@ class HospitalObject {
 
 		if (($this->record['id'] == -1)) {
 			$query = "INSERT INTO hospital (`hospitalName`, `assocName`, 'address1', 'address2', ";
-			$query.= "'zipcode', 'regionCode', 'explain', 'userId', 'manager1', 'manager2', 'contact1', 'contact2', ";
+			$query.= "'zipcode', 'regionCode', 'explain', 'userid', 'manager1', 'manager2', 'contact1', 'contact2', ";
 			$query.= "'price', 'personLimit', 'homepage',  ";
 			$query.= "'documentId', 'document', 'imageId1', 'imageId2', 'imageId3', 'imageId4') VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -241,7 +241,7 @@ class HospitalObject {
 				$this->record['zipcode'],
 				$this->record['regionCode'],
 				$this->record['explain'],
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['manager1'],
 				$this->record['manager2'],
 				$this->record['contact1'],
@@ -280,7 +280,7 @@ class HospitalObject {
 			$updateData.= "`regionCode` = ?, ";
 			$updateData.= "`zipcode` = ?, ";
 			$updateData.= "`explain` = ?, ";
-			$updateData.= "`userId` = ?, ";
+			$updateData.= "`userid` = ?, ";
 			$updateData.= "`manager1` = ?, ";
 			$updateData.= "`manager2` = ?, ";
 			$updateData.= "`contact1` = ?, ";
@@ -308,7 +308,7 @@ class HospitalObject {
 				$this->record['zipcode'],
 				$this->record['regionCode'],
 				$this->record['explain'],
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['manager1'],
 				$this->record['manager2'],
 				$this->record['contact1'],
@@ -523,8 +523,8 @@ class HospitalObject {
 		$m_assocName = trim($value);
 	} 
 
-	function UserID($value) {
-		$m_userId = trim($value);
+	function userid($value) {
+		$m_userid = trim($value);
 	} 
 
 	function Manager1($value) {
@@ -623,7 +623,7 @@ class HospitalObject {
 		$m_hospitalId=-1;
 		$m_hospitalName="";
 		$m_assocName="";
-		$m_userId="";
+		$m_userid="";
 		$m_manager1="";
 		$m_manager2="";
 		$m_price=0;
@@ -731,7 +731,7 @@ class HospitalObject {
 	function Update() {
 		if (($m_hospitalId==-1)) {
 			# New Data
-			$query = "INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, ";
+			$query = "INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, ";
 			$query = $query."manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document, imageId1, imageId2, imageId3, imageId4) VALUES ";
 			$insertData="'".$mssqlEscapeString[$m_hospitalName]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_assocName]."',";
@@ -740,7 +740,7 @@ class HospitalObject {
 			$insertData = $insertData."'".$m_zipcode[0].$m_zipcode[1]."',";
 			$insertData = $insertData."'".$m_regionCode."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_explain]."',";
-			$insertData = $insertData."'".$m_userId."', ";
+			$insertData = $insertData."'".$m_userid."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_manager1]."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_manager2]."', ";
 			$insertData = $insertData."'".$m_contact1[0]."-".$m_contact1[1]."-".$m_contact1[2]."', ";
@@ -771,7 +771,7 @@ class HospitalObject {
 			$updateData = $updateData."regionCode = '".$m_regionCode."', ";
 			$updateData = $updateData."zipcode = '".$m_zipcode[0].$m_zipcode[1]."', ";
 			$updateData = $updateData."explain = '".$mssqlEscapeString[$m_explain]."', ";
-			$updateData = $updateData."userId = '".$m_userId."', ";
+			$updateData = $updateData."userid = '".$m_userid."', ";
 			$updateData = $updateData."manager1 = '".$mssqlEscapeString[$m_manager1]."', ";
 			$updateData = $updateData."contact1 = '".$m_contact1[0]."-".$m_contact1[1]."-".$m_contact1[2]."', ";
 			$updateData = $updateData."manager2 = '".$mssqlEscapeString[$m_manager2]."', ";

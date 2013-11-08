@@ -18,7 +18,7 @@ if ((strlen($order)==0)) {
 	$order="reqId";
 } 
 
-$query = "select A.title, B.userId, B.dueDate from requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.reqId = ".$reqId;
+$query = "select A.title, B.userid, B.dueDate from requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.reqId = ".$reqId;
 $viewRS = $db->Execute($query);
 
 $query = "select sum(cost) as costTotal from (select cost from requestItem WHERE reqId = ".$reqId." union select 0) T";
@@ -41,7 +41,7 @@ if (($listRS->RecordCount>0)) {
 $objTable = new tableBuilder();
 $objTable->setButton(array("후원자","수 정","삭 제"));
 $objTable->setColumn(array("개별코드","후원요청코드","아이템","요청금액","후원상태","후원자"));
-$objTable->setField(array("reqItemId","reqId","item","cost","sendStatus","userId"));
+$objTable->setField(array("reqItemId","reqId","item","cost","sendStatus","userid"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("reqItemId"));
 $objTable->setGotoPage($page);
@@ -86,7 +86,7 @@ function body() {
 
 		<h3>후원 제목: <?php echo $viewRS["title"];?></h3>
 		<ul>
-			<li>선교사: <?php echo $viewRS["userId"];?></li>
+			<li>선교사: <?php echo $viewRS["userid"];?></li>
 			<li>총비용: <?php echo $costRS["costTotal"];?></li>
 			<li>후원 마감일: <?php echo $viewRS["dueDate"];?></li>
 		</ul>

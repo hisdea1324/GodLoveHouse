@@ -155,13 +155,13 @@ class HouseHelper {
 		return $this->getHouseList($query);
 	} 
 
-	function getHouseListByUserId($userId, $houseType) {
-		if ($userId == "lovehouse") {
+	function getHouseListByuserid($userid, $houseType) {
+		if ($userid == "lovehouse") {
 			$query = "SELECT houseId FROM house WHERE status = 'S2002'";
 		} elseif ($houseType == 1) {
-			$query = "SELECT houseId FROM house WHERE userId = '$userId' AND status = 'S2002'";
+			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2002'";
 		} else {
-			$query = "SELECT houseId FROM house WHERE userId = '$userId' AND (status = 'S2001')";
+			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND (status = 'S2001')";
 		} 
 
 		return $this->getHouseList($query);
@@ -262,7 +262,7 @@ class HouseHelper {
 		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$_SESSION['userid']."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userid = '".$_SESSION['userid']."' ".$this->m_StrConditionQuery;
 		} 
 
 		if ($result = $mysqli->query($query)) {
@@ -281,7 +281,7 @@ class HouseHelper {
 		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userid = '".$mysqli->real_escape_string($_SESSION['userid'])."' ".$this->m_StrConditionQuery;
 		} 
 
 		$start = $this->m_pageCount * ($curPage - 1);
@@ -318,7 +318,7 @@ class HouseHelper {
 		if ($_SESSION['userid'] == "lovehouse") {
 			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId";
 		} else {
-			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."'";
+			$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND A.userid = '".$mysqli->real_escape_string($_SESSION['userid'])."'";
 		} 
 
 		return $this->getReservationList($query);
@@ -328,7 +328,7 @@ class HouseHelper {
 		global $mysqli;
 
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
-		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userId = '".$mysqli->real_escape_string($_SESSION['userid'])."' ";
+		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userid = '".$mysqli->real_escape_string($_SESSION['userid'])."' ";
 		$query = $query."ORDER BY C.regDate DESC";
 		return $this->getReservationList($query);
 	} 

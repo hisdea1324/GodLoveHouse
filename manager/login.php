@@ -11,7 +11,7 @@ if (strlen($userid) == 0 || strlen($password) == 0) {
 	MoveToPage("index.php");
 }
 
-$query = "SELECT * FROM member WHERE userId = '".$userid."'";
+$query = "SELECT * FROM member WHERE userid = '".$userid."'";
 $result = $mysqli->query($query);
 
 if (!$result) {
@@ -23,14 +23,14 @@ if (!$result) {
 if ($result->num_rows > 0) {
 	$obj = $result->fetch_object();
 	echo "<br>".$obj->password."<br>";
-	echo crypt($password, $obj->userId)."<br>";
+	echo crypt($password, $obj->userid)."<br>";
 	
-	if ($obj->password != crypt($password, $obj->userId)) {
+	if ($obj->password != crypt($password, $obj->userid)) {
 		echo "no matched password!!";
 		//header("Location: "."index.php?userid=".$userid);
 		MoveToPage("index.php?userid=".$userid);
 	} else {
-		$_SESSION['userId'] = $userid;
+		$_SESSION['userid'] = $userid;
 		$_SESSION['userLv'] = $obj->userLv;
 		echo "{$userid} loggined!!";
 		//header("Location: "."main.php");
@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
 } else {
 	# 관리자 생성
 	$member = new MemberObject();
-	$member->userId = "lovehouse";
+	$member->userid = "lovehouse";
 	$member->password = "6394";
 	$member->userLv = "9";
 	$member->Update();

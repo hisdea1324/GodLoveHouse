@@ -145,15 +145,15 @@ class HospitalHelper {
 		return getHospitalList($query);
 	} 
 
-	function getHospitalListByUserId($userId, $hospitalType) {
-		if ($userId == "lovehouse") {
+	function getHospitalListByuserid($userid, $hospitalType) {
+		if ($userid == "lovehouse") {
 			$query = "SELECT hospitalId FROM hospital WHERE AND status = 'S2002'";
 		}
 			else
 		if ($hospitalType == 1) {
-			$query = "SELECT hospitalId FROM hospital WHERE userId = '{$userId}' AND status = 'S2002'";
+			$query = "SELECT hospitalId FROM hospital WHERE userid = '{$userid}' AND status = 'S2002'";
 		} else {
-			$query = "SELECT hospitalId FROM hospital WHERE userId = '{$userId}' AND status = 'S2001'";
+			$query = "SELECT hospitalId FROM hospital WHERE userid = '{$userid}' AND status = 'S2001'";
 		} 
 
 		return getHospitalList($query);
@@ -201,10 +201,10 @@ class HospitalHelper {
 
 	function makeReservationListPagingHTML($curPage) {
 		$query = "SELECT COUNT(*) AS recordCount FROM hospital A, reservation C ";
-		if ($_SESSION["userId"] == "lovehouse") {
+		if ($_SESSION["userid"] == "lovehouse") {
 			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userid = '".$_SESSION["userid"]."' ".$this->m_StrConditionQuery;
 		} 
 
 		$countRS = $db->Execute($query);
@@ -218,10 +218,10 @@ class HospitalHelper {
 		$topNum = $this->m_pageCount*$curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM hospital A, reservation C ";
-		if ($_SESSION["userId"] == "lovehouse") {
+		if ($_SESSION["userid"] == "lovehouse") {
 			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userid = '".$_SESSION["userid"]."' ".$this->m_StrConditionQuery;
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
@@ -255,10 +255,10 @@ class HospitalHelper {
 
 	function getReservationListByManager($curPage) {
 		$query = "SELECT C.reservationNo FROM hospital A, reservation C ";
-		if ($_SESSION["userId"] =="lovehouse") {
+		if ($_SESSION["userid"] =="lovehouse") {
 			$query = $query."WHERE A.hospitalId = C.hospitalId";
 		} else {
-			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."'";
+			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userid = '".$_SESSION["userid"]."'";
 		} 
 
 		return getReservationList($query);

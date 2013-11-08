@@ -33,7 +33,7 @@ if ($status == "S2002") {
 	$objTable->setButton(array("방정보","수정","삭제","승인"));
 } 
 $objTable->setColumn(array("선교관코드","단체명","선교관이름","관리자","연락처","방갯수"));
-$objTable->setField(array("houseId","assocName","houseName","userId","contact1","roomCount"));
+$objTable->setField(array("houseId","assocName","houseName","userid","contact1","roomCount"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("houseId"));
 $objTable->setGotoPage($page);
@@ -88,7 +88,7 @@ function body() {
 			<tr>
 				<td align="right">
 					<select name="field">
-						<option value="userId" <?php if (($field=="userId")) {
+						<option value="userid" <?php if (($field=="userid")) {
 ?>selected<?php } ?>>관리자</option>
 						<option value="houseName" <?php if (($field=="houseName")) {
 ?>selected<?php } ?>>선교관이름</option>

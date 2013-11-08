@@ -1,23 +1,23 @@
 <?php 
 class CommentHelper {
-	var $m_hostUserId;
+	var $m_hostuserid;
 	var $m_pageCount;
 	var $m_pageUnit;
 
 	#  Get property
 	# ***********************************************
-	function HostUserId() {
-		$HostUserId = $this->m_hostUserId;
+	function Hostuserid() {
+		$Hostuserid = $this->m_hostuserid;
 	} 
 
 	#  Set property 
 	# ***********************************************
-	function HostUserId($value) {
-		$this->m_hostUserId = $value;
+	function Hostuserid($value) {
+		$this->m_hostuserid = $value;
 	} 
 
 	function __construct() {
-		$this->m_hostUserId = "";
+		$this->m_hostuserid = "";
 		$this->m_pageCount = 5;
 		$this->m_pageUnit = 10;
 	} 
@@ -28,10 +28,10 @@ class CommentHelper {
 	} 
 
 	function getCommentList($curPage) {
-		if (strlen($this->m_hostUserId)>0) {
+		if (strlen($this->m_hostuserid)>0) {
 			$topNum = $this->m_pageCount * $curPage;
 
-			$query = "SELECT top {$topNum} id FROM familyComment WHERE hostUserId = '".$this->m_hostUserId."' AND parentId = -1 ORDER BY regDate DESC";
+			$query = "SELECT top {$topNum} id FROM familyComment WHERE hostuserid = '".$this->m_hostuserid."' AND parentId = -1 ORDER BY regDate DESC";
 			$commentsRS = $mysqli->Execute($query);
 			if (($commentsRS->RecordCount>0)) {
 				$commentsRS->PageSize = $this->m_pageCount;
@@ -58,7 +58,7 @@ class CommentHelper {
 	} 
 
 	function makePagingHTML($curPage) {
-		$query = "SELECT COUNT(*) AS recordCount from familyComment WHERE hostUserId = '".$this->m_hostUserId."' AND parentId = -1";
+		$query = "SELECT COUNT(*) AS recordCount from familyComment WHERE hostuserid = '".$this->m_hostuserid."' AND parentId = -1";
 		$countRS = $mysqli->Execute($query);
 		$total = $countRS["recordCount"];
 

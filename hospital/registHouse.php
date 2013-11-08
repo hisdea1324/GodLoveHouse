@@ -15,7 +15,7 @@ $codeStatus = $c_Helper->getHouseStatusCodeList();
 $h_helper = new HospitalHelper();
 $hospitalObj = $h_helper->getHospitalInfoById($hospitalId);
 
-# if (sessions.userId <> hospitalObj.UserID) then 
+# if (sessions.userid <> hospitalObj.userid) then 
 #	Call alertBack("본인 소유의 병원이 아닙니다.")
 # end if
 
@@ -32,7 +32,7 @@ function body() {
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 		<form name="dataForm" id="dataForm" method="post">
 		<input type="hidden" name="mode" id="mode" value="registHospital" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $hospitalObj->UserID;?>" />
+		<input type="hidden" name="userid" id="userid" value="<?php echo $hospitalObj->userid;?>" />
 		<input type="hidden" name="hospitalId" id="hospitalId" value="<?php echo $hospitalObj->hospitalId;?>" />
 				<col width="20%" />
 				<col />
@@ -164,7 +164,7 @@ function body() {
 //<![CDATA[
 	function frmSubmit() {
 <?php 
-	if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0 && false) {
+	if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0 && false) {
 		# 로그인 안해도 등록할 수 있도록 수정함
 		$backURL = get_path_info();
 ?>

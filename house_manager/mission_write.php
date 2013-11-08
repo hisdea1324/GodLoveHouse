@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+checkUserLogin();
 
 showHouseManagerHeader();
 showHouseManagerLeft();
@@ -238,7 +239,7 @@ function body() {
 	
 	function frmSubmit() {
 		<?php 
-if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0) {
+if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 	$backURL = get_path_info();
 ?>
 			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");

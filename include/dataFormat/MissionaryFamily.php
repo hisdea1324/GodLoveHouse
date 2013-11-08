@@ -25,14 +25,14 @@ class MissionaryFamily {
 
     function __construct() {
     	$this->record['id'] = -1;
-		$this->record['userId'] = -1;
+		$this->record['userid'] = -1;
 		$this->record['name'] = "";
 		$this->record['age'] = 0;
 		$this->record['sex'] = "";
 		$this->record['relation'] = "";
 	}
 
-	function Open($userId) {
+	function Open($userid) {
 		global $mysqli;
 
 		$column = array();
@@ -42,7 +42,7 @@ class MissionaryFamily {
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
-			$stmt->bind_param("s", $userId);
+			$stmt->bind_param("s", $userid);
 
 			/* execute query */
 			$stmt->execute();
@@ -81,14 +81,14 @@ class MissionaryFamily {
 		global $mysqli;
 
 
-		if (($this->record['userId'] == "")) {
-			$query = "INSERT INTO missionary_family (`userId`, `name`, `age`, `sex`, 'relation' ";
+		if (($this->record['userid'] == "")) {
+			$query = "INSERT INTO missionary_family (`userid`, `name`, `age`, `sex`, 'relation' ";
 			$query = $query.") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			$stmt = $mysqli->prepare($query);
 
 			# New Data
 			$stmt->bind_param("ssiis", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['name'], 
 				$this->record['age'], 
 				$this->record['sex'], 
@@ -100,8 +100,8 @@ class MissionaryFamily {
 			# close statement
 			$stmt->close();
 			
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM missionary_family WHERE userId = ?");
-			$stmt->bind_param("s", $this->record['userId']);
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM missionary_family WHERE userid = ?");
+			$stmt->bind_param("s", $this->record['userid']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
 			$stmt->close();
@@ -109,7 +109,7 @@ class MissionaryFamily {
 		} else {
 
 			$query = "UPDATE missionary_family SET ";
-			$updateData = "`userId` = ?, ";
+			$updateData = "`userid` = ?, ";
 			$updateData.= "`name` = ?, ";
 			$updateData.= "`age` = ?, ";
 			$updateData.= "`sex` = ?, ";
@@ -120,7 +120,7 @@ class MissionaryFamily {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("ssiiss", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['name'], 
 				$this->record['age'], 
 				$this->record['sex'], 
@@ -170,8 +170,8 @@ class MissionaryFamily {
 		$familyID = $m_index;
 	} 
 
-	function UserID() {
-		$UserID = $m_userid;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function Name() {
@@ -196,7 +196,7 @@ class MissionaryFamily {
 		$m_index=intval($value);
 	} 
 
-	function UserID($value) {
+	function userid($value) {
 		$m_userid = trim($value);
 	} 
 
@@ -236,7 +236,7 @@ class MissionaryFamily {
 		$memberRS = $objDB->execute_query($query);
 		if ((!$memberRS->eof && !$memberRS->bof)) {
 			$m_index=intval($memberRS["id"]);
-			$m_userid = $memberRS["userID"];
+			$m_userid = $memberRS["userid"];
 			$m_name = $memberRS["name"];
 			$m_age=intval($memberRS["age"]);
 			$m_sex = $memberRS["sex"];
@@ -247,7 +247,7 @@ class MissionaryFamily {
 	function Update() {
 		if (($m_index==-1)) {
 			//New Data
-			$query = "INSERT INTO missionary_family (userId, name, age, sex, relation) VALUES ";
+			$query = "INSERT INTO missionary_family (userid, name, age, sex, relation) VALUES ";
 			$insertData="'".$mssqlEscapeString[$m_userid]."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_name]."', ";
 			$insertData = $insertData."'".$m_age."', ";
@@ -256,14 +256,14 @@ class MissionaryFamily {
 			$query = $query."(".$insertData.") ";
 			$objDB->execute_command($query);
 
-			$query = "SELECT MAX(id) AS new_id FROM missionary_family WHERE userId = '".$mssqlEscapeString[$m_userid]."'";
+			$query = "SELECT MAX(id) AS new_id FROM missionary_family WHERE userid = '".$mssqlEscapeString[$m_userid]."'";
 			$missionRS = $objDB->execute_query($query);
 			if ((!$missionRS->eof && !$missionRS->bof)) {
 				$m_index=intval($missionRS["new_id"]);
 			} 
 		} else {
 			$query = "UPDATE missionary_family SET ";
-			$updateData=" userId = '".$mssqlEscapeString[$m_userid]."', ";
+			$updateData=" userid = '".$mssqlEscapeString[$m_userid]."', ";
 			$updateData = $updateData." name = '".$mssqlEscapeString[$m_name]."', ";
 			$updateData = $updateData." age = '".$m_age."', ";
 			$updateData = $updateData." sex = '".$m_sex."', ";

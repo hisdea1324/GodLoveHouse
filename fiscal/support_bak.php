@@ -32,7 +32,7 @@ showFooter();
 $listRS = null;
 
 function makeCondition($supprotType,$field,$keyword) {
-	$strWhere=" WHERE A.nationCode = B.code AND A.userId = C.userId AND A.supportType = '".$supprotType."'";
+	$strWhere=" WHERE A.nationCode = B.code AND A.userid = C.userid AND A.supportType = '".$supprotType."'";
 	if ((strlen($field)>0 && strlen($keyword)>0)) {
 		$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 	} 

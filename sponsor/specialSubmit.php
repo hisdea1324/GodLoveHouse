@@ -88,7 +88,7 @@ function body() {
 ?>
 			<tr>
 <?php 
-			if (($reqItem->HasSupport && $reqItem->SendUser != $_SESSION["userId"])) {
+			if (($reqItem->HasSupport && $reqItem->SendUser != $_SESSION["userid"])) {
 ?>
 				<td>
 					<font color="#56AA56"><strong>v</strong></font>
@@ -97,7 +97,7 @@ function body() {
 			} else {
 ?>
 				<td>
-					<input type="checkbox" name="check" id="check" value="<?php echo $reqItem->RequestItemID;?>" class="chk" onclick="sum()"<? if ((strlen($reqItem->SendUser)>0 && $reqItem->SendUser == $_SESSION["userId"])) {
+					<input type="checkbox" name="check" id="check" value="<?php echo $reqItem->RequestItemID;?>" class="chk" onclick="sum()"<? if ((strlen($reqItem->SendUser)>0 && $reqItem->SendUser == $_SESSION["userid"])) {
 ?> checked<?				 } ?> />
 				</td>
 <?php 

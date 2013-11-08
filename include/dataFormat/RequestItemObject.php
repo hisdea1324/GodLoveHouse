@@ -28,7 +28,7 @@ class RequestItemObject {
 		$this->record['item'] = "";
 		$this->record['descript'] = "";
 		$this->record['cost'] = 0;
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['sendStatus'] = "s1001";
 	}
 
@@ -39,7 +39,7 @@ class RequestItemObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT reqId, item, descript, cost, userId, sendStatus FROM requestItem WHERE reqItemId = ? ";
+		$query = "SELECT reqId, item, descript, cost, userid, sendStatus FROM requestItem WHERE reqItemId = ? ";
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
@@ -81,7 +81,7 @@ class RequestItemObject {
 
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO requestItem ('reqId', 'item', 'descript', 'cost', 'userId', 'sendStatus') VALUES ";
+			$query = "INSERT INTO requestItem ('reqId', 'item', 'descript', 'cost', 'userid', 'sendStatus') VALUES ";
 
 			$query = $query."(?, ?, ?, ?, ?, ?)";
 
@@ -93,7 +93,7 @@ class RequestItemObject {
 				$this->record['item'], 
 				$this->record['descript'], 
 				$this->record['cost'], 
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['sendStatus']);
 
 			# execute query
@@ -118,7 +118,7 @@ class RequestItemObject {
 			$updateData.= "`descript` = ?, ";
 			$updateData.= "`cost` = ?, ";
 			$updateData.= "`secret` = ?, ";
-			$updateData.= "`userId` = ?, ";
+			$updateData.= "`userid` = ?, ";
 			$updateData.= "`sendStatus` = ?, ";
 			$query .= $updateData." WHERE `reqItemId` = ?";
 
@@ -132,7 +132,7 @@ class RequestItemObject {
 				$this->record['descript'], 
 				$this->record['cost'],
 				$this->record['secret'], 
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['sendStatus'],
 				$this->record['reqItemId']);
 				
@@ -144,12 +144,12 @@ class RequestItemObject {
 		}
 	}
 
-	function Insert($userId,$supType) {
-		$query = "SELECT supId from requestInfo WHERE userId = ? AND supType = ?";
+	function Insert($userid,$supType) {
+		$query = "SELECT supId from requestInfo WHERE userid = ? AND supType = ?";
 		
 		$supId = -1;
 		$stmt = $mysqli->prepare($query);
-				$stmt->bind_param("ss", $userId, $supType);
+				$stmt->bind_param("ss", $userid, $supType);
 				$stmt->execute();
 				$stmt->bind_result($supId);
 				$stmt->close();
@@ -189,7 +189,7 @@ class RequestItemObject {
 	var $m_item;
 	var $m_descript;
 	var $m_cost;
-	var $m_userId;
+	var $m_userid;
 	var $m_sendStatus;
 
 	#  Get property
@@ -215,7 +215,7 @@ class RequestItemObject {
 	} 
 
 	function HasSupport() {
-		if ((strlen($m_userId)>0)) {
+		if ((strlen($m_userid)>0)) {
 			$retValue=true;
 		} else {
 			$retValue=false;
@@ -225,7 +225,7 @@ class RequestItemObject {
 	} 
 
 	function Status() {
-		if ((strlen($m_userId)>0)) {
+		if ((strlen($m_userid)>0)) {
 			$retValue="후원예약";
 		} else {
 			$retValue="미후원";
@@ -235,7 +235,7 @@ class RequestItemObject {
 	} 
 
 	function SendUser() {
-		$SendUser = $m_userId;
+		$SendUser = $m_userid;
 	} 
 
 	function SendStatus() {
@@ -265,8 +265,8 @@ class RequestItemObject {
 	} 
 
 	function SendUser($value) {
-		$m_userId = trim($value);
-		if ((strlen($m_userId)==0)) {
+		$m_userid = trim($value);
+		if ((strlen($m_userid)==0)) {
 			$m_sendStatus = "S1001";
 		} else {
 			$m_sendStatus = "S1002";
@@ -285,7 +285,7 @@ class RequestItemObject {
 		$m_item="";
 		$m_descript="";
 		$m_cost=0;
-		$m_userId="";
+		$m_userid="";
 		$m_sendStatus="S1001";
 	} 
 
@@ -296,7 +296,7 @@ class RequestItemObject {
 	#  class method
 	# ***********************************************
 	function Open($reqItemId) {
-		$query = "SELECT reqId, item, descript, cost, userId, sendStatus FROM requestItem WHERE reqItemId = '".$mssqlEscapeString[$reqItemId]."'";
+		$query = "SELECT reqId, item, descript, cost, userid, sendStatus FROM requestItem WHERE reqItemId = '".$mssqlEscapeString[$reqItemId]."'";
 		$reqItemRS = $objDB->execute_query($query);
 
 		if ((!$reqItemRS->eof && !$reqItemRS->bof)) {
@@ -305,7 +305,7 @@ class RequestItemObject {
 			$m_item = $reqItemRS["item"];
 			$m_descript = $reqItemRS["descript"];
 			$m_cost = $reqItemRS["cost"];
-			$m_userId = $reqItemRS["userId"];
+			$m_userid = $reqItemRS["userid"];
 			$m_sendStatus = $reqItemRS["sendStatus"];
 		} 
 	} 
@@ -313,12 +313,12 @@ class RequestItemObject {
 	function Update() {
 		if ((intval($m_reqItemId)==-1)) {
 			# New Data
-			$query = "INSERT INTO requestItem (reqId, item, descript, cost, userId, sendStatus) VALUES ";
+			$query = "INSERT INTO requestItem (reqId, item, descript, cost, userid, sendStatus) VALUES ";
 			$insertData="'".$m_reqId."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_item]."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_descript]."', ";
 			$insertData = $insertData."'".$m_cost."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_userId]."', ";
+			$insertData = $insertData."'".$mssqlEscapeString[$m_userid]."', ";
 			$insertData = $insertData."'".$m_sendStatus."'";
 			$query = $query."(".$insertData.")";
 			$objDB->execute_command($query);
@@ -334,15 +334,15 @@ class RequestItemObject {
 			$updateData = $updateData."item = '".$mssqlEscapeString[$m_item]."', ";
 			$updateData = $updateData."descript = '".$mssqlEscapeString[$m_descript]."', ";
 			$updateData = $updateData."cost = '".$m_cost."', ";
-			$updateData = $updateData."userId = '".$mssqlEscapeString[$m_userId]."', ";
+			$updateData = $updateData."userid = '".$mssqlEscapeString[$m_userid]."', ";
 			$updateData = $updateData."sendStatus = '".$m_sendStatus."' ";
 			$query = $query.$updateData." WHERE reqItemId = ".$m_reqItemId;
 			$objDB->execute_command($query);
 		} 
 	} 
 
-	function Insert($userId,$supType) {
-		$query = "SELECT supId from requestInfo WHERE userId = '".$mssqlEscapeString[$userId]."' AND supType = '".$mssqlEscapeString[$supType]."'";
+	function Insert($userid,$supType) {
+		$query = "SELECT supId from requestInfo WHERE userid = '".$mssqlEscapeString[$userid]."' AND supType = '".$mssqlEscapeString[$supType]."'";
 		$supportRS = $objDB->execute_query($query);
 
 		if ((!$supportRS->eof && !$supportRS->bof)) {

@@ -53,11 +53,11 @@ class AccountObject {
     }
 
 
-    function __construct($userId = -1) {
-		if ($userId == -1) {
+    function __construct($userid = -1) {
+		if ($userid == -1) {
 			$this->initialize();
 		} else {
-			$this->Open($userId);
+			$this->Open($userid);
 		}
 	}
 
@@ -75,7 +75,7 @@ class AccountObject {
 		$this->record['regdate'] = "";
 	}
 
-	function Open($userId) {
+	function Open($userid) {
 		global $mysqli;
 
 		$column = array();
@@ -85,7 +85,7 @@ class AccountObject {
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
-			$stmt->bind_param("s", $userId);
+			$stmt->bind_param("s", $userid);
 
 			/* execute query */
 			$stmt->execute();
@@ -132,7 +132,7 @@ class AccountObject {
 
 			# New Data
 			$stmt->bind_param("sssssssss", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['name'], 
 				$this->record['bank'], 
 				$this->record['method'], 
@@ -213,8 +213,8 @@ class AccountObject {
 
 	# Get property
 	#***********************************************
-	function UserID() {
-		$UserID = $m_userid;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function Bank() {
@@ -263,7 +263,7 @@ class AccountObject {
 
 	# Set property
 	#***********************************************
-	function UserID($value) {
+	function userid($value) {
 		$m_userid = trim($value);
 	} 
 
@@ -333,7 +333,7 @@ class AccountObject {
 
 	function Open($userid) {
 		$m_userid = $userid;
-		$query = "SELECT * from account WHERE userId = '".$mssqlEscapeString[$m_userid]."'";
+		$query = "SELECT * from account WHERE userid = '".$mssqlEscapeString[$m_userid]."'";
 		$rs_account = $objDB->execute_query($query);
 		if ((!$rs_account->eof && !$rs_account->bof)) {
 			$m_index=intval($rs_account["id"]);
@@ -354,7 +354,7 @@ class AccountObject {
 	function Update() {
 		if (($m_index==-1)) {
 			#New Data
-			$query = "INSERT INTO account (userId, name, bank, method, number, nid, sendDate, expectDate) VALUES ";
+			$query = "INSERT INTO account (userid, name, bank, method, number, nid, sendDate, expectDate) VALUES ";
 			$insertData="'".$mssqlEscapeString[$m_userid]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_name]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_bank]."',";
@@ -366,7 +366,7 @@ class AccountObject {
 			$query = $query."(".$insertData.")";
 			$objDB->execute_command($query);
 
-			$query = "SELECT MAX(id) AS new_id FROM account WHERE userId = '".$m_userid."'";
+			$query = "SELECT MAX(id) AS new_id FROM account WHERE userid = '".$m_userid."'";
 			$rs_account = $objDB->execute_query($query);
 			if ((!$rs_account->eof && !$rs_account->bof)) {
 				$m_index=intval($rs_account["new_id"]);
@@ -392,7 +392,7 @@ class AccountObject {
 		} 
 	}
 
-	function setUserID($userid) {
+	function setuserid($userid) {
 		return Open($userid);
 	} 
 } 

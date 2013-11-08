@@ -79,7 +79,7 @@ $objTable = new tableBuilder();
 $objTable->setButton(array("수 정","답 글","삭 제"));
 $objTable->setColumn(array("글번호","제목","작성자","작성일","조회수"));
 $objTable->setOrder($order);
-$objTable->setField(array("id","title","userId","editDate","countView"));
+$objTable->setField(array("id","title","userid","editDate","countView"));
 $objTable->setKeyValue(array("groupId","id"));
 $objTable->setGotoPage($page);
 $htmlTable = $objTable->getTable($query);

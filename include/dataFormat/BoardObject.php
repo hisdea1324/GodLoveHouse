@@ -29,7 +29,7 @@ class BoardObject {
 		$this->record['password'] = "";
 		$this->record['regDate'] = "";
 		$this->record['editDate'] = "";
-		$this->record['userId'] = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
+		$this->record['userid'] = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
 		$this->record['countView'] = 0;
 		$this->record['countCommnent'] = 0;
 		$this->record['answerId'] = -1;
@@ -85,7 +85,7 @@ class BoardObject {
 		global $mysqli;
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userId`, ";
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, ";
 			$query.= "`answerId`, `answerNum`, `answerLv`) VALUES ";
 			$query.= "(?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -97,7 +97,7 @@ class BoardObject {
 				$this->record['title'],
 				$this->record['contents'],
 				$this->record['password'],
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['answerId'],
 				$this->record['answerNum'],
 				$this->record['answerLv']);
@@ -108,8 +108,8 @@ class BoardObject {
 			# close statement
 			$stmt->close();
 
-			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM board WHERE `userId` = ?");
-			$stmt->bind_param("s", $this->record['userId']);
+			$stmt = $mysqli->prepare("SELECT MAX(id) as new_id FROM board WHERE `userid` = ?");
+			$stmt->bind_param("s", $this->record['userid']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['id']);
 			$stmt->close();
@@ -140,7 +140,7 @@ class BoardObject {
 			$updateData = "`contents` = ?, ";
 			$updateData = "`password` = ?, ";
 			$updateData = "`editDate` =  getDate(), ";
-			$updateData = "`userId` = ?, ";
+			$updateData = "`userid` = ?, ";
 			$updateData = "`countView` = ?, ";
 			$updateData = "`countComment` = ?, ";
 			$updateData = "`answerId` = ?, ";
@@ -156,7 +156,7 @@ class BoardObject {
 				$this->record['title'],
 				$this->record['contents'],
 				$this->record['password'],
-				$this->record['userId'],
+				$this->record['userid'],
 				$this->record['countView'],
 				$this->record['countComment'],
 				$this->record['answerId'],
@@ -211,7 +211,7 @@ class BoardObject {
 
 	function checkEditPermission() {
 		$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : "";
-		if (($this->record['id'] == -1 || $this->record['userId'] ==0 || $userLevel==9)) {
+		if (($this->record['id'] == -1 || $this->record['userid'] ==0 || $userLevel==9)) {
 			return true;
 		} else {
 			return false;
@@ -237,7 +237,7 @@ class BoardObject {
 	var $m_password;
 	var $m_regDate;
 	var $m_editDate;
-	var $m_userId;
+	var $m_userid;
 	var $m_countView;
 	var $m_countComment;
 	var $m_answerId;
@@ -289,8 +289,8 @@ class BoardObject {
 		$EditDate = $m_editDate;
 	} 
 
-	function UserID() {
-		$UserID = $m_userId;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function CountView() {
@@ -331,8 +331,8 @@ class BoardObject {
 		$m_contents = trim($value);
 	} 
 
-	function UserID($value) {
-		$m_userId = trim($value);
+	function userid($value) {
+		$m_userid = trim($value);
 	} 
 
 	function AnswerID($value) {
@@ -357,7 +357,7 @@ class BoardObject {
 		$m_password="";
 		$m_regDate="";
 		$m_editDate="";
-		$m_userId = $_SESSION["userId"];
+		$m_userid = $_SESSION["userid"];
 		$m_countView=0;
 		$m_countComment=0;
 		$m_answerId=-1;
@@ -383,7 +383,7 @@ class BoardObject {
 			$m_password = $boardRS["password"];
 			$m_regDate = $boardRS["regDate"];
 			$m_editDate = $boardRS["editDate"];
-			$m_userId = $boardRS["userId"];
+			$m_userid = $boardRS["userid"];
 			$m_countView=intval($boardRS["countView"]);
 			$m_countComment=intval($boardRS["countComment"]);
 			$m_answerId=intval($boardRS["answerId"]);
@@ -397,19 +397,19 @@ class BoardObject {
 		if (($m_index==-1)) {
 			# New Data
 			# transation이 필요함 나중에 처리	
-			$query = "INSERT INTO board (groupId, title, contents, password, userId, answerId, answerNum, answerLv) VALUES ";
+			$query = "INSERT INTO board (groupId, title, contents, password, userid, answerId, answerNum, answerLv) VALUES ";
 			$insertData="'".$mssqlEscapeString[$m_groupId]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_title]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_contents]."',";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_password]."',";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_userId]."', ";
+			$insertData = $insertData."'".$mssqlEscapeString[$m_userid]."', ";
 			$insertData = $insertData."'".$m_answerId."', ";
 			$insertData = $insertData."'".$m_answerNum."', ";
 			$insertData = $insertData."'".$m_answerLv."'";
 			$query = $query."(".$insertData.")";
 			$objDB->execute_command($query);
 
-			$query = "SELECT MAX(id) AS new_id FROM board WHERE userId = '".$m_userid."'";
+			$query = "SELECT MAX(id) AS new_id FROM board WHERE userid = '".$m_userid."'";
 			$boardRS = $objDB->execute_query($query);
 			if ((!$boardRS->eof && !$boardRS->bof)) {
 				$m_index=intval($boardRS["new_id"]);
@@ -432,7 +432,7 @@ class BoardObject {
 			$updateData = $updateData."contents = '".$mssqlEscapeString[$m_contents]."', ";
 			$updateData = $updateData."password = '".$mssqlEscapeString[$m_password]."', ";
 			$updateData = $updateData."editDate = getDate(), ";
-			$updateData = $updateData."userId = '".$mssqlEscapeString[$m_userId]."', ";
+			$updateData = $updateData."userid = '".$mssqlEscapeString[$m_userid]."', ";
 			$updateData = $updateData."countView = '".$m_countView."', ";
 			$updateData = $updateData."countComment = '".$m_countComment."', ";
 			$updateData = $updateData."answerId = '".$m_answerId."', ";
@@ -470,7 +470,7 @@ class BoardObject {
 	} 
 
 	function checkEditPermission() {
-		if (($m_index==-1 || strcmp($_SESSION["userId"],$m_userId)==0 || $_SESSION["userLv"]==9)) {
+		if (($m_index==-1 || strcmp($_SESSION["userid"],$m_userid)==0 || $_SESSION["userLv"]==9)) {
 			return true;
 		} else {
 			return false;

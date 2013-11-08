@@ -7,7 +7,7 @@ class DataCenter {
 		
 	} 
 
-	function getMemberByUserId($userId) {
+	function getMemberByuserid($userid) {
 		$member = new MemberObject();
 		return $member;
 	} 

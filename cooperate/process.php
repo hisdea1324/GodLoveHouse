@@ -3,7 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
 # 현재 로그인 세션
-if ($_SESSION["userId"]) {
+if ($_SESSION["userid"]) {
 	alertGoPage("로그인해 주세요", "http://".$_SERVER['HTTP_HOST']."/member/login.php");
 }
 
@@ -21,29 +21,29 @@ if ($mode=="editComment") {
 
 function addFamily($familyType) {
 
-	$followId = $_SESSION['UserId'];
-	$userId = trim($_REQUEST["userId"]);
+	$followId = $_SESSION['userid'];
+	$userid = trim($_REQUEST["userid"]);
 
 	$ObjQuery = new DataManager();
-	$fieldList = array("userId","followUserId","familyType");
-	$valueList = array($userId,$followId,$familyType);
+	$fieldList = array("userid","followuserid","familyType");
+	$valueList = array($userid,$followId,$familyType);
 	$ObjQuery->setTable("family");
 	$ObjQuery->setField($fieldList);
 	$ObjQuery->setValue($valueList);
-	$ObjQuery->setCondition("userId = '".$userId."' AND followUserId = '".$followId."'");
+	$ObjQuery->setCondition("userid = '".$userid."' AND followuserid = '".$followId."'");
 	$ObjQuery->delete();
 	$ObjQuery->insert();
 	$ObjQuery = null;
 
-	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userid=".trim($_REQUEST["userid"]));
 } 
 
 function editComment() {
 	$comment = new CommentObject();
 	$comment->Open(trim($_REQUEST["editCommentId"]));
 
-	$comment->FollowId = $_SESSION["userId"];
-	$comment->HostUserId = $_REQUEST["userId"];
+	$comment->FollowId = $_SESSION["userid"];
+	$comment->Hostuserid = $_REQUEST["userid"];
 	$comment->Comments = $_REQUEST["editComment"];
 	$comment->Secret = $_REQUEST["editSecret"];
 	$comment->parentID = $_REQUEST["parentId"];
@@ -51,7 +51,7 @@ function editComment() {
 
 	$comment = null;
 
-	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userid=".trim($_REQUEST["userid"]));
 } 
 
 function deleteComment() {
@@ -59,6 +59,6 @@ function deleteComment() {
 	$comment->Open($_REQUEST["editCommentId"]);
 	$comment->Delete();
 
-	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userid=".trim($_REQUEST["userid"]));
 } 
 ?>

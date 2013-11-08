@@ -50,9 +50,9 @@ function addPost() {
 
 
 	$ObjQuery = new DataManager();
-	$fieldList = array("title","contents","userId","groupId");
+	$fieldList = array("title","contents","userid","groupId");
 	$fieldNList = array("answerId","answerNum","answerLv");
-	$valueList = array($title,$contents,$_SESSION['userId'],$groupId);
+	$valueList = array($title,$contents,$_SESSION['userid'],$groupId);
 	$valueNList = array($answerId,0,0);
 
 	$ObjQuery->setTable("board");
@@ -90,9 +90,9 @@ function replyPost() {
 
 
 	$ObjQuery = new DataManager();
-	$fieldList = array("title","contents","userId","groupId");
+	$fieldList = array("title","contents","userid","groupId");
 	$fieldNList = array("answerId","answerNum","answerLv");
-	$valueList = array($title,$contents,$_SESSION['userId'],$groupId);
+	$valueList = array($title,$contents,$_SESSION['userid'],$groupId);
 	$valueNList = array($id,$answerNum,$answerLv);
 
 	$ObjQuery->setTable("board");

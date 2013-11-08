@@ -73,7 +73,7 @@ class ReservationObject {
 
 	private function initialize() {
 		$this->reservationNo = -1;
-		$this->userId = null;
+		$this->userid = null;
 		$this->roomId = -1;
 		$this->hospitalId = -1;
 		$this->reservStatus = "S0001";
@@ -97,7 +97,7 @@ class ReservationObject {
 
 		while ($row = $result->fetch_assoc()) {
 			$this->reservationNo = $row['reservationNo'];
-			$this->userId = $row['userId'];
+			$this->userid = $row['userid'];
 			$this->roomId = $row['roomId'];
 			$this->hospitalId = $row['hospitalId'];
 			$this->reservStatus = $row['reservStatus'];
@@ -128,7 +128,7 @@ class ReservationObject {
 
 		while ($row = $result->fetch_assoc()) {
 			$this->reservationNo = $row['reservationNo'];
-			$this->userId = $row['userId'];
+			$this->userid = $row['userid'];
 			$this->roomId = $row['roomId'];
 			$this->hospitalId = $row['hospitalId'];
 			$this->reservStatus = $row['reservStatus'];
@@ -149,7 +149,7 @@ class ReservationObject {
 		global $mysqli;
 
 		if ($this->reservationNo == -1) {
-			$temp = "'".$mysqli->real_escape_string($this->userId)."'";
+			$temp = "'".$mysqli->real_escape_string($this->userid)."'";
 			$temp = $temp.", ".$mysqli->real_escape_string($this->roomId);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->hospitalId);
 			$temp = $temp.", '".$mysqli->real_escape_string($this->reservStatus)."'";
@@ -161,7 +161,7 @@ class ReservationObject {
 			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_nation)."'";
 			$temp = $temp.", '".$mysqli->real_escape_string($this->resv_assoc)."'";
 
-			$query = "INSERT INTO reservation (`userId`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`, resv_name, resv_phone, resv_nation, resv_assoc) VALUES ($temp)";
+			$query = "INSERT INTO reservation (`userid`, `roomId`, `hospitalId`, `reservStatus`, `startDate`, `endDate`, `regDate`, resv_name, resv_phone, resv_nation, resv_assoc) VALUES ($temp)";
 
 			$result = $mysqli->query($query);
 			if (!$result) {
@@ -172,7 +172,7 @@ class ReservationObject {
 			$this->reservationNo = $mysqli->insert_id;
 		} else {
 			$query = "UPDATE reservation SET ";
-			$updateData=" userId = '".$mysqli->real_escape_string($this->userId)."', ";
+			$updateData=" userid = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData." roomId = ".$mysqli->real_escape_string($this->roomId).", ";
 			$updateData = $updateData." hospitalId = ".$mysqli->real_escape_string($this->hospitalId).", ";
 			$updateData = $updateData." reservStatus = '".$mysqli->real_escape_string($this->reservStatus)."', ";
@@ -209,7 +209,7 @@ class ReservationObject {
 	} 
 
 	function checkId() {
-		return (strlen($this->userId) != 0 && strlen($this->roomId) != 0);
+		return (strlen($this->userid) != 0 && strlen($this->roomId) != 0);
 	} 
 
 	function checkDate() {

@@ -19,7 +19,7 @@ function addSupport() {
 
 	# 후원 정보	
 	$support = new SupportObject();
-	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(1));
+	$support->Open($_SESSION["userid"], $c_Helper->getSupportCode(1));
 	$support->Name = $_REQUEST["name"];
 	$support->Jumin = $_REQUEST["nid1"].$_REQUEST["nid2"];
 	$support->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel2"];
@@ -41,13 +41,13 @@ function addSupport() {
 		foreach ($detailIDList as $detailId) {
 			if (($reqItemList[$i]->RequestItemID==intval(trim($detailId)))) {
 				//해당 항목 예약
-				$reqItemList[$i]->SendUser = $_SESSION["userId"];
+				$reqItemList[$i]->SendUser = $_SESSION["userid"];
 				$reqItemList[$i]->Update();
 				$checkValue=true;
 			} 
 
 		}
-		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $_SESSION["userId"]) {
+		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $_SESSION["userid"]) {
 			//해당 항목 예약 삭제
 			$reqItemList[$i]->SendUser = "";
 			$reqItemList[$i]->Update();
@@ -68,8 +68,8 @@ function addSupport() {
 function addCenterSupport() {
 	// 입금 정보	
 	$m_Helper = new MemberHelper();
-	$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
-	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+	$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 	$account->Method = $_REQUEST["method"];
 	$account->Bank = $_REQUEST["bank"];
 	$account->Number = $_REQUEST["number"];
@@ -82,7 +82,7 @@ function addCenterSupport() {
 	// 후원 정보	
 	$c_Helper = new CodeHelper();
 	$support = new SupportObject();
-	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(2));
+	$support->Open($_SESSION["userid"], $c_Helper->getSupportCode(2));
 	$support->Name = $_REQUEST["supName"];
 	$support->Jumin = $_REQUEST["supNID"];
 	$support->Phone = $_REQUEST["phone"];
@@ -121,12 +121,12 @@ function addServiceSupport() {
 
 
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 	$c_Helper = new CodeHelper();
 
 	// 후원 정보	
 	$support = new SupportObject();
-	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(3));
+	$support->Open($_SESSION["userid"], $c_Helper->getSupportCode(3));
 	$support->Name = $member->Name;
 	$jumin = $member->Jumin;
 	$support->Jumin = $jumin[0].$jumin[1];

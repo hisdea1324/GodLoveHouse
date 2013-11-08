@@ -6,14 +6,14 @@ $toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
 $fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 
 // 계좌정보
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 
 // 후원 내역 
 $s_Helper = new SupportHelper();
-$supporter = $s_Helper->getServiceSupportByUserId($_SESSION["userid"]);
+$supporter = $s_Helper->getServiceSupportByuserid($_SESSION["userid"]);
 
 if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 온라인 증명서 발급","mypage_manager","tit_0803.gif");
@@ -36,7 +36,7 @@ function body() {
 			<div class="mypage b20">
 			<p class="hi"><strong><?php echo $member->Name;?></strong>님, 안녕하세요</p>
 				<ul class="txt01">
-			<li><strong>회원ID</strong> <?php echo $member->UserID;?></li>
+			<li><strong>회원ID</strong> <?php echo $member->userid;?></li>
 			<li class="btn">
 			<img src="../images/sub/btn_out.gif" onclick="clickTopNavi(10)" class="r5">
 			<img src="../images/sub/btn_logout.gif" onclick="clickTopNavi(4)" class="r5">

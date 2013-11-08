@@ -20,6 +20,9 @@ class MemberObject {
 	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch($name) {
+			case "post":
+				$this->record['zipcode'] = $value; 
+				break;
 			default:
 				$this->record[$name] = $value; 
 				break;
@@ -41,6 +44,7 @@ class MemberObject {
 			case "email":
 				return explode('@', $this->record["email"]);
 			case "level":
+			case "userlevel":
 				return $this->record["userlv"];				
 			default:
 				return $this->record[$name];
@@ -58,14 +62,13 @@ class MemberObject {
     }
 
     // 멤버 오브젝트 초기화 함수  
-    function __construct($userId = -1) {
+    function __construct($userid = -1) {
     	$this->isNew = true;
     	$this->initialize();
-    	
-			if ($userId > -1) {
-				$this->isNew = false;
-				$this->Open($userId);
-			}
+
+		if ($userid != -1) {
+			$this->Open($userid);
+		}
 	}
 
 	private function initialize() {
@@ -112,6 +115,8 @@ class MemberObject {
 			$this->phone = $row['phone'];
 			$this->mobile = $row['mobile'];
 			$this->msgok = $row['msgok'];
+
+			$this->isNew = false;
 		}
 		$result->close();
 	}
@@ -140,6 +145,8 @@ class MemberObject {
 			$this->phone = $row['phone'];
 			$this->mobile = $row['mobile'];
 			$this->msgok = $row['msgok'];
+
+			$this->isNew = false;
 		}
 		$result->close();
 	}
@@ -150,74 +157,55 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->isNew) {
+
+			echo "<pre>"; print_r($this); echo "</pre>";
+			$values = "'".$mysqli->real_escape_string($this->userid)."'";
+			$values .= ", '".$mysqli->real_escape_string(crypt($this->password, $this->userid))."'";
+			$values .= ", '".$mysqli->real_escape_string($this->passquest)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->passanswer)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->memo)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->name)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->nick)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->userlv)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->record['email'])."'";
+			$values .= ", '".$mysqli->real_escape_string($this->record['jumin'])."'";
+			$values .= ", '".$mysqli->real_escape_string($this->address1)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->address2)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->record['zipcode'])."'";
+			$values .= ", '".$mysqli->real_escape_string($this->record['phone'])."'";
+			$values .= ", '".$mysqli->real_escape_string($this->record['mobile'])."'";
+			$values .= ", ".$mysqli->real_escape_string($this->msgok);
+
 			$query = "INSERT INTO `users` (`userid`, `password`, `passquest`, `passanswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userlv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
 			$query = $query."`zipcode`, `phone`, `mobile`, `msgok`) VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$query = $query."($values)";
 
-			if ($stmt = $mysqli->prepare($query)) {
-
-				# New Data
-				$stmt->bind_param("isissssisssssssi", 
-					$this->record['userid'], 
-					crypt($this->password, $this->userid),
-					$this->passquest, 
-					$this->passanswer, 
-					$this->memo, 
-					$this->name, 
-					$this->nick, 
-					$this->userlv, 
-					$this->email, 
-					$this->jumin, 
-					$this->address1, 
-					$this->address2,
-					$this->zipcode,
-					$this->phone,
-					$this->mobile,
-					$this->msgok);
-	
-				# execute query
-				$stmt->execute();
-			
-				# close statement
-				$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
 			}
+
 		} else {
 
 			$query = "UPDATE member SET ";
-			$updateData = "`nick` = ?, ";
-			$updateData.= "`userlv` = ?, ";
-			$updateData.= "`email` = ?, ";
-			$updateData.= "`jumin` = ?, ";
-			$updateData.= "`address1` = ?, ";
-			$updateData.= "`address2` = ?, ";
-			$updateData.= "`zipcode` = ?, ";
-			$updateData.= "`phone` = ?, ";
-			$updateData.= "`mobile` = ?, ";
-			$updateData.= "`msgok` = ? ";
-			$query .= $updateData." WHERE `userid` = ?";
+			$updateData = "`nick` = '".$mysqli->real_escape_string($this->nick)."', ";
+			$updateData.= "`userlv` = ".$mysqli->real_escape_string($this->userlv).", ";
+			$updateData.= "`email` = '".$mysqli->real_escape_string($this->record['email'])."', ";
+			$updateData.= "`jumin` = '".$mysqli->real_escape_string($this->record['jumin'])."', ";
+			$updateData.= "`address1` = '".$mysqli->real_escape_string($this->address1)."', ";
+			$updateData.= "`address2` = '".$mysqli->real_escape_string($this->address2)."', ";
+			$updateData.= "`zipcode` = '".$mysqli->real_escape_string($this->record['zipcode'])."', ";
+			$updateData.= "`phone` = '".$mysqli->real_escape_string($this->record['phone'])."', ";
+			$updateData.= "`mobile` = '".$mysqli->real_escape_string($this->record['mobile'])."', ";
+			$updateData.= "`msgok` = ".$mysqli->real_escape_string($this->msgok)." ";
+			$query .= $updateData." WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("sssssssssi", 
-				$this->nick, 
-				$this->userlv, 
-				$this->email, 
-				$this->jumin, 
-				$this->address1, 
-				$this->address2, 
-				$this->zipcode, 
-				$this->phone, 
-				$this->mobile, 
-				$this->msgok);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 		}
 	} 
 
@@ -231,117 +219,5 @@ class MemberObject {
 			$stmt->close();
 		}
 	} 
-
-
-
 }
-
-/*
-class MemberObject {
-	function Open($userid) {
-		$query = "SELECT * from users WHERE userId = '".$mssqlEscapeString[$userid]."'";
-		$memberRS = $objDB->execute_query($query);
-
-		if ((!$memberRS->eof && !$memberRS->bof)) {
-			$m_userid = $memberRS["userID"];
-			$m_nick = $memberRS["nick"];
-			$m_name = $memberRS["name"];
-			$m_userLevel = $memberRS["userLv"];
-			$m_email=explode("@",$memberRS["email"]);
-			if ((count($m_email)<1)) {
-				$m_email = array("","","");
-			} 
-			$m_jumin[0]=substr($memberRS["jumin"],0,6);
-			$m_jumin[1]=substr($memberRS["jumin"],strlen($memberRS["jumin"])-(7));
-			$m_address1 = $memberRS["address1"];
-			$m_address2 = $memberRS["address2"];
-			$m_zipcode[0]=substr($memberRS["zipcode"],0,3);
-			$m_zipcode[1]=substr($memberRS["zipcode"],strlen($memberRS["zipcode"])-(3));
-			$m_phone=explode("-",$memberRS["phone"]);
-			if ((count($m_phone)<2)) {
-				$m_phone = array("","","");
-			} 
-			$m_mobile=explode("-",$memberRS["mobile"]);
-			if ((count($m_mobile)<2)) {
-				$m_mobile = array("","","");
-			} 
-			$m_msgOk = $memberRS["msgOK"];
-		}
-	} 
-
-	function OpenByNick($nick) {
-		$query = "SELECT * from users WHERE nick = '".$mssqlEscapeString[$nick]."'";
-		$memberRS = $objDB->execute_query($query);
-
-		if ((!$memberRS->eof && !$memberRS->bof)) {
-			$m_userid = $memberRS["userID"];
-			$m_nick = $memberRS["nick"];
-			$m_name = $memberRS["name"];
-			$m_userLevel = $memberRS["userLv"];
-			$m_email=explode("@",$memberRS["email"]);
-			if ((count($m_email)<1)) {
-				$m_email = array("","","");
-			} 
-			$m_jumin[0]=substr($memberRS["jumin"],0,6);
-			$m_jumin[1]=substr($memberRS["jumin"],strlen($memberRS["jumin"])-(7));
-			$m_address1 = $memberRS["address1"];
-			$m_address2 = $memberRS["address2"];
-			$m_zipcode[0]=substr($memberRS["zipcode"],0,3);
-			$m_zipcode[1]=substr($memberRS["zipcode"],strlen($memberRS["zipcode"])-(3));
-			$m_phone=explode("-",$memberRS["phone"]);
-			if ((count($m_phone)<2)) {
-				$m_phone = array("","","");
-			} 
-			$m_mobile=explode("-",$memberRS["mobile"]);
-			if ((count($m_mobile)<2)) {
-				$m_mobile = array("","","");
-			} 
-			$m_msgOk = $memberRS["msgOK"];
-		} 
-	}
-
-	function Update() {
-		$query = "SELECT * from users WHERE userId = '".$mssqlEscapeString[$m_userid]."'";
-		$memberRS = $objDB->execute_query($query);
-
-		if (($memberRS->eof || $memberRS->bof)) {
-			$query = "INSERT INTO users (userId, password, passQuest, passAnswer, name, nick, userLv, email, jumin, address1, address2, zipcode, phone, mobile, msgOk) VALUES ";
-			$insertData="'".$mssqlEscapeString[$m_userid]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_password]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_passQuest]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_passAnswer]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_name]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_nick]."', ";
-			$insertData = $insertData."'".$m_userLevel."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$join[$m_email]["@"]]."', ";
-			$insertData = $insertData."'".$m_jumin[0].$m_jumin[1]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_address1]."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_address2]."', ";
-			$insertData = $insertData."'".$m_zipcode[0].$m_zipcode[1]."', ";
-			$insertData = $insertData."'".$join[$m_phone]["-"]."', ";
-			$insertData = $insertData."'".$join[$m_mobile]["-"]."', ";
-			$insertData = $insertData."'".$m_msgOK."'";
-			$query = $query."(".$insertData.") ";
-			$objDB->execute_command($query);
-		} else {
-			$query = "UPDATE users SET ";
-			$updateData=" name = '".$mssqlEscapeString[$m_name]."', ";
-			$updateData = $updateData." nick = '".$mssqlEscapeString[$m_nick]."', ";
-			$updateData = $updateData." userLv = '".$m_userLevel."', ";
-			$updateData = $updateData." email = '".$mssqlEscapeString[$join[$m_email]["@"]]."', ";
-			$updateData = $updateData." jumin = '".$m_jumin[0].$m_jumin[1]."', ";
-			$updateData = $updateData." address1 = '".$mssqlEscapeString[$m_address1]."', ";
-			$updateData = $updateData." address2 = '".$mssqlEscapeString[$m_address2]."', ";
-			$updateData = $updateData." zipcode = '".$m_zipcode[0].$m_zipcode[1]."', ";
-			$updateData = $updateData." phone = '".$join[$m_phone]["-"]."', ";
-			$updateData = $updateData." mobile = '".$join[$m_mobile]["-"]."', ";
-			$updateData = $updateData." msgOK = '".$m_msgOK."'";
-			$query = $query.$updateData." WHERE userId = '".$mssqlEscapeString[$m_userId]."'";
-			$objDB->execute_command($query);
-		}
-	} 
-
-	
-} 
-*/
 ?>

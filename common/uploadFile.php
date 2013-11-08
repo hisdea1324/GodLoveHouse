@@ -20,7 +20,7 @@ function upload() {
 	} 
 	
 	$attach = new AttachFile();
-	$attach->UserID = $_SESSION["userId"];
+	$attach->userid = $_SESSION["userid"];
 	$attach->Name = $fileName;
 	$attach->Update();
 ?>

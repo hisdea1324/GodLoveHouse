@@ -51,7 +51,7 @@ if (($status=="S2002")) {
 } 
 
 $objTable->setColumn(array("병원코드","병원이름","관리자","연락처","일일진료인원"));
-$objTable->setField(array("hospitalId","hospitalName","userId","contact1","personLimit"));
+$objTable->setField(array("hospitalId","hospitalName","userid","contact1","personLimit"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("hospitalId"));
 $objTable->setGotoPage($page);
@@ -107,7 +107,7 @@ function body() {
 			<tr>
 				<td align="right">
 					<select name="field">
-						<option value="userId" <?php if (($field=="userId")) {
+						<option value="userid" <?php if (($field=="userid")) {
 ?>selected<?php } ?>>관리자</option>
 						<option value="hospitalName" <?php if (($field=="hospitalName")) {
 ?>selected<?php } ?>>병원이름</option>

@@ -95,7 +95,7 @@ function body() {
 			<dt>
 				요청 선교사
 			<dd>
-				<input type="text" name="userId" size="20" maxlength=30 value="<?php echo $requestAdd->userId;?>" /> (특별후원일 경우만 입력, 회원 ID를 정확히 입력해야 함)
+				<input type="text" name="userid" size="20" maxlength=30 value="<?php echo $requestAdd->userid;?>" /> (특별후원일 경우만 입력, 회원 ID를 정확히 입력해야 함)
 			<dt>
 				마감일
 			<dd>

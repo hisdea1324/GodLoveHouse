@@ -1,22 +1,22 @@
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (1, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:29:36', '', 0);
+  (1, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:29:36', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (2, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:30:40', '', 0);
+  (2, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:30:40', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (3, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''100000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 15', '2010-03-17 18:30:56', '', 0);
+  (3, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''100000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 15', '2010-03-17 18:30:56', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (4, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:30:56', '', 0);
+  (4, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:30:56', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -269,7 +269,7 @@ VALUES
 * 더욱 자세한 내용은 홈페이지로 가셔서 공지글과 내용을 자세히 확인하시기 바랍니다.
  
 방문하실 때 선교 현지 사역지의 기념될 만한 것 중에 1개품을 헌물해 주시면 선교지와 선교사님을 위해 기도하고 기념으로 "선교사님 방문 기념코너"를 만들어 전시하고자 합니다.자세한 문의는 본 게시판에 남겨 주세요. 
-'', userId = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:35:31', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
+'', userid = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:35:31', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -287,7 +287,7 @@ VALUES
 * 더욱 자세한 내용은 홈페이지로 가셔서 공지글과 내용을 자세히 확인하시기 바랍니다.
  
 방문하실 때 선교 현지 사역지의 기념될 만한 것 중에 1개품을 헌물해 주시면 선교지와 선교사님을 위해 기도하고 기념으로 "선교사님 방문 기념코너"를 만들어 전시하고자 합니다.자세한 문의는 본 게시판에 남겨 주세요. 
-'', userId = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:35:45', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
+'', userid = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:35:45', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -305,7 +305,7 @@ VALUES
 * 더욱 자세한 내용은 홈페이지로 가셔서 공지글과 내용을 자세히 확인하시기 바랍니다.
  
 방문하실 때 선교 현지 사역지의 기념될 만한 것 중에 1개품을 헌물해 주시면 선교지와 선교사님을 위해 기도하고 기념으로 "선교사님 방문 기념코너"를 만들어 전시하고자 합니다.자세한 문의는 본 게시판에 남겨 주세요. 
-'', userId = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:37:05', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
+'', userid = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:37:05', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -323,22 +323,22 @@ VALUES
 * 더욱 자세한 내용은 홈페이지로 가셔서 공지글과 내용을 자세히 확인하시기 바랍니다.
  
 방문하실 때 선교 현지 사역지의 기념될 만한 것 중에 1개품을 헌물해 주시면 선교지와 선교사님을 위해 기도하고 기념으로 "선교사님 방문 기념코너"를 만들어 전시하고자 합니다.자세한 문의는 본 게시판에 남겨 주세요. 
-'', userId = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:37:16', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
+'', userid = ''lovehouse'', manager1 = ''최바울'', contact1 = ''010--'', manager2 = '''', contact2 = ''010--'', price = ''무료'', personLimit = ''4'', roomLimit = ''0'', houseName = ''그리심빌리지'', homepage = ''http://cafe.daum.net/gerizimvillage/78l5/34'', buildingType = ''4'', status = ''S2002'', document = ''test'' documentId = ''-1''  WHERE houseId = 100', '2011-12-27 22:37:16', 'Line 14: Incorrect syntax near ''documentId''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (68, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:05:04', 'Invalid column name ''homepage''.', -2147217900);
+  (68, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:05:04', 'Invalid column name ''homepage''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (70, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:06:56', 'Invalid column name ''homepage''.', -2147217900);
+  (70, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:06:56', 'Invalid column name ''homepage''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (72, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:08:03', 'Cannot insert the value NULL into column ''hospitalId'', table ''npngjjh.npngjjh.hospital''; column does not allow nulls. INSERT fails.', -2147217873);
+  (72, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:08:03', 'Cannot insert the value NULL into column ''hospitalId'', table ''npngjjh.npngjjh.hospital''; column does not allow nulls. INSERT fails.', -2147217873);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -673,22 +673,22 @@ VALUES
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (5, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''100000'', userId = '''', sendStatus = ''S1001''  WHERE reqItemId = 15', '2010-03-17 18:31:10', '', 0);
+  (5, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''100000'', userid = '''', sendStatus = ''S1001''  WHERE reqItemId = 15', '2010-03-17 18:31:10', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (6, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:31:10', '', 0);
+  (6, 'UPDATE requestItem SET reqId = ''20'', item = ''자동차구입'', descript = ''자동차구입'', cost = ''8000000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 16', '2010-03-17 18:31:10', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (7, 'UPDATE requestItem SET reqId = ''57'', item = ''기타물품#1'', descript = ''그외 기타물품구입비'', cost = ''20000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 29', '2010-03-17 18:31:22', '', 0);
+  (7, 'UPDATE requestItem SET reqId = ''57'', item = ''기타물품#1'', descript = ''그외 기타물품구입비'', cost = ''20000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 29', '2010-03-17 18:31:22', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (8, 'UPDATE requestItem SET reqId = ''57'', item = ''기타물품#2'', descript = ''그외 기타물품구입비'', cost = ''30000'', userId = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 30', '2010-03-17 18:31:22', '', 0);
+  (8, 'UPDATE requestItem SET reqId = ''57'', item = ''기타물품#2'', descript = ''그외 기타물품구입비'', cost = ''30000'', userid = ''lovehouse'', sendStatus = ''S1002''  WHERE reqItemId = 30', '2010-03-17 18:31:22', '', 0);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
@@ -858,12 +858,12 @@ VALUES
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (69, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:06:20', 'Invalid column name ''homepage''.', -2147217900);
+  (69, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:06:20', 'Invalid column name ''homepage''.', -2147217900);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)
 VALUES
-  (71, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userId, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:07:57', 'Cannot insert the value NULL into column ''hospitalId'', table ''npngjjh.npngjjh.hospital''; column does not allow nulls. INSERT fails.', -2147217873);
+  (71, 'INSERT INTO hospital (hospitalName, assocName, address1, address2, zipcode, regionCode, explain, userid, manager1, manager2, contact1, contact2, price, personLimit, homepage, documentId, document) VALUES (''삼성병원'',''누구지'',''서울 강남구 일원동 삼성의료원'',''어딘가'',''135710'',''02001'',''삼성의료원 잘하시오'',''누굴까'', ''누구시오'', '''', ''010-111-2111'', ''010-111-111'', '''', ''2'', ''samsunghospital.org'',''-1'', '''')', '2012-02-11 16:07:57', 'Cannot insert the value NULL into column ''hospitalId'', table ''npngjjh.npngjjh.hospital''; column does not allow nulls. INSERT fails.', -2147217873);
 
 INSERT INTO debug_query_list
   (id, query, regDate, errMessage, errNumber)

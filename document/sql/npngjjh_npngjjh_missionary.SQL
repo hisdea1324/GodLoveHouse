@@ -1,5 +1,5 @@
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('adama65', '이봉우', '동일교회', '02-2208-0811', '예장 통합', '02-763-9764', '01228', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -16,7 +16,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('Andrew Lee', '이찬우', '연희교회', '02-333-9942', '한국 인터서브 선교회', '070-7013-0085', '01226', '', '', '', '', '유미희', '010-5339-5862', '@', '간단한 소개 :저는 약사로서 평신도 선교사로 인터서브 선교회 소속으로 1997년에 가족(아내, 세 아이들)들과 함께 파송되어 중앙 아시아 키르기즈스탄에서 사역하고 있습니다. 
 
@@ -33,12 +33,12 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('apple802', '', '', '02--', '', '02--', '01999', '', '', '', '', '', '010--', '@', '', '', 0, 0, 114, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('bark2028', '박기철', '금양교회', '055-882-0286', '열방선교회', '053-621-4308', '01999', '833077-52-100488', '농협', '박기철', '', '임선희', '010-7797-8024', 'lim72791@hanmail.net', '간단한 소개 :진주노회 서남시찰 금양교회를 17년10개월 위임목사로 섬기며 하동성시화운동대표본부장, 하동기독교연합회장, 경목, (영호남 4개지역)섬진강변기독교협의회를 만들고 섬기기도하였던 모든 활동을 뒤로하고 오직 땅끝까지 주의 복음전하는 선교사역에 전가족(90세 노모와 세아들 그리고 아내)이 헌신하기로 하여 열방선교회 본부 총무로 먼저 활동하게 되었다.
 
@@ -55,7 +55,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('blackdew', 'ttt', '', '02--', '', '02--', '01101', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -72,7 +72,7 @@ VALUES
 ', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('byunggookyoon', '윤병국', '예장총회 세계선교위원회(고신)', '042-622-7061', '예장총회 세계선교위원회(고신)', '042-622-7061', '01216', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -89,7 +89,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('chjphoto', '최한준', '이레교회', '02-992-2274', '한국기아대책기구', '02-2085-8385', '01306', '1103246100063', '신한은행', '최한준', '', '', '010--', '@', '간단한 소개 :평신도선교사로 현재 교회 사역중 , 아내와 아들 2명과 함께현지에 거주, 현재 워싱턴 침신 대학원과정 학업중
 
@@ -109,7 +109,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('chjpo7', '최한준', '이레교회', '02-2085-8385', '기아대책기구', '02-2085-8385', '01306', '110324610063', '신한은행', '최한준', '', '', '010--', '@', '간단한 소개 :기아대책기구 소속 평신도 선교사 현재 신대원 재학, 가족4 아들2명 모두 현재 신학대학 재학중, 현지 파라과이에서,, 현재 6년차 
 
@@ -130,7 +130,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('cigrace', '박광우', '바울선교회', '053-254-8418', '국제기아대책기구', '02-254-8418', '01101', '076-04-08382-266', '외환은행', '바울선교회', 'www.bauri.org    www.kfhi.or.kr', '최선주', '053-254-8418', 'tpmk86@naver.com', '간단한 소개 :
 2000년 파송 이래로 서아프리카 코트디부아르에서 사역중인 선교사입니다. 
@@ -148,7 +148,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('crystalkim7', '윤장오', '', '02--', '', '02--', '01999', '', '시티은행', '김찬근', '', '', '010--', '@', '간단한 소개 : 윤장오 선교사는 미국 버지니아 리버티 신학교에서 MDiv를 수학하고 동 신학교에서 ThM을 하는 중에 2007년 필리핀에 들어와 현지 필리핀 교회와 협력 사역, 빈민촌 지역의 사역, 교도소 사역을 감당하고 있으며 슬하에 아들 화평(20살) 지금 라살 대학 2학년에 재학 중이고 작은 아이 온유(18살) 지금 라살 대학1학년에 재학 중입니다. 그리고 아내 김수정(45살) 선교사가 함께 사역을 감당하고 있습니다. 
 
@@ -173,7 +173,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('dawnwatchmission', '김갑동', '서울효심장로교회', '070-8288-0009', '백석 예수교 장로회 백석총회 평안노회', '070-8288-0009', '01232', '', '', '', '', '조양현', '010-2369-8022', '@', '간단한 소개 :
 
@@ -190,7 +190,7 @@ VALUES
 ', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('dosungoo', '도바울', '영광..', '02-2633-5246', 'gcn..', '070-4103-8691', '01223', '168-08-109978', '우리은행', '도성오', '', '김정삼목사', '010-2256-2284', '@', '간단한 소개 :합동측 안주노회 소속이며 2005년에 파송
 
@@ -211,7 +211,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('fimsoo', '김성수', '인천청운교회', '032-544-2341', 'DMS', '070-8235-5167', '01216', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -228,7 +228,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('hossea', '김찬휘', '화성교회(예장 합신)', '02-2606-7701', '알타이선교회', '02-576-8503', '01223', '024-21-0768-365', '국민은행', '김찬휘', 'http://wendeng.church360.net', '유기남', '010-2890-2296', 'altaim@hanmail.net', '간단한 소개 : 저는 예장 합신 서서울노회 소속 목사이고, 알타이선교회 소속으로 중국 산동성 문등시에서 사역하고 있습니다.
 
@@ -249,7 +249,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('jang', '윤장오', '', '02--', '', '02--', '01232', '', '', '', '', '', '010--', '@', '간단한 소개 : 필리핀의 윤장오 선교사입니다. 저는 1962년생으로 미국 버지니아 리버티 신학교에서 MDiv를 수학하고 동 신학교에서 ThM을 하는 중에 하나님의 인도하심으로 2007년 9월 아내 김수정 그리고 두 자녀와 함께 이곳 필리핀에 오게 되었습니다.
 
@@ -263,7 +263,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('jhouse1', '선교사', '한국교회와 선교단체', '02--', '교회와 선교단체', '070-7807-6394', '01202', '', '', '', '', '', '010--', '@', '**** 간단한 소개 :
 
@@ -287,7 +287,7 @@ VALUES
 			', 0, 1, 494, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('joe71', '정양수', '', '02--', 'wec', '02-529-4552', '01101', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -304,7 +304,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('jw1104', '한종우, 조은경', '', '02--', '중동선교회', '070-8250-3320', '01406', '39908047221', '우리은행', '조은경', '', '', '010--', '@', '간단한 소개 :
 요르단에서 6년차 살고 있습니다
@@ -322,7 +322,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('kkchina', '김승진', '한빛교회', '02-894-4149', 'GMS', '02-568-9776', '01999', '', '', '', '', '', '010--', '@', '간단한 소개 : 저희 가정은(1남2녀) 2002년 봄에 중국으로 파송되어 9년 반 동안 학교사역과 장족사역을 하다가 재작년 선교지를 변경하게 되어 영국에서 사역하고 있습니다.
 
@@ -339,7 +339,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('m10003', '주신실', '월문교회', '02--', 'SOUL 선교회', '02--', '01008', '060-13-28623-8', '외환', '김경숙', '', '박희춘', '011-1701-3589', '@', '간단한 소개 :
 I국 선교사. 
@@ -361,7 +361,7 @@ I국의 대학교 젊은이들을 대상으로 사역하고 있습니다.
 ', 0, 0, 189, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('m2000210135', '신명철', '신애제일교회', '02-838-3171', 'WEC', '02-529-4552', '01212', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -378,12 +378,12 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('mission001', '', '', '02--', '', '02--', '01225', '', '', '', '', '', '010--', '@', '', '', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('mission2', '22', '222', '02-222-2222', '222', '02-22-222', '01003', '222', '22', '222', '22', '222', '010-22-222', '22@222', '간단한 소개 :
 
@@ -400,7 +400,7 @@ VALUES
 			', 0, 0, 2, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('moonheekz', '이문희', '형제침례교회', '02-233-3960', '침레교해외선교회', '070-8237-5277', '01101', '', '', '', '', '', '010--', '@', '간단한 소개 :인도의 김기태 선교사의 아내 이문희입니다.
 
@@ -417,12 +417,12 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('mwkang1024', '', '', '02--', '', '02--', '01102', '', '', '', '', '', '010--', '@', '', '', 0, 0, 235, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('myanmagape', '강대현 전인숙', '김제신안교회', '063-544-5953', '예장(합동) GMS선교회', '02-568-9776', '01008', '010-04-06395-537', '외환', 'GMS (강대현)', '', '김덕실', '010--', 'myanmagape@gmail.com', '* 간단한 소개 :
   미얀마 선교사로 1993년에 총회 파송받음. 2남1녀의 자녀와 함께 미얀마에서 사역하고 있음. 
@@ -446,12 +446,12 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('newacts', '', '', '02--', '', '02--', '01403', '', '', '', '', '', '010--', '@', '', '', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('paul726', '선석완', '이리온누리교회', '063-858-3811', '이리온누리교회', '063-858-3811', '01232', '777-01-0000-417', '국민은행', '선석완', 'www.manilaseoul.or.kr', 'paul sun', '010--', 'paulsun726@gmail.com', '간단한 소개 :필리핀에서 24년 째 사역하고 있습니다
 
@@ -468,7 +468,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('powersfn', '윤성복/손여정/경원', '광주포도원교회', '062-675-3004', '', '02--', '01404', '', '', '', 'facebook(에덴의 포도나무)', '', '010--', '@', '간단한 소개 : 안녕하세요? 예루살렘에 살고 있는 윤성복/손여정/경원 선교사입니다. 가정과 교회와 사역과 사업이 늘 평안하시길 기도합니다^^
 
@@ -485,7 +485,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('proverbs36', '배석우', '순복음춘천교회', '033-253-2741', '순복음춘천교회', '033-253-2741', '01216', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -502,7 +502,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('rebekahre', '김영인', '빛과소금의 교회', '02-9634-3303', '인터서브', '070-4352-6510', '01223', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -519,7 +519,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('rkatkgody', '신명철/박인숙', '신애제일교회', '02-838-3171', 'WEC', '02-529-4552', '01212', '019-21-1002-031', '국민은행', '신명철', '', '나유진', '010-6314-3813', 'hiworld@hanmail.net', '간단한 소개 :2004년 WEC 호주 MTC 2년을 마치고 2006년 아제르바이잔으로 나갔습니다. 비자의 어려움이 있고 사역적인 부분에서 이슬람국가들이 갖고 있는 난제들이 있지만 기도하며 하나님의 세미한 음성에 귀기울이며 살고 있습니다.
 
@@ -534,7 +534,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('sarangcn', '진훈', '중동교회', '032-322-5599', 'HOPE', '02-533-6057', '01223', '', '', '', '', '', '010--', '@', '간단한 소개 :
 
@@ -551,7 +551,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('sunkyosa', '정형구', '천안중부교회', '041-575-0479', 'GMS', '02-568-9776', '01232', '', '', '', '', '', '010--', '@', '간단한 소개 : 25년째 선교사로 사역하고 있습니다.
 
@@ -568,7 +568,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('timlee', '오충성', '마산재건교회', '055-248-5156', 'WEM', '02-421-0888', '01223', '651-21-0919-921', '국민은행', '이태인', '', '전승훈', '010-3209-2138', '@', '간단한 소개 :
 중국선교사(13년째)
@@ -585,7 +585,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('walnut59', '김미미', '삼선교회', '02-742-0475', '삼선교회 협력', '02-742-5174', '01223', '06919432118', '외환은행', '오인열', 'www.samsungchurch.net', '장윤석 목사', '010-9945-0191', '@hanmail.net', '간단한 소개 :1992년 총신대학교 정성구 목사님이 중국으로 파송함.
 정목사님 사임후 파송이 끊어짐.
@@ -609,7 +609,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('wmpkorea', '김태한', '일산 세광교회', '031-903-3390', '한국 AFC', '02-514-8870', '01999', '820-21-0528839', '국민은행', '김태한', '', '황지현', '02-514-8870', 'afck@afck.or.kr', '간단한 소개 : 2004년 우크라이나에 파송받아 8년째 사역하고 있는 김태한, 윤수정 선교사입니다. 좋은 선교회를 설립하시고 협력하시는 귀한 여러분들의 모습이 아름답습니다. 저도 일원이 되어 함께 선교하고자 합니다. 
 
@@ -628,7 +628,7 @@ VALUES
 			', 0, 0, 0, 0);
 
 INSERT INTO missionary
-  (userId, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
+  (userid, missionName, church, churchContact, ngo, ngoContact, nationCode, accountNo, bank, accountName, homepage, manager, managerContact, managerEmail, memo, prayList, familyCount, approval, imageId, flagFamily)
 VALUES
   ('yongjunk', '김용준', '한국대학생선교회', '02-397-6200', '한국대학생선교회', '02-397-6200', '01008', '803-01-0144-121', '국민은행', '김용준', 'kccc.org', '정건철', '010-3114-5359', '@', '간단한 소개 : 파송된지 10년이 되었습니다. 아내 두아들이 있습니다
 

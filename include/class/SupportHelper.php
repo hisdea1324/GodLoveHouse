@@ -20,8 +20,8 @@ class SupportHelper {
 
 	#  method : return one Account Object
 	# ***********************************************
-	function getAccountInfoByUserId($userId) {
-		$account = new AccountObject($userId);
+	function getAccountInfoByuserid($userid) {
+		$account = new AccountObject($userid);
 		if (!$account) {
 			$this->eHandler->ignoreError("Account Not Found.");
 		} 
@@ -30,20 +30,20 @@ class SupportHelper {
 
 	#  method : return one Support Object
 	# ***********************************************
-	function getSupportByUserId($userId, $supType) {
-		return new SupportObject($userId, $supType);
+	function getSupportByuserid($userid, $supType) {
+		return new SupportObject($userid, $supType);
 	} 
 
-	function getSpecialSupportByUserId($userId) {
-		return $this->getSupportByUserId($userId,"03001");
+	function getSpecialSupportByuserid($userid) {
+		return $this->getSupportByuserid($userid,"03001");
 	} 
 
-	function getCenterSupportByUserId($userId) {
-		return $this->getSupportByUserId($userId,"03002");
+	function getCenterSupportByuserid($userid) {
+		return $this->getSupportByuserid($userid,"03002");
 	} 
 
-	function getServiceSupportByUserId($userId) {
-		return $this->getSupportByUserId($userId,"03003");
+	function getServiceSupportByuserid($userid) {
+		return $this->getSupportByuserid($userid,"03003");
 	} 
 
 	function getSupportBySupId($supId) {
@@ -216,21 +216,21 @@ class SupportHelper {
 		return $this->getRequestList($query);
 	} 
 
-	function getReqListForCenter($userId) {
+	function getReqListForCenter($userid) {
 		global $mysqli;
-		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03002' AND A.userId = '".$mysqli->real_escape_string($userId)."'";
+		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03002' AND A.userid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getRequestList($query);
 	} 
 
-	function getReqListForService($userId) {
+	function getReqListForService($userid) {
 		global $mysqli;
-		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03003' AND A.userId = '".$mysqli->real_escape_string($userId)."'";
+		$query = "SELECT B.reqId FROM supportInfo A, supportItem B WHERE A.supId = B.supId AND A.supportType = '03003' AND A.userid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getRequestList($query);
 	} 
 
-	function getReqListForSpecial($userId) {
+	function getReqListForSpecial($userid) {
 		global $mysqli;
-		$query = "SELECT DISTINCT A.reqId FROM requestInfo A, requestItem B WHERE A.reqId = B.reqId AND A.supportType = '03001' AND B.userId = '".$mysqli->real_escape_string($userId)."'";
+		$query = "SELECT DISTINCT A.reqId FROM requestInfo A, requestItem B WHERE A.reqId = B.reqId AND A.supportType = '03001' AND B.userid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getRequestList($query);
 	} 
 

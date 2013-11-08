@@ -9,7 +9,7 @@ if (strlen($chkCenter) == 0) {
 
 $s_Helper = new SupportHelper();
 
-$supporter = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+$supporter = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
 $requests = $s_Helper->getCenterListWithCond($chkCenter);
 
 showHeader("HOME > 선교사후원 > 센터사역후원","sponsor","tit_0302.gif");

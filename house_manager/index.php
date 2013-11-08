@@ -7,6 +7,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //	 - 비밀번호 변경하는 페이지는 따로 추가해야 함
 //	 - 자바 스크립트 추가 & update process 진행
 //***************************************************************
+checkUserLogin();
+
 showHouseManagerHeader();
 showHouseManagerLeft();
 body();

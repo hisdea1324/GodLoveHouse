@@ -33,7 +33,7 @@ if ((strlen($upload_image)==0)) {
 $field = trim($_REQUEST["field"]);
 $keyword = trim($_REQUEST["keyword"]);
 $groupId = trim($_REQUEST["groupId"]);
-$userId = $_SESSION['UserID'];
+$userid = $_SESSION['userid'];
 $mode = trim($_REQUEST["mode"]);
 $page = trim($_REQUEST["page"]);
 if ((strlen($mode)==0)) {
@@ -48,7 +48,7 @@ if ((strlen($id)>0)) {
 	$boardRS = $db->Execute($query);
 	$title = $boardRS["title"];
 	$contents = $boardRS["contents"];
-	$userId = $boardRS["userId"];
+	$userid = $boardRS["userid"];
 	$id = $boardRS["id"];
 	$boardRS = null;
 } 
@@ -57,7 +57,7 @@ if ((strlen($id)>0)) {
 //쓰기권한 체크
 if (checkAuthorize($groupId, "W") == false) {
 	alertGoPage("권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
-} else if ($mode == "edit" && $userId != $_SESSION['UserId'] && $_SESSION['UserLv'] < 9) {
+} else if ($mode == "edit" && $userid != $_SESSION['userid'] && $_SESSION['UserLv'] < 9) {
 	alertGoPage("권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
 
@@ -112,7 +112,7 @@ function body() {
 		<input type="hidden" name="mode" id="mode" value="<?php echo $mode;?>" />
 		<input type="hidden" name="groupId" id="groupId" value="<?php echo $groupId;?>" />
 		<input type="hidden" name="id" id="id" value="<?php echo $id;?>" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $_SESSION['UserId'];?>" />
+		<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION['userid'];?>" />
 			<col width="15%">
 		<col />
 				<tr>
@@ -124,7 +124,7 @@ function body() {
 				<tr>
 					<td class="td01">작성자</td>
 					<td>
-						<?php echo $userId;?>
+						<?php echo $userid;?>
 					</td>
 				</tr>
 		<?php if (($mode=="edit")) {
@@ -132,7 +132,7 @@ function body() {
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
-						<?php echo $_SESSION['UserId'];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
+						<?php echo $_SESSION['userid'];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
 					</td>
 				</tr>
 		<?php } ?>

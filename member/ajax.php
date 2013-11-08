@@ -2,8 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $mode = trim($_REQUEST["mode"]);
 switch (($mode)) {
-	case "checkUserId":
-confirmUserId();
+	case "checkuserid":
+confirmuserid();
 		break;
 	case "checkNick":
 confirmNick();
@@ -19,16 +19,16 @@ getUserProfile();
 		break;
 } 
 
-function confirmUserId() {
-	$userId = trim($_REQUEST["userId"]);
-	$query = "SELECT * FROM users WHERE userId = '".$userId."'";
+function confirmuserid() {
+	$userid = trim($_REQUEST["userid"]);
+	$query = "SELECT * FROM users WHERE userid = '".$userid."'";
 	$rs = $db->execute($query);
 
-	if ((strlen($userId)<4)) {
+	if ((strlen($userid)<4)) {
 		print "<b><font color=red>아이디는 4자 이상만 가능합니다.</font></b>";
 	} else if (($rs->eof || $rs->bof)) {
 		print "사용 가능한 아이디입니다.";
-	} else if ((strlen($userId)>0)) {
+	} else if ((strlen($userid)>0)) {
 		print "<b><font color=red>이 아이디는 사용할 수 없습니다.</font></b>";
 	} 
 
@@ -94,8 +94,8 @@ function confirmPassword() {
 
 function getUserProfile() {
 	$m_helper = new MemberHelper();
-	$member = $m_helper->getMemberByUserId($trim[$_REQUEST["userid"]]);
-	$mission = $m_helper->getMissionInfoByUserId($trim[$_REQUEST["userid"]]);
+	$member = $m_helper->getMemberByuserid($trim[$_REQUEST["userid"]]);
+	$mission = $m_helper->getMissionInfoByuserid($trim[$_REQUEST["userid"]]);
 
 	print "<table width=200><tr><td>";
 	print "<ul>";

@@ -103,7 +103,7 @@ function body() {
 		<input type="hidden" name="answerId" id="answerId" value="<?php echo $boardInfo->answerId;?>" />
 		<input type="hidden" name="answerNum" id="answerNum" value="<?php echo $boardInfo->answerNum;?>" />
 		<input type="hidden" name="answerLv" id="answerLv" value="<?php echo $boardInfo->answerLv;?>" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $_SESSION["userId"];?>" />
+		<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION["userid"];?>" />
 			<col width="15%">
 		<col />
 				<tr>
@@ -114,14 +114,14 @@ function body() {
 				</tr>
 				<tr>
 					<td class="td01">작성자</td>
-					<td><?php echo $boardInfo->userId;?></td>
+					<td><?php echo $boardInfo->userid;?></td>
 				</tr>
 		<?php if (($boardInfo->id>-1)) {
 ?>
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
-						<?php echo $_SESSION["userId"];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
+						<?php echo $_SESSION["userid"];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
 					</td>
 				</tr>
 		<?php } ?>

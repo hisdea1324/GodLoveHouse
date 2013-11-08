@@ -42,8 +42,8 @@ if ($status == "S0001") {
 } 
 $objTable->setColumn(array("예약번호","회원아이디","방번호","상태","숙박날짜","숙박날짜"));
 $objTable->setOrder($order);
-$objTable->setField(array("reservationNo","userId","roomId","reservStatus","startDate","endDate"));
-$objTable->setKeyValue(array("reservationNo","roomId","userId"));
+$objTable->setField(array("reservationNo","userid","roomId","reservStatus","startDate","endDate"));
+$objTable->setKeyValue(array("reservationNo","roomId","userid"));
 $objTable->setGotoPage($page);
 $htmlTable = $objTable->getTable($query);
 
@@ -129,27 +129,27 @@ function body() {
 //<![CDATA[
 	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
 	
-	function clickButton(no, reservId, roomId, userId) {
+	function clickButton(no, reservId, roomId, userid) {
 		switch(no) {
 <?php if (($status=="S0001")) { ?>
 			case 0: goShowRoom(roomId); break;
-			case 1: goShowUser(userId); break;
+			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goChange(reservId, 'S0002'); break;
 			case 4: goChange(reservId, 'S0004'); break;
 <?php } else if(($status=="S0002")) { ?>
 			case 0: goShowRoom(roomId); break;
-			case 1: goShowUser(userId); break;
+			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goChange(reservId, 'S0003'); break;
 <?php } else if(($status=="S0003")) { ?>
 			case 0: goShowRoom(roomId); break;
-			case 1: goShowUser(userId); break;
+			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goDelete(reservId); break;
 <?php } else { ?>
 			case 0: goShowRoom(roomId); break;
-			case 1: goShowUser(userId); break;
+			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goDelete(reservId); break;
 <?php } ?>
@@ -162,9 +162,9 @@ function body() {
 		window.open('<?php echo "http://".$_SERVER['SERVER_NAME'];?>/living/reservationDetail.php?roomId=' + roomId, 'new', '');
 	}
 	
-	function goShowUser(userId) 
+	function goShowUser(userid) 
 	{
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/' + 'manager/member/editForm.php?mode=editUser&userId=' + userId;
+		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/' + 'manager/member/editForm.php?mode=editUser&userid=' + userid;
 	}
 
 	function goEdit(reservId) 

@@ -24,7 +24,7 @@ class CommentObject {
     function __construct() {
 		$this->record['id'] = -1;
 		$this->record['parentId'] = -1;
-		$this->record['hostUserId'] = "";
+		$this->record['hostuserid'] = "";
 		$this->record['followId'] = "";
 		$this->record['comments'] = "";
 		$this->record['regDate'] = "";
@@ -37,7 +37,7 @@ class CommentObject {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT `id`, `parentId`, `hostUserId`, `followId`, `comments`, `regDate`, `secret` FROM familyComment WHERE `id` = ? ";
+		$query = "SELECT `id`, `parentId`, `hostuserid`, `followId`, `comments`, `regDate`, `secret` FROM familyComment WHERE `id` = ? ";
 		if ($stmt = $mysqli->prepare($query)) {
 
 			/* bind parameters for markers */
@@ -112,7 +112,7 @@ class CommentObject {
 
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO familyComment (`parentId`, `hostUserId`, `followId', `comments`, `secret`) VALUES ";
+			$query = "INSERT INTO familyComment (`parentId`, `hostuserid`, `followId', `comments`, `secret`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
@@ -120,7 +120,7 @@ class CommentObject {
 			# New Data
 			$stmt->bind_param("iiisi", 
 				$this->record['parentId'], 
-				$this->record['hostUserId'], 
+				$this->record['hostuserid'], 
 				$this->record['followId'], 
 				$this->record['comments'], 
 				$this->record['secret']);
@@ -143,7 +143,7 @@ class CommentObject {
 
 			$query = "UPDATE familyComment SET ";
 			$updateData = "`parentId` = ?, ";
-			$updateData.= "`hostUserId` = ?, ";
+			$updateData.= "`hostuserid` = ?, ";
 			$updateData.= "`followId` = ?, ";
 			$updateData.= "`comments` = ?, ";
 			$updateData.= "`secret` = ?, ";
@@ -154,7 +154,7 @@ class CommentObject {
 			
 			$stmt->bind_param("sss", 
 				$this->record['parentId'], 
-				$this->record['hostUserId'], 
+				$this->record['hostuserid'], 
 				$this->record['followId'], 
 				$this->record['comments'],
 				$this->record['secret'],
@@ -187,7 +187,7 @@ class CommentObject {
 class CommentObject {
 	var $m_index;
 	var $m_parentId;
-	var $m_hostUserId;
+	var $m_hostuserid;
 	var $m_followId;
 	var $m_comments;
 	var $m_regDate;
@@ -201,8 +201,8 @@ class CommentObject {
 		$ID = $m_index;
 	} 
 
-	function HostUserId() {
-		$HostUserId = $m_hostUserId;
+	function Hostuserid() {
+		$Hostuserid = $m_hostuserid;
 	} 
 
 	function FollowId() {
@@ -231,8 +231,8 @@ class CommentObject {
 
 	// Set property
 	//***********************************************
-	function HostUserId($value) {
-		$m_hostUserId = trim($value);
+	function Hostuserid($value) {
+		$m_hostuserid = trim($value);
 	} 
 
 	function FollowId($value) {
@@ -260,7 +260,7 @@ class CommentObject {
 	function __construct() {
 		$m_index=-1;
 		$m_parentId=-1;
-		$m_hostUserId="";
+		$m_hostuserid="";
 		$m_followId="";
 		$m_comments="";
 		$m_regDate="";
@@ -276,13 +276,13 @@ class CommentObject {
 	// class method
 	//***********************************************
 	function Open($idx) {
-		$query = "SELECT id, parentId, hostUserId, followId, comments, regDate, secret FROM familyComment WHERE id = '".$mssqlEscapeString[$idx]."'";
+		$query = "SELECT id, parentId, hostuserid, followId, comments, regDate, secret FROM familyComment WHERE id = '".$mssqlEscapeString[$idx]."'";
 		$commentRS = $objDB->execute_query($query);
 
 		if ((!$commentRS->eof && !$commentRS->bof)) {
 			$m_index=intval($commentRS["id"]);
 			$m_parentId=intval($commentRS["parentId"]);
-			$m_hostUserId = $commentRS["hostUserId"];
+			$m_hostuserid = $commentRS["hostuserid"];
 			$m_followId = $commentRS["followId"];
 			$m_comments = $commentRS["comments"];
 			$m_regDate = $commentRS["regDate"];
@@ -309,9 +309,9 @@ class CommentObject {
 	function Update() {
 		if (($m_index==-1)) {
 			//New Data
-			$query = "INSERT INTO familyComment (parentId, hostUserId, followId, comments, secret) VALUES ";
+			$query = "INSERT INTO familyComment (parentId, hostuserid, followId, comments, secret) VALUES ";
 			$insertData="'".$m_parentId."', ";
-			$insertData = $insertData."'".$m_hostUserId."', ";
+			$insertData = $insertData."'".$m_hostuserid."', ";
 			$insertData = $insertData."'".$m_followId."', ";
 			$insertData = $insertData."'".$mssqlEscapeString[$m_comments]."', ";
 			$insertData = $insertData."'".$m_secret."'";
@@ -327,7 +327,7 @@ class CommentObject {
 		} else {
 			$query = "UPDATE familyComment SET ";
 			$updateData="parentId = '".$m_parentId."', ";
-			$updateData = $updateData."hostUserId = '".$m_hostUserId."', ";
+			$updateData = $updateData."hostuserid = '".$m_hostuserid."', ";
 			$updateData = $updateData."followId = '".$m_followId."', ";
 			$updateData = $updateData."comments = '".$mssqlEscapeString[$m_comments]."', ";
 			$updateData = $updateData."secret = '".$m_secret."' ";

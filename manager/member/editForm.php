@@ -6,11 +6,11 @@ $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $userLv = (isset($_REQUEST["userLv"])) ? trim($_REQUEST["userLv"]) : 0;
 $gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
-$userId = (isset($_REQUEST["userId"])) ? trim($_REQUEST["userId"]) : 0;
+$userid = (isset($_REQUEST["userid"])) ? trim($_REQUEST["userid"]) : 0;
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($userId);
-$mission = $m_Helper->getMissionInfoByUserId($userId);
+$member = $m_Helper->getMemberByuserid($userid);
+$mission = $m_Helper->getMissionInfoByuserid($userid);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
@@ -84,9 +84,9 @@ function body() {
 					아이디 
 				<dd>
 					<?php if ((strlen($userid)>0)) {?>
-					<?php echo $member->userId;?> <input type="hidden" id="userId" name="userId" value="<?php echo $member->userId;?>" />
+					<?php echo $member->userid;?> <input type="hidden" id="userid" name="userid" value="<?php echo $member->userid;?>" />
 					<?	 } else { ?>
-					<input type="text" id="userId" name="userId" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userid;?>" />
+					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userid;?>" />
 					<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_idcheck.gif" border=0 align="absmiddle" onclick="checkId()" style="cursor:pointer" />
 					<?php } ?>
 				<dt>
@@ -368,7 +368,7 @@ function body() {
 					<tr><th>이름</th><th>나이</th><th>성별</th><th>관계</th><th>삭제</th></tr>
 					<?php 
 	$year=substr(time(),0,4);
-	if ((strlen($mission->UserId)>0)) {
+	if ((strlen($mission->userid)>0)) {
 		for ($num=0; $num<=count($familyList); $num = $num+1) {
 			$familyObj = $familyList[$num];
 ?>
@@ -494,9 +494,9 @@ function body() {
 <?php } ?>
 	
 	function check() {
-		if (document.getElementById("userId").value == "") {
+		if (document.getElementById("userid").value == "") {
 			alert("아이디를 입력해주세요.");
-			document.getElementById("userId").focus();
+			document.getElementById("userid").focus();
 			return;
 		}
 		if (document.getElementById("name").value == "") {
@@ -627,7 +627,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?>&userId=<?php echo $userId;?>&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?>&userid=<?php echo $userid;?>&familyId=" + familyId;
 	}
 	
 	function showImage(obj, e) {

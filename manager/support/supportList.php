@@ -32,7 +32,7 @@ $query = "SELECT *  FROM supportInfo ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT * ($page - 1);
 
-$query = "SELECT supId, userId, name, regDate, sumPrice FROM supportInfo $strWhere LIMIT $topNum, $PAGE_COUNT";
+$query = "SELECT supId, userid, name, regDate, sumPrice FROM supportInfo $strWhere LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -44,9 +44,9 @@ if (($wait=="1")) {
 } 
 
 $objTable->setColumn(array("후원코드","후원자ID","입금자명","금액","등록일"));
-$objTable->setField(array("supId","userId","name","sumPrice","regDate"));
+$objTable->setField(array("supId","userid","name","sumPrice","regDate"));
 $objTable->setOrder($order);
-$objTable->setKeyValue(array("supId","userId"));
+$objTable->setKeyValue(array("supId","userid"));
 $objTable->setGotoPage($page);
 $htmlTable = $objTable->getTable($query);
 //$htmlPaging = $objTable->displayListPage();
@@ -141,10 +141,10 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[	
-	function clickButton(no, supId, userId) {
+	function clickButton(no, supId, userid) {
 		switch(no) {
 			case 0: goShow(supId); break;
-			case 1: goShowUser(userId); break;
+			case 1: goShowUser(userid); break;
 			case 2: goChange(supId); break;
 			default: break;
 		}
@@ -154,8 +154,8 @@ function body() {
 		location.href = 'supportDetailList.php?supId=' + supId;
 	}
 	
-	function goShowUser(userId) {
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/manager/member/editForm.php?mode=editUser&userId=' + userId;
+	function goShowUser(userid) {
+		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/manager/member/editForm.php?mode=editUser&userid=' + userid;
 	}
 
 	function goChange(supId) {

@@ -12,11 +12,11 @@ $house = $h_Helper->getHouseInfoById($room->HouseID);
 
 $m_Helper = new MemberHelper();
 if (isset($_SESSION["userid"])) {
-	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 } else {
-	$member = $m_Helper->getMemberByUserId();
-	$mission = $m_Helper->getMissionInfoByUserId();
+	$member = $m_Helper->getMemberByuserid();
+	$mission = $m_Helper->getMissionInfoByuserid();
 }
 
 setTestValue($member);

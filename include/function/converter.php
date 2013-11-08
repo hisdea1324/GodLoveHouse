@@ -5,8 +5,8 @@ function ParsingURL($sUrl) {
 	# $parsedURL is of type "Scripting.Dictionary"
 	$urlPattern="http:#[a-zA-Z0-9]/([a-zA-Z0-9]/)*([a-zA-Z.])*";
 
-	$pos=(strpos($sUrl,":#") ? strpos($sUrl,":#")+1 : 0)-1;
-	if (($pos>-1)) {
+	$pos = (strpos($sUrl,":#") ? strpos($sUrl,":#")+1 : 0)-1;
+	if ($pos>-1) {
 		$parsedURL["protocol"]=substr($sUrl,0,$pos+3);
 		$sUrl=substr($sUrl,strlen($sUrl)-(strlen($sUrl)-$pos-3));
 	} else {
@@ -14,7 +14,7 @@ function ParsingURL($sUrl) {
 	} 
 
 	$pos=(strpos($sUrl,"/") ? strpos($sUrl,"/")+1 : 0)-1;
-	if (($pos>-1)) {
+	if ($pos>-1) {
 		$parsedURL["domain"]=substr($sUrl,0,$pos);
 		$sUrl=substr($sUrl,strlen($sUrl)-(strlen($sUrl)-$pos));
 	} else {
@@ -32,7 +32,7 @@ function ParsingURL($sUrl) {
 		$parsedURL["query"]="";
 	} 
 
-	$ParsingURL = $parsedURL;
+	return $parsedURL;
 } 
 
 function replace_sp($str) {

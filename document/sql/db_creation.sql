@@ -6,7 +6,7 @@ CREATE TABLE `account` (
     `name`        VARCHAR(50) NOT NULL,
     `method`      CHAR(10) NOT NULL,
     `nid`         CHAR(13),
-    `userId`      VARCHAR(50) NOT NULL,
+    `userid`      VARCHAR(50) NOT NULL,
     `sendDate`    INT,
     `expectDate`  INT,
     `regDate`     int(4) not null default 0,
@@ -30,7 +30,7 @@ CREATE TABLE `board` (
     `password`      VARCHAR(50) NOT NULL,
     `regDate`       int(4) not null default 0,
     `editDate`      int(4) not null default 0,
-    `userId`        VARCHAR(50) NOT NULL,
+    `userid`        VARCHAR(50) NOT NULL,
     `countView`     INT NOT NULL default 0,
     `countComment`  INT NOT NULL default 0,
     `answerId`      INT NOT NULL,
@@ -73,8 +73,8 @@ CREATE TABLE debug_query_list (
 DROP TABLE IF EXISTS family;
 CREATE TABLE family (
     `id`            INT(4) NOT NULL AUTO_INCREMENT,
-    userId        VARCHAR(50) NOT NULL,
-    followUserId  VARCHAR(50) NOT NULL,
+    userid        VARCHAR(50) NOT NULL,
+    followuserid  VARCHAR(50) NOT NULL,
     familyType    CHAR(5) NOT NULL,
     regDate       int(4) not null default 0,
 	PRIMARY KEY (`id`)
@@ -84,7 +84,7 @@ DROP TABLE IF EXISTS familyComment;
 CREATE TABLE familyComment (
     `id`          INT(4) NOT NULL AUTO_INCREMENT,
     parentId    int(4) not null default -1,
-    hostUserId  VARCHAR(50) NOT NULL,
+    hostuserid  VARCHAR(50) NOT NULL,
     followId    VARCHAR(50) NOT NULL,
     `comments`    TEXT NOT NULL,
     regDate     int(4) not null default 0,
@@ -102,7 +102,7 @@ CREATE TABLE hospital (
     zipcode       CHAR(6),
     regionCode    CHAR(5),
     `explain`       TEXT NOT NULL,
-    userId        VARCHAR(50),
+    userid        VARCHAR(50),
     manager1      VARCHAR(50),
     manager2      VARCHAR(50),
     contact1      VARCHAR(50),
@@ -130,7 +130,7 @@ CREATE TABLE house (
     zipcode       CHAR(6),
     regionCode    CHAR(5),
     `explain`       TEXT NOT NULL,
-    userId        VARCHAR(50),
+    userid        VARCHAR(50),
     manager1      VARCHAR(50),
     manager2      VARCHAR(50),
     contact1      VARCHAR(50),
@@ -151,7 +151,7 @@ CREATE TABLE house (
 
 DROP TABLE IF EXISTS missionary;
 CREATE TABLE missionary (
-    userId          VARCHAR(50) NOT NULL,
+    userid          VARCHAR(50) NOT NULL,
     missionName     VARCHAR(50),
     church          VARCHAR(50),
     churchContact   VARCHAR(50),
@@ -171,7 +171,7 @@ CREATE TABLE missionary (
     approval        INT NOT NULL DEFAULT 0,
     imageId         INT,
     flagFamily      INT NOT NULL DEFAULT 0,
-	PRIMARY KEY (`userId`)
+	PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
 
 DROP TABLE IF EXISTS missionary_family;
@@ -188,7 +188,7 @@ CREATE TABLE missionary_family (
 DROP TABLE IF EXISTS requestAddInfo;
 CREATE TABLE requestAddInfo (
     reqId       INT NOT NULL,
-    userId      VARCHAR(50) NOT NULL,
+    userid      VARCHAR(50) NOT NULL,
     `status`      CHAR(5) NOT NULL DEFAULT '05001',
     dueDate     DATETIME NOT NULL,
     nationCode  CHAR(5) NOT NULL,
@@ -213,7 +213,7 @@ CREATE TABLE requestItem (
     `item`        VARCHAR(256) NOT NULL,
     `descript`    VARCHAR(1024) NOT NULL,
     cost        INT NOT NULL DEFAULT 0,
-    userId      VARCHAR(50),
+    userid      VARCHAR(50),
     sendStatus  CHAR(5),
 	PRIMARY KEY (`reqItemId`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
@@ -221,7 +221,7 @@ CREATE TABLE requestItem (
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation (
     reservationNo  INT(4) NOT NULL AUTO_INCREMENT,
-    userId         VARCHAR(50) NOT NULL,
+    userid         VARCHAR(50) NOT NULL,
     roomId         INT,
     hospitalId     INT,
     reservStatus   CHAR(5) NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE room (
 DROP TABLE IF EXISTS supportInfo;
 CREATE TABLE supportInfo (
     supId        INT(4) NOT NULL AUTO_INCREMENT,
-    userId       VARCHAR(50) NOT NULL,
+    userid       VARCHAR(50) NOT NULL,
     sumPrice     INT NOT NULL DEFAULT 0,
     supportType  CHAR(5) NOT NULL,
     `status`       CHAR(5) NOT NULL,
@@ -295,7 +295,7 @@ CREATE TABLE useRoom (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-    userId         VARCHAR(50) NOT NULL,
+    userid         VARCHAR(50) NOT NULL,
     password       VARCHAR(256) NOT NULL,
     passQuest      TINYINT NOT NULL,
     passAnswer     VARCHAR(50) NOT NULL,
@@ -313,5 +313,5 @@ CREATE TABLE `users` (
     registDate     INT NOT NULL DEFAULT 0,
     updateDate     INT NOT NULL DEFAULT 0,
     LastLoginDate  INT NOT NULL DEFAULT 0,
-	PRIMARY KEY (`userId`)
+	PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;

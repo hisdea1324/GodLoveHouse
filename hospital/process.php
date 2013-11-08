@@ -29,7 +29,7 @@ function registHospital() {
 
 	if ((strlen($_REQUEST["hospitalId"])>0)) {
 		$hospital->HospitalID = $_REQUEST["hospitalId"];
-		$hospital->UserID = $_REQUEST["userId"];
+		$hospital->userid = $_REQUEST["userid"];
 	} 
 
 	$hospital->HospitalName = $_REQUEST["hospitalName"];
@@ -61,7 +61,7 @@ function reservation() {
 	$hospitalId = $_REQUEST["hospitalId"];
 	$book->StartDate = $_REQUEST["startDate"];
 	$book->EndDate = $_REQUEST["endDate"];
-	$book->UserId = $_SESSION["userId"];
+	$book->userid = $_SESSION["userid"];
 
 	if ((!$book->checkId())) {
 		header("Location: "."reservation.php?hospitalId=".$hospitalId);
@@ -76,7 +76,7 @@ function reservation() {
 	$hospital = new HospitalObject();
 	$manager = new MemberObject();
 	$hospital->Open($hospitalId);
-	$manager->Open($hospital->UserID);
+	$manager->Open($hospital->userid);
 	$from_number="01010041004";
 	$message="병원 예약 신청이 들어왔습니다."." 병원 : ".$hospital->HospitalName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
 	sendSMSMessage($from_number,$Join[$manager->Mobile][""],$message);

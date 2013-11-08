@@ -20,7 +20,7 @@ if ((strlen($order)==0)) {
 
 $s_Helper = new SupportHelper();
 $supporter = $s_Helper->getSupportBySupId($supId);
-$account = $s_Helper->getAccountInfoByUserId($supporter->UserId);
+$account = $s_Helper->getAccountInfoByuserid($supporter->userid);
 
 $query = "SELECT COUNT(*) AS recordCount from supportItem WHERE supId = ".$supId;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
@@ -85,7 +85,7 @@ function body() {
 
 		<h3>후원자 정보</h3>
 		<ul>
-			<li>후원자 : <?php echo $supporter->Name;?> (<?php echo $supporter->UserId;?>)</li>
+			<li>후원자 : <?php echo $supporter->Name;?> (<?php echo $supporter->userid;?>)</li>
 			<li>후원타입 : <?php echo $supporter->SupportType;?></li>
 			<li>총 후원금액: <?php echo priceFormat($supporter->SumPrice, 1);?></li>
 			<?	 $jumin = $supporter->Jumin;?>

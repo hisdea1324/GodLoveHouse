@@ -31,7 +31,7 @@ class RequestAddInfo {
 		$this->record['totalCost'] = 0;
 		$this->record['status'] = "05001";
 		$this->record['email'] = "";
-		$this->record['userId'] = "";
+		$this->record['userid'] = "";
 		$this->record['itemCount'] = 0;
 	}
 
@@ -41,11 +41,11 @@ class RequestAddInfo {
 
 		$column = array();
 		/* create a prepared statement */
-		$query = "SELECT A.reqId, A.userId, B.nick, A.status, A.nationCode, C.name, A.dueDate, B.email, ";
+		$query = "SELECT A.reqId, A.userid, B.nick, A.status, A.nationCode, C.name, A.dueDate, B.email, ";
 		$query.= " (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId) AS totalCost, ";
-		$query.= " (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId AND userId > '') AS currentCost ";
+		$query.= " (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId AND userid > '') AS currentCost ";
 		$query.= " FROM requestAddInfo A, users B, code C ";
-		$query.= " WHERE A.reqId = ? AND A.userId = B.userId AND A.nationCode = C.code";
+		$query.= " WHERE A.reqId = ? AND A.userid = B.userid AND A.nationCode = C.code";
 
 
 		if ($stmt = $mysqli->prepare($query)) {
@@ -132,7 +132,7 @@ class RequestAddInfo {
 
 
 		if (($this->record['id'] == -1)) {
-			$query = "INSERT INTO requestAddInfo (`reqId`, `userId`, `status', 'dueDate', 'nationCode') VALUES ";
+			$query = "INSERT INTO requestAddInfo (`reqId`, `userid`, `status', 'dueDate', 'nationCode') VALUES ";
 			$query = $query."(?, ?, ?, ?, ?)";
 
 			$stmt = $mysqli->prepare($query);
@@ -140,7 +140,7 @@ class RequestAddInfo {
 			# New Data
 			$stmt->bind_param("issss", 
 				$this->record['reqId'], 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['status'], 
 				$this->record['dueDate'], 
 				$this->record['nationCode']);
@@ -153,8 +153,8 @@ class RequestAddInfo {
 
 			
 
-			$stmt = $mysqli->prepare("SELECT MAX(reqId) as new_id FROM requestAddInfo WHERE userId = ?");
-			$stmt->bind_param("s", $this->record['userId']);
+			$stmt = $mysqli->prepare("SELECT MAX(reqId) as new_id FROM requestAddInfo WHERE userid = ?");
+			$stmt->bind_param("s", $this->record['userid']);
 			$stmt->execute();
 			$stmt->bind_result($this->record['reqId']);
 			$stmt->close();
@@ -165,14 +165,14 @@ class RequestAddInfo {
 			
 			if (($this->record['itemCount'] > 0)) {
 				for ($i=0; $i < $this->record['itemCount']; $i++) {
-					$items[$i]->insert($this->record['userId'], $this->record['supType']);
+					$items[$i]->insert($this->record['userid'], $this->record['supType']);
 				}
 			}
 			
 		} else {
 
 			$query = "UPDATE requestAddInfo SET ";
-			$updateData = "`userId` = ?, ";
+			$updateData = "`userid` = ?, ";
 			$updateData.= "`status` = ?, ";
 			$updateData.= "`dueDate` = ?, ";
 			$updateData.= "`nationCode` = ? ";
@@ -182,7 +182,7 @@ class RequestAddInfo {
 			$stmt = $mysqli->prepare($query);
 			
 			$stmt->bind_param("ssssi", 
-				$this->record['userId'], 
+				$this->record['userid'], 
 				$this->record['status'], 
 				$this->record['dueDate'], 
 				$this->record['nationCode'],
@@ -223,7 +223,7 @@ class RequestAddInfo {
 
 	var $m_reqId;
 	var $m_dueDate;
-	var $m_userId;
+	var $m_userid;
 	var $m_nick;
 	var $m_nation;
 	var $m_email;
@@ -240,8 +240,8 @@ class RequestAddInfo {
 		$RequestID = $m_reqId;
 	} 
 
-	function UserID() {
-		$UserID = $m_userId;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function Due() {
@@ -296,7 +296,7 @@ class RequestAddInfo {
 		$m_reqId=intval($value);
 	} 
 
-	function UserID($value) {
+	function userid($value) {
 		$m_userid = trim($value);
 	} 
 
@@ -328,7 +328,7 @@ class RequestAddInfo {
 		$m_totalCost=0;
 		$m_status="05001";
 		$m_email="";
-		$m_userId="";
+		$m_userid="";
 		$m_itemCount=0;
 	} 
 
@@ -340,16 +340,16 @@ class RequestAddInfo {
 	#  class method
 	# ***********************************************
 	function Open($reqId) {
-		$query = "SELECT A.reqId, A.userId, B.nick, A.status, A.nationCode, C.name, A.dueDate, B.email, ";
+		$query = "SELECT A.reqId, A.userid, B.nick, A.status, A.nationCode, C.name, A.dueDate, B.email, ";
 		$query = $query." (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId) AS totalCost, ";
-		$query = $query." (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId AND userId > '') AS currentCost ";
+		$query = $query." (SELECT SUM(cost) FROM requestItem WHERE reqId = A.reqId AND userid > '') AS currentCost ";
 		$query = $query." FROM requestAddInfo A, users B, code C ";
-		$query = $query." WHERE A.reqId = '".$mssqlEscapeString[$reqId]."' AND A.userId = B.userId AND A.nationCode = C.code";
+		$query = $query." WHERE A.reqId = '".$mssqlEscapeString[$reqId]."' AND A.userid = B.userid AND A.nationCode = C.code";
 		$reqInfoRS = $objDB->execute_query($query);
 
 		if ((!$reqInfoRS->eof && !$reqInfoRS->bof)) {
 			$m_reqId=intval($reqInfoRS["reqId"]);
-			$m_userId = $reqInfoRS["userId"];
+			$m_userid = $reqInfoRS["userid"];
 			$m_nick = $reqInfoRS["nick"];
 			$m_status = $reqInfoRS["status"];
 			$m_nationCode = $reqInfoRS["nationCode"];
@@ -378,16 +378,16 @@ class RequestAddInfo {
 	function Update() {
 		if (($m_reqId==-1)) {
 			# New Data
-			$query = "INSERT INTO requestAddInfo (reqId, userId, status, dueDate, nationCode) VALUES ";
+			$query = "INSERT INTO requestAddInfo (reqId, userid, status, dueDate, nationCode) VALUES ";
 			$insertData="'".$m_reqId."', ";
-			$insertData = $insertData."'".$mssqlEscapeString[$m_userId]."', ";
+			$insertData = $insertData."'".$mssqlEscapeString[$m_userid]."', ";
 			$insertData = $insertData."'".$m_status."', ";
 			$insertData = $insertData."'".$m_dueDate."', ";
 			$insertData = $insertData."'".$m_nationCode."' ";
 			$query = $query."(".$insertData.")";
 			$objDB->execute_command($query);
 
-			$query = "SELECT MAX(reqId) AS new_id FROM requestAddInfo WHERE userId = '".$mssqlEscapeString[$m_userId]."'";
+			$query = "SELECT MAX(reqId) AS new_id FROM requestAddInfo WHERE userid = '".$mssqlEscapeString[$m_userid]."'";
 			$reqInfoRS = $objDB->execute_query($query);
 			if ((!$reqInfoRS->eof && !$reqInfoRS->bof)) {
 				$m_reqId=intval($reqInfoRS["new_id"]);
@@ -400,7 +400,7 @@ class RequestAddInfo {
 			}
 		} else {
 			$query = "UPDATE requestAddInfo SET ";
-			$updateData="userId = '".$mssqlEscapeString[$m_userId]."', ";
+			$updateData="userid = '".$mssqlEscapeString[$m_userid]."', ";
 			$updateData = $updateData."status = ".$m_status.", ";
 			$updateData = $updateData."dueDate = '".$m_dueDate."',";
 			$updateData = $updateData."nationCode = '".$m_nationCode."'";

@@ -1,12 +1,20 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-//***************************************************************// member edit page//// last update date : 2009.12.28// updated by blackdew// To do List//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함//	 - 자바 스크립트 추가 & update process 진행//***************************************************************
+//***************************************************************
+// member edit page
+//
+// last update date : 2009.12.28
+// updated by blackdew
+// To do List
+//	 - 비밀번호 변경하는 페이지는 따로 추가해야 함
+//	 - 자바 스크립트 추가 & update process 진행
+//***************************************************************
 checkUserLogin();
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
-$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
@@ -30,20 +38,20 @@ function body() {
 	<!-- //정보 -->
 		<div id="content">
 		<div class="mypage b20">
-			<p class="hi"><strong><?php echo $member->Name;?></strong>님, 안녕하세요</p>
+			<p class="hi"><strong><?=$member->Name?></strong>님, 안녕하세요</p>
 		<ul class="txt01">
-			<li><strong>회원ID</strong> <?php echo $member->UserID;?></li>
+			<li><strong>회원ID</strong> <?=$member->userid?></li>
 			<li class="btn">
 			<img src="../images/sub/btn_out.gif" onclick="clickTopNavi(10)" class="r5">
 			<img src="../images/sub/btn_logout.gif" onclick="clickTopNavi(4)" class="r5">
 			</li>
 		</ul>
 		<ul class="txt02">
-			<li class="tit"><?php echo $account->Method;?></li>
-			<li>은행 : <?php echo $account->Bank;?></li>
-			<li>예금주 : <?php echo $account->Name;?></li>
-			<li>계좌번호 : <?php echo $account->Number;?></li>
-			<li>이체일 : <?php echo $account->SendDate;?> 일</li>
+			<li class="tit"><?=$account->Method?></li>
+			<li>은행 : <?=$account->Bank?></li>
+			<li>예금주 : <?=$account->Name?></li>
+			<li>계좌번호 : <?=$account->Number?></li>
+			<li>이체일 : <?=$account->SendDate?> 일</li>
 		</ul> 
 		</div>
 		<!-- 정보// -->
@@ -51,118 +59,114 @@ function body() {
 			<p class="b5"><img src="../images/sub/stit_080101.gif"></p>
 	<form name="dataForm" id="dataForm" method="post">
 	<input type="hidden" id="mode" name="mode" value="editUser" />
-	<input type="hidden" id="userId" name="userId" value="<?php echo $member->UserID;?>" />
-	<input type="hidden" id="level" name="level" value="<?php echo $member->UserLevel;?>" />
+	<input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
+	<input type="hidden" id="level" name="level" value="<?=$member->UserLevel?>" />
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 				<col width="25%" />
 				<col />
 				<tr>
 					<td class="td01">아이디</td>
-					<td><?php echo $member->UserID;?></td>
+					<td><?=$member->userid?></td>
 				</tr>
 				<tr>
 					<td class="td01">닉네임<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="nickName" id="nickName" maxlength="30" tabindex="1"	value="<?php echo $member->Nick;?>" onkeyup="checkNick(this.value);" />
-			<label class="fs11" type="text" name='resultMessage2' id='resultMessage2'></label>
-			</td>
+						<input type="text" name="nickName" id="nickName" maxlength="30" tabindex="1" value="<?=$member->Nick?>" onkeyup="checkNick(this.value);" />
+						<label class="fs11" type="text" name='resultMessage2' id='resultMessage2'></label>
+					</td>
 				</tr>
 				<tr>
 					<td class="td01">이름<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="name" id="name" maxlength="30" tabindex="2" value="<?php echo $member->Name;?>" />
-			<label class="fs11" type="text" name='resultMessage3' id='resultMessage3'>(공백없이 한글만 입력가능)</label>
-			</td>
+						<input type="text" name="name" id="name" maxlength="30" tabindex="2" value="<?=$member->Name?>" />
+						<label class="fs11" type="text" name='resultMessage3' id='resultMessage3'>(공백없이 한글만 입력가능)</label>
+					</td>
 				</tr>
 				<!--tr>
 					<td class="td01">주민등록번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-				<?	 $jumin = $member->Jumin;?>
-						<input type="text" name="jumin1" id="jumin1" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="6" style="width:100px" tabindex="3" value="<?php echo $jumin[0];?>" />
+				<?	 $jumin = $member->Jumin?>
+						<input type="text" name="jumin1" id="jumin1" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="6" style="width:100px" tabindex="3" value="<?=$jumin[0]?>" />
 						-
-						<input type="password" name="jumin2" id="jumin2" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="7" style="width:100px" tabindex="4" value="<?php echo $jumin[1];?>" />
+						<input type="password" name="jumin2" id="jumin2" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="7" style="width:100px" tabindex="4" value="<?=$jumin[1]?>" />
 			<label class="fs11" type="text" name='resultMessage4' id='resultMessage4'></label>
 					</td>
 				</tr-->
 				<tr>
 					<td class="td01"> E-mail<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
-			<? $email = $member->Email;?>
 					<td>
-				<input type="text" name="email1" id="email1" style="ime-mode:disabled" tabindex="5" maxlength="30" value="<?php echo $email[0];?>" />
-			@
-			<input type="text" name="email2" id="email2" style="ime-mode:disabled" tabindex="6" maxlength="50" value="<?php echo $email[1];?>" />
-			</td>
+						<input type="text" name="email1" id="email1" style="ime-mode:disabled" tabindex="5" maxlength="30" value="<?=$member->Email[0]?>" />
+						@
+						<input type="text" name="email2" id="email2" style="ime-mode:disabled" tabindex="6" maxlength="50" value="<?=$member->Email[1]?>" />
+					</td>
 				</tr>
 				<tr>
 					<td class="td01">우편번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-				<?	 $zipcode = $member->Zipcode;?>
-						<input type="text" id="post1" name="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="7" value="<?php echo $zipcode[0];?>" />
+						<input type="text" id="post1" name="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="7" value="<?=$member->Zipcode[0]?>" />
 						-
-						<input type="text" id="post2" name="post2" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?php echo $zipcode[1];?>" />
+						<input type="text" id="post2" name="post2" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?=$member->Zipcode[1]?>" />
 						<img src="../images/board/btn_zipcode.gif" border="0" align="absmiddle" class="m2" onclick="PostPopup();" style="cursor:hand;">
-			</td>
+					</td>
 				</tr>
 				<tr>
 					<td class="td01">주소<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="addr1" id="addr1" style="width:80%" tabindex="9" readonly onclick="PostPopup();" value="<?php echo $member->Address1;?>" />
+						<input type="text" name="addr1" id="addr1" style="width:80%" tabindex="9" readonly onclick="PostPopup();" value="<?=$member->Address1?>" />
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="10" value="<?php echo $member->Address2;?>" />
+						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="10" value="<?=$member->Address2?>" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">전화번호</td>
 					<td>
-				<?	 $phone = $member->Phone;?>
 						<select id="tel1" name="tel1" tabindex="11">
-				<option value="02"<?php if (($phone[0]=="02")) { ?> selected<?php } ?>>02</option>
-				<option value="031"<?php if (($phone[0]=="031")) { ?> selected<?php } ?>>031</option>
-				<option value="032"<?php if (($phone[0]=="032")) { ?> selected<?php } ?>>032</option>
-				<option value="033"<?php if (($phone[0]=="033")) { ?> selected<?php } ?>>033</option>
-				<option value="041"<?php if (($phone[0]=="041")) { ?> selected<?php } ?>>041</option>
-				<option value="042"<?php if (($phone[0]=="042")) { ?> selected<?php } ?>>042</option>
-				<option value="043"<?php if (($phone[0]=="043")) { ?> selected<?php } ?>>043</option>
-				<option value="051"<?php if (($phone[0]=="051")) { ?> selected<?php } ?>>051</option>
-				<option value="052"<?php if (($phone[0]=="052")) { ?> selected<?php } ?>>052</option>
-				<option value="053"<?php if (($phone[0]=="053")) { ?> selected<?php } ?>>053</option>
-				<option value="054"<?php if (($phone[0]=="054")) { ?> selected<?php } ?>>054</option>
-				<option value="055"<?php if (($phone[0]=="055")) { ?> selected<?php } ?>>055</option>
-				<option value="061"<?php if (($phone[0]=="061")) { ?> selected<?php } ?>>061</option>
-				<option value="062"<?php if (($phone[0]=="062")) { ?> selected<?php } ?>>062</option>
-				<option value="063"<?php if (($phone[0]=="063")) { ?> selected<?php } ?>>063</option>
-				<option value="064"<?php if (($phone[0]=="064")) { ?> selected<?php } ?>>064</option>
-				<option value="070"<?php if (($phone[0]=="070")) { ?> selected<?php } ?>>070</option>
+							<option value="02"<?php if ($member->Phone[0] == "02") { ?> selected<?php } ?>>02</option>
+							<option value="031"<?php if ($member->Phone[0] == "031") { ?> selected<?php } ?>>031</option>
+							<option value="032"<?php if ($member->Phone[0] == "032") { ?> selected<?php } ?>>032</option>
+							<option value="033"<?php if ($member->Phone[0] == "033") { ?> selected<?php } ?>>033</option>
+							<option value="041"<?php if ($member->Phone[0] == "041") { ?> selected<?php } ?>>041</option>
+							<option value="042"<?php if ($member->Phone[0] == "042") { ?> selected<?php } ?>>042</option>
+							<option value="043"<?php if ($member->Phone[0] == "043") { ?> selected<?php } ?>>043</option>
+							<option value="051"<?php if ($member->Phone[0] == "051") { ?> selected<?php } ?>>051</option>
+							<option value="052"<?php if ($member->Phone[0] == "052") { ?> selected<?php } ?>>052</option>
+							<option value="053"<?php if ($member->Phone[0] == "053") { ?> selected<?php } ?>>053</option>
+							<option value="054"<?php if ($member->Phone[0] == "054") { ?> selected<?php } ?>>054</option>
+							<option value="055"<?php if ($member->Phone[0] == "055") { ?> selected<?php } ?>>055</option>
+							<option value="061"<?php if ($member->Phone[0] == "061") { ?> selected<?php } ?>>061</option>
+							<option value="062"<?php if ($member->Phone[0] == "062") { ?> selected<?php } ?>>062</option>
+							<option value="063"<?php if ($member->Phone[0] == "063") { ?> selected<?php } ?>>063</option>
+							<option value="064"<?php if ($member->Phone[0] == "064") { ?> selected<?php } ?>>064</option>
+							<option value="070"<?php if ($member->Phone[0] == "070") { ?> selected<?php } ?>>070</option>
 						</select>
 						-
-						<input type="text" id="tel2" name="tel2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="12" maxlength="4" value="<?php echo $phone[1];?>" />
+						<input type="text" id="tel2" name="tel2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="12" maxlength="4" value="<?=$member->Phone[1]?>" />
 						-
-						<input type="text" id="tel3" name="tel3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="13" maxlength="4" value="<?php echo $phone[2];?>" />
+						<input type="text" id="tel3" name="tel3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="13" maxlength="4" value="<?=$member->Phone[2]?>" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">휴대폰번호</td>
 					<td>
-				<?	 $mobile = $member->Mobile;?>
 						<select id="hp1" name="hp1" tabindex="14">
-				<option value="010"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>010</option>
-				<option value="011"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>011</option>
-				<option value="016"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>016</option>
-				<option value="017"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>017</option>
-				<option value="018"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>018</option>
-				<option value="019"<?php if (($mobile[0]=="070")) { ?> selected<?php } ?>>019</option>
+							<option value="010"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>010</option>
+							<option value="011"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>011</option>
+							<option value="016"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>016</option>
+							<option value="017"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>017</option>
+							<option value="018"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>018</option>
+							<option value="019"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>019</option>
 						</select>
 						-
-						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?php echo $mobile[1];?>" />
+						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?=$member->Mobile[1]?>" />
 						-
-						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?php echo $mobile[2];?>" />
-						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="21"<?php if (($member->CheckMessageOption==1)) {
-?> checked<?php } ?> />
-						SMS 수신동의 </td>
+						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?=$member->Mobile[2]?>" />
+						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="21"<?php if ($member->CheckMessageOption == 1) {?> checked<?php } ?> />
+						SMS 수신동의 
+					</td>
 				</tr>
 			</table>
 			<p class="right b10">
@@ -194,17 +198,17 @@ function body() {
 
 ?>
 		<!-- //선교사일 경우 -->
-			<p class="b5"	id="imgMission" style="display: <?php echo $display;?>;" /><img src="../images/sub/stit_080102.gif"></p>
-			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write" id="frmMission" style="display: <?php echo $display;?>;">
+			<p class="b5"	id="imgMission" style="display: <?=$display?>;" /><img src="../images/sub/stit_080102.gif"></p>
+			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write" id="frmMission" style="display: <?=$display?>;">
 				<col width="25%" />
 				<col />
 				<tr>
 					<td class="td01">선교사명</td>
-					<td><input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?php echo $mission->MissionName;?>" /></td>
+					<td><input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?=$mission->MissionName?>" /></td>
 				</tr>
 				<tr>
 					<td class="td01">파송교회</td>
-					<td><input type="text" name="church" id="church" maxlength="20" size="30" value="<?php echo $mission->Church;?>" /></td>
+					<td><input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->Church?>" /></td>
 				</tr>
 				<tr>
 					<td class="td01">파송교회 연락처 </td>
@@ -229,13 +233,13 @@ function body() {
 				<option value="070"<?php if (($churchContact[0]=="070")) { ?> selected<?php } ?>>070</option>
 						</select>
 						-
-						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?php echo $churchContact[1];?>" />
+						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
 						-
-						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?php echo $churchContact[2];?>" />
+						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
 				</tr>
 				<tr>
 					<td class="td01">파송선교단체</td>
-					<td><input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?php echo $mission->Ngo;?>"></td>
+					<td><input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?=$mission->Ngo?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">파송선교단체 연락처 </td>
@@ -260,9 +264,9 @@ function body() {
 				<option value="070"<?php if (($ngoContact[0]=="070")) { ?> selected<?php } ?>>070</option>
 						</select>
 						-
-						<input type="text" name="ngoContact2" id="ngoContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?php echo $ngoContact[1];?>" />
+						<input type="text" name="ngoContact2" id="ngoContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$ngoContact[1]?>" />
 						-
-						<input type="text" name="ngoContact3" id="ngoContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?php echo $ngoContact[2];?>" />
+						<input type="text" name="ngoContact3" id="ngoContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$ngoContact[2]?>" />
 				</tr>
 				<tr>
 					<td class="td01">선교지</td>
@@ -273,11 +277,11 @@ function body() {
 		$codeObj = $codes[$i];
 		if (($codeObj->Code == $mission->NationCode)) {
 ?>
-					<option value="<?php echo $codeObj->Code;?>" selected><?php echo $codeObj->Name;?></option>
+					<option value="<?=$codeObj->Code?>" selected><?=$codeObj->Name?></option>
 				<?php 
 		} else {
 ?>
-					<option value="<?php echo $codeObj->Code;?>"><?php echo $codeObj->Name;?></option>
+					<option value="<?=$codeObj->Code?>"><?=$codeObj->Name?></option>
 				<?php 
 		} 
 
@@ -290,11 +294,11 @@ function body() {
 				</tr>
 				<tr>
 					<td class="td01">홈페이지 주소 </td>
-					<td><input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?php echo $mission->Homepage;?>"></td>
+					<td><input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?=$mission->Homepage?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">파송관리자 이름 </td>
-					<td><input type="text" name="manager" id="manager" maxlength="20" value="<?php echo $mission->Manager;?>"></td>
+					<td><input type="text" name="manager" id="manager" maxlength="20" value="<?=$mission->Manager?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">파송관리자 연락처 </td>
@@ -325,41 +329,41 @@ function body() {
 				<option value="070"<?php if (($managerContact[0]=="070")) { ?> selected<?php } ?>>070</option>
 						</select>
 						-
-						<input type="text" name="managerContact2" id="managerContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?php echo $managerContact[1];?>" />
+						<input type="text" name="managerContact2" id="managerContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$managerContact[1]?>" />
 						-
-						<input type="text" name="managerContact3" id="managerContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?php echo $managerContact[2];?>" />
+						<input type="text" name="managerContact3" id="managerContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$managerContact[2]?>" />
 			</td>
 				</tr>
 				<tr>
 					<td class="td01"> 파송관리자 E-mail </td>
 					<td>
-						<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" value="<?php echo $managerEmail[0];?>" />
+						<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" value="<?=$managerEmail[0]?>" />
 						@
-						<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" value="<?php echo $managerEmail[1];?>" />
+						<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" value="<?=$managerEmail[1]?>" />
 			</td>
 				</tr>
 				<tr>
 					<td class="td01">후원 계좌번호</td>
-					<td><input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" value="<?php echo $mission->AccountNo;?>"></td>
+					<td><input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" value="<?=$mission->AccountNo?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">은행명</td>
-					<td><input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?php echo $mission->Bank;?>"></td>
+					<td><input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?=$mission->Bank?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">예금주</td>
-					<td><input type="text" name="accountName" id="accountName" maxlength="20" value="<?php echo $mission->AccountName;?>"></td>
+					<td><input type="text" name="accountName" id="accountName" maxlength="20" value="<?=$mission->AccountName?>"></td>
 				</tr>
 				<tr>
 					<td class="td01">기타메모</td>
 					<td>
-			<textarea name="memo" id="memo" class="b10"><?php echo $memo;?></textarea>
+			<textarea name="memo" id="memo" class="b10"><?=$memo?></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">기도제목</td>
 					<td>
-			<textarea name="prayList" id="prayList"><?php echo $prayList;?></textarea>
+			<textarea name="prayList" id="prayList"><?=$prayList?></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -369,13 +373,13 @@ function body() {
 			<tr><th>이름</th><th>나이</th><th>성별</th><th>관계</th><th>삭제</th></tr>
 			<?php 
 	$year=substr(time(),0,4);
-	if ((strlen($mission->UserId)>0)) {
+	if ((strlen($mission->userid)>0)) {
 		for ($num=0; $num<=count($familyList); $num = $num+1) {
 			$familyObj = $familyList[$num];
 ?>
 				<tr id="trFamily" align="center">
-					<input type="hidden" name="familyId" id="familyId" value="<?php echo $familyObj->familyID;?>" />
-					<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?php echo $familyObj->Name;?>" /></td>
+					<input type="hidden" name="familyId" id="familyId" value="<?=$familyObj->familyID?>" />
+					<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?=$familyObj->Name?>" /></td>
 					<td><select name="familyAge" id="familyAge">
 					<?php 
 			for ($i=0; $i<=99; $i = $i+1) {
@@ -411,7 +415,7 @@ function body() {
 							<option value="기타"<?			 if (($familyObj->Relation=="기타")) { ?> selected<?			 } ?>>기타</option>
 						</select>
 					</td>
-					<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?php echo $familyObj->familyID;?>)" /></td>
+					<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?=$familyObj->familyID?>)" /></td>
 				</tr>
 			<?php 
 
@@ -656,7 +660,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?>&userId=<?php echo $userId;?>&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?php echo $userid?>&familyId=" + familyId;
 	}
 //]]>
 </script>

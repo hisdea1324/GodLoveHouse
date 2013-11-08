@@ -24,16 +24,16 @@ function showHouseManagerLeft() {
 	checkUserLogin();
 
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-	$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
-	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+	$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 
 	$c_Helper = new CodeHelper();
 	$codes = $c_Helper->getNationCodeList();
 
 	$h_Helper = new HouseHelper();
-	$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
-	$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 2);
+	$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
+	$houseList2 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 2);
 	
 	echo "<!-- leftSec -->";
 	echo "<div id=\"leftSec\">";
@@ -72,7 +72,7 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	$strHeader = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strHeader);
 	$strHeader = str_replace("[CHARSET]", $Application["Charset"], $strHeader);
 
-	if ((strlen($_SESSION['userId'])==0)) {
+	if ((strlen($_SESSION['userid'])==0)) {
 		$strHeader = str_replace("[LOGIN_STATUS1]","gm_01",$strHeader);
 		$strHeader = str_replace("[LOGIN_STATUS2]","gm_02",$strHeader);
 		$strHeader = str_replace("[LOGIN_VALUE1]","1",$strHeader);

@@ -2,11 +2,11 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
 $mode = trim($_REQUEST["mode"]);
-$checkUserId = trim($_REQUEST["userId"]);
+$checkuserid = trim($_REQUEST["userid"]);
 $isExist = "N";
 
-if (($mode=="search") && (strlen($checkUserId)>3)) {
-	$query = "SELECT * FROM users WHERE userID = '".$mssqlEscapeString[$checkUserId]."'";
+if (($mode=="search") && (strlen($checkuserid)>3)) {
+	$query = "SELECT * FROM users WHERE userid = '".$mssqlEscapeString[$checkuserid]."'";
 	$rs = $db->execute($query);
 	if (!$Rs->EOF) {
 		$isExist = "Y";
@@ -47,13 +47,13 @@ if (($mode=="search") && (strlen($checkUserId)>3)) {
 <?php } else if($isExist=="Y") { ?>
 					<table border="0" cellpadding="6" cellspacing="1" width="100%" bgcolor="e0e0e0">
 						<tr>
-							<td bgcolor="f5f5f5" align="center" class="ls">아이디 <font color="#A5423D"><b><?php echo $checkUserId;?></b></font>은 사용할 수 없는 아이디입니다.</td>
+							<td bgcolor="f5f5f5" align="center" class="ls">아이디 <font color="#A5423D"><b><?php echo $checkuserid;?></b></font>은 사용할 수 없는 아이디입니다.</td>
 						</tr>
 					</table>
 <?php } else { ?>
 					<table border="0" cellpadding="6" cellspacing="1" width="100%" bgcolor="e0e0e0">
 						<tr>
-							<td bgcolor="f5f5f5" align="center" class="ls">아이디 <font color="#A5423D"><b><?php echo $checkUserId;?></b></font>은 사용할 수 있는 아이디입니다.</td>
+							<td bgcolor="f5f5f5" align="center" class="ls">아이디 <font color="#A5423D"><b><?php echo $checkuserid;?></b></font>은 사용할 수 있는 아이디입니다.</td>
 						</tr>
 						<tr>
 							<td></td>
@@ -75,7 +75,7 @@ if (($mode=="search") && (strlen($checkUserId)>3)) {
 									<table border="0" cellpadding="6" cellspacing="0">
 										<tr>
 											<td><b class="ls">아이디 검색</b></td>
-											<td><input type="text" id="userId" name="userId" style="ime-mode:disabled;width:150;" /></td>
+											<td><input type="text" id="userid" name="userid" style="ime-mode:disabled;width:150;" /></td>
 											<td><img src="/images/common/idcheck.gif" alt="아이디검색" width="54" height="20" border="0" onClick="doSearch()" style="cursor:hand"></td>
 										</tr>
 									</table>
@@ -93,10 +93,10 @@ if (($mode=="search") && (strlen($checkUserId)>3)) {
 </BODY>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
-document.getElementById("userId").focus();
+document.getElementById("userid").focus();
 
 function doSearch(){
-	var object = document.getElementById("userId");
+	var object = document.getElementById("userid");
 	if(object.value == ""){
 		alert("아이디를 미 입력하셨거나 숫자만 입력하셨습니다.");
 		object.focus();
@@ -123,7 +123,7 @@ function doSearch(){
 }
 
 function choice(){
-	opener.document.getElementById("userId").value="<?php echo $checkUserId;?>";
+	opener.document.getElementById("userid").value="<?php echo $checkuserid;?>";
 	opener.document.getElementById("name").focus();
 	window.close();
 }

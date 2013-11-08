@@ -17,8 +17,8 @@ class SessionObject {
 		$MemberType = $m_type;
 	} 
 
-	function UserID() {
-		$UserID = $m_userid;
+	function userid() {
+		$userid = $m_userid;
 	} 
 
 	function Nick() {
@@ -34,8 +34,8 @@ class SessionObject {
 	} 
 
 	function __construct() {
-		if (strlen($_SESSION['userId'])>0) {
-			setVariable($_SESSION['userId'],$_SESSION['userName'],$_SESSION['userNick'],$_SESSION['userLv']);
+		if (strlen($_SESSION['userid'])>0) {
+			setVariable($_SESSION['userid'],$_SESSION['userName'],$_SESSION['userNick'],$_SESSION['userLv']);
 		} 
 
 		$m_readList = $_SESSION['readList'];
@@ -110,11 +110,11 @@ class SessionObject {
 		$rs = $mysqli->query($query);
 
 		if (!$Rs->eof || !$Rs->bof) {
-			$_SESSION['userId'] = $userid;
+			$_SESSION['userid'] = $userid;
 			$_SESSION['userNick'] = $Rs["nick"];
 			$_SESSION['userName'] = $Rs["name"];
 			$_SESSION['userLv'] = $Rs["userLv"];
-			setVariable($_SESSION['userId'],$_SESSION['userType'],$_SESSION['userNick'],$_SESSION['userLv']);
+			setVariable($_SESSION['userid'],$_SESSION['userType'],$_SESSION['userNick'],$_SESSION['userLv']);
 			$retValue=0;
 		} else {
 			$retValue=1;

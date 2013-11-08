@@ -64,7 +64,7 @@ function body() {
 ?>
 				<tr>
 					<td><?php echo ($i+1);?></td>
-					<td><a href="familyDetail.php?userId=<?php echo $mission->userId;?>"><img src="<?php echo $mission->fileImage;?>" width="120" height="75" border="0" class="img"></a></td>
+					<td><a href="familyDetail.php?userid=<?php echo $mission->userid;?>"><img src="<?php echo $mission->fileImage;?>" width="120" height="75" border="0" class="img"></a></td>
 					<td><?php echo $mission->nation;?></td>
 					<td class="ltd">
 						<p class="b"><?php echo $mission->missionName;?></p>

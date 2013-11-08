@@ -13,7 +13,7 @@ $codeStatus = $c_Helper->getHouseStatusCodeList();
 $h_helper = new HouseHelper();
 $houseObj = $h_helper->getHouseInfoById($houseId);
 
-if (!needUserLv(9) && (!isset($_SESSION["userid"]) || $_SESSION["userid"] <> $houseObj->UserID)) {
+if (!needUserLv(9) && (!isset($_SESSION["userid"]) || $_SESSION["userid"] <> $houseObj->userid)) {
 	alertBack("본인 소유의 선교관이 아닙니다.");
 }
 
@@ -30,7 +30,7 @@ function body() {
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 		<form name="dataForm" id="dataForm" method="post">
 		<input type="hidden" name="mode" id="mode" value="regist" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $_SESSION["UserID"];?>" />
+		<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION["userid"];?>" />
 		<input type="hidden" name="houseId" id="houseId" value="<?php echo $houseObj->HouseID;?>" />
 				<col width="20%" />
 				<col />
@@ -175,7 +175,7 @@ function body() {
 //<![CDATA[
 	function frmSubmit() {
 <?php 
-if (!isset($_SESSION['userId']) || strlen($_SESSION['userId'])==0 && false) {
+if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0 && false) {
 	#로그인 안해도 등록할 수 있도록 수정함
 	$backURL = get_path_info();
 ?>

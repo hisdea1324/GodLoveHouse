@@ -132,7 +132,7 @@ class HouseObject {
 			$this->zipcode = $row['zipcode'];
 			$this->regioncode = $row['regionCode'];
 			$this->explain = $row['explain'];
-			$this->userid = $row['userId'];
+			$this->userid = $row['userid'];
 			$this->manager1 = $row['manager1'];
 			$this->contact1 = $row['contact1'];
 			$this->manager2 = $row['manager2'];
@@ -176,7 +176,7 @@ class HouseObject {
 		global $mysqli;
 
 		if ($this->houseId == -1) {
-			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userId`, ";
+			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userid`, ";
 			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -192,7 +192,7 @@ class HouseObject {
 				$this->zipcode,
 				$this->regionCode,
 				$this->explain,
-				$this->userId,
+				$this->userid,
 				$this->manager1,
 				$this->contact1, 
 				$this->manager2, 
@@ -223,7 +223,7 @@ class HouseObject {
 			$updateData = $updateData."`regionCode` = ?, ";
 			$updateData = $updateData."`zipcode` = ?, ";
 			$updateData = $updateData."`explain` = ?, ";
-			$updateData = $updateData."`userId` = ?, ";
+			$updateData = $updateData."`userid` = ?, ";
 			$updateData = $updateData."`manager1` = ?, ";
 			$updateData = $updateData."`contact1` = ?, ";
 			$updateData = $updateData."`manager2` = ?, ";
@@ -249,7 +249,7 @@ class HouseObject {
 				$this->zipcode, 
 				$this->regionCode, 
 				$this->explain, 
-				$this->userId, 
+				$this->userid, 
 				$this->manager1, 
 				$this->contact1, 
 				$this->manager2, 

@@ -75,6 +75,7 @@ class RoomObject {
 		$this->network = null;
 		$this->kitchen = null;
 		$this->laundary = null;
+		$this->bed = null;
 		$this->fee = 0;
 		$this->imageId1 = -1;
 		$this->imageId2 = -1;
@@ -100,6 +101,7 @@ class RoomObject {
 			$this->network = $row['network'];
 			$this->kitchen = $row['kitchen'];
 			$this->laundary = $row['laundary'];
+			$this->bed = $row['bed'];
 			$this->fee = $row['fee'];
 			$this->imageId1 = $row['imageId1'];
 			$this->imageId2 = $row['imageId2'];
@@ -141,35 +143,30 @@ class RoomObject {
 		global $mysqli;
 
 		if ($this->roomId == -1) {
+			$values = $mysqli->real_escape_string($this->houseId);
+			$values .= ", '".$mysqli->real_escape_string($this->roomName)."'";
+			$values .= ", ".$mysqli->real_escape_string($this->limit);
+			$values .= ", '".$mysqli->real_escape_string($this->explain)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->network)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->kitchen)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->laundary)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->bed)."'";
+			$values .= ", ".$mysqli->real_escape_string($this->fee);
+			$values .= ", ".$mysqli->real_escape_string($this->imageId1);
+			$values .= ", ".$mysqli->real_escape_string($this->imageId2);
+			$values .= ", ".$mysqli->real_escape_string($this->imageId3);
+			$values .= ", ".$mysqli->real_escape_string($this->imageId4);
+
 			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
-			$query = $query."`network`, `kitchen`, `laundary`, `fee`, ";
+			$query = $query."`network`, `kitchen`, `laundary`, `bed`, `fee`, ";
 			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$query = $query."($values)";
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 
-			# New Data
-			$stmt->bind_param("isissssiiiii", 
-				$this->houseId, 
-				$this->roomName, 
-				$this->limit, 
-				$this->explain, 
-				$this->network, 
-				$this->kitchen, 
-				$this->laundary, 
-				$this->fee, 
-				$this->imageId1, 
-				$this->imageId2, 
-				$this->imageId3, 
-				$this->imageId4);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-			
 			$this->roomId = $mysqli->insert_id;
 			
 			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->houseId."'";
@@ -177,44 +174,28 @@ class RoomObject {
 			
 		} else {
 			$query = "UPDATE room SET ";
-			$updateData = "`houseId` = ?, ";
-			$updateData = $updateData."`roomName` = ?, ";
-			$updateData = $updateData."`limit` = ?, ";
-			$updateData = $updateData."`explain` = ?, ";
-			$updateData = $updateData."`network` = ?, ";
-			$updateData = $updateData."`kitchen` = ?, ";
-			$updateData = $updateData."`laundary` = ?, ";
-			$updateData = $updateData."`fee` = ?, ";
-			$updateData = $updateData."`imageId1` = ?, ";
-			$updateData = $updateData."`imageId2` = ?, ";
-			$updateData = $updateData."`imageId3` = ?, ";
-			$updateData = $updateData."`imageId4` = ? ";
-			$query = $query.$updateData." WHERE `roomId` = ?";
+			$updateData = "`houseId` = ".$mysqli->real_escape_string($this->houseId).", ";
+			$updateData = $updateData."`roomName` = '".$mysqli->real_escape_string($this->roomName)."', ";
+			$updateData = $updateData."`limit` = ".$mysqli->real_escape_string($this->limit).", ";
+			$updateData = $updateData."`explain` = '".$mysqli->real_escape_string($this->explain)."', ";
+			$updateData = $updateData."`network` = '".$mysqli->real_escape_string($this->network)."', ";
+			$updateData = $updateData."`kitchen` = '".$mysqli->real_escape_string($this->kitchen)."', ";
+			$updateData = $updateData."`laundary` = '".$mysqli->real_escape_string($this->laundary)."', ";
+			$updateData = $updateData."`bed` = '".$mysqli->real_escape_string($this->bed)."', ";
+			$updateData = $updateData."`fee` = ".$mysqli->real_escape_string($this->fee).", ";
+			$updateData = $updateData."`imageId1` = ".$mysqli->real_escape_string($this->imageId1).", ";
+			$updateData = $updateData."`imageId2` = ".$mysqli->real_escape_string($this->imageId2).", ";
+			$updateData = $updateData."`imageId3` = ".$mysqli->real_escape_string($this->imageId3).", ";
+			$updateData = $updateData."`imageId4` = ".$mysqli->real_escape_string($this->imageId4)." ";
+			$query = $query.$updateData." WHERE `roomId` = ".$mysqli->real_escape_string($this->roomId);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("isissssiiiiii", 
-				$this->houseId, 
-				$this->roomName, 
-				$this->limit, 
-				$this->explain, 
-				$this->network, 
-				$this->kitchen, 
-				$this->laundary, 
-				$this->fee, 
-				$this->imageId1, 
-				$this->imageId2, 
-				$this->imageId3, 
-				$this->imageId4, 
-				$this->roomId);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 		}
+
+		return true;
 	} 
 
 	function Delete() {

@@ -3,18 +3,18 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
 
 // 회원 정보$m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 
 // 계좌정보
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 
 // 선교사 후원
-$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userId"]);
+$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userid"]);
 
 // 후원 내역 
 $s_Helper = new SupportHelper();
-$centerSupportInfo = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
-$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($_SESSION["userId"]);
+$centerSupportInfo = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
+$serviceSupportInfo = $s_Helper->getServiceSupportByuserid($_SESSION["userid"]);
 
 if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");

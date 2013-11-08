@@ -15,16 +15,16 @@ $houseId = isset($_REQUEST["houseId"]) ? trim($_REQUEST["houseId"]) : "";
 $roomId = isset($_REQUEST["roomId"]) ? trim($_REQUEST["roomId"]) : "";
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userid"]);
-$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
+$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
 
 $h_Helper = new HouseHelper();
-$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 1);
-$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userid"], 2);
+$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
+$houseList2 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 2);
 
 foreach ($houseList1 as $house) {
 	if (trim($houseId) == trim($house->HouseID)) {
@@ -56,7 +56,7 @@ function body() {
 		<!--div class="mypage b20">
 			<p class="hi"><strong><?php echo $member->Name;?></strong>님, 안녕하세요</p>
 		<ul class="txt01">
-			<li><strong>회원ID</strong> <?php echo $member->UserID;?></li>
+			<li><strong>회원ID</strong> <?php echo $member->userid;?></li>
 			<li class="btn">
 			<img src="../images/sub/btn_out.gif" onclick="clickTopNavi(10)" class="r5">
 			<img src="../images/sub/btn_logout.gif" onclick="clickTopNavi(4)" class="r5">

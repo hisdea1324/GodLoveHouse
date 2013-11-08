@@ -10,8 +10,8 @@ if ((strlen($page)==0)) {
 } 
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 
 $h_Helper = new HouseHelper();
 $h_Helper->PAGE_UNIT=10; //하단 페이징 단위 $h_Helper->PAGE_COUNT=7; //한페이지에 보여줄 리스트 갯수 $h_Helper->setReservationListCondition($search);
@@ -37,7 +37,7 @@ function body() {
 		<div class="mypage b20">
 			<p class="hi"><strong><?php echo $member->Name;?></strong>님, 안녕하세요</p>
 			<ul class="txt01">
-				<li><strong>회원ID</strong><?php echo $member->UserID;?></li>
+				<li><strong>회원ID</strong><?php echo $member->userid;?></li>
 				<li class="btn">
 					<img src="../images/sub/btn_out.gif" onclick="clickTopNavi(10)" class="r5">
 					<img src="../images/sub/btn_logout.gif" onclick="clickTopNavi(4)" class="r5">
@@ -90,7 +90,7 @@ function body() {
 			<tr>
 				<td><?php echo $reservObj->BookNo;?></td>
 				<td class="ltd">
-					<label id="profileId<?php echo $i;?>" onmouseover="showProfile('<?php echo $i;?>', event)" onmouseout="unshowProfile('<?php echo $i;?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.UserID ?></label>
+					<label id="profileId<?php echo $i;?>" onmouseover="showProfile('<?php echo $i;?>', event)" onmouseout="unshowProfile('<?php echo $i;?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.userid ?></label>
 					<div id="profile<?php echo $i;?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
 				</td>
 				<td><?php echo $reservObj->HouseName;?> / <?php echo $reservObj->RoomName;?></td>

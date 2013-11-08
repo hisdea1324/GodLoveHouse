@@ -1,9 +1,9 @@
 <?php
 	//session_start();
-	//session_register("UserID_session");
-	//session_register("UserId_session");
+	//session_register("userid_session");
+	//session_register("userid_session");
 	//session_register("UserLv_session");
-	//session_register("userId_session");
+	//session_register("userid_session");
 	//header("Content-type: "."text/html;charset=utf-8");
 
 	global $Application;

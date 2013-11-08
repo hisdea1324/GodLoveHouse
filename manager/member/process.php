@@ -45,7 +45,7 @@ function editUser() {
 function editUserNormal() {
 	$member = new MemberObject();
 
-	$member->UserID = $_REQUEST["userId"];
+	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
 	$member->Password = $Encrypt[$_REQUEST["password"]];
@@ -92,7 +92,7 @@ function editUserNormal() {
 function addUserMissionary() {
 	$mission = new MissionObject();
 
-	$mission->UserID = $_REQUEST["userId"];
+	$mission->userid = $_REQUEST["userid"];
 	$mission->Church = $_REQUEST["church"];
 	$mission->MissionName = $_REQUEST["missionName"];
 	$mission->Ngo = $_REQUEST["ngo"];
@@ -136,7 +136,7 @@ function addUserMissionary() {
 	$familyRelation=explode(",",$_REQUEST["familyRelation"]);
 	for ($i=0; $i<=count($familyName); $i = $i+1) {
 		$familyMember = new MissionaryFamily();
-		$familyMember->UserID = $_REQUEST["userId"];
+		$familyMember->userid = $_REQUEST["userid"];
 		$familyMember->familyID = $familyId[$i];
 		$familyMember->Name = $familyName[$i];
 		$familyMember->Age = $familyAge[$i];
@@ -149,12 +149,12 @@ function addUserMissionary() {
 } 
 
 function deleteUser() {
-	$userId = trim($_REQUEST["userId"]);
+	$userid = trim($_REQUEST["userid"]);
 
 	$ObjQuery = new DataManager();
 
 	$ObjQuery->setTable("users");
-	$ObjQuery->setCondition("userId = '".$userId."'");
+	$ObjQuery->setCondition("userid = '".$userid."'");
 	$ObjQuery->delete();
 
 	$ObjQuery->setTable("missionary");
@@ -168,7 +168,7 @@ function deleteUser() {
 
 function deleteFamily() {
 	$familyId = trim($_REQUEST["familyId"]);
-	$userId = trim($_REQUEST["userId"]);
+	$userid = trim($_REQUEST["userid"]);
 	$userLv = trim($_REQUEST["userLv"]);
 
 	$familyMember = new MissionaryFamily();
@@ -178,14 +178,14 @@ function deleteFamily() {
 	$ObjQuery = null;
 
 
-	header("Location: "."editForm.php?userLv=".$userLv."&userId=".$userId);
+	header("Location: "."editForm.php?userLv=".$userLv."&userid=".$userid);
 } 
 
 function changeUser($userLv) {
 	$member = new MemberObject();
 
-	$userId = trim($_REQUEST["userId"]);
-	$member->Open($userId);
+	$userid = trim($_REQUEST["userid"]);
+	$member->Open($userid);
 	$member->UserLevel = $userLv;
 	$member->Update();
 

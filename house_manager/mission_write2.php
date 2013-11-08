@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+checkUserLogin();
 
 showHouseManagerHeader();
 showHouseManagerLeft();
@@ -35,6 +36,10 @@ function body() {
 					<col width="80%" />
 				</colgroup>
 				<tbody>
+					<form name="dataForm" id="dataForm" method="post">
+					<input type="hidden" name="mode" value="editRoom" />
+					<input type="hidden" name="houseId" value="<?=$houseId?>" />
+					<input type="hidden" name="roomId" value="<?=$room->RoomId?>" />
 					<tr>
 						<th>선교관이름</th>
 						<td><?=$house->houseName?></td>
@@ -48,22 +53,30 @@ function body() {
 					<tr>
 						<th>인터넷 유무</th>
 						<td>
-							<input type="radio" name="network" id="network" value="Y" class="ml20" <?php if ($house->Network == "Y") { print "checked"; } ?> /> 있음
-							<input type="radio" name="network" id="network" value="N" class="ml20" <?php if ($house->Network != "Y") { print "checked"; } ?> /> 없음 
+							<input type="radio" name="network" id="network" value="Y" class="ml20" <?php if ($room->Network == "Y") { print "checked"; } ?> /> 있음
+							<input type="radio" name="network" id="network" value="N" class="ml20" <?php if ($room->Network != "Y") { print "checked"; } ?> /> 없음 
 						</td>
 					</tr>
 					<tr>
 						<th>취사여부</th>
 						<td>
-							<input type="radio" name="kitchen" id="kitchen" value="Y" class="ml20" <?php if ($house->kitchen == "Y") { print "checked"; } ?> /> 가능
-							<input type="radio" name="kitchen" id="kitchen" value="N" class="ml20" <?php if ($house->kitchen != "Y") { print "checked"; } ?> /> 불가능 
+							<input type="radio" name="kitchen" id="kitchen" value="Y" class="ml20" <?php if ($room->kitchen == "Y") { print "checked"; } ?> /> 가능
+							<input type="radio" name="kitchen" id="kitchen" value="N" class="ml20" <?php if ($room->kitchen != "Y") { print "checked"; } ?> /> 불가능 
 						</td>
 					</tr>
 					<tr>
 						<th>세탁여부</th>
 						<td>
-							<input type="radio" name="laundary" id="laundary" value="Y" class="ml20" <?php if ($house->laundary == "Y") { print "checked"; } ?> /> 가능
-							<input type="radio" name="laundary" id="laundary" value="N" class="ml20" <?php if ($house->laundary != "Y") { print "checked"; } ?> /> 불가능
+							<input type="radio" name="laundary" id="laundary" value="Y" class="ml20" <?php if ($room->laundary == "Y") { print "checked"; } ?> /> 가능
+							<input type="radio" name="laundary" id="laundary" value="N" class="ml20" <?php if ($room->laundary != "Y") { print "checked"; } ?> /> 불가능
+						</td>
+					</tr>
+					<tr>
+						<th>침대</th>
+						<td>
+							<input type="radio" name="bed" id="bed" value="없음" class="ml20" <?php if ($room->bed == "" || $room->bed == "없음") { print "checked"; } ?> /> 없음
+							<input type="radio" name="bed" id="bed" value="싱글" class="ml20" <?php if ($room->bed == "싱글") { print "checked"; } ?> /> 싱글
+							<input type="radio" name="bed" id="bed" value="더블" class="ml20" <?php if ($room->bed == "더블") { print "checked"; } ?> /> 더블
 						</td>
 					</tr>
 					<tr>
@@ -75,7 +88,7 @@ function body() {
 					<tr>
 						<th>방인원수</th>
 						<td>
-							<input type="text" name="limit" class="inputTxt" size="30" value="<?php echo $room->Limit;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 명
+							<input type="text" name="limit" class="inputTxt" size="30" value="<?=$room->Limit?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 명
 						</td>
 					</tr>
 					<!--tr>
@@ -100,16 +113,17 @@ function body() {
 						<td>
 							<!--span class="btn1"><a href="#">이미지등록</a></span> <span class="btn1g"><a href="#">+ 이미지추가</a></span><br /-->
 							<input type="button" class="btn1" name="imgUpload" id="imgUpload" value="이미지등록" onclick="uploadImage(event, 'RoomImage1', 'room')" style="cursor:pointer" /><br />
-							<input type="hidden" name="idRoomImage1" id="idRoomImage1" value="<?php echo $room->ImageID1;?>" />
-							<img src="<?php echo $room->Image1;?>" id="imgRoomImage1" class="img" />
-							<input type="hidden" name="idRoomImage2" id="idRoomImage2" value="<?php echo $room->ImageID2;?>" />
-							<img src="<?php echo $room->Image2;?>" id="imgRoomImage2" class="img" />
-							<input type="hidden" name="idRoomImage3" id="idRoomImage3" value="<?php echo $room->ImageID3;?>" />
-							<img src="<?php echo $room->Image3;?>" id="imgRoomImage3" class="img" />
-							<input type="hidden" name="idRoomImage4" id="idRoomImage4" value="<?php echo $room->ImageID4;?>" />
-							<img src="<?php echo $room->Image4;?>" id="imgRoomImage4" class="img" />
+							<input type="hidden" name="idRoomImage1" id="idRoomImage1" value="<?=$room->ImageID1?>" />
+							<img src="<?=$room->Image1?>" id="imgRoomImage1" class="img" />
+							<input type="hidden" name="idRoomImage2" id="idRoomImage2" value="<?=$room->ImageID2?>" />
+							<img src="<?=$room->Image2?>" id="imgRoomImage2" class="img" />
+							<input type="hidden" name="idRoomImage3" id="idRoomImage3" value="<?=$room->ImageID3?>" />
+							<img src="<?=$room->Image3?>" id="imgRoomImage3" class="img" />
+							<input type="hidden" name="idRoomImage4" id="idRoomImage4" value="<?=$room->ImageID4?>" />
+							<img src="<?=$room->Image4?>" id="imgRoomImage4" class="img" />
 						</td>
 					</tr>
+					</form>
 				</tbody>
 			</table>
 			<div class="aRight mt20">

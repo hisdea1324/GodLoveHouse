@@ -69,7 +69,7 @@ function body() {
 			<div id="search"> <img src="../images/board/img_search.gif" class="r10" align="absmiddle">
 				<select name="field" id="field">
 					<option value="title" <?php if ($field == "title") { print "selected"; } ?>>제목</option>
-					<option value="userId" <?php if ($field == "userId") { print "selected"; } ?>>작성자</option>
+					<option value="userid" <?php if ($field == "userid") { print "selected"; } ?>>작성자</option>
 				</select>
 				<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?php echo $keyword;?>">
 				<img src="../images/board/btn_search.gif" border="0" align="absmiddle" onclick="frmSubmit();" style="cursor:hand"></div>
@@ -110,7 +110,7 @@ function body() {
 				<tr>
 				<td><?php echo $num-$i;?></td>
 				<td class="ltd"><?php echo $boardObj->ReplyImage;?><a href="view.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>&id=<?php echo $boardObj->BoardID;?>"><?php echo $boardObj->Title;?></a></td>
-				<td><?php echo $boardObj->UserID;?></td>
+				<td><?php echo $boardObj->userid;?></td>
 				<td><?php echo dateFormat($boardObj->RegDAte, 1);?></td>
 				<td><?php echo $boardObj->CountView;?></td>
 				</tr>

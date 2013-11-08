@@ -4,18 +4,18 @@ checkUserLogin();
 
 // 회원 정보
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 
 // 계좌정보
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 
 // 선교사 후원
-$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userId"]);
+$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userid"]);
 
 // 후원 내역 
 $s_Helper = new SupportHelper();
-$centerSupportInfo = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
-$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($_SESSION["userId"]);
+$centerSupportInfo = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
+$serviceSupportInfo = $s_Helper->getServiceSupportByuserid($_SESSION["userid"]);
 
 if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");
@@ -59,7 +59,7 @@ function body() {
 	 
 		<h2>특별후원내역</h2>
 <?php 
-	$specialList = $s_Helper->getReqListForSpecial($_SESSION["userId"]);
+	$specialList = $s_Helper->getReqListForSpecial($_SESSION["userid"]);
 	if ((count($specialList)>0)) {
 ?>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
@@ -77,7 +77,7 @@ function body() {
 <?php 
 			for ($j=0; $j<=count($specialItems); $j = $j+1) {
 				$specialItem = $specialItems[$j];
-				if ($specialItem->SendUser == $_SESSION["userId"]) {
+				if ($specialItem->SendUser == $_SESSION["userid"]) {
 ?>
 					<p><?php echo $specialItem->RequestItem;?> :	<?php echo $specialItem->showPrice();?></p>
 <?php 

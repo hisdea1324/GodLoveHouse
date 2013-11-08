@@ -44,7 +44,7 @@ function editHouse() {
 	$zipcode[1] = $_REQUEST["post2"];
 
 	$house->houseId = $_REQUEST["houseId"];
-	$house->userId = $_REQUEST["userId"];
+	$house->userid = $_REQUEST["userid"];
 	$house->houseName = $_REQUEST["houseName"];
 	$house->assocName = $_REQUEST["assocName"];
 	$house->manager1 = $_REQUEST["manager1"];
@@ -145,7 +145,7 @@ function editHospital() {
 	$zipcode[1] = $_REQUEST["post2"];
 
 	$hospital->HospitalID = $_REQUEST["hospitalId"];
-	$hospital->UserID = $_REQUEST["userId"];
+	$hospital->userid = $_REQUEST["userid"];
 	$hospital->HospitalName = $_REQUEST["hospitalName"];
 	$hospital->AssocName = $_REQUEST["assocName"];
 	$hospital->Manager1 = $_REQUEST["manager1"];

@@ -40,7 +40,7 @@ class MissionObject {
 	}
 
     private function initialize() {
-		$this->userId = "";
+		$this->userid = "";
 		$this->missionName = "";
 		$this->church = "";
 		$this->churchContact = "";
@@ -73,7 +73,7 @@ class MissionObject {
 		if (!$result) return;
 
 		while ($row = $result->fetch_assoc()) {
-			$this->userId = $row['userid'];
+			$this->userid = $row['userid'];
 			$this->missionName = $row['missionname'];
 			$this->church = $row['church'];
 			$this->churchContact = $row['churchcontact'];
@@ -122,7 +122,7 @@ class MissionObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->userId == "") {
+		if ($this->userid == "") {
 			$query = "INSERT INTO missionary (`userid`, `missionname`, `church`, `churchcontact`, ";
 			$query = $query."`ngo`, `ngocontact`, `nationcode`, `accountno`, ";
 			$query = $query."`bank`, `accountname`, `homepage`, `manager`, ";	
@@ -224,7 +224,7 @@ class MissionObject {
 		}
 	} 
 
-	function GetFamilyPrayCount($userId) {
+	function GetFamilyPrayCount($userid) {
 		global $mysqli;
 		$coust_array = array(0, 0);
 

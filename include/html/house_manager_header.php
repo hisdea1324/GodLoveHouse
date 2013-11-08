@@ -6,6 +6,7 @@
 		<link type="text/css" rel="stylesheet" href="css/design.css" media="all" />
 		<script language='javascript' src='[WEBROOT]include/js/prototype.js'></script>
 		<script language='javascript' src='[WEBROOT]include/js/calendar.js'></script>
+		<script language='javascript' src='[WEBROOT]include/js/interface.js'></script>
 	</head>
 	<body class="bgSub">
 		<div id="wrapper">

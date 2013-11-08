@@ -12,7 +12,7 @@ $reservId = (isset($_REQUEST["reservId"])) ? trim($_REQUEST["reservId"]) : "";
 
 if (strlen($reservId) > 0) {
 	$query = "SELECT A.startDate, A.endDate, B.nick, B.name, B.phone, B.mobile, C.roomName, D.houseName, D.assocName, D.manager1, D.contact1, D.manager2, D.contact2, E.name AS regionName FROM reservation A, users B, room C, house D, code E ";
-	$query = $query."WHERE A.userId = B.userId AND A.roomId = C.roomId AND C.houseId = D.houseId AND D.regionCode = E.code AND A.reservationNo = ".$reservId;
+	$query = $query."WHERE A.userid = B.userid AND A.roomId = C.roomId AND C.houseId = D.houseId AND D.regionCode = E.code AND A.reservationNo = ".$reservId;
 	if ($result = $mysqli->query($query)) {
 		if ($row = $result->fetch_array()) {
 			$fromDate = date("Y-m-d", $row["startDate"]);

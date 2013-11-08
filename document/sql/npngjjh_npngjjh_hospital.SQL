@@ -1,5 +1,5 @@
 INSERT INTO hospital
-  (hospitalId, hospitalName, assocName, address1, address2, zipcode, regionCode, `explain`, userId, manager1, manager2, contact1, contact2, price, personLimit, regDate, status, homepage, documentId, document, imageId1, imageId2, imageId3, imageId4)
+  (hospitalId, hospitalName, assocName, address1, address2, zipcode, regionCode, `explain`, userid, manager1, manager2, contact1, contact2, price, personLimit, regDate, status, homepage, documentId, document, imageId1, imageId2, imageId3, imageId4)
 VALUES
   (1, '남평미래병원', '국제쉼터선교회', '전남 나주시 남평읍 교원리', '387', '520843', '02007', '[선교사님 무료로 검진, 검사, 치료, 입원하실 분 신청을 받습니다]
 
@@ -55,7 +55,7 @@ VALUES
 ', 'lovehouse', '고종원', '', '010-4751-9004', '070-8200-8089', 0, 2, '2012-02-11 16:09:28', 'S2001', 'http://www.peacemind.co.kr/main.htm', -1, '', 271, 272, 273, 274);
 
 INSERT INTO hospital
-  (hospitalId, hospitalName, assocName, address1, address2, zipcode, regionCode, `explain`, userId, manager1, manager2, contact1, contact2, price, personLimit, regDate, status, homepage, documentId, document, imageId1, imageId2, imageId3, imageId4)
+  (hospitalId, hospitalName, assocName, address1, address2, zipcode, regionCode, `explain`, userid, manager1, manager2, contact1, contact2, price, personLimit, regDate, status, homepage, documentId, document, imageId1, imageId2, imageId3, imageId4)
 VALUES
   (2, '이랜드 클리닉', '아시안 미션', '서울 금천구 가산동', '459-11 제이플라츠 4층', '153803', '02001', '* 이랜드에서 운영하는 건강검진센터입니다.
   아래 홈페이지에서 온라인 예약하시면 됩니다.

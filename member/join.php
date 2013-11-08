@@ -25,7 +25,7 @@ function body() {
 				<tr>
 			<td class="td01">아이디<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="userId" id="userId" style="ime-mode:disabled" maxlength="30" tabindex="1" onkeyup="checkUserId(this.value);" />
+						<input type="text" name="userid" id="userid" style="ime-mode:disabled" maxlength="30" tabindex="1" onkeyup="checkuserid(this.value);" />
 			<label class="fs11" type="text" name='resultMessage1' id='resultMessage1'></label>
 					</td>
 				</tr>
@@ -416,12 +416,12 @@ function body() {
 //<![CDATA[
 	var familyNum = 1;
 	
-	function checkUserId(userId) {
-		var url = 'ajax.php?mode=checkUserId&userId='+userId;
-		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultUserId});
+	function checkuserid(userid) {
+		var url = 'ajax.php?mode=checkuserid&userid='+userid;
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultuserid});
 	}
 	
-	function resultUserId(reqResult) {
+	function resultuserid(reqResult) {
 		var addHtml = reqResult.responseText;
 		document.getElementById("resultMessage1").innerHTML = addHtml;
 	}
@@ -475,9 +475,9 @@ function body() {
 			return;
 		}
 		
-		if (document.getElementById("userId").value == "") {
+		if (document.getElementById("userid").value == "") {
 			alert("아이디를 입력해주세요.");
-			document.getElementById("userId").focus();
+			document.getElementById("userid").focus();
 			return;
 		}
 		if (document.getElementById("nickName").value == "") {

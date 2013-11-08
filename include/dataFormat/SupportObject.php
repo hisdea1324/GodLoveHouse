@@ -54,10 +54,10 @@ class SupportObject {
 		return isset($this->record[$name]); 
     }
 
-    function __construct($userId = -1, $supId = -1) {
+    function __construct($userid = -1, $supId = -1) {
 		$this->initialize();
-		if ($userId > -1 && $supId > -1) {
-			$this->Open($userId, $supId);
+		if ($userid > -1 && $supId > -1) {
+			$this->Open($userid, $supId);
 		}
 	}
 
@@ -87,7 +87,7 @@ class SupportObject {
 
 	    while ($row = mysqli_fetch_assoc($result)) {
 			$this->supportId = $row['supId'];
-			$this->userid = $row['userId'];
+			$this->userid = $row['userid'];
 			$this->name = $row['name'];
 			$this->jumin = $row['jumin'];
 			$this->suptype = $row['supportType'];
@@ -118,7 +118,7 @@ class SupportObject {
 
 	function OpenWithSupId($supId) {
 		global $mysqli;
-		$query = "SELECT supId, userId, name, supportType, status, jumin, phone, mobile, email, zipcode, address1, address2, regDate ";
+		$query = "SELECT supId, userid, name, supportType, status, jumin, phone, mobile, email, zipcode, address1, address2, regDate ";
 		$query = $query."FROM supportInfo WHERE supId = '".$mysqli->real_escape_string($supId)."'";
 		$this->OpenQuery($query);
 	} 
@@ -126,8 +126,8 @@ class SupportObject {
 	function Open($userid, $supType) {
 		global $mysqli;
 		$this->userid = $userid;
-		$query = "SELECT supId, userId, name, supportType, status, jumin, phone, mobile, email, zipcode, address1, address2, regDate FROM supportInfo ";
-		$query = $query." WHERE userId = '".$mysqli->real_escape_string($userid)."' AND supportType = '".$mysqli->real_escape_string($supType)."'";
+		$query = "SELECT supId, userid, name, supportType, status, jumin, phone, mobile, email, zipcode, address1, address2, regDate FROM supportInfo ";
+		$query = $query." WHERE userid = '".$mysqli->real_escape_string($userid)."' AND supportType = '".$mysqli->real_escape_string($supType)."'";
 		$this->OpenQuery($query);
 	} 
 
@@ -136,7 +136,7 @@ class SupportObject {
 
 		if ($this->record['supportid'] == -1) {
 			# New Data
-			$query = "INSERT INTO supportInfo (userId, supportType, status, name, jumin, phone, mobile, email, zipcode, address1, address2) VALUES ";
+			$query = "INSERT INTO supportInfo (userid, supportType, status, name, jumin, phone, mobile, email, zipcode, address1, address2) VALUES ";
 			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->supporttype)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($m_sthis->status)."', ";

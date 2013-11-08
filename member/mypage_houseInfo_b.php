@@ -5,12 +5,12 @@ $toDate = trim($_REQUEST["toDate"]);
 $fromDate = trim($_REQUEST["fromDate"]);
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
-$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 
 $h_Helper = new HouseHelper();
-$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userId"]);
-$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userId"]);
+$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"]);
+$houseList2 = $h_Helper->getHouseListByuserid($_SESSION["userid"]);
 
 if ($_SESSION["userLv"] >= 7) {
 	showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_manager","tit_0804.gif");
@@ -31,7 +31,7 @@ function body() {
 			<div class="mypage b20">
 			<p class="hi"><strong><?php echo $member->Name;?></strong>님, 안녕하세요</p>
 				<ul class="txt01">
-			<li><strong>회원ID</strong> <?php echo $member->UserID;?></li>
+			<li><strong>회원ID</strong> <?php echo $member->userid;?></li>
 			<li class="btn">
 			<img src="../images/sub/btn_out.gif" onclick="clickTopNavi(10)" class="r5">
 			<img src="../images/sub/btn_logout.gif" onclick="clickTopNavi(4)" class="r5">

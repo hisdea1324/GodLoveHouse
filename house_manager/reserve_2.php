@@ -1,5 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+checkUserLogin();
 
 showHouseManagerHeader();
 showHouseManagerLeft();
@@ -20,8 +21,8 @@ function body() {
 	$house = $h_Helper->getHouseInfoById($houseId);
 
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
-	$mission = $m_Helper->getMissionInfoByUserId($_SESSION["userid"]);
+	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
+	$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
 
 	//******************************************************************
 	// 달력 세팅
@@ -187,7 +188,7 @@ function body() {
 				if ($row["resv_name"]) {
 					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userId"]."</div>\r\n";
+					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
 				}
 
 				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\"></div>\r\n";

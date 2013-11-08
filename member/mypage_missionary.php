@@ -19,7 +19,7 @@ $search = isset($_REQUEST["search"]) ? trim($_REQUEST["search"]) : "";
 $page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userid"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 
 $h_Helper = new HouseHelper();
 $reservList = $h_Helper->getReservationListByUser(1);
@@ -80,7 +80,7 @@ function body() {
 			<tr>
 				<td><?php echo $reservObj->RegDate;?></td>
 				<td class="ltd">
-					<label id="profileId<?php echo $i;?>" onmouseover="showProfile('<?php echo $i;?>', event)" onmouseout="unshowProfile('<?php echo $i;?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.UserID ?></label>
+					<label id="profileId<?php echo $i;?>" onmouseover="showProfile('<?php echo $i;?>', event)" onmouseout="unshowProfile('<?php echo $i;?>')" style="cursor:prointer"><?php echo $member->Nick;?><?php //=member.Name ?><?php //=reservObj.userid ?></label>
 					<div id="profile<?php echo $i;?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
 				</td>
 				<td><?php echo $reservObj->HouseName;?> / <?php echo $reservObj->RoomName;?></td>

@@ -11,7 +11,7 @@ $itemidList=explode(",",$detailIdList);
 $reqId = trim($_REQUEST["reqId"]);
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 $s_Helper = new SupportHelper();
 $reqInfo = $s_Helper->getRequestInfoByReqId($reqId);
 $reqAddInfo = $s_Helper->getRequestAddInfoByReqId($reqId);
@@ -68,7 +68,7 @@ function body() {
 			<col />
 			<tr>
 				<th>이름</th>
-				<td colspan="3" class="ltd"><?php echo $reqAddInfo->UserId;?></td>
+				<td colspan="3" class="ltd"><?php echo $reqAddInfo->userid;?></td>
 			</tr>
 			<tr>
 				<th>선교지</th>
