@@ -155,7 +155,7 @@ function body() {
 <?php 
 			for ($j=0; $j<=count($specialItems); $j = $j+1) {
 				$specialItem = $specialItems[$j];
-				if (($specialItem->SendUser == $sessions->UserID)) {
+				if ($specialItem->SendUser == $_SESSION["userId"]) {
 ?>
 					<p><?php echo $specialItem->RequestItem;?> :	<?php echo $specialItem->showPrice();?></p>
 <?php 

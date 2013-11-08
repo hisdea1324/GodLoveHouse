@@ -2,25 +2,26 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
 
-$sessions = new __construct();
-
 // 회원 정보$m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 
-// 계좌정보$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
+// 계좌정보
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
 
-// 선교사 후원$missionList2 = $m_Helper->getMemberListByRegular($sessions->UserID);
+// 선교사 후원
+$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userId"]);
 
-// 후원 내역 $s_Helper = new SupportHelper();
-$centerSupportInfo = $s_Helper->getCenterSupportByUserId($sessions->UserID);
-$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($sessions->UserID);
+// 후원 내역 
+$s_Helper = new SupportHelper();
+$centerSupportInfo = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($_SESSION["userId"]);
 
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_missionary","tit_0802.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_missionary","tit_0802.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_normal","tit_0802.gif");
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_normal","tit_0802.gif");
 } 
 
 

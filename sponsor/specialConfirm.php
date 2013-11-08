@@ -10,9 +10,8 @@ if (strlen($detailIdList) == 0) {
 $itemidList=explode(",",$detailIdList);
 $reqId = trim($_REQUEST["reqId"]);
 
-$sessions = new __construct();
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserId);
+$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 $s_Helper = new SupportHelper();
 $reqInfo = $s_Helper->getRequestInfoByReqId($reqId);
 $reqAddInfo = $s_Helper->getRequestAddInfoByReqId($reqId);
@@ -45,18 +44,11 @@ showHeader("HOME > 선교사후원 > 특별후원","sponsor","tit_0301.gif");
 body();
 showFooter();
 
-$sessions = null;
-
 $m_Helper = null;
-
 $member = null;
-
 $s_Helper = null;
-
 $reqInfo = null;
-
 $reqAddInfo = null;
-
 
 function body() {
 ?>

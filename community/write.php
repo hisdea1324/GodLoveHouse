@@ -14,7 +14,6 @@ $groupId = (isset($_REQUEST["groupId"])) ? trim($_REQUEST["groupId"]) : 0;
 $mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "editPost";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
-//$sessions = new __construct();
 $b_Helper = new BoardHelper();
 $boardGrp = $b_Helper->getBoardGroupByGroupId($groupId);
 if ((strcmp($mode,"replyPost")==0)) {
@@ -26,7 +25,6 @@ if ((strcmp($mode,"replyPost")==0)) {
 } 
 
 # 쓰기권한 체크
-
 
 //$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : 0;
 //echo "UserLevel ::: " . $userLevel;
@@ -73,7 +71,7 @@ switch (($groupId)) {
 		$headerSet = array("HOME > 동역자소식 > 후원자소식","fiscal","tit_0505n.gif");
 		break;
 	default:
-		alertGoPage("잘못된 접근입니다",$Application["WebRoot"]."index.php");
+		alertGoPage("잘못된 접근입니다", "http://".$_SERVER['HTTP_HOST']."/index.php");
 		break;
 } 
 
@@ -105,7 +103,7 @@ function body() {
 		<input type="hidden" name="answerId" id="answerId" value="<?php echo $boardInfo->answerId;?>" />
 		<input type="hidden" name="answerNum" id="answerNum" value="<?php echo $boardInfo->answerNum;?>" />
 		<input type="hidden" name="answerLv" id="answerLv" value="<?php echo $boardInfo->answerLv;?>" />
-		<input type="hidden" name="userId" id="userId" value="<?php echo $sessions->userId;?>" />
+		<input type="hidden" name="userId" id="userId" value="<?php echo $_SESSION["userId"];?>" />
 			<col width="15%">
 		<col />
 				<tr>
@@ -123,7 +121,7 @@ function body() {
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
-						<?php echo $sessions->userId;?> (작성자는 수정한 사람 아이디로 바뀝니다.)
+						<?php echo $_SESSION["userId"];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
 					</td>
 				</tr>
 		<?php } ?>

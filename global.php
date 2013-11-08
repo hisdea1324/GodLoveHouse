@@ -1,10 +1,4 @@
 <?php 
-function Session_OnStart() {	
-} 
-
-function Session_OnEnd() {	
-} 
-
 function Application_OnStart() {
 	$Application["FileRoot"]="F:\\HOME\\npngjjh\\www\\";
 	$Application["WebRoot"]="http://www.godlovehouse.net/";

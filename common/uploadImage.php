@@ -19,10 +19,8 @@ function upload() {
 		$fileImage = $uploadFile_upload["/"]["imgFile"][$theField->FileName][0][$pathName];
 	} 
 
-
-	$sessions = new __construct();
 	$attach = new AttachFile();
-	$attach->UserID = $sessions->UserID;
+	$attach->UserID = $_SESSION["userId"];
 	$attach->Name = $fileImage;
 	$attach->Update();
 ?>
@@ -52,7 +50,6 @@ function choice() {
 <?php 
 	print $attach->ImageID;
 	$theField = null;
-	$sessions = null;
 	$attach = null;
 } 
 

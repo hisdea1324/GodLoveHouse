@@ -12,7 +12,7 @@ switch ($mode) {
 }
 
 function shortList() {
-	global $Application, $mysqli;
+	global $mysqli;
 	
 	$groupId = (trim($_REQUEST["groupId"])) ? trim($_REQUEST["groupId"]) : "";
 	$query = "SELECT top 3 * FROM board WHERE groupId = '".$groupId."' ORDER BY regDate DESC";

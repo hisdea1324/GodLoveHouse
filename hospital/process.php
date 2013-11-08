@@ -56,13 +56,12 @@ function registHospital() {
 } 
 
 function reservation() {
-	$sessions = new __construct();
 	$book = new reservationObject();
 
 	$hospitalId = $_REQUEST["hospitalId"];
 	$book->StartDate = $_REQUEST["startDate"];
 	$book->EndDate = $_REQUEST["endDate"];
-	$book->UserId = $sessions->UserID;
+	$book->UserId = $_SESSION["userId"];
 
 	if ((!$book->checkId())) {
 		header("Location: "."reservation.php?hospitalId=".$hospitalId);

@@ -9,13 +9,11 @@ for ($i=0; $i<=count($IdList); $i = $i+1) {
 
 }
 
-
-$sessions = new __construct();
 $s_Helper = new SupportHelper();
-$member = $s_Helper->getCenterSupportByUserId($sessions->UserId);
-if (($member->IsNew())) {
+$member = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+if ($member->IsNew()) {
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($sessions->UserId);
+	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 } 
 
 
@@ -23,12 +21,8 @@ showHeader("HOME > 선교사후원 > 후원자 정보입력","sponsor","tit_0302
 body();
 showFooter();
 
-$sessions = null;
-
 $m_Helper = null;
-
 $member = null;
-
 
 function body() {
 ?>

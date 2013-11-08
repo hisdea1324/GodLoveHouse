@@ -245,7 +245,7 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>지원단체</b></td>
+					<td class="td01"><p class="reserve"><b>파송 단체</b></td>
 					<td>
 						<? if ($mission->church) { ?>
 						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">

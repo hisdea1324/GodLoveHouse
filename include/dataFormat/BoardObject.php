@@ -22,8 +22,6 @@ class BoardObject {
   }
 
   function __construct() {
-    //$sessions = new __construct();
-
 		$this->record['id'] = -1;
 		$this->record['groupId'] = "";
 		$this->record['title'] = "";
@@ -188,7 +186,6 @@ class BoardObject {
 
 
 	function AddView() {
-		//$sessions = new __construct();
 		if ($this->record['id'] > -1) {
 			$query = "UPDATE board SET `countView` = `countView` + 1 WHERE `id` = ? ";
 			$stmt = $mysqli->prepare($query);
@@ -197,7 +194,6 @@ class BoardObject {
 			$stmt->close();
 			$this->record['countView'] = $this->record['countView'] + 1;
 		} 
-		$sessions = null;
 	}
 
 	function AddComment() {
@@ -354,7 +350,6 @@ class BoardObject {
 	#  class initialize
 	# ***********************************************
 	function __construct() {
-		$sessions = new __construct();
 		$m_index=-1;
 		$m_groupId="";
 		$m_title="";
@@ -362,7 +357,7 @@ class BoardObject {
 		$m_password="";
 		$m_regDate="";
 		$m_editDate="";
-		$m_userId = $sessions->UserID;
+		$m_userId = $_SESSION["userId"];
 		$m_countView=0;
 		$m_countComment=0;
 		$m_answerId=-1;
@@ -458,15 +453,11 @@ class BoardObject {
 	} 
 
 	function AddView() {
-		$sessions = new __construct();
 		if (($m_index>-1 && !$sessions->checkReadList($m_index))) {
 			$query = "UPDATE board SET countView = countView + 1 WHERE id = '".$m_index."'";
 			$objDB->execute_command($query);
 			$m_countView = $m_countView+1;
 		} 
-
-		$sessions = null;
-
 	} 
 
 	function AddComment() {
@@ -479,8 +470,7 @@ class BoardObject {
 	} 
 
 	function checkEditPermission() {
-		$sessions = new __construct();
-		if (($m_index==-1 || strcmp($sessions->UserID,$m_userId)==0 || $sessions->UserLevel==9)) {
+		if (($m_index==-1 || strcmp($_SESSION["userId"],$m_userId)==0 || $_SESSION["userLv"]==9)) {
 			return true;
 		} else {
 			return false;

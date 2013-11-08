@@ -2,25 +2,27 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
 
-$sessions = new __construct();
+// 회원 정보
+$m_Helper = new MemberHelper();
+$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 
-// 회원 정보$m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
+// 계좌정보
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
 
-// 계좌정보$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
+// 선교사 후원
+$missionList2 = $m_Helper->getMemberListByRegular($_SESSION["userId"]);
 
-// 선교사 후원$missionList2 = $m_Helper->getMemberListByRegular($sessions->UserID);
+// 후원 내역 
+$s_Helper = new SupportHelper();
+$centerSupportInfo = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
+$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($_SESSION["userId"]);
 
-// 후원 내역 $s_Helper = new SupportHelper();
-$centerSupportInfo = $s_Helper->getCenterSupportByUserId($sessions->UserID);
-$serviceSupportInfo = $s_Helper->getServiceSupportByUserId($sessions->UserID);
-
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_missionary","tit_0802.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_manager","tit_0802.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_missionary","tit_0802.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 후원정보","mypage_normal","tit_0802.gif");
+	showHeader("HOME > 멤버쉽 > 후원정보","mypage_normal","tit_0802.gif");
 } 
 
 
@@ -57,7 +59,7 @@ function body() {
 	 
 		<h2>특별후원내역</h2>
 <?php 
-	$specialList = $s_Helper->getReqListForSpecial($sessions->UserID);
+	$specialList = $s_Helper->getReqListForSpecial($_SESSION["userId"]);
 	if ((count($specialList)>0)) {
 ?>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
@@ -75,7 +77,7 @@ function body() {
 <?php 
 			for ($j=0; $j<=count($specialItems); $j = $j+1) {
 				$specialItem = $specialItems[$j];
-				if (($specialItem->SendUser == $sessions->UserID)) {
+				if ($specialItem->SendUser == $_SESSION["userId"]) {
 ?>
 					<p><?php echo $specialItem->RequestItem;?> :	<?php echo $specialItem->showPrice();?></p>
 <?php 

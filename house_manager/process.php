@@ -76,8 +76,6 @@ function deleteRoom() {
 } 
 
 function editUser() {
-	global $Application;
-	
 	# 비밀번호 체크, 아이디 체크 해야함
 	$missionary = trim($_REQUEST["missionary"]);
 
@@ -91,7 +89,7 @@ function editUser() {
 
 	$parsedURL = $ParsingURL[$getURL];
 	if ((strcmp($parsedURL->Item("path"),"/member/join.php")==0)) {
-		$returnURL = $Application["WebRoot"]."member/login.php";
+		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
 	} else {
 		$returnURL = $parsedURL->Item("path");
 	} 
@@ -280,7 +278,6 @@ function logout() {
 } 
 
 function changeReservStatus() {
-	global $Application;
 	$status = trim($_REQUEST["status"]);
 	$houseId = trim($_REQUEST["houseId"]);
 	$roomId = trim($_REQUEST["roomId"]);
@@ -289,52 +286,44 @@ function changeReservStatus() {
 	} 
 	$bookNo = trim($_REQUEST["bookNo"]);
 
-	$reserv = new ReservationObject();
-	$reserv->Open($bookNo);
-	if (($status=="2")) {
+	$reserv = new ReservationObject($bookNo);
+	if ($status == "2") {
 		$reserv->Status="S0002";
-	} else if (($status=="3")) {
-		$reserv->Status="S0003";
+	} else if ($status == "3") {
+		$reserv->Status = "S0003";
 	} else {
-		$reserv->Status="S0004";
+		$reserv->Status = "S0004";
 	} 
 
 	$reserv->Update();
-
 	$reserv = null;
 
-
-	header("Location: ".$Application["WebRoot"]."member/mypage_houseReserv.php?houseId=".$houseId."&roomId=".$roomId);
+	header("Location: http://".$_SERVER['HTTP_HOST']."/member/mypage_houseReserv.php?houseId=".$houseId."&roomId=".$roomId);
 } 
 
 function reservation() {
-	$sessions = new __construct();
 	$book = new reservationObject();
 
-	$houseId = $_REQUEST["houseId"];
-	$book->StartDate = $_REQUEST["startDate"];
-	$book->EndDate = $_REQUEST["endDate"];
-	$book->RoomId = $_REQUEST["roomId"];
-	$book->UserId = $sessions->UserID;
+	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
+	$book->StartDate = isset($_REQUEST["startDate"]) ? $_REQUEST["startDate"] : "";
+	$book->EndDate = isset($_REQUEST["endDate"]) ? $_REQUEST["endDate"] : "";
+	$book->RoomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
+	$book->UserId = $_SESSION["userId"};
 
-	if ((!$book->checkId())) {
+	if (!$book->checkId()) {
 		header("Location: "."mypage_houseReserv.php?houseId=".$houseId);
-	} else if ((!$book->checkDate())) {
+	} else if (!$book->checkDate()) {
 		header("Location: "."mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
 	} 
-
 
 	$book->Update();
 
 // SMS 메세지 보내기alertGoPage("예약요청 되었습니다.","mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
-	$house = new HouseObject();
-	$manager = new MemberObject();
-	$house->Open($houseId);
-	$manager->Open($house->UserID);
+	$house = new HouseObject($houseId);
+	$manager = new MemberObject($house->UserID);
 	$from_number="01010041004";
 	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
-sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
-
+	//sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
 } 
 ?>
 

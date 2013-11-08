@@ -1,5 +1,4 @@
 <?php
-global $Application;
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -16,13 +15,11 @@ if ($mode=="addSupport") {
 
 
 function addSupport() {
-	global $Application;
-	
-	$sessions = new __construct();
 	$c_Helper = new CodeHelper();
 
-	# 후원 정보	$support = new SupportObject();
-	$support->Open($sessions->UserId, $c_Helper->getSupportCode(1));
+	# 후원 정보	
+	$support = new SupportObject();
+	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(1));
 	$support->Name = $_REQUEST["name"];
 	$support->Jumin = $_REQUEST["nid1"].$_REQUEST["nid2"];
 	$support->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel2"];
@@ -44,13 +41,13 @@ function addSupport() {
 		foreach ($detailIDList as $detailId) {
 			if (($reqItemList[$i]->RequestItemID==intval(trim($detailId)))) {
 				//해당 항목 예약
-				$reqItemList[$i]->SendUser = $sessions->UserId;
+				$reqItemList[$i]->SendUser = $_SESSION["userId"];
 				$reqItemList[$i]->Update();
 				$checkValue=true;
 			} 
 
 		}
-		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $sessions->UserID) {
+		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $_SESSION["userId"]) {
 			//해당 항목 예약 삭제
 			$reqItemList[$i]->SendUser = "";
 			$reqItemList[$i]->Update();
@@ -65,16 +62,14 @@ function addSupport() {
 	$supportItem->Cost = $_REQUEST["sumPrice"];
 	$supportItem->update();
 
-	alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/special.php");
+	alertGoPage("신청되었습니다", "http://".$_SERVER['HTTP_HOST']."/sponsor/special.php");
 } 
 
 function addCenterSupport() {
-	global $Application;
-	$sessions = new __construct();
-
-// 입금 정보	$m_Helper = new MemberHelper();
-	$account = $m_Helper->getAccountInfoByUserId($sessions->UserId);
-	$member = $m_Helper->getMemberByUserId($sessions->UserId);
+	// 입금 정보	
+	$m_Helper = new MemberHelper();
+	$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 	$account->Method = $_REQUEST["method"];
 	$account->Bank = $_REQUEST["bank"];
 	$account->Number = $_REQUEST["number"];
@@ -84,9 +79,10 @@ function addCenterSupport() {
 	$account->ExpectDate = $_REQUEST["expectDate"];
 	$account->Update();
 
-// 후원 정보	$c_Helper = new CodeHelper();
+	// 후원 정보	
+	$c_Helper = new CodeHelper();
 	$support = new SupportObject();
-	$support->Open($sessions->UserId, $c_Helper->getSupportCode(2));
+	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(2));
 	$support->Name = $_REQUEST["supName"];
 	$support->Jumin = $_REQUEST["supNID"];
 	$support->Phone = $_REQUEST["phone"];
@@ -98,10 +94,12 @@ function addCenterSupport() {
 	$support->SupportType = $c_Helper->getSupportCode(2);
 	$support->Update();
 
-//후원 상세 정보 삭제	$s_Helper = new SupportHelper();
+	//후원 상세 정보 삭제	
+	$s_Helper = new SupportHelper();
 	$s_Helper->delSupItemListBySupId($support->SupportID);
 
-//후원 상세 정보 등록	$idList=explode(" ",trim($_REQUEST["idList"}));
+	//후원 상세 정보 등록	
+	$idList=explode(" ",trim($_REQUEST["idList"}));
 	$priceList=explode(" ",trim($_REQUEST["priceList"]));
 	for ($i=0; $i<=count($idList); $i = $i+1) {
 		$m_items = new SupportItemObject();
@@ -112,7 +110,7 @@ function addCenterSupport() {
 	}
 
 
-	alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/center.php");
+	alertGoPage("신청되었습니다", "http://".$_SERVER['HTTP_HOST']."/sponsor/center.php");
 } 
 
 function addServiceSupport() {
@@ -122,13 +120,13 @@ function addServiceSupport() {
 	} 
 
 
-	$sessions = new __construct();
 	$m_Helper = new MemberHelper();
-	$member = $m_Helper->getMemberByUserId($sessions->UserId);
+	$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
 	$c_Helper = new CodeHelper();
 
-// 후원 정보	$support = new SupportObject();
-	$support->Open($sessions->UserId, $c_Helper->getSupportCode(3));
+	// 후원 정보	
+	$support = new SupportObject();
+	$support->Open($_SESSION["userId"], $c_Helper->getSupportCode(3));
 	$support->Name = $member->Name;
 	$jumin = $member->Jumin;
 	$support->Jumin = $jumin[0].$jumin[1];
@@ -145,10 +143,12 @@ function addServiceSupport() {
 	$support->SupportType = $c_Helper->getSupportCode(3);
 	$support->Update();
 
-//후원 상세 정보 삭제	$s_Helper = new SupportHelper();
+	//후원 상세 정보 삭제	
+	$s_Helper = new SupportHelper();
 	$s_Helper->delSupItemListBySupId($support->SupportID);
 
-//후원 상세 정보 등록	$idList=explode(",",trim($_REQUEST["check"}));
+	//후원 상세 정보 등록	
+	$idList=explode(",",trim($_REQUEST["check"}));
 	for ($i=0; $i<=count($idList); $i = $i+1) {
 		$m_items = new SupportItemObject();
 		$m_items->OpenWithIndex($support->SupportID, $idList[$i]);
@@ -156,7 +156,6 @@ function addServiceSupport() {
 
 	}
 
-
-alertGoPage("신청되었습니다",$Application["WebRoot"]."/sponsor/service.php");
+	alertGoPage("신청되었습니다", "http://".$_SERVER['HTTP_HOST']."/sponsor/service.php");
 } 
 ?>

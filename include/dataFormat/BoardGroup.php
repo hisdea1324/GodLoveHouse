@@ -170,39 +170,28 @@ class BoardGroup {
 	/*
 
 	function WritePermission() {
-		$sessions = new __construct();
-		if (($m_authWriteLv <= $sessions->UserLevel)) {
+		if (($m_authWriteLv <= $_SESSION["userId"])) {
 			$WritePermission=true;
 		} else {
 			$WritePermission=false;
 		} 
 
-		$sessions = null;
-
 	} 
 
 	function ReadPermission() {
-		$sessions = new __construct();
-		if (($m_authReadLv <= $sessions->UserLevel)) {
+		if (($m_authReadLv <= $_SESSION["userId"])) {
 			$ReadPermission=true;
 		} else {
 			$ReadPermission=false;
 		} 
-
-		$sessions = null;
-
 	} 
 
 	function CommentPermission() {
-		$sessions = new __construct();
-		if (($m_authCommentLv <= $sessions->UserLevel)) {
+		if ($m_authCommentLv <= $_SESSION["userId"]) {
 			$CommentPermission=true;
 		} else {
 			$CommentPermission=false;
 		} 
-
-		$sessions = null;
-
 	} 
 	*/
 }

@@ -94,9 +94,7 @@ switch ($groupId) {
 		$headerSet = array("HOME > 동역자소식 > 후원자소식","fiscal","tit_0505n.gif");
 		break;
 	default:
-
-
-alertGoPage("잘못된 접근입니다",$Application["WebRoot"]."index.php");
+		alertGoPage("잘못된 접근입니다", "http://".$_SERVER['HTTP_HOST']."/index.php");
 		break;
 } 
 

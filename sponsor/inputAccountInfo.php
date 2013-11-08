@@ -15,12 +15,11 @@ $address1 = $_REQUEST["addr1"];
 $address2 = $_REQUEST["addr2"];
 $email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
 
-$sessions = new __construct();
 $m_Helper = new MemberHelper();
 $s_Helper = new SupportHelper();
-$account = $m_Helper->getAccountInfoByUserId($sessions->UserId);
-$member = $m_Helper->getMemberByUserId($sessions->UserId);
-$supporter = $s_Helper->getCenterSupportByUserId($sessions->UserId);
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
+$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+$supporter = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
 
 showHeader("HOME > 선교사후원 > 납입 방법 선택","sponsor","tit_0302.gif");
 body();

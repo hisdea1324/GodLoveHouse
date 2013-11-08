@@ -6,7 +6,6 @@ body();
 showFooter();
 
 function body() { 
-	global $Application;
 ?>
 	<div class="dan1">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab">

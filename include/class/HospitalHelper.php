@@ -200,12 +200,11 @@ class HospitalHelper {
 	} 
 
 	function makeReservationListPagingHTML($curPage) {
-		$sessions = new __construct();
 		$query = "SELECT COUNT(*) AS recordCount FROM hospital A, reservation C ";
-		if ($sessions->UserID=="lovehouse") {
+		if ($_SESSION["userId"] == "lovehouse") {
 			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."' ".$this->m_StrConditionQuery;
 		} 
 
 		$countRS = $db->Execute($query);
@@ -216,14 +215,13 @@ class HospitalHelper {
 	} 
 
 	function getReservationListWithPaging($curPage) {
-		$sessions = new Session();
 		$topNum = $this->m_pageCount*$curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM hospital A, reservation C ";
-		if ($sessions->UserID == "lovehouse") {
+		if ($_SESSION["userId"] == "lovehouse") {
 			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
 		} else {
-			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."' ".$this->m_StrConditionQuery;
+			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."' ".$this->m_StrConditionQuery;
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
@@ -256,12 +254,11 @@ class HospitalHelper {
 	} 
 
 	function getReservationListByManager($curPage) {
-		$sessions = new __construct();
 		$query = "SELECT C.reservationNo FROM hospital A, reservation C ";
-		if (($sessions->UserID=="lovehouse")) {
+		if ($_SESSION["userId"] =="lovehouse") {
 			$query = $query."WHERE A.hospitalId = C.hospitalId";
 		} else {
-			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userId = '".$sessions->UserID."'";
+			$query = $query."WHERE A.hospitalId = C.hospitalId AND A.userId = '".$_SESSION["userId"]."'";
 		} 
 
 		return getReservationList($query);

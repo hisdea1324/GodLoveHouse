@@ -7,11 +7,9 @@ if (strlen($chkCenter) == 0) {
 	alertBack("선택된 항목이 없습니다.");
 } 
 
-
-$sessions = new __construct();
 $s_Helper = new SupportHelper();
 
-$supporter = $s_Helper->getCenterSupportByUserId($sessions->UserId);
+$supporter = $s_Helper->getCenterSupportByUserId($_SESSION["userId"]);
 $requests = $s_Helper->getCenterListWithCond($chkCenter);
 
 showHeader("HOME > 선교사후원 > 센터사역후원","sponsor","tit_0302.gif");

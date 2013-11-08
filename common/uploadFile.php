@@ -19,9 +19,8 @@ function upload() {
 		$fileName = $uploadFile_upload["/"]["fileName"][$theField->FileName][0][$pathName];
 	} 
 	
-	$sessions = new __construct();
 	$attach = new AttachFile();
-	$attach->UserID = $sessions->UserID;
+	$attach->UserID = $_SESSION["userId"];
 	$attach->Name = $fileName;
 	$attach->Update();
 ?>
@@ -50,13 +49,8 @@ function choice() {
 </html>
 <?php 
 	print $attach->ImageID;
-
 	$theField = null;
-
-	$sessions = null;
-
 	$attach = null;
-
 } 
 
 function uploadForm() {

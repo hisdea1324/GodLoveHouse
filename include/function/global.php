@@ -10,10 +10,8 @@ function authority($limitLevel) {
 } 
 
 function showHouseManagerHeader() {
-	global $Application;
-
 	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_header.php");
-	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+	$strMenu = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strMenu);
 
 	print $strMenu;
 }
@@ -59,10 +57,8 @@ function showHouseManagerLeft() {
 }
 
 function showHouseManagerFooter() {
-	global $Application;
-
 	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/house_manager_footer.php");
-	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
+	$strFooter = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strFooter);
 
 	print $strFooter;
 	debugFooter();
@@ -72,9 +68,9 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	global $Application;
 	
 	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/header_simple.php");
-	$strHeader = str_replace("[TITLE]",$Application["Title"],$strHeader);
-	$strHeader = str_replace("[WEBROOT]",$Application["WebRoot"],$strHeader);
-	$strHeader = str_replace("[CHARSET]",$Application["Charset"],$strHeader);
+	$strHeader = str_replace("[TITLE]", $Application["Title"], $strHeader);
+	$strHeader = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strHeader);
+	$strHeader = str_replace("[CHARSET]", $Application["Charset"], $strHeader);
 
 	if ((strlen($_SESSION['userId'])==0)) {
 		$strHeader = str_replace("[LOGIN_STATUS1]","gm_01",$strHeader);
@@ -89,7 +85,7 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	} 
 
 	$strSubMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/subMenu/".$strSub.".php");
-	$strSubMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strSubMenu);
+	$strSubMenu = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strSubMenu);
 	$strSubMenu = str_replace("[TITLEIMG]",$strTitleImg,$strSubMenu);
 	$strSubMenu = str_replace("[NAVIGATION]",$strNavi,$strSubMenu);
 
@@ -101,7 +97,7 @@ function showHeader($strNavi, $strSub, $strTitleImg) {
 	
 	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/header.php");
 	$strHeader = str_replace("[TITLE]",$Application["Title"],$strHeader);
-	$strHeader = str_replace("[WEBROOT]",$Application["WebRoot"],$strHeader);
+	$strHeader = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strHeader);
 	$strHeader = str_replace("[CHARSET]",$Application["Charset"],$strHeader);
 
 	if (!isset($_SESSION['userid']) || $_SESSION['userid'] == "") {
@@ -117,7 +113,7 @@ function showHeader($strNavi, $strSub, $strTitleImg) {
 	} 
 
 	$strSubMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/subMenu/".$strSub.".php");
-	$strSubMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strSubMenu);
+	$strSubMenu = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strSubMenu);
 	$strSubMenu = str_replace("[TITLEIMG]",$strTitleImg,$strSubMenu);
 	$strSubMenu = str_replace("[NAVIGATION]",$strNavi,$strSubMenu);
 
@@ -125,28 +121,22 @@ function showHeader($strNavi, $strSub, $strTitleImg) {
 } 
 
 function showMenu() {
-	global $Application;
-	
 	$strMenu = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/adminMenu.php");
-	$strMenu = str_replace("[WEBROOT]",$Application["WebRoot"],$strMenu);
+	$strMenu = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strMenu);
 
 	print $strMenu;
 } 
 
 function showSimpleFooter() {
-	global $Application;
-	
 	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/footer_simple.php");
-	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
+	$strFooter = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strFooter);
 
 	print $strFooter;
 } 
 
 function showFooter() {
-	global $Application;
-	
 	$strFooter = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/footer.php");
-	$strFooter = str_replace("[WEBROOT]",$Application["WebRoot"],$strFooter);
+	$strFooter = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strFooter);
 
 	print $strFooter;
 	debugFooter();
@@ -234,7 +224,7 @@ function get_path_info() {
 }
 
 function makePaging($page, $pageCount, $pageUnit, $query) {
-	global $Application, $mysqli;
+	global $mysqli;
 
 	if ($result = $mysqli->query($query)) {
 	    /* determine number of rows result set */
@@ -274,7 +264,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 		$nextPage = $totalPage;
 	} 
 
-	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='".$Application["WebRoot"]."images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='".$Application["WebRoot"]."images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
 	for ($i = 1; $i <= $totalPage; $i++) {
 		if ($i - $page == 0) {
 			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
@@ -284,13 +274,11 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	}
 
 	$str = substr($str, 0, strlen($str) - 2);
-	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_02.gif' alt='' /></a> </div>";
+	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_02.gif' alt='' /></a> </div>";
 	return $str;
 } 
 
-function makePagingN($page, $pageCount, $pageUnit, $total) {
-	global $Application;
-	
+function makePagingN($page, $pageCount, $pageUnit, $total) {	
 	$pathInfo = get_path_info();
 	if (strlen($_SERVER["QUERY_STRING"]) > 0) {
 		if ((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0) {
@@ -320,7 +308,7 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 		$nextPage = $totalPage;
 	} 
 
-	$str="<div class='paging'><a href='".$linkUrl."page=1'> <img src='".$Application["WebRoot"]."images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='".$Application["WebRoot"]."images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	$str="<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
 	for ($i=1; $i <= $totalPage; $i = $i+1) {
 		if (($i-$page==0)) {
 			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
@@ -330,7 +318,7 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 	}
 
 	$str=substr($str,0,strlen($str)-2);
-	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='".$Application["WebRoot"]."images/board/btn_next_02.gif' alt='' /></a> </div>";
+	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_02.gif' alt='' /></a> </div>";
 	return $str;
 } 
 ?>

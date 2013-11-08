@@ -2,12 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-global $Application;
-
 # 현재 로그인 세션
-$sessions = new __construct();
-if (($sessions->isSessionAlived()==false)) {
-	alertGoPage("로그인해 주세요",$Application["WebRoot"]."/member/login.php");
+if ($_SESSION["userId"]) {
+	alertGoPage("로그인해 주세요", "http://".$_SERVER['HTTP_HOST']."/member/login.php");
 }
 
 $mode = trim($_REQUEST["mode"]);
@@ -38,14 +35,14 @@ function addFamily($familyType) {
 	$ObjQuery->insert();
 	$ObjQuery = null;
 
-	header("Location: ".$Application["WebRoot"]."cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
 } 
 
 function editComment() {
 	$comment = new CommentObject();
 	$comment->Open(trim($_REQUEST["editCommentId"]));
 
-	$comment->FollowId = $sessions->UserID;
+	$comment->FollowId = $_SESSION["userId"];
 	$comment->HostUserId = $_REQUEST["userId"];
 	$comment->Comments = $_REQUEST["editComment"];
 	$comment->Secret = $_REQUEST["editSecret"];
@@ -54,7 +51,7 @@ function editComment() {
 
 	$comment = null;
 
-	header("Location: ".$Application["WebRoot"]."cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
 } 
 
 function deleteComment() {
@@ -62,6 +59,6 @@ function deleteComment() {
 	$comment->Open($_REQUEST["editCommentId"]);
 	$comment->Delete();
 
-	header("Location: ".$Application["WebRoot"]."cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
+	header("Location: http://".$_SERVER['HTTP_HOST']."/cooperate/familyDetail.php?userId=".trim($_REQUEST["userId"]));
 } 
 ?>

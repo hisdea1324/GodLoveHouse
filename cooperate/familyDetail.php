@@ -12,9 +12,6 @@ if ((strlen($page)==0)) {
 	$page=1;
 } 
 
-# 현재 로그인 세션
-$sessions = new __construct();
-
 # 선교사 정보
 $m_Helper = new MemberHelper();
 $member = $m_Helper->getMemberByUserId($userId);
@@ -39,7 +36,7 @@ function body() {
 		<!-- //view -->
 		<p class="btn_right b5"><img src="../images/board/txt_family.gif" class="r5">
 <?php 
-	if (($m_Helper->getFamilyType($mission->UserId.$sessions->UserId)=="F0002")) {
+	if ($m_Helper->getFamilyType($mission->UserId.$_SESSION["userId"]) == "F0002") {
 ?>
 		<img src="../images/board/btn_family_01.gif" border="0" class="m2" onclick="joinFamily(1)" />
 <?php 
@@ -130,7 +127,7 @@ function body() {
 				<span id="date<?php echo $comment->ID;?>"><?php echo dateFormat($comment->RegDate, 1);?></span>
 				<span id="button<?php echo $comment->ID;?>">
 <?php 
-			if (($comment->FollowId == $sessions->UserId)) {
+			if ($comment->FollowId == $_SESSION["userId"]) {
 ?> 
 				<img src="../images/board/btn_m_modify.gif" border="0" class="r5" onclick="edit_form(<?php echo $comment->ID;?>)" alt="의견수정" valign="absmiddle" />
 				<img src="../images/board/btn_m_del.gif" border="0" class="r5" onclick="delete_comment(<?php echo $comment->ID;?>)" alt="의견삭제" valign="absmiddle" />
@@ -188,7 +185,7 @@ function body() {
 					<span id="date<?php echo $replyComment->ID;?>"><?php echo dateFormat($replyComment->RegDate, 1);?></span>
 					<span id="button<?php echo $replyComment->ID;?>">
 <?php 
-					if (($replyComment->FollowId == $sessions->UserId)) {
+					if ($replyComment->FollowId == $_SESSION["userId"]) {
 ?> 
 					<img src="../images/board/btn_m_modify.gif" border="0" class="r5" onclick="edit_form(<?						 echo $replyComment->ID;?>)" alt="의견수정" valign="absmiddle" />
 					<img src="../images/board/btn_m_del.gif" border="0" class="r5" onclick="delete_comment(<?						 echo $replyComment->ID;?>)" alt="의견삭제" valign="absmiddle" />

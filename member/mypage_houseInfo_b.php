@@ -4,21 +4,20 @@ checkUserLogin();
 $toDate = trim($_REQUEST["toDate"]);
 $fromDate = trim($_REQUEST["fromDate"]);
 
-$sessions = new __construct();
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByUserId($sessions->UserID);
-$account = $m_Helper->getAccountInfoByUserId($sessions->UserID);
+$member = $m_Helper->getMemberByUserId($_SESSION["userId"]);
+$account = $m_Helper->getAccountInfoByUserId($_SESSION["userId"]);
 
 $h_Helper = new HouseHelper();
-$houseList1 = $h_Helper->getHouseListByUserId($sessions->UserID);
-$houseList2 = $h_Helper->getHouseListByUserId($sessions->UserID);
+$houseList1 = $h_Helper->getHouseListByUserId($_SESSION["userId"]);
+$houseList2 = $h_Helper->getHouseListByUserId($_SESSION["userId"]);
 
-if (($sessions->authority(7))) {
-showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_manager","tit_0804.gif");
-} else if (($sessions->authority(3))) {
-showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_missionary","tit_0804.gif");
+if ($_SESSION["userLv"] >= 7) {
+	showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_manager","tit_0804.gif");
+} else if ($_SESSION["userLv"] >= 3) {
+	showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_missionary","tit_0804.gif");
 } else {
-showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_normal","tit_0804.gif");
+	showHeader("HOME > 멤버쉽 > 선교관 정보관리","mypage_normal","tit_0804.gif");
 } 
 
 

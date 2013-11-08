@@ -4,27 +4,27 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
 $mode = trim($_REQUEST["mode"]);
 
-switch (($mode)) {
+switch ($mode) {
 	case "login":
-login();
+		login();
 		break;
 	case "editUser":
-editUser();
+		editUser();
 		break;
 	case "deleteUser":
-deleteUser();
+		deleteUser();
 		break;
 	case "deleteFamily":
-deleteFamily();
+		deleteFamily();
 		break;
 	case "upCommon":
-changeUser(1);
+		changeUser(1);
 		break;
 	case "upMission":
-changeUser(3);
+		changeUser(3);
 		break;
 	case "upHouse":
-changeUser(7);
+		changeUser(7);
 		break;
 } 
 
@@ -39,7 +39,7 @@ function editUser() {
 
 	editUserNormal();
 
-	header("Location: ".$Application["WebRoot"]."manager/member/index.php?userLv=".$userLv);
+	header("Location: http://".$_SERVER['HTTP_HOST']."/manager/member/index.php?userLv=".$userLv);
 } 
 
 function editUserNormal() {
