@@ -54,7 +54,6 @@ function body() {
 			print "<option value='".$houseObj->HouseID."'>".$houseName."</option>";
 		} 
 	}
-
 ?>
 				</select>
 				<input type="text" name="fromDate" id="fromDate" value="<?php echo $fromDate;?>" style="width:100px" class="input" readonly onclick="calendar('fromDate')">

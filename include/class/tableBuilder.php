@@ -95,19 +95,9 @@ class tableBuilder {
 		$retString = "";
 		
 		$pathInfo = get_path_info();
-		if (strlen($_SERVER["QUERY_STRING"]) > 0) {
-			if ((strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) > 0) {
-				$tempString = substr($_SERVER["QUERY_STRING"], strlen($_SERVER["QUERY_STRING"]) - (strlen($_SERVER["QUERY_STRING"]) - (strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) + 1));
-				if ((strpos($tempString, "&") ? strpos($tempString, "&") + 1 : 0)) {
-					$queryString = substr($_SERVER["QUERY_STRING"], 0, (strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) - 1) . substr($tempString, strlen($tempString) - (strlen($tempString) - (strpos($tempString, "&") ? strpos($tempString, "&") + 1 : 0) + 1)) . "&";
-				} else {
-					$queryString = substr($_SERVER["QUERY_STRING"], 0, (strpos($_SERVER["QUERY_STRING"], "order=") ? strpos($_SERVER["QUERY_STRING"], "order=") + 1 : 0) - 1);
-				}
-
-			} else {
-				$queryString = $_SERVER["QUERY_STRING"] . "&";
-			}
-
+		if (isset($_SERVER["QUERY_STRING"])) {
+			$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
+			$queryString = preg_replace('/^&/i', '?', $queryString);
 		} else {
 			$queryString = "";
 		}

@@ -48,11 +48,7 @@ function registHouse() {
 	$house->Update();
 	$house = null;
 
-	if (strlen($_REQUEST["houseId"]) > 0) {
-		alertGoPage("선교관 정보수정이 처리 되었습니다.","/member/mypage_houseInfo.php");
-	} else {
-		alertGoPage("선교관 등록요청이 되었습니다.","registHouse.php");
-	} 
+	alertGoPage("선교관 등록요청이 되었습니다.","registHouse.php");
 } 
 
 function reservation() {

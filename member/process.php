@@ -311,7 +311,7 @@ function reservation() {
 	$book->StartDate = isset($_REQUEST["startDate"]) ? $_REQUEST["startDate"] : "";
 	$book->EndDate = isset($_REQUEST["endDate"]) ? $_REQUEST["endDate"] : "";
 	$book->RoomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
-	$book->userid = $_SESSION["userid"};
+	$book->userid = $_SESSION["userid"];
 
 	if (!$book->checkId()) {
 		header("Location: "."mypage_houseReserv.php?houseId=".$houseId);
@@ -321,11 +321,11 @@ function reservation() {
 
 	$book->Update();
 
-// SMS 메세지 보내기alertGoPage("예약요청 되었습니다.","mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
-	$house = new HouseObject($houseId);
-	$manager = new MemberObject($house->userid);
-	$from_number="01010041004";
-	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
+	// SMS 메세지 보내기alertGoPage("예약요청 되었습니다.","mypage_houseReserv.php?houseId=".$houseId."&roomId=".$book->RoomId);
+	// $house = new HouseObject($houseId);
+	// $manager = new MemberObject($house->userid);
+	// $from_number="01010041004";
+	// $message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
 	//sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
 } 
 ?>

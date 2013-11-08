@@ -92,7 +92,7 @@ img { border:none; }
 #subimg{margin-bottom:35px; _margin-top:-4px;}
 #topmenu {height:48px; padding:40px 0px 0px 0px}
 #topmenu ul{float:left; width:800px; margin-left:250px; position:absolute}
-#topmenu ul li{float:left; width:83px; text-align:center; padding-right:10px;}
+#topmenu ul li{float:left; width:83px; text-align:center; padding-right:45px;}
 #topmenu ul .dot{background:url(../../images/common/topmenu_dot.gif) no-repeat; padding-left:10px}
 .submenu .list{padding:0px 15px 0px 15px; height:21px; background:#54741f url(../../images/common/submenu_bar.gif) no-repeat;}
 .submenu .list2{padding:0px 15px 0px 10px; height:21px; background-color:#54741f;}

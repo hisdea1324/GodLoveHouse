@@ -236,17 +236,9 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	}
 
 	$pathInfo = get_path_info();
-	if (strlen($_SERVER["QUERY_STRING"]) > 0) {
-		if ((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"], "page=") + 1 : 0) > 0) {
-			$tempString = substr($_SERVER["QUERY_STRING"], strlen($_SERVER["QUERY_STRING"]) - (strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
-			if (strpos($tempString,"&") ? strpos($tempString,"&") + 1 : 0) {
-				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1).substr($tempString,strlen($tempString)-(strlen($tempString)-(strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)+1))."&";
-			} else {
-				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1);
-			} 
-		} else {
-			$queryString = $_SERVER["QUERY_STRING"]."&";
-		} 
+	if (isset($_SERVER["QUERY_STRING"])) {
+		$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
+		$queryString = preg_replace('/^&/i', '?', $queryString);
 	} else {
 		$queryString = "";
 	}
@@ -278,19 +270,11 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	return $str;
 } 
 
-function makePagingN($page, $pageCount, $pageUnit, $total) {	
+function makePagingN($page, $pageCount, $pageUnit, $total) {
 	$pathInfo = get_path_info();
-	if (strlen($_SERVER["QUERY_STRING"]) > 0) {
-		if ((strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0) > 0) {
-			$tempString=substr($_SERVER["QUERY_STRING"],strlen($_SERVER["QUERY_STRING"])-(strlen($_SERVER["QUERY_STRING"])-(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)+1));
-			if ((strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)) {
-				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1).substr($tempString,strlen($tempString)-(strlen($tempString)-(strpos($tempString,"&") ? strpos($tempString,"&")+1 : 0)+1))."&";
-			} else {
-				$queryString=substr($_SERVER["QUERY_STRING"],0,(strpos($_SERVER["QUERY_STRING"],"page=") ? strpos($_SERVER["QUERY_STRING"],"page=")+1 : 0)-1);
-			} 
-		} else {
-			$queryString = $_SERVER["QUERY_STRING"]."&";
-		} 
+	if (isset($_SERVER["QUERY_STRING"])) {
+		$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
+		$queryString = preg_replace('/^&/i', '?', $queryString);
 	} else {
 		$queryString = "";
 	} 
@@ -301,15 +285,15 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 	$linkUrl=str_replace("?&","?",str_replace("?&","?",$linkUrl));
 	$linkUrl=str_replace("&&","&",str_replace("&&","&",$linkUrl));
 
-	$totalPage = round($total / $pageCount) + 1;
+	$totalPage = round($total / $pageCount);
 	$prevPage = round($page / $pageUnit) * 10 + 1;
 	$nextPage = $prevPage + 10;
 	if ($nextPage > $totalPage) {
 		$nextPage = $totalPage;
 	} 
 
-	$str="<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
-	for ($i=1; $i <= $totalPage; $i = $i+1) {
+	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	for ($i = 1; $i <= $totalPage; $i++) {
 		if (($i-$page==0)) {
 			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
 		} else {
