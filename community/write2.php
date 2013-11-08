@@ -1,6 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$needUserLv[1];
+
+global $mysqli;
+needUserLv(1);
 
 //=================에디터용 ==================
 if ((strlen($lang)==0)) {
@@ -44,15 +46,16 @@ if ((strlen($page)==0)) {
 } 
 
 if ((strlen($id)>0)) {
-	$query = "select * from board where groupId='".$mssqlEscapeString[$groupId]."' AND id= '".$mssqlEscapeString[$id]."'";
-	$boardRS = $db->Execute($query);
-	$title = $boardRS["title"];
-	$contents = $boardRS["contents"];
-	$userid = $boardRS["userid"];
-	$id = $boardRS["id"];
-	$boardRS = null;
-} 
+	$query = "select * from board where groupId='".$mysqli->real_escape_string($groupId)."' AND id= '".$mysqli->real_escape_string($id)."'";
+	$result = $mysqli->query($query);
 
+	if ($row = $result->fetch_assoc()) {
+		$title = $row["title"];
+		$contents = $row["contents"];
+		$userid = $row["userid"];
+		$id = $row["id"];
+	}
+} 
 
 //쓰기권한 체크
 if (checkAuthorize($groupId, "W") == false) {
@@ -60,7 +63,6 @@ if (checkAuthorize($groupId, "W") == false) {
 } else if ($mode == "edit" && $userid != $_SESSION['userid'] && $_SESSION['UserLv'] < 9) {
 	alertGoPage("권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
-
 
 switch ($groupId) {
 	case "notice":
@@ -98,7 +100,7 @@ switch ($groupId) {
 		break;
 } 
 
-showHeader($headerSet[0],$headerSet[1],$headerSet[2]);
+showHeader($headerSet[0], $headerSet[1], $headerSet[2]);
 body();
 showFooter();
 
@@ -127,8 +129,7 @@ function body() {
 						<?php echo $userid;?>
 					</td>
 				</tr>
-		<?php if (($mode=="edit")) {
-?>
+		<?php if (($mode=="edit")) {?>
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
@@ -139,12 +140,11 @@ function body() {
 				<tr>
 					<td class="td01">내용</td>
 					<td>
-			<?php 
+	<?php 
 	if (($mode=="replyPost" || $mode=="editPost")) {
 		$contentData = $contents;
 	} 
-
-?>	
+	?>	
 			<!-- #include Virtual = "/editor/editor.php" -->
 					</td>
 				</tr>

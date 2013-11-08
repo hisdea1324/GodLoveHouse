@@ -200,6 +200,8 @@ class HospitalHelper {
 	} 
 
 	function makeReservationListPagingHTML($curPage) {
+		global $mysqli;
+
 		$query = "SELECT COUNT(*) AS recordCount FROM hospital A, reservation C ";
 		if ($_SESSION["userid"] == "lovehouse") {
 			$query = $query." WHERE A.hospitalId = C.hospitalId ".$this->m_StrConditionQuery;
@@ -207,15 +209,18 @@ class HospitalHelper {
 			$query = $query." WHERE A.hospitalId = C.hospitalId AND A.userid = '".$_SESSION["userid"]."' ".$this->m_StrConditionQuery;
 		} 
 
-		$countRS = $db->Execute($query);
-		$total = $countRS["recordCount"];
-		$countRS = null;
+		$result = $mysqli->query($query);
+		while ($row = $result->fetch_assoc()) {
+			$total = $row["recordCount"];
+		}
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
 	function getReservationListWithPaging($curPage) {
-		$topNum = $this->m_pageCount*$curPage;
+		global $mysqli;
+
+		$topNum = $this->m_pageCount * $curPage;
 
 		$query = "SELECT top ".$topNum." C.reservationNo FROM hospital A, reservation C ";
 		if ($_SESSION["userid"] == "lovehouse") {
@@ -225,15 +230,10 @@ class HospitalHelper {
 		} 
 
 		$query = $query." ORDER BY C.reservationNo DESC";
-		$db->CursorLocation=3;
-		$reserveListRS = $db->Execute($query);
 
-		if ($reserveListRS->RecordCount > 0) {
-			$reserveListRS->PageSize = $this->m_pageCount;
-			$reserveListRS->AbsolutePage = $curPage;
-			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
-				$reservInfo = new ReservationObject();
-				$reservInfo->Open($reserveListRS["reservationNo"]);
+		if ($result = $mysqli->query($query)) {
+			while($row = $result->fetch_assoc()) {
+				$reservInfo = new ReservationObject($row["reservationNo"]);
 			} 
 		} 
 
@@ -241,12 +241,11 @@ class HospitalHelper {
 	} 
 
 	function getReservationList($query) {
-		$reserveListRS = $db->Execute($query);
+		global $mysqli;
 
-		if ((!$reserveListRS->Eof && !$reserveListRS->Bof)) {
-			while(!(($reserveListRS->EOF || $reserveListRS->BOF))) {
-				$reserveInfo = new ReservationObject();
-				$reserveInfo->Open($reserveListRS["reservationNo"]);
+		if ($result = $mysqli->query($query)) {
+			while($row = $result->fetch_assoc()) {
+				$reserveInfo = new ReservationObject($row["reservationNo"]);
 			} 
 		} 
 
@@ -255,6 +254,7 @@ class HospitalHelper {
 
 	function getReservationListByManager($curPage) {
 		$query = "SELECT C.reservationNo FROM hospital A, reservation C ";
+
 		if ($_SESSION["userid"] =="lovehouse") {
 			$query = $query."WHERE A.hospitalId = C.hospitalId";
 		} else {

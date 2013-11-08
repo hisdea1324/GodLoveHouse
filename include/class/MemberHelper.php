@@ -99,21 +99,18 @@ class MemberHelper {
 	} 
 
 	function getFamilyType($missionId,$userid) {
+		global $mysqli;
 
+		$retValue = false;
+		
 		if (strlen($userid) > 0) {
 			$query = "SELECT familyType FROM family WHERE userid = '".$missionId."' AND followuserid = '".$userid."'";
-			$familyRS = $db->Execute($query);
-			if (!$familyRS->EOF && !$familyRS->BOF) {
-				$retValue = $familyRS["familyType"];
-			} else {
-				$retValue=false;
-			} 
-
-			$familyRS = null;
-
-		} else {
-			$retValue=false;
-		} 
+			if ($result = $mysqli->query($query)) {
+				while ($row = $result->fetch_assoc()) {
+					$retValue = $row["familyType"];
+				}
+			}
+		}
 
 
 		return $retValue;

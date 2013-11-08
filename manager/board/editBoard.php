@@ -2,19 +2,22 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
+
 checkAuth();
 
 $groupId = trim($_REQUEST["groupId"]);
 
 if ((strlen($groupId)>0)) {
 	$query = "SELECT * FROM boardGroup WHERE groupId = '".$groupId."'";
-	$groupRS = $db->Execute($query);
-	$name = $groupRS["name"];
-	$authRead = $groupRS["authReadLv"];
-	$authWrite = $groupRS["authWriteLv"];
-	$managerId = $groupRS["managerId"];
-	$groupRS = null;
-
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_assoc()) {
+			$name = $row["name"];
+			$authRead = $row["authReadLv"];
+			$authWrite = $row["authWriteLv"];
+			$managerId = $row["managerId"];
+		}
+	}
 } 
 
 

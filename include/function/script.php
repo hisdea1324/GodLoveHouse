@@ -1,7 +1,5 @@
 <?php 
 function alert($msg) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Alert</title></head><body>
 	<script language="javascript">
@@ -25,8 +23,6 @@ function alertBack($msg) {
 } 
 
 function alertCloseReload($msg) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Alert & Close & Reload</title></head><body>
 	<script language="javascript">
@@ -40,8 +36,6 @@ function alertCloseReload($msg) {
 } 
 
 function alertClose($msg) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Alert & Close</title></head><body>
 	<script language="javascript">
@@ -75,8 +69,6 @@ function OpenerReload() {
 } 
 
 function closeAndReload() {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Close & Reload</title></head><body>
 	<script language="javascript">
@@ -101,8 +93,6 @@ function alertGoPage($msg, $url) {
 } 
 
 function alertGoTopPage($msg,$url) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Alert & Go Top Page</title></head><body>
 	<script language="javascript">
@@ -115,8 +105,6 @@ function alertGoTopPage($msg,$url) {
 } 
 
 function goPage($url) {
-	$db->Close;
-	$db = null;
 ?>
 <html><head><title>Go Page</title></head><body>
 	<script language="javascript">

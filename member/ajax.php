@@ -20,69 +20,53 @@ getUserProfile();
 } 
 
 function confirmuserid() {
+	global $mysqli;
+
 	$userid = trim($_REQUEST["userid"]);
-	$query = "SELECT * FROM users WHERE userid = '".$userid."'";
-	$rs = $db->execute($query);
-
-	if ((strlen($userid)<4)) {
+	if (strlen($userid) < 4) {
 		print "<b><font color=red>아이디는 4자 이상만 가능합니다.</font></b>";
-	} else if (($rs->eof || $rs->bof)) {
-		print "사용 가능한 아이디입니다.";
-	} else if ((strlen($userid)>0)) {
+		return;
+	}
+
+	$query = "SELECT * FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."'";
+	$result = $mysqli->query($query);
+
+	if ($result && $result->num_rows > 0) {
 		print "<b><font color=red>이 아이디는 사용할 수 없습니다.</font></b>";
-	} 
-
-
-	$rs = null;
-
+	} else {
+		print "사용 가능한 아이디입니다.";
+	}
 } 
 
 function confirmNick() {
+	global $mysqli;
+
 	$nick = trim($_REQUEST["nick"]);
-	$query = "SELECT * FROM users WHERE nick = '".$nick."'";
-	$rs = $db->execute($query);
-
-	if ((strlen($nick)==0)) {
+	if (strlen($nick) == 0) {
 		print "";
-	} else if ((strlen($nick)<2)) {
+		return;
+	} else if (strlen($nick) < 2) {
 		print "<b><font color=red>닉네임은 2자 이상만 가능합니다.</font></b>";
-	} else if (($Rs->EOF || $Rs->BOF)) {
-		print "사용 가능한 닉네임입니다.";
-	} else {
+		return;
+	}
+
+	$query = "SELECT * FROM users WHERE nick = '".$mysqli->real_escape_string($nick)."'";
+	$result = $mysqli->query($query)
+
+	if ($result && $result->num_rows > 0) {
 		print "<b><font color=red>이 닉네임은 사용할 수 없습니다.</font></b>";
-	} 
-
-	$Rs = null;
-
-} 
-
-function confirmNID() {
-	$nid1 = trim($_REQUEST["nid1"]);
-	$nid2 = trim($_REQUEST["nid2"]);
-	$query = "SELECT * FROM users WHERE jumin = '".$nid1.$nid2."'";
-	$rs = $db->execute($query);
-
-	if ((strlen($nid1)==0 && strlen($nid2)==0)) {
-		print "";
-	} else if ((strlen($nid1)!=6 || strlen($nid2)!=7)) {
-		print "<b><font color=red>정확히 입력해 주세요</font></b>";
-	} else if (($Rs->EOF || $Rs->BOF)) {
-		print "사용 가능합니다.";
 	} else {
-		print "<b><font color=red>이미 사용중인 번호입니다.</font></b>";
+		print "사용 가능한 닉네임입니다.";
 	} 
-
-	$Rs = null;
-
 } 
 
 function confirmPassword() {
 	$pw1 = trim($_REQUEST["pw1"]);
 	$pw2 = trim($_REQUEST["pw2"]);
 
-	if ((strlen($pw2)==0 || strlen($pw2)!=strlen($pw1))) {
+	if (strlen($pw2) == 0 || strlen($pw2) != strlen($pw1)) {
 		print "";
-	} else if (($pw2 == $pw1)) {
+	} else if ($pw2 == $pw1) {
 		print "확인 되었습니다.";
 	} else {
 		print "<b><font color=red>비밀번호와 일치하지 않습니다.</font></b>";
@@ -106,12 +90,6 @@ function getUserProfile() {
 	print "<li> 파송단체 : ".$mission->Ngo."</li>";
 	print "</ul>";
 	print "</td></tr></table>";
-
-	$mission = null;
-
-	$member = null;
-
-	$m_helper = null;
 
 } 
 ?>

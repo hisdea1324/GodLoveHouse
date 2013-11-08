@@ -56,11 +56,20 @@ class CodeHelper {
 		return $value;
 	} 
 
-	function getCodeListByType($value,$index) {
-		$query = "SELECT * from code WHERE type = '{$value}'";
-		$codeRS = $db->Execute($query);
+	function getCodeListByType($value, $index) {
+		global $mysqli;
+		$return = array();
 
-		return $codeRS;
+		$query = "SELECT * from code WHERE type = '".$mysqli->real_escape_string($value)."'";
+		$result = $mysqli->query($query);
+
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$return = $row;
+			} 
+		} 
+
+		return $result;
 	} 
 
 	function getCodeList($query) {
@@ -68,7 +77,7 @@ class CodeHelper {
 		$return = array();
 		
 		if ($result = $mysqli->query($query)) {
-			while($row = $result->fetch_array()) {
+			while ($row = $result->fetch_array()) {
 				$codeInfo = new CodeObject();
 				$codeInfo->Open($row["code"]);
 				$return[] = $codeInfo;

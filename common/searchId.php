@@ -5,13 +5,12 @@ $mode = trim($_REQUEST["mode"]);
 $checkuserid = trim($_REQUEST["userid"]);
 $isExist = "N";
 
-if (($mode=="search") && (strlen($checkuserid)>3)) {
-	$query = "SELECT * FROM users WHERE userid = '".$mssqlEscapeString[$checkuserid]."'";
-	$rs = $db->execute($query);
-	if (!$Rs->EOF) {
-		$isExist = "Y";
+if ($mode == "search") && (strlen($checkuserid) > 3) {
+	$query = "SELECT * FROM users WHERE userid = '".$mysqli->real_escape_string($checkuserid)."'";
+	$result = $mysqli->query($query);
+	if ($result) {
+		$isExist="Y";
 	} 
-
 } 
 
 ?>

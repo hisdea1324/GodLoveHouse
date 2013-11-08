@@ -62,13 +62,15 @@ function editRoom() {
 } 
 
 function deleteRoom() {
+	global $mysqli;
+	
 	$houseId = trim($_REQUEST["houseId"]);
 	$roomId = trim($_REQUEST["roomId"]);
 
 	$query = "DELETE FROM room WHERE roomId = ".$roomId;
-	$deleteRs = $db->Execute($query);
+	$deleteRs = $mysqli->query($query);
 	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$houseId;
-	$deleteRs = $db->Execute($query);
+	$deleteRs = $mysqli->query($query);
 
 	$deleteRs = null;
 

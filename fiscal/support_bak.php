@@ -1,5 +1,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+
+global $mysqli;
+
 # 페이징 갯수
 $PAGE_COUNT=10;
 $PAGE_UNIT=10;
@@ -18,12 +21,7 @@ $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.*, C.nick, B.name AS regionName FROM request A, code B, user C".$strWhere." ORDER BY A.reqId DESC";
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
+$result = $mysqli->query($query);
 
 showHeader("HOME > 재정보고 > 수입보고","fiscal","tit_0501.gif");
 body();

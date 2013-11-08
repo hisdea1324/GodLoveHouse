@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
 checkAuth();
 
 //페이징 갯수 
@@ -19,22 +20,23 @@ if ((strlen($order)==0)) {
 } 
 
 $query = "select A.title, B.userid, B.dueDate from requestInfo A, requestAddInfo B WHERE A.reqId = B.reqId AND A.reqId = ".$reqId;
-$viewRS = $db->Execute($query);
+if ($result = $mysqli->query($query)) {
+	$viewRS = $result->fetch_assoc();
+}
 
 $query = "select sum(cost) as costTotal from (select cost from requestItem WHERE reqId = ".$reqId." union select 0) T";
-$costRS = $db->Execute($query);
+if ($result = $mysqli->query($query)) {
+	$costRS = $result->fetch_assoc();
+}
 
 $query = "SELECT COUNT(*) AS recordCount from requestItem WHERE reqId = ".$reqId;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." * from requestItem WHERE reqId = ".$reqId." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
+if ($result = $mysqli->query($query)) {
+	$listRS = $result->fetch_assoc();
+}
 
 
 // 테이블 생성
@@ -51,12 +53,6 @@ $htmlPaging = $objTable->displayListPage();
 showAdminHeader("관리툴 - 후원관리","","","");
 body();
 showAdminFooter();
-
-$listRS = null;
-
-$viewRS = null;
-
-$costRS = null;
 
 $objTable = null;
 

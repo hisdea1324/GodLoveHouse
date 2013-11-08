@@ -104,19 +104,21 @@ function deleteRoom() {
 	$roomId = trim($_REQUEST["roomId"]);
 
 	$query = "DELETE FROM room WHERE roomId = ".$roomId;
-	$deleteRs = $mysqli->query($query);
+	$result = $mysqli->query($query);
 	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$houseId;
-	$deleteRs = $mysqli->query($query);
+	$result = $mysqli->query($query);
 
 	header("Location: roomList.php?houseId={$houseId}");
 } 
 
 function deleteHouse() {
+	global $mysqli;
+
 	$houseId = trim($_REQUEST["houseId"]);
 	$query = "DELETE FROM house WHERE houseId = ".$houseId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 	$query = "DELETE FROM room WHERE houseId = ".$houseId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 
 	header("Location: index.php");
 } 
@@ -173,17 +175,19 @@ function editHospital() {
 	$hospital = null;
 
 	if ((strlen($_REQUEST["status"])>0)) {
-alertGoPage("처리되었습니다.","hospital.php?status=".$_REQUEST["status"]);
+		alertGoPage("처리되었습니다.","hospital.php?status=".$_REQUEST["status"]);
 	} else {
-alertGoPage("처리되었습니다.","hospital.php");
+		alertGoPage("처리되었습니다.","hospital.php");
 	} 
 
 } 
 
 function deleteHospital() {
+	global $mysqli;
+
 	$hospitalId = trim($_REQUEST["hospitalId"]);
 	$query = "DELETE FROM hospital WHERE hospitalId = ".$hospitalId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 
 	header("Location: "."hospital.php");
 } 
@@ -192,7 +196,7 @@ function confirmHospital() {
 	$hospitalId = trim($_REQUEST["hospitalId"]);
 	$value = trim($_REQUEST["value"]);
 	$query = "UPDATE hospital SET status = '".$value."' WHERE hospitalId = ".$hospitalId;
-	$rs = $db->execute($query);
+	$result = $mysqli->query($query);
 
 	header("Location: "."index.php");
 } 

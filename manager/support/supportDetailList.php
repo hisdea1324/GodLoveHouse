@@ -2,6 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
+
 checkAuth();
 
 //페이징 갯수 
@@ -27,13 +29,10 @@ $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." A.supItemId, B.title, A.cost FROM supportItem A, requestInfo B WHERE A.reqId = B.reqId AND A.supId = ".$supId." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
 
+if ($result = $mysqli->query($query)) {
+	$listRS = $result->fetch_assoc();
+}
 
 // 테이블 생성
 $objTable = new tableBuilder();

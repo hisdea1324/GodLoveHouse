@@ -68,6 +68,8 @@ function addPost() {
 } 
 
 function replyPost() {
+	global $mysqli;
+
 	$id = trim($_REQUEST["id"]);
 	$title = trim($_REQUEST["title"]);
 	$contents = trim($_REQUEST["contents"]);
@@ -75,19 +77,20 @@ function replyPost() {
 	$contents=str_replace("'","''",$contents);
 
 	$query = "SELECT MAX(answerNum) + 1 AS answerNum FROM board WHERE groupId = '".$groupId."' AND answerId = ".$id." GROUP BY answerId";
-	$rs = $db->execute($query);
-	if (($Rs->Eof || $Rs->Bof)) {
-		$answerNum=1;
-	} else {
-		$answerNum = $Rs["answerNum"];
-	} 
-
+	$answerNum = 1;
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_assoc()) {
+			$answerNum = $row["answerNum"];
+		}
+	}
 
 	$query = "SELECT answerLv + 1 AS answerLv FROM board WHERE groupId = '".$groupId."' AND id = ".$id;
-	$rs = $db->execute($query);
-	$answerLv = $Rs["answerLv"];
-	$Rs = null;
-
+	$result = $mysqli->query($query);
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_assoc()) {
+			$answerNum = $row["answerNum"];
+		}
+	}
 
 	$ObjQuery = new DataManager();
 	$fieldList = array("title","contents","userid","groupId");
@@ -131,9 +134,11 @@ function editPost() {
 } 
 
 function deletePost() {
+	global $mysqli;
 	$id = trim($_REQUEST["id"]);
-	$Sql="delete from board where id=".$id;
-	$db->Execute($sql);
+	$Sql = "delete from board where id=".$id;
+	$result = $mysqli->query($sql);
+
 	header("Location: "."boardList.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
 

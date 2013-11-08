@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
 checkAuth();
 
 //페이징 갯수 
@@ -34,13 +35,7 @@ $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT*$page;
 
 $query = "SELECT top ".$topNum." * FROM house ".$strWhere." ORDER BY ".$order;
-$db->CursorLocation=3;
-$listRS = $db->Execute($query);
-if (($listRS->RecordCount>0)) {
-	$listRS->PageSize = $PAGE_COUNT;
-	$listRS->AbsolutePage = $page;
-} 
-
+$result = $mysqli->query($query);
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -55,7 +50,7 @@ $objTable->setField(array("houseId","assocName","houseName","regionCode","manage
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("houseId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($listRS);
+$htmlTable = $objTable->getTable($result);
 
 showAdminHeader("관리툴 - 선교관관리","","","");
 //call showAdminMenu()

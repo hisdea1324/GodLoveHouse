@@ -1,16 +1,18 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+
+global $mysqli;
+
 $mode = trim($_REQUEST["mode"]);
 $checkNickName = trim($_REQUEST["nickName"]);
 $isExist="N";
 
-if (($mode=="search") && (strlen($checkNickName)>0)) {
-	$query = "SELECT * FROM users WHERE nick = '".$mssqlEscapeString[$checkNickName]."'";
-	$rs = $db->execute($query);
-	if (!$Rs->EOF) {
+if ($mode=="search") && (strlen($checkNickName)>0) {
+	$query = "SELECT * FROM users WHERE nick = '".$mysqli->real_escape_string($checkNickName)."'";
+	$result = $mysqli->query($query);
+	if ($result) {
 		$isExist="Y";
 	} 
-
 } 
 
 ?>

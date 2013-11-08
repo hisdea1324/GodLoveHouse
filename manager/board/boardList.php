@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
 checkAuth();
 
 //페이징 갯수 
@@ -31,9 +32,11 @@ if ((strlen($order)==0)) {
 */
 
 //$query = "SELECT name FROM boardGroup where groupId = '".$groupId."'";
-
-//$listRS = $db->Execute($query);
-//$boardName = $listRS["name"];
+//if ($result = $mysqli->query($query)) {
+//	while ($row = $result->fetch_assoc()) {
+//		$boardName = $row["name"];
+//	}
+//}
 
 // 조건문 작성
 
@@ -66,12 +69,11 @@ $query = "SELECT * FROM board ".$strWhere." ORDER BY ".$order." DESC LIMIT $topN
 
 
 //$query = "select top ".$topNum." * from board ".$strWhere." ORDER BY ".$order." DESC";
-//$db->CursorLocation=3;
-//$listRS = $db->Execute($query);
-//if (($listRS->RecordCount>0)) {
-//	$listRS->PageSize = $PAGE_COUNT;
-//	$listRS->AbsolutePage = $page;
-//} 
+//if ($result = $mysqli->query($query)) {
+//	while ($row = $result->fetch_assoc()) {
+//		$boardName = $row["name"];
+//	}
+//}
 
 
 // 테이블 생성

@@ -2,6 +2,7 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
+global $mysqli;
 checkAuth();
 
 if (strlen(trim($_REQUEST["groupId"])) == 0) {
@@ -10,23 +11,25 @@ if (strlen(trim($_REQUEST["groupId"])) == 0) {
 	$groupId = trim($_REQUEST["groupId"]);
 } 
 
-if (trim($mode)=="") {
+if (trim($mode) == "") {
 	$mode="addPost";
 } 
 
-if ((strlen($id)>0)) {
+if (strlen($id) > 0) {
 	$query = "select * from board where groupId='".$groupId."' AND id=".$id;
-	$rs = $db->execute($query);
-	$title = $Rs["title"];
-	$contents = $Rs["contents"];
-	$Rs = null;
-
+	
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_assoc()) {
+			$title = $row["title"];
+			$contents = $row["contents"];
+		}
+	}
 } 
 
 
-if (($mode=="replyPost")) {
-	$rs = $db->execute($query);
-	$title="[RE] ".$title;
+if ($mode == "replyPost") {
+	$result = $mysqli->query($query);
+	$title = "[RE] ".$title;
 	$contents="<br /><br /><br /> ========================== 원문입니다. ========================= <br /><br /><br />".$contents;
 } 
 
