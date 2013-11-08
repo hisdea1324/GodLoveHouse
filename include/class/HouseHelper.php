@@ -70,7 +70,7 @@ class HouseHelper {
 
 	#  method : Return Object List
 	# ************************************************************
-	function setCondition($houseId,$regionCode,$fromDate,$toDate) {
+	function setCondition($houseId, $regionCode, $fromDate, $toDate) {
 		$strWhere = " WHERE B.status = 'S2002' AND A.houseId = B.houseId ";
 		if (strlen($houseId) > 0) {
 			$strWhere = $strWhere." AND A.houseId = '{$houseId}'";
@@ -167,27 +167,31 @@ class HouseHelper {
 		return $this->getHouseList($query);
 	} 
 
-	function setReservationListConditionWithHouse($search,$houseId) {
+	function setReservationListConditionWithHouse($search, $houseId, $fromDate = 0, $toDate = 0) {
 		switch ($search) {
 			case "1":
-				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."'";
 				break;
 			case "2":
-				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0002' AND A.houseId = '".$houseId."'";
 				break;
 			case "3":
-				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0003' AND A.houseId = '".$houseId."'";
 				break;
 			case "4":
-				$this->m_StrConditionQuery=" AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0004' AND A.houseId = '".$houseId."'";
 				break;
 			default:
-				$this->m_StrConditionQuery=" AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."'";
+				$this->m_StrConditionQuery = " AND C.reservStatus <> 'S0004' AND A.houseId = '".$houseId."'";
 				break;
 		} 
+
+		if ($fromDate > 9) {
+			$this->m_StrConditionQuery.= " AND C.startDate <= {$toDate} AND C.endDate >= {$fromDate}";
+		}
 	} 
 
-	function setReservationListConditionWithDate($search,$houseId,$roomId) {
+	function setReservationListConditionWithDate($search, $houseId, $roomId) {
 		switch ($search) {
 			case "1":
 				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";
