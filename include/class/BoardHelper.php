@@ -45,9 +45,7 @@ class BoardHelper {
 	} 
 
 	function getBoardGroupByGroupId($groupId) {
-		$boardGrp = new BoardGroup();
-		$boardGrp->Open($groupId);
-		return $boardGrp;
+		return new BoardGroup($groupId);
 	} 
 
 	function getReplyInfoById($index) {

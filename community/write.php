@@ -1,11 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardObject.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardGroup.php");
-//$needUserLv[1];
 
-$needUserLv = 3;
+needUserLv(3);
 
 $id = (isset($_REQUEST["id"])) ? trim($_REQUEST["id"]) : 0;
 $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
@@ -16,7 +12,7 @@ $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 
 $b_Helper = new BoardHelper();
 $boardGrp = $b_Helper->getBoardGroupByGroupId($groupId);
-if ((strcmp($mode,"replyPost")==0)) {
+if (strcmp($mode,"replyPost") == 0) {
 # for reply	
 	$boardInfo = $b_Helper->getReplyInfoById($id);
 } else {
@@ -29,17 +25,13 @@ if ((strcmp($mode,"replyPost")==0)) {
 //$userLevel = (isset($_SESSION["userLv"])) ? trim($_SESSION["userLv"]) : 0;
 //echo "UserLevel ::: " . $userLevel;
 
-
-
-if ($boardGrp->WritePermission()) {
+if (!$boardGrp->WritePermission()) {
 	alertGoPage("쓰기 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
-} else if ((!$boardInfo->checkEditPermission())) {
+} else if (!$boardInfo->checkEditPermission()) {
 	alertGoPage("수정 권한이 없습니다.","board.php?groupId=".$groupId."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
 
-
-
-switch (($groupId)) {
+switch ($groupId) {
 	case "notice":
 		$headerSet = array("HOME > 커뮤니티 > 공지사항","community","tit_0601.gif");
 		break;
@@ -79,18 +71,12 @@ showHeader($headerSet[0],$headerSet[1],$headerSet[2]);
 body();
 showFooter();
 
-$b_Helper = null;
-
-$boardGrp = null;
-
-$boardInfo = null;
-
-
 function body() {
-	global $boardInfo;
+	global $boardInfo, $boardGrp;
+	global $mode, $page, $groupId;
 ?>
-	<link href="css/default.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js/HuskyEZCreator.js" charset="utf-8"></script>
+	<!--link href="css/default.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/HuskyEZCreator.js" charset="utf-8"></script-->
 
 		<!-- //content -->
 		<div id="content">

@@ -10,7 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dbconn.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/ErrorHandler.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/tableBuilder.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/DataManager.php");
-//require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/MemberHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
 #require "class/CommentHelper.php";
@@ -42,8 +42,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HouseObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/HospitalObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/RoomObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/ReservationObject.php");
-#require "dataFormat/BoardObject.php";
-#require "dataFormat/BoardGroup.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardObject.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardGroup.php");
 
 function MoveToPage($page) {
 	//header("Location: ".$page);

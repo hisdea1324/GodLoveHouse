@@ -10,31 +10,42 @@ class BoardObject {
 	protected $record = array();
 
 	public function __set($name,$value) { 
+		$name = strtolower($name);
 		$this->record[$name] = $value;
 	}
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		return $this->record[$name];
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
-  }
+	}
 
-  function __construct() {
-		$this->record['id'] = -1;
-		$this->record['groupId'] = "";
-		$this->record['title'] = "";
-		$this->record['contents'] = "";
-		$this->record['password'] = "";
-		$this->record['regDate'] = "";
-		$this->record['editDate'] = "";
-		$this->record['userid'] = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
-		$this->record['countView'] = 0;
-		$this->record['countCommnent'] = 0;
-		$this->record['answerId'] = -1;
-		$this->record['answerNum'] = 1000;
-		$this->record['answerLv'] = 0;
+	function __construct($id = -1) {
+		$this->initialize();
+		
+		if ($id != -1) {
+			$this->Open($id);
+		}
+	}
+
+	function initialize() {
+		$this->id = -1;
+		$this->groupId = "";
+		$this->title = "";
+		$this->contents = "";
+		$this->password = "";
+		$this->regDate = "";
+		$this->editDate = "";
+		$this->userid = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
+		$this->countView = 0;
+		$this->countCommnent = 0;
+		$this->answerId = -1;
+		$this->answerNum = 1000;
+		$this->answerLv = 0;
 	}
 
 	function Open($value) {

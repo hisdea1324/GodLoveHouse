@@ -10,77 +10,57 @@ class BoardGroup {
 	protected $record = array();
 
 
-	public function __set($name,$value) { 
+	public function __set($name, $value) { 
+		$name = strtolower($name);
 		$this->record[$name] = $value;
 	}
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		return $this->record[$name];
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
-		$this->record['groupId'] = -1;
-		$this->record['title'] = "";
-		$this->record['contents'] = "";
-		$this->record['password'] = "";
-		$this->record['regDate'] = "";
-		$this->record['editDate'] = "";
-		$this->record['userid'] = "";
-		$this->record['countView'] = 0;
-		$this->record['countComment'] = 0;
-		$this->record['countList'] = 0;
-		$this->record['answerId'] = -1;
-		$this->record['answerNum'] = 0;
-		$this->record['answerLv'] = 0;
-		$this->record['name'] = "";
+    function __construct($groupId = -1) {
+		$this->initialize();
+		if ($groupId != -1) {
+			$this->Open($groupId);
+		}
+    }
+
+    function initialize() {
+		$this->groupId = -1;
+		$this->managerId = "";
+		$this->authReadLv = 0;
+		$this->authWriteLv = 0;
+		$this->authCommentLv = 0;
+		$this->countList = -1;
+		$this->name = "";
 	}
 
 
 	function Open($value) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * from boardGroup WHERE `groupId` = ? ";
+		$query = "SELECT * from boardGroup WHERE `groupId` = ".$mysqli->real_escape_string($value);
 
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $value);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->groupId = $row['groupId'];
+			$this->managerId = $row['managerId'];
+			$this->authReadLv = $row['authReadLv'];
+			$this->authWriteLv = $row['authWriteLv'];
+			$this->authCommentLv = $row['authCommentLv'];
+			$this->countList = $row['countList'];
+			$this->name = $row['name'];
 		}
+		$result->close();
 	}
 
 
@@ -94,9 +74,7 @@ class BoardGroup {
 		$stmt->bind_result($resultCount);
 		$stmt->close();
 
-
-
-		if (($resultCount == 0)) {
+		if ($resultCount == 0) {
 			$query = "INSERT INTO boardGroup (`groupId`, `managerId`, `authReadLv`, `authWriteLv`, ";
 			$query.= "`authCommentLv`, `countList`,`name`) VALUES ";
 			$query = $query."(?, ?, ?, ?, ?, ?, ?)";
@@ -155,11 +133,9 @@ class BoardGroup {
 	function Delete() {
 		global $mysqli;
 
-		if ($this->record['userid'] > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM boardGroup WHERE groupId = ?");
-			$stmt->bind_param("s", $this->record['groupId']);
-			$stmt->execute();
-			$stmt->close();
+		if ($this->groupId > -1) {
+			$query = "DELETE FROM boardGroup WHERE groupId = ".$mysqli->real_escape_string($this->groupId);
+			$result = $mysqli->query($query);
 		}
 	} 
 
@@ -167,32 +143,35 @@ class BoardGroup {
 		$this->record['countList'] = $this->record['countList'] + 1;
 	}
 
-	/*
-
 	function WritePermission() {
-		if (($m_authWriteLv <= $_SESSION["userid"])) {
-			$WritePermission=true;
+		if (!isset($_SESSION["userLv"]) || $_SESSION["userLv"] == "") return false;
+
+		if ($this->authWriteLv <= $_SESSION["userLv"]) {
+			return true;
 		} else {
-			$WritePermission=false;
+			return false;
 		} 
 
 	} 
 
 	function ReadPermission() {
-		if (($m_authReadLv <= $_SESSION["userid"])) {
-			$ReadPermission=true;
+		if (!isset($_SESSION["userLv"]) || $_SESSION["userLv"] == "") return false;
+
+		if ($this->authReadLv <= $_SESSION["userLv"]) {
+			return true;
 		} else {
-			$ReadPermission=false;
+			return false;
 		} 
 	} 
 
 	function CommentPermission() {
-		if ($m_authCommentLv <= $_SESSION["userid"]) {
-			$CommentPermission=true;
+		if (!isset($_SESSION["userLv"]) || $_SESSION["userLv"] == "") return false;
+
+		if ($this->authCommentLv <= $_SESSION["userLv"]) {
+			return true;
 		} else {
-			$CommentPermission=false;
+			return false;
 		} 
 	} 
-	*/
 }
 ?>

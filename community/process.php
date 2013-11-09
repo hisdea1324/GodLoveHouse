@@ -2,12 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
-if ((strlen($mode)==0)) {
-	$mode="editPost";
-} 
+$mode = isset($_REQUEST["mode"]) ? trim($_REQUEST["mode"]) : "editPost";
 
-switch (($mode)) {
+echo "$mode";
+switch ($mode) {
 	case "replyPost":
 		replyPost();
 		break;

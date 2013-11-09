@@ -52,15 +52,12 @@ class AccountObject {
 		return isset($this->record[$name]); 
     }
 
-
     function __construct($userid = -1) {
-		if ($userid == -1) {
-			$this->initialize();
-		} else {
+		$this->initialize();
+		if ($userid != -1) {
 			$this->Open($userid);
 		}
 	}
-
 
     function initialize() {
 		$this->record['id'] = -1;
@@ -121,7 +118,6 @@ class AccountObject {
 
 	function Update() {
 		global $mysqli;
-
 
 		if (($this->record['userid'] == "")) {
 			$query = "INSERT INTO account (`userid`, `name`, `bank`, `method`, ";
