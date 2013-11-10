@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
 $mode = isset($_REQUEST["mode"]) ? trim($_REQUEST["mode"]) : "editPost";
 
-echo "$mode";
 switch ($mode) {
 	case "replyPost":
 		replyPost();
@@ -26,17 +25,17 @@ function editPost() {
 	$b_Helper = new BoardHelper();
 	$boardGrp = $b_Helper->getBoardGroupByGroupId($_REQUEST["groupId"]);
 	$board = $b_Helper->getBoardInfoById($_REQUEST["id"]);
-	$board->GroupID = $_REQUEST["groupId"];
-	$board->Title = $_REQUEST["title"];
-	$board->userid = $_REQUEST["userid"];
-	$board->Contents = $_REQUEST["contents"];
 
-	# 쓰기권한 체크	
-	$field = trim($_REQUEST["field"]);
-	$keyword = trim($_REQUEST["keyword"]);
-	$page = trim($_REQUEST["page"]);
+	$board->GroupID = isset($_REQUEST["groupId"]) ? $_REQUEST["groupId"] : "";
+	$board->Title = isset($_REQUEST["title"]) ? $_REQUEST["title"] : "";
+	$board->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
+	$board->Contents = isset($_REQUEST["contents"]) ? $_REQUEST["contents"] : "";
 
-	if ((!$boardGrp->WritePermission)) {
+	$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+	$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+	$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+
+	if (!$boardGrp->WritePermission()) {
 		alertGoPage("권한이 없습니다.","board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
 	} else if ((!$board->checkEditPermission())) {
 		alertGoPage("권한이 없습니다.","board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
@@ -44,37 +43,33 @@ function editPost() {
 
 	$board->Update();
 	header("Location: "."view.php?groupId=".$board->GroupID."&id=".$board->BoardID."&page=".$page."&field=".$field."&keyword=".$keyword);
-
-	$board = null;
-	$boardGrp = null;
-	$b_Helper = null;
 } 
 
 function replyPost() {
 	$b_Helper = new BoardHelper();
 	$boardGrp = $b_Helper->getBoardGroupByGroupId($_REQUEST["groupId"]);
 	$board = $b_Helper->getBoardInfoById($_REQUEST["id"]);
-	$board->GroupID = $_REQUEST["groupId"];
-	$board->userid = $_REQUEST["userid"];
-	$board->Title = $_REQUEST["title"];
-	$board->Contents = $_REQUEST["contents"];
-	$board->AnswerID = $_REQUEST["answerId"];
-	$board->AnswerNum = $_REQUEST["answerNum"];
-	$board->AnswerLv = $_REQUEST["answerLv"];
 
-	$field = trim($_REQUEST["field"]);
-	$keyword = trim($_REQUEST["keyword"]);
-	$page = trim($_REQUEST["page"]);
+	$board->GroupID = isset($_REQUEST["groupId"]) ? $_REQUEST["groupId"] : "";
+	$board->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
+	$board->Title = isset($_REQUEST["title"]) ? $_REQUEST["title"] : "";
+	$board->Contents = isset($_REQUEST["contents"]) ? $_REQUEST["contents"] : "";
+	$board->AnswerID = isset($_REQUEST["answerId"]) ? $_REQUEST["answerId"] : "";
+	$board->AnswerNum = isset($_REQUEST["answerNum"]) ? $_REQUEST["answerNum"] : "";
+	$board->AnswerLv = isset($_REQUEST["answerLv"]) ? $_REQUEST["answerLv"] : "";
+
+	$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+	$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+	$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 
 	# 쓰기권한 체크
-	if ((!$boardGrp->WritePermission)) {
+	if (!$boardGrp->WritePermission()) {
 		alertGoPage("권한이 없습니다.","board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
 	} 
+
 	$board->Update();
+
 	header("Location: "."board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
-	$board = null;
-	$boardGrp = null;
-	$b_Helper = null;
 } 
 
 function deletePost() {
@@ -82,21 +77,19 @@ function deletePost() {
 	$boardGrp = $b_Helper->getBoardGroupByGroupId($_REQUEST["groupId"]);
 	$board = $b_Helper->getBoardInfoById($_REQUEST["id"]);
 
-	$field = trim($_REQUEST["field"]);
-	$keyword = trim($_REQUEST["keyword"]);
-	$page = trim($_REQUEST["page"]);
+	$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+	$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+	$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 
-	if ((!$boardGrp->WritePermission)) {
+	if (!$boardGrp->WritePermission()) {
 		alertGoPage("권한이 없습니다.","board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
-	} else if ((!$board->checkEditPermission())) {
+	} else if (!$board->checkEditPermission()) {
 		alertGoPage("권한이 없습니다.","board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
 	} 
 
 
 	$board->Delete();
 	header("Location: "."board.php?groupId=".$board->GroupID."&page=".$page."&field=".$field."&keyword=".$keyword);
-	$board = null;
-	$boardGrp = null;
-	$b_Helper = null;
 } 
+
 ?>

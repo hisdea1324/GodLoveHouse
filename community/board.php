@@ -7,7 +7,7 @@ $PAGE_COUNT = 15;
 $PAGE_UNIT = 10;
 $field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
 $keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
-$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1; 
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 $groupId = isset($_REQUEST["groupId"]) ? trim($_REQUEST["groupId"]) : ""; 
 
 switch ($groupId) {
@@ -60,6 +60,7 @@ showFooter();
 function body() {
 	global $groupId, $keyword, $field, $page;
 	global $strPage, $boardList;
+	global $b_Helper;
 ?>
 		<!-- //content -->
 		<div id="content">

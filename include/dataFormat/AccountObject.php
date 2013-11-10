@@ -49,70 +49,50 @@ class AccountObject {
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
     }
 
-    function __construct($userid = -1) {
+    function __construct($userid = "") {
 		$this->initialize();
-		if ($userid != -1) {
+		if ($userid != "") {
 			$this->Open($userid);
 		}
 	}
 
     function initialize() {
-		$this->record['id'] = -1;
-		$this->record['userid'] = "";
-		$this->record['name'] = "";
-		$this->record['bank'] = "";
-		$this->record['method'] = "";
-		$this->record['number'] = "";
-		$this->record['jumin'] = "";
-		$this->record['senddate'] = 5;
-		$this->record['expectdate'] = 1;
-		$this->record['regdate'] = "";
+		$this->id = -1;
+		$this->userid = "";
+		$this->name = "";
+		$this->bank = "";
+		$this->method = "";
+		$this->number = "";
+		$this->jumin = "000000-0000000";
+		$this->senddate = -1;
+		$this->expectdate = -1;
+		$this->regdate = "";
 	}
 
 	function Open($userid) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * from account WHERE userid = ? ";
+		$query = "SELECT * from account WHERE userid = '".$mysqli->real_escape_string($userid)."'";
 
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $userid);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->id = $row['id'];
+			$this->userid = $row['userid'];
+			$this->name = $row['name'];
+			$this->bank = $row['bank'];
+			$this->method = $row['method'];
+			$this->number = $row['number'];
+			$this->senddate = $row['senddate'];
+			$this->expectdate = $row['expectdate'];
+			$this->regdate = $row['regdate'];
 		}
+		$result->close();
 	}
 
 

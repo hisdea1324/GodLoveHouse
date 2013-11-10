@@ -8,41 +8,45 @@
 class BoardHelper {
 	protected $record = array();
 
-	# property
-	#***********************************************
-	
-	
-	public function __set($name,$value) { 
-		$this->record[$name] = $value;
+	public $m_pageCount = 0;
+	public $m_pageUnit = 0;
+	public $m_total = 0;
+	public $m_StrConditionQuery = "";
+
+	public function __construct() {
+		$this->m_eHandler = new ErrorHandler();
+	} 
+
+	public function __destruct() {
+	} 
+
+	#  property
+	# ***********************************************
+	public function __get($name) {
+		switch ($name) {
+			case "PAGE_UNIT":
+				return $this->m_pageUnit;
+			case "PAGE_COUNT":
+				return $this->m_pageCount;
+			default: 
+				return null;
+		}
 	}
 	
-	public function __get($name) { 
-		return $this->record[$name];
+	public function __set($name, $value) {
+ 		switch ($name) {
+			case "PAGE_UNIT" :
+				$this->m_pageUnit = $value;
+				break;
+			case "PAGE_COUNT" :
+				$this->m_pageCount = $value;
+				break;
+		}
 	}
-	
+
 	public function __isset($name) {
 		return isset($this->record[$name]); 
-  }
-
-  function __construct() {
-		$this->record['total'] = 0;
-		$this->record['pageCount'] = 5;
-		$this->record['pageUnit'] = 10;
-		$this->record['strConditionQuery'] = "";
 	}
-	
-	/*
-	function __construct() {
-		$this->m_eHandler = new ErrorHandler();
-		$this->m_pageCount = 5;
-		$this->m_pageUnit = 10;
-		$this->m_total = 0;
-	} 
-	*/
-
-	function __destruct() {
-
-	} 
 
 	function getBoardGroupByGroupId($groupId) {
 		return new BoardGroup($groupId);
@@ -53,14 +57,13 @@ class BoardHelper {
 			$index=-1;
 		}
 		
-		$board = new BoardObject();
+		$board = new BoardObject($index);
 		$replyBoard = new BoardObject();
-		$board->Open($index);
 		$replyBoard->answerId = $board->answerId;
 		$replyBoard->answerNum = $board->answerNum - 1;
 		$replyBoard->answerLv = $board->answerLv + 1;
-		$replyBoard->title="[Re]".$board->title;
-		$replyBoard->contents="<P>===================================================================</P>".$board->Contents."<P>==================================================================</P>";
+		$replyBoard->title = "[Re]".$board->title;
+		$replyBoard->contents = "=========================================================\r\n".$board->Contents."\r\n=========================================================\r\n";
 
 		return $replyBoard;
 	} 
@@ -69,9 +72,7 @@ class BoardHelper {
 		if (strlen(trim($index)) == 0) {
 			$index = -1;
 		}
-		$board = new BoardObject();
-		$board->Open($index);
-		return $board;
+		return new BoardObject($index);
 	} 
 
 	function setCondition($field, $keyword, $groupId) {
@@ -80,29 +81,29 @@ class BoardHelper {
 			$strWhere = $strWhere." AND ".$field." LIKE '%{$keyword}%'";
 		} 
 
-		$this->record['strConditionQuery'] = $strWhere;
+		$this->m_StrConditionQuery = $strWhere;
 	} 
 
 	function makePagingHTML($curPage) {
 		global $mysqli;
-		$query = "SELECT COUNT(*) AS recordCount from board".$this->record['strConditionQuery'];
+		$query = "SELECT COUNT(*) AS recordCount from board".$this->m_StrConditionQuery;
 		if ($result = $mysqli->query($query)) {
 			while($row = $result->fetch_array()) {
-				$this->record['total'] = $row["recordCount"];
+				$this->m_total = $row["recordCount"];
 			}
 		}
 
-		return makePagingN($curPage, $this->record['pageCount'], $this->record['pageUnit'], $this->record['total']);
+		return makePagingN($curPage, $this->PAGE_COUNT, $this->PAGE_UNIT, $this->m_total);
 	} 
 
 	function getBoardListWithPaging($curPage) {
 		global $mysqli;
 		
-		$topNum = $this->record['pageCount'] * $curPage;
+		$topNum = $this->PAGE_COUNT * ($curPage - 1);
 		$board = array();
 		
-		$query = "SELECT * FROM board ".$this->record['strConditionQuery']." ORDER BY answerId DESC, answerNum DESC LIMIT {$topNum}, ".$this->record['pageCount'];
-		
+		$query = "SELECT * FROM board ".$this->m_StrConditionQuery." ORDER BY answerId DESC, answerNum DESC LIMIT {$topNum}, ".$this->PAGE_COUNT;
+
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
 				$board[] = new BoardObject($row["id"]);

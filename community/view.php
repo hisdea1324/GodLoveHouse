@@ -1,11 +1,11 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$id = trim($_REQUEST["id"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$groupId = trim($_REQUEST["groupId"]);
+$id = (isset($_REQUEST["id"])) ? trim($_REQUEST["id"]) : 0;
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
+$groupId = (isset($_REQUEST["groupId"])) ? trim($_REQUEST["groupId"]) : 0;
 
-switch (($groupId)) {
+switch ($groupId) {
 	case "notice":
 		$headerSet = array("HOME > 커뮤니티 > 공지사항","community","tit_0601.gif");
 		break;
@@ -37,9 +37,7 @@ switch (($groupId)) {
 		$headerSet = array("HOME > 동역자소식 > 후원자소식","fiscal","tit_0505n.gif");
 		break;
 	default:
-
-
-	alertGoPage("잘못된 접근입니다", "http://".$_SERVER['HTTP_HOST']."/index.php");
+		alertGoPage("잘못된 접근입니다", "http://".$_SERVER['HTTP_HOST']."/index.php");
 		break;
 } 
 
@@ -52,11 +50,10 @@ body();
 showFooter();
 
 $board->AddView();
-$board = null;
-$boardGrp = null;
-$b_Helper = null;
 
 function body() {
+	global $board, $boardGrp;
+	global $id, $groupId, $field, $keyword;
 ?>
 		<!-- #content -->
 		<div id="content">
@@ -71,27 +68,27 @@ function body() {
 					<col width="30%">
 					<tr>
 						<th class="th01">제목</th>
-						<th colspan="5"><?php echo $board->Title;?></th>
+						<th colspan="5"><?=$board->Title?></th>
 					</tr>
 					<tr>
 						<td class="td01">작성자</td>
-						<td><?php echo $board->userid;?></td>
+						<td><?=$board->userid?></td>
 						<td class="td01">작성일</td>
-						<td><?php echo dateFormat($board->RegDate, 1);?></td>
+						<td><?=dateFormat($board->RegDate, 1)?></td>
 						<td class="td01">조회</td>
-						<td><?php echo $board->CountView;?></td>
+						<td><?=$board->CountView?></td>
 					</tr>
 					<tr>
-						<td colspan="6" class="td02"><?php echo $board->Contents;?></td>
+						<td colspan="6" class="td02"><?=$board->Contents?></td>
 					</tr>
 				</table>
 			<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td><a class="addthis_button_facebook"><img src="/images/icon_face.gif" alt="페이스북 공유하기"></a></td>
 						<td><a class="addthis_button_twitter"><img src="/images/icon_t.gif" alt="트위터 공유하기"></a></td>
-						<td><img src="/images/icon_me.gif" style="cursor:pointer;" onclick="javascript:sns_share('m2d','<?php echo $board->Title;?>');" alt="미투데이 공유하기"></td>
-						<td><img src="/images/icon_yo.gif" style="cursor:pointer;" onclick="javascript:sns_share('yzm','<?php echo $board->Title;?>');" alt="요즘 공유하기"></td>
-						<td><img src="/images/icon_cy.gif" style="cursor:pointer;" onclick="javascript:sns_share('cwd','<?php echo $board->Title;?>');" alt="싸이공감 공유하기"></td>
+						<td><img src="/images/icon_me.gif" style="cursor:pointer;" onclick="javascript:sns_share('m2d','<?=$board->Title?>');" alt="미투데이 공유하기"></td>
+						<td><img src="/images/icon_yo.gif" style="cursor:pointer;" onclick="javascript:sns_share('yzm','<?=$board->Title?>');" alt="요즘 공유하기"></td>
+						<td><img src="/images/icon_cy.gif" style="cursor:pointer;" onclick="javascript:sns_share('cwd','<?=$board->Title?>');" alt="싸이공감 공유하기"></td>
 					</tr>
 				</table>
 			<script src="/community/js/addthis_widget.js" type="text/javascript"></script>
@@ -123,10 +120,10 @@ function body() {
 		</div>
 			<!-- view# -->
 		<p class="btn_right">
-		<a href="board.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="../images/board/btn_list.gif" border="0" class="m2"></a>
-		<?php if (($boardGrp->WritePermission)) { ?><img src="../images/board/btn_modify.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=editPost&groupId=<?php echo $groupId;?>&id=<?php echo $id;?>';"><?php } ?>
-		<?php if (($boardGrp->WritePermission)) { ?><img src="../images/board/btn_reply.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=replyPost&groupId=<?php echo $groupId;?>&id=<?php echo $id;?>';"><?php } ?>
-		<?php if (($boardGrp->WritePermission)) { ?><img src="../images/board/btn_delete.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='process.php?mode=deletePost&groupId=<?php echo $groupId;?>&id=<?php echo $id;?>';"><?php } ?>
+		<a href="board.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>"><img src="../images/board/btn_list.gif" border="0" class="m2"></a>
+		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_modify.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=editPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
+		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_reply.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=replyPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
+		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_delete.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='process.php?mode=deletePost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
 		</p>
 		</div>
 		<!-- content# -->

@@ -11,68 +11,50 @@ class AttachFile {
 
 
 	public function __set($name,$value) { 
+		$name = strtolower($name);
 		$this->record[$name] = $value;
 	}
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		return $this->record[$name];
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
-		$this->record['image'] = -1;
-		$this->record['id'] = "";
-		$this->record['userid'] = "";
-		$this->record['name'] = "";
+    function __construct($id = -1) {
+    	$this->initializse();
+    	if ($this->id != -1) {
+    		$this->Open($id);
+    	}
+    }
+
+    function initializse() {
+		$this->image = -1;
+		$this->id = "";
+		$this->userid = "";
+		$this->name = "";
 	}
 
 	function Open($value) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * from attachFile WHERE `id` = ? ";
+		$query = "SELECT * from attachFile WHERE `id` = ".$mysqli->real_escape_string($value);
 
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $value);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->image = $row['image'];
+			$this->id = $row['id'];
+			$this->userid = $row['userid'];
+			$this->name = $row['name'];
 		}
+		$result->close();
 	}
-
-
 
 	function Update() {
 		global $mysqli;
