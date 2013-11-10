@@ -66,13 +66,13 @@ function body() {
 		<div id="content">
 			<!-- //search -->
 		<form name="findFrm" id="findFrm" action="board.php" method="get">
-		<input type="hidden" name="groupId" id="groupId" value="<?php echo $groupId;?>">
+		<input type="hidden" name="groupId" id="groupId" value="<?=$groupId?>">
 			<div id="search"> <img src="../images/board/img_search.gif" class="r10" align="absmiddle">
 				<select name="field" id="field">
 					<option value="title" <?php if ($field == "title") { print "selected"; } ?>>제목</option>
 					<option value="userid" <?php if ($field == "userid") { print "selected"; } ?>>작성자</option>
 				</select>
-				<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?php echo $keyword;?>">
+				<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?=$keyword?>">
 				<img src="../images/board/btn_search.gif" border="0" align="absmiddle" onclick="frmSubmit();" style="cursor:hand"></div>
 		</form>
 			<!-- search// -->
@@ -99,21 +99,14 @@ function body() {
 					</tr>
 <?php 
 	} else {
-		$num = count($boardList);
-		$remain = $b_Helper->TOTAL_COUNT%$b_Helper->PAGE_COUNT;
-		if ($remain == 0) {
-			$remain = $b_Helper->PAGE_COUNT;
-		}
-		$num = (round($b_Helper->TOTAL_COUNT / $b_Helper->PAGE_COUNT,5) - $page + 1) * $b_Helper->PAGE_COUNT + $remain;
-		for ($i = 0; $i <= count($boardList) - 1; $i++) {
-			$boardObj = $boardList[$i];
+		foreach ($boardList as $boardObj) {
 ?>
 				<tr>
-				<td><?php echo $num-$i;?></td>
-				<td class="ltd"><?php echo $boardObj->ReplyImage;?><a href="view.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>&id=<?php echo $boardObj->BoardID;?>"><?php echo $boardObj->Title;?></a></td>
-				<td><?php echo $boardObj->userid;?></td>
-				<td><?php echo dateFormat($boardObj->RegDAte, 1);?></td>
-				<td><?php echo $boardObj->CountView;?></td>
+				<td><?=$boardObj->id?></td>
+				<td class="ltd"><?$boardObj->ReplyImage?><a href="view.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><?=$boardObj->Title?></a></td>
+				<td><?=$boardObj->userid?></td>
+				<td><?=date("Y.m.d", $boardObj->RegDate)?></td>
+				<td><?=$boardObj->CountView?></td>
 				</tr>
 				<?php 
 		}
@@ -123,10 +116,10 @@ function body() {
 			</div>
 			<!-- list// -->
 			<!-- //page -->
-			<?php echo $strPage;?>
+			<?=$strPage?>
 			<!-- page// -->
 		
-		<p class="btn_right"><a href="write.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="../images/board/btn_write.gif" border="0"></a></p>
+		<p class="btn_right"><a href="write.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>"><img src="../images/board/btn_write.gif" border="0"></a></p>
 		</div>
 		<!-- content// -->
 <?php } ?>

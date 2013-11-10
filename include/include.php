@@ -26,7 +26,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/function/script.php");
 #require "function/fileuploadComm.php";
 #require "function/string.php";
 #require "function/debug.php";
-#require "dataFormat/AttachFile.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/AttachFile.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/CodeObject.php");
 #require "dataFormat/CommentObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");

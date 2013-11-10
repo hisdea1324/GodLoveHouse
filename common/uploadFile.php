@@ -1,9 +1,10 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$tag = trim($_REQUEST["tag"]);
-$path = trim($_REQUEST["path"]);
-if ((strlen($tag)==0)) {
+$tag = isset($_REQUEST["tag"]) ? trim($_REQUEST["tag"]) : "";
+$path = isset($_REQUEST["path"]) ? trim($_REQUEST["path"]) : "";
+
+if (strlen($tag) == 0) {
 	upload();
 } else {
 	uploadForm();
@@ -11,17 +12,27 @@ if ((strlen($tag)==0)) {
 
 
 function upload() {	
-	$tagName = trim($ABCU["tagName"]);
-	$pathName = trim($ABCU["pathName"]);
-	$theField = $ABCU["fileName"];
+	global $path;
+	$tag = isset($_REQUEST["tagName"]) ? trim($_REQUEST["tagName"]) : "";
 
-	if ($theField->FileExists) {
-		$fileName = $uploadFile_upload["/"]["fileName"][$theField->FileName][0][$pathName];
-	} 
-	
+	$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
+	$uploadfile = $uploaddir . basename($_FILES['fileName']['name']);
+
+	echo '<pre>';
+	if (move_uploaded_file($_FILES['fileName']['tmp_name'], $uploadfile)) {
+	    echo "파일이 유효하고, 성공적으로 업로드 되었습니다.\n";
+	} else {
+	    print "파일 업로드 공격의 가능성이 있습니다!\n";
+	}
+
+	echo '자세한 디버깅 정보입니다:';
+	print_r($_FILES);
+
+	print "</pre>";
+
 	$attach = new AttachFile();
 	$attach->userid = $_SESSION["userid"];
-	$attach->Name = $fileName;
+	$attach->Name = $_FILES['fileName']['name'];
 	$attach->Update();
 ?>
 <html>
@@ -38,9 +49,10 @@ function choice() {
 	if (opener.document.getElementById("txt<?php echo $tagName;?>") != null) {
 		opener.document.getElementById("txt<?php echo $tagName;?>").value = "<?php echo $attach->Name;?>";
 	}
+	/*
 	if (opener.pasteHTMLDemo != null) {
 		opener.pasteAttachFile();
-	}
+	}*/
 	window.close();
 }
 //-->
@@ -49,8 +61,6 @@ function choice() {
 </html>
 <?php 
 	print $attach->ImageID;
-	$theField = null;
-	$attach = null;
 } 
 
 function uploadForm() {
@@ -74,8 +84,8 @@ function uploadForm() {
 					<td align="center">
 						<table border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="e0e0e0">
 							<form id="frmUploadFile" name="frmUploadFile" method="post" enctype="multipart/form-data" onSubmit="return checkFile();">
-							<input type="hidden" id="tagName" name="tagName" value="<?php echo $tag;?>" />
-							<input type="hidden" id="pathName" name="pathName" value="<?php echo $path;?>" />
+							<input type="hidden" id="tagName" name="tagName" value="<?=$tag?>" />
+							<input type="hidden" id="path" name="path" value="<?=$path?>" />
 							<tr>
 								<td bgcolor="f5f5f5" align="center">
 									<table border="0" cellpadding="6" cellspacing="0" width="100%">

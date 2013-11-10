@@ -107,9 +107,10 @@ class BoardObject {
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerId);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerNum);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerLv);
+			$temp = $temp.", ".time();
 
-			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`) VALUES ($temp)";
-			
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `regDate`) VALUES ($temp)";
+
 			$result = $mysqli->query($query);
 			if (!$result) {
 				return false;
@@ -127,43 +128,27 @@ class BoardObject {
 			}
 
 		} else {
-
 			$query = "UPDATE board SET ";
-			$updateData = "`groupId` = ?, ";
-			$updateData = "`title` = ?, ";
-			$updateData = "`contents` = ?, ";
-			$updateData = "`password` = ?, ";
-			$updateData = "`editDate` =  getDate(), ";
-			$updateData = "`userid` = ?, ";
-			$updateData = "`countView` = ?, ";
-			$updateData = "`countComment` = ?, ";
-			$updateData = "`answerId` = ?, ";
-			$updateData.= "`answerNum` = ?, ";
-			$updateData.= "`answerLv` = ? ";
-			$query .= $updateData." WHERE `id` = ?";
+			$updateData=" groupId = '".$mysqli->real_escape_string($this->groupId)."', ";
+			$updateData = $updateData." title = '".$mysqli->real_escape_string($this->title)."', ";
+			$updateData = $updateData." contents = '".$mysqli->real_escape_string($this->contents)."', ";
+			$updateData = $updateData." `password` = '".$mysqli->real_escape_string($this->password)."', ";
+			$updateData = $updateData." editDate = ".time().", ";
+			$updateData = $updateData." `userid` = '".$mysqli->real_escape_string($this->userid)."', ";
+			$updateData = $updateData." countView = '".$mysqli->real_escape_string($this->countView)."', ";
+			$updateData = $updateData." countComment = '".$mysqli->real_escape_string($this->countComment)."', ";
+			$updateData = $updateData." answerId = ".$mysqli->real_escape_string($this->answerId).", ";
+			$updateData = $updateData." answerNum = ".$mysqli->real_escape_string($this->answerNum).", ";
+			$updateData = $updateData." answerLv = ".$mysqli->real_escape_string($this->answerLv);
+			$query = $query.$updateData." WHERE `id` = ".$mysqli->real_escape_string($this->id);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("sss", 
-				$this->record['groupId'], 
-				$this->record['title'],
-				$this->record['contents'],
-				$this->record['password'],
-				$this->record['userid'],
-				$this->record['countView'],
-				$this->record['countComment'],
-				$this->record['answerId'],
-				$this->record['answerNum'],
-				$this->record['answerLv'],
-				$this->record['id']);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 		}
+
+		return true;
 	} 
 
 	function Delete() {

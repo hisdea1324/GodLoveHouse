@@ -165,7 +165,6 @@ class ReservationObject {
 
 			$result = $mysqli->query($query);
 			if (!$result) {
-				echo $query; exit();
 				return false;
 			}
 			

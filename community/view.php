@@ -74,7 +74,7 @@ function body() {
 						<td class="td01">작성자</td>
 						<td><?=$board->userid?></td>
 						<td class="td01">작성일</td>
-						<td><?=dateFormat($board->RegDate, 1)?></td>
+						<td><?=date("Y.m.d", $board->RegDate)?></td>
 						<td class="td01">조회</td>
 						<td><?=$board->CountView?></td>
 					</tr>

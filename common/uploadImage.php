@@ -1,27 +1,37 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$tag = trim($_REQUEST["tag"]);
-$path = trim($_REQUEST["path"]);
-if ((strlen($tag)==0)) {
+$tag = isset($_REQUEST["tag"]) ? trim($_REQUEST["tag"]) : "";
+$path = isset($_REQUEST["path"]) ? trim($_REQUEST["path"]) : "";
+
+if (strlen($tag) == 0) {
 	upload();
 } else {
 	uploadForm();
 } 
 
-
 function upload() {	
-	$tagName = trim($ABCU["tagName"]);
-	$pathName = trim($ABCU["pathName"]);
-	$theField = $ABCU["imgFile"];
+	global $path;
+	$tag = isset($_REQUEST["tagName"]) ? trim($_REQUEST["tagName"]) : "";
 
-	if ($theField->FileExists) {
-		$fileImage = $uploadFile_upload["/"]["imgFile"][$theField->FileName][0][$pathName];
-	} 
+	$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
+	$uploadfile = $uploaddir . basename($_FILES['imgFile']['name']);
+
+	echo '<pre>';
+	if (move_uploaded_file($_FILES['imgFile']['tmp_name'], $uploadfile)) {
+	    echo "파일이 유효하고, 성공적으로 업로드 되었습니다.\n";
+	} else {
+	    print "파일 업로드 공격의 가능성이 있습니다!\n";
+	}
+
+	echo '자세한 디버깅 정보입니다:';
+	print_r($_FILES);
+
+	print "</pre>";
 
 	$attach = new AttachFile();
 	$attach->userid = $_SESSION["userid"];
-	$attach->Name = $fileImage;
+	$attach->Name = $_FILES['imgFile']['name'];
 	$attach->Update();
 ?>
 <html>
@@ -31,16 +41,18 @@ function upload() {
 choice();
 
 function choice() {
-	opener.document.getElementById("id<?php echo $tagName;?>").value = "<?php echo $attach->ImageID;?>";
-	if (opener.document.getElementById("img<?php echo $tagName;?>") != null) {
-		opener.document.getElementById("img<?php echo $tagName;?>").src = "/upload/<?php echo $pathName;?>/<?php echo $attach->Name;?>";
+	opener.document.getElementById("id<?=$tag?>").value = "<?=$attach->ImageID?>";
+	if (opener.document.getElementById("img<?=$tag?>") != null) {
+		opener.document.getElementById("img<?=$tag?>").src = "/upload/<?=$path?>/<?=$attach->Name?>";
 	}
-	if (opener.document.getElementById("txt<?php echo $tagName;?>") != null) {
-		opener.document.getElementById("txt<?php echo $tagName;?>").value = "<?php echo $attach->Name;?>";
+	if (opener.document.getElementById("txt<?=$tag?>") != null) {
+		opener.document.getElementById("txt<?=$tag?>").value = "<?=$attach->Name?>";
 	}
+	/*
 	if (opener.pasteHTMLDemo != null) {
 		opener.pasteHTMLDemo();
 	}
+	*/
 	window.close();
 }
 //-->
@@ -49,11 +61,10 @@ function choice() {
 </html>
 <?php 
 	print $attach->ImageID;
-	$theField = null;
-	$attach = null;
 } 
 
 function uploadForm() {	
+	global $tag, $path;
 ?>
 <html>
 <head>
@@ -74,8 +85,9 @@ function uploadForm() {
 					<td align="center">
 						<table border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="e0e0e0">
 							<form id="frmUploadImage" name="frmUploadImage" method="post" enctype="multipart/form-data" onSubmit="return checkFile();">
-							<input type="hidden" id="tagName" name="tagName" value="<?php echo $tag;?>" />
-							<input type="hidden" id="pathName" name="pathName" value="<?php echo $path;?>" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+							<input type="hidden" id="tagName" name="tagName" value="<?=$tag?>" />
+							<input type="hidden" id="path" name="path" value="<?=$path?>" />
 							<tr>
 								<td bgcolor="f5f5f5" align="center">
 									<table border="0" cellpadding="6" cellspacing="0" width="100%">
