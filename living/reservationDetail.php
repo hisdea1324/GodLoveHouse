@@ -123,7 +123,7 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>지원단체</b></td>
+					<td class="td01"><p class="reserve"><b>파송 단체</b></td>
 					<td>
 						<? if ($mission->church) { ?>
 						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">
@@ -181,7 +181,8 @@ function body() {
 				<td class="td01">주소</td>
 				<td colspan="7">
 					[<?=implode('-', $house->Zipcode)?>]
-					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($house->Address1.$house->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$house->Address1?></A>
+					<a href="javascript:void(0)" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($house->Address1.$house->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$house->Address1?></A>
+					&nbsp;&nbsp;&nbsp;<span class="btn1"><a href="javascript:void(0)" onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($house->Address1.$house->Address2)?>','win','top=0, left=500, width=550,height=450')">지도 보기</a></span>
 				</td>
 			</tr>
 			<tr>

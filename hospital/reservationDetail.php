@@ -108,7 +108,8 @@ function body() {
 				<td class="td01">주소</td>
 				<td colspan="3">
 					[<? echo $hospital->Zipcode[0]?>-<?=$hospital->Zipcode[1]?>]
-					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospital->Address1.$ospital->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$hospital->Address1?> <?=$hospital->Address2?></A>
+					<a href="javascript:void(0)" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospital->Address1.$ospital->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$hospital->Address1?> <?=$hospital->Address2?></A>
+					&nbsp;&nbsp;&nbsp;<span class="btn1"><a href="javascript:void(0)" onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospital->Address1.$hospital->Address2)?>','win','top=0, left=500, width=550,height=450')">지도 보기</a></span>
 				</td>
 			</tr>
 			<tr>

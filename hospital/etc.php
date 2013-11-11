@@ -41,20 +41,20 @@ function body() {
 				</select>
 		 <img src="../images/board/btn_search.gif" border="0" align="absmiddle" style="cursor:pointer;" onclick="frmSubmit()">
 		</div>
-		 <input type="hidden" name="page" id="page" value="<?php echo $page;?>" />
+		 <input type="hidden" name="page" id="page" value="<?=$page?>" />
 		</form>
 			<!-- search#  -->
 			<!-- # list -->
 			<div class="bg_list">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_list">
 					<col width="7%" />
-					<col width="20%" />
+					<col width="15%" />
 					<col width="20%" />
 					<col />
 					<tr>
 						<th>No</th>
 						<th>이미지</th>
-						<th class="th01">선교관(방이름)</th>
+						<th class="th01">병원(진료과목)</th>
 						<th class="th01">내용</th>
 					</tr>
 <?php
@@ -71,7 +71,7 @@ function body() {
 			$hospitalObj = $hospitals[$i];
 ?>
 					<tr>
-				<td><?php echo (($page-1)*$h_Helper->PAGE_COUNT)+($i+1);?></td>
+				<td><?=(($page-1)*$h_Helper->PAGE_COUNT)+($i+1)?></td>
 						<td>
 <?php 
 			if (strlen($toDate) > 0) {
@@ -81,20 +81,23 @@ function body() {
 				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
 			}
 ?>
-				<a href="reservationDetail.php?hospitalId=<?php echo $hospitalObj->HospitalID;?><?php echo $searchDateValue;?>">
-				<img src="<?php echo $hospitalObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
+				<a href="reservationDetail.php?hospitalId=<?=$hospitalObj->HospitalID?><?=$searchDateValue?>">
+				<img src="<?=$hospitalObj->Image1?>" width="120" height="75" border="0" class="img"></a></td>
 						<td>
-				<a href="reservationDetail.php?hospitalId=<?php echo $hospitalObj->HospitalID;?><?php echo $searchDateValue;?>">
-				<?php echo $hospitalObj->HospitalName;?><br />
+				<a href="reservationDetail.php?hospitalId=<?=$hospitalObj->HospitalID?><?=$searchDateValue?>">
+				<?=$hospitalObj->HospitalName?><br />
 				</a>
 			</td>
 						<td class="ltd">
 							<ul class="intro">
-								<li><b>운영</b> : <?php echo $hospitalObj->AssocName;?></li>
-								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($hospitalObj->Address1.$hospitalObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $hospitalObj->Address1;?> <?php echo $hospitalObj->Address2;?></a></li>
-								<li><b>담당자</b> : <?php echo $hospitalObj->Manager1;?></li>
-				<li><b>요금</b> : <?php echo $hospitalObj->showFee();?></li>
+								<li><b>운영</b> : <?=$hospitalObj->AssocName?></li>
+								<li><b>주소</b> : <a href="javascript:void(0)" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospitalObj->Address1.$hospitalObj->Address2)?>','win','top=0, left=500,width=550,height=450')"><?=$hospitalObj->Address1?> <?=$hospitalObj->Address2?></a></li>
+								<li><b>담당자</b> : <?=$hospitalObj->Manager1?></li>
+				<li><b>요금</b> : <?=$hospitalObj->showFee()?></li>
 							</ul>
+						</td>
+						<td class="ltd">
+							<span class="btn1g"><a href="reservationDetail.php?hospitalId=<?=$hospitalObj->HospitalID?>">보기</a></span>
 						</td>
 					</tr>
 <?php 
@@ -105,7 +108,7 @@ function body() {
 			</div>
 			<!-- list#  -->
 			<!-- # page -->
-			<?php echo $strPage;?>
+			<?=$strPage?>
 			<!-- page#  -->
 		</div>
 	<!-- content#  -->
@@ -129,7 +132,7 @@ function body() {
 		if (hospital.length == 0) {
 			return;
 		}
-		location.href = "etc.php?region=<?php echo $regionCode;?>&hospitalId=" + hospital;
+		location.href = "etc.php?region=<?=$regionCode?>&hospitalId=" + hospital;
 	}
 	
 	function frmSubmit() {

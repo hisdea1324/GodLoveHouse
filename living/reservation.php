@@ -56,13 +56,13 @@ function body() {
 	}
 ?>
 				</select>
-				<input type="text" name="fromDate" id="fromDate" value="<?php echo $fromDate;?>" style="width:100px" class="input" readonly onclick="calendar('fromDate')">
+				<input type="text" name="fromDate" id="fromDate" value="<?=$fromDate?>" style="width:100px" class="input" readonly onclick="calendar('fromDate')">
 				<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('fromDate')" style="cursor:pointer;"> ~
-				<input type="text" name="toDate" id="toDate" value="<?php echo $toDate;?>" style="width:100px" class="input" readonly onclick="calendar('toDate')">
+				<input type="text" name="toDate" id="toDate" value="<?=$toDate?>" style="width:100px" class="input" readonly onclick="calendar('toDate')">
 				<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('toDate')" style="cursor:pointer;">
 		 <img src="../images/board/btn_search.gif" border="0" align="absmiddle" style="cursor:pointer;" onclick="frmSubmit()">
 		</div>
-		 <input type="hidden" name="page" id="page" value="<?php echo $page;?>" />
+		 <input type="hidden" name="page" id="page" value="<?=$page?>" />
 		</form>
 			<!-- search// -->
 			<!-- //list -->
@@ -92,7 +92,7 @@ function body() {
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
 			<tr>
-			<td><?php echo $roomObj->roomId;?></td>
+			<td><?=$roomObj->roomId?></td>
 			<td>
 <?php 
 			$searchDateValue = "";
@@ -103,22 +103,25 @@ function body() {
 				$searchDateValue = $searchDateValue."&fromDate=".$fromDate;
 			}
 ?>
-				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
-				<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img">
+				<a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?><?=$searchDateValue?>">
+				<img src="<?=$roomObj->Image1?>" width="120" height="75" border="0" class="img">
 				</a>
 			</td>
 			<td>
-				<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?><?php echo $searchDateValue;?>">
-				<?php echo $houseObj->HouseName;?><br />(<?php echo $roomObj->RoomName;?>)
+				<a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?><?=$searchDateValue?>">
+				<?=$houseObj->HouseName?><br />(<?=$roomObj->RoomName?>)
 				</a>
 			</td>
 						<td class="ltd">
 							<ul class="intro">
-								<li><b>운영</b> : <?php echo $houseObj->AssocName;?></li>
-								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1." ".$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1;?></a></li>
-								<li><b>담당자</b> : <?php echo $houseObj->Manager1;?></li>
-								<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
+								<li><b>운영</b> : <?=$houseObj->AssocName?></li>
+								<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($houseObj->Address1." ".$houseObj->Address2)?>','win','top=0, left=500,width=550,height=450')"><?=$houseObj->Address1?></a></li>
+								<li><b>담당자</b> : <?=$houseObj->Manager1?></li>
+								<li><b>요금</b> : <?=$roomObj->showFee()?></li>
 							</ul>
+						</td>
+						<td class="ltd">
+							<span class="btn1g"><a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?>">자세히 보기</a></span>
 						</td>
 					</tr>
 <?php
@@ -129,7 +132,7 @@ function body() {
 			</div>
 			<!-- list// -->
 			<!-- //page -->
-			<?php echo $strPage;?>
+			<?=$strPage?>
 			<!-- page// -->
 		</div>
 	<!-- content// -->
@@ -153,7 +156,7 @@ function body() {
 		if (house.length == 0) {
 			return;
 		}
-		location.href = "reservation.php?region=<?php echo $regionCode;?>&houseId=" + house;
+		location.href = "reservation.php?region=<?=$regionCode?>&houseId=" + house;
 	}
 	
 	function frmSubmit() {

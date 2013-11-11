@@ -92,6 +92,9 @@ function body() {
 						<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
 					</ul>
 				</td>
+				<td class="ltd">
+					<span class="btn1g"><a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?>">자세히 보기</a></span>
+				</td>
 			</tr>
 <?php 
 		}

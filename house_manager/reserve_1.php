@@ -21,11 +21,7 @@ function body() {
 								</div>
 								<div id="content">
 									<!-- content -->
-									<h1><?=$house->houseName?> <span class="btn1"><a href="mission_write.php?houseId=<?=$houseId?>">선교관 정보수정</a></span></h1>
-									<ul class="tabs mt30">
-										<li class="on"><a href="reserve_1.php">달력보기</a></li>
-										<li><a href="reserve_2.php">방전체보기</a></li>
-									</ul>
+									<!--h1><?=$house->houseName?> <span class="btn1"><a href="mission_write.php?houseId=<?=$houseId?>">선교관 정보수정</a></span></h1-->
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
 											<li><a href="#"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
@@ -36,6 +32,10 @@ function body() {
 											<li><a href="#"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
 											<li class="txt">03</li>
 											<li><a href="#"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
+										</ul>
+										<ul class="tabs mt30">
+											<li class="on"><a href="reserve_1.php">달력보기</a></li>
+											<li><a href="reserve_2.php">방전체보기</a></li>
 										</ul>
 									</div> <!-- // list_year -->
 									<div class="cal_month mt20"> <!-- cal_month -->

@@ -25,7 +25,7 @@ function body() {
 		</div>
 		<div id="content">
 			<!-- content -->
-			<h1>선교관 정보수정 - <?=$house->houseName?></h1>
+			<!--h1>선교관 정보수정 - <?=$house->houseName?></h1-->
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />

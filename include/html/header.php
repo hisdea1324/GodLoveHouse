@@ -114,11 +114,11 @@
 			</tr>
 		</table>
 	</div>
-	<div id="sub_menu6" onpropertychange="selectbox_hidden('sub_menu6');" style="position: absolute; z-index: 999; position: absolute; top:58px; left:340px; display:none;">
+	<div id="sub_menu6" onpropertychange="selectbox_hidden('sub_menu6');" style="position: absolute; z-index: 999; position: absolute; top:58px; left:440px; display:none;">
 		<table width="308" border="0" cellspacing="0" cellpadding="0" class="submenu">
 			<tr>
 				<td class="list3"><img src="[WEBROOT]images/common/submenu_l.gif"></td>
-				<td class="list2"><img src="[WEBROOT]images/common/submenu_0901.gif" onclick="clickTopMenu07(1);" style="cursor:pointer"></td>
+				<!--td class="list2"><img src="[WEBROOT]images/common/submenu_0901.gif" onclick="clickTopMenu07(1);" style="cursor:pointer"></td-->
 				<td class="list"><img src="[WEBROOT]images/common/submenu_0902.gif" onclick="clickTopMenu07(2);" style="cursor:pointer"></td>
 				<td class="list"><img src="[WEBROOT]images/common/submenu_0903.gif" onclick="clickTopMenu07(3);" style="cursor:pointer"></td>
 				<td class="list3"><img src="[WEBROOT]images/common/submenu_r.gif"></td>

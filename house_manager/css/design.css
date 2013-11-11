@@ -18,8 +18,8 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 
 .mt10 {margin-top:10px;}
 .mt15 {margin-top:15px;}
-.mt20 {margin-top:20px;}
-.mt30 {margin-top:30px;}
+.mt20 {margin-top:10px;}
+.mt30 {margin-top:5px;}
 .mb10 {margin-bottom:10px;}
 .mb20 {margin-bottom:20px;}
 .mb30 {margin-bottom:30px;}
@@ -148,7 +148,7 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 .btn2 a:hover   {color:#3b4047; text-decoration:none;}
 
 /* Calendar */
-.list_year {width:100%; height:50px;}
+.list_year {height:71px;}
 .list_year:after {content:""; display:block; clear:both;}
 .list_year ul {float:left; text-align: center;}
 .list_year ul:after {content:""; display:block; clear:both;}
@@ -171,9 +171,12 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 .cal_month table tbody td .cal_day ul li {margin-bottom:1px; list-style:none; padding:2px}
 .cal_month table tbody td .cal_day ul li:after {content:""; display:block; clear:both;}
 .cal_month table tbody td .cal_day ul li span {display:block; float:left; line-height:15px; padding:1px 0 0 0;}
-.cal_month table tbody td .cal_day .view{position:absolute; background:#3b4047; z-index:1; width:250px; padding:10px 20px 10px 20px; color:#fff}
-.cal_month table tbody td .cal_day .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff}
-.cal_month table tbody td .cal_day .view ul li{line-height:18px; background:#3b4047; list-style:none}
+.cal_month table tbody td .cal_day .view{position:absolute; background:#3b4047; z-index:1; width:300px; padding:10px 20px 10px 20px; color:#fff}
+.cal_month table tbody td .cal_day .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff; position:relative; height:30px}
+.cal_month table tbody td .cal_day .view ul li{line-height:20px; background:#3b4047; list-style:none}
+.cal_month table tbody td .cal_day .view p{float:left; width:100px; font-weight:bold}
+.cal_month table tbody td .cal_day .view span{float:left}
+
 
 .cal_month2 {width:100%; position:relative;}
 .cal_month2 table {width:100%; border-left:1px solid #e4e0dd;}
@@ -181,9 +184,11 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 .cal_month2 table tbody th{border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd; padding:10px}
 .cal_month2 table tbody td {border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd;}
 .cal_month2 .check{float:left; height:20px; text-align:center; line-height:20px; z-index:1}
-.cal_month2 table tbody td .view{position:absolute; background:#3b4047; z-index:1; width:250px; padding:10px 20px 10px 20px; color:#fff}
-.cal_month2 table tbody td .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff}
-.cal_month2 table tbody td .view ul li{line-height:18px; background:#3b4047; list-style:none}
+.cal_month2 table tbody td .view{position:absolute; background:#3b4047; z-index:1; width:300px; padding:10px 20px 10px 20px; color:#fff}
+.cal_month2 table tbody td .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff; position:relative; height:30px}
+.cal_month2 table tbody td .view ul li{line-height:20px; background:#3b4047; list-style:none}
+.cal_month2 table tbody td .view p{float:left; width:100px; font-weight:bold}
+.cal_month2 table tbody td .view span{float:left}
 .red {color:#c50000;}
 .blue {color:#015bd6;}
 
@@ -229,9 +234,9 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 .paging img {vertical-align:middle;}
 
 /* Tab */
-ul.tabs {list-style:none; width:100%; height:35px; width:100%}
+ul.tabs {float:right; list-style:none; height:35px; margin-top: 20px;}
 ul.tabs:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
-ul.tabs li {float:left; display:inline; padding:0 40px 0 40px; line-height:35px; margin-right:2px; font-size:14px; font-weight:bold; border:2px solid #3b4047}
+ul.tabs li {display:inline;  vertical-align: bottom; padding:0 40px 0 40px; line-height:35px; margin-right:2px; font-size:14px; font-weight:bold; border:2px solid #3b4047}
 ul.tabs li:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
 ul.tabs .on {background-color:#3b4047; color:#fff}
 ul.tabs .on a {color:#fff}

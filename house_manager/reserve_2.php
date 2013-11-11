@@ -60,13 +60,6 @@ function body() {
 									<strong>Home</strong> &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 예약 현황 보기
 								</div>
 								<div id="content">
-									<!-- content -->
-									<h1><?=$house->houseName?> :: <?=$room->roomName?> </h1>
-									<ul class="tabs mt30">
-										<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
-										<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
-										<li><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
-									</ul><br />
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
 											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[2]}&{$q[6]}";?>"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
@@ -77,6 +70,11 @@ function body() {
 											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[3]}&{$q[5]}";?>"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
 											<li class="txt"><?=$calendar['month']?></li>
 											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[3]}&{$q[7]}";?>"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
+										</ul>
+										<ul class="tabs mt30">
+											<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+											<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
+											<li><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
 										</ul>
 									</div> <!-- // list_year -->
 									<!-- cal_month -->
@@ -305,7 +303,7 @@ function body() {
 					<tr>
 						<th>예약번호</th>
 						<th>이름</th>
-						<th>선교관 / 선교관 방이름</th>
+						<th>선교관 / 방이름</th>
 						<th>일정</th>
 						<th>상태</th>
 					</tr>

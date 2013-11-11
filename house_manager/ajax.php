@@ -106,10 +106,10 @@ function getUserProfile2() {
 	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
 	print "</div>";
 	print "<ul>";
-	print "	<li><p>성명</p> {$resv->resv_name}</li>";
-	print "	<li><p>연락처</p> {$resv->resv_phone}</li>";
-	print "	<li><p>파송국가</p> {$resv->resv_nation}</li>";
-	print "	<li><p>지원단체</p> {$resv->resv_assoc}</li>";
+	print "	<li><p>성명</p> ".(($resv->resv_name) ? $resv->resv_name : "-")."</li>";
+	print "	<li><p>연락처</p> ".(($resv->resv_phone) ? $resv->resv_phone : "-")."</li>";
+	print "	<li><p>파송 국가</p> ".(($resv->resv_nation) ? $resv->resv_name : "-")."</li>";
+	print "	<li><p>지원 단체</p> ".(($resv->resv_assoc) ? $resv->resv_assoc : "-")."</li>";
 	print "</ul>";
 
 }

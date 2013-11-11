@@ -24,12 +24,14 @@ function body() {
 		</div>
 		<div id="content">
 			<!-- content -->
-			<h1><?=$house->houseName?> :: <?=$room->roomName?></h1>
-			<ul class="tabs mt30">
-				<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
-				<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
-				<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
-			</ul>
+			<!--h1><?=$house->houseName?> :: <?=$room->roomName?></h1-->
+			<div class="list_year"> <!-- list_year -->
+				<ul class="tabs mt30">
+					<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+					<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
+					<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+				</ul>
+			</div>
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />

@@ -326,6 +326,16 @@ H4 { background:url(../../images/common/bullet_sstit.gif) no-repeat 5px 5px; pad
 .sTab a.on span {display:block; letter-spacing:-0.05em; height:17px; padding:3px 0 2px 0; font-weight:bold; color:#333333;}
 .sTab a.off span {display:block; letter-spacing:-0.05em; height:17px; padding:3px 0 2px 0; color:#727272;}
 
+/* Button */
+.btn1{border:1px solid #3b4047; padding:2px 15px 2px 15px; border-radius:5px; font-size:11px; font-weight:bold; text-align:center; background:#3b4047; color:#fff;}
+.btn1 a:link, a:active {color:#fff; text-decoration:none;}
+.btn1 a:visited {color:#fff; text-decoration:none;}
+.btn1 a:hover   {color:#fff; text-decoration:none;}
+
+.btn1g{border:1px solid #3b4047; padding:5px 15px 5px 15px; border-radius:5px; font-size:11px; font-weight:bold; text-align:center; background:#6b7789; color:#fff; line-height:15px;}
+.btn1g a:link, a:active {color:#fff; text-decoration:none;}
+.btn1g a:visited {color:#fff; text-decoration:none;}
+.btn1g a:hover   {color:#fff; text-decoration:none;}
 
 
 
