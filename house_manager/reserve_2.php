@@ -32,6 +32,7 @@ function body() {
 
 	$fromDate = mktime(0, 0, 0, $calendar['month'], 1, $calendar['year']);
 	$toDate = mktime(0, 0, 0, $calendar['month'] + 1, 1, $calendar['year']);
+
 	// year month correcting
 	$calendar['year'] = date('Y', $fromDate);
 	$calendar['month'] = date('m', $fromDate);
@@ -130,6 +131,7 @@ function body() {
 	//1일부터 마지막날까지 달력생성
 	//------------------------------
 	print "												<tr>\r\n";
+
 	for ($i = $fromDate; $i < $toDate; $i += 86400) {
 		switch (date('w', $i)) {
 			case 6:
@@ -165,7 +167,7 @@ function body() {
 		} else {
 			print "												<th><a href=\"reserve_2.php?houseId={$houseId}&roomId={$aRoom->roomId}\">{$aRoom->roomName}</th>\r\n";
 		}
-		print "												<td colspan=\"30\">\r\n";
+		print "												<td colspan=\"31\">\r\n";
 		if ($result = $mysqli->query($query)) {
 			$prev_margin = 0;
 			while ($row = $result->fetch_assoc()) {

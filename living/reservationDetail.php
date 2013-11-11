@@ -47,11 +47,11 @@ function body() {
 	foreach ($house->RoomList as $roomInfo) {
 		if (trim($roomId) == trim($roomInfo->RoomID)) {
 ?>
-				<option value='<?php echo $roomInfo->RoomID;?>' selected><?php echo $roomInfo->RoomName;?></option>
+				<option value='<?=$roomInfo->RoomID?>' selected><?=$roomInfo->RoomName?></option>
 <?php 
 		} else {
 ?>
-				<option value='<?php echo $roomInfo->RoomID;?>'><?php echo $roomInfo->RoomName;?></option>
+				<option value='<?=$roomInfo->RoomID?>'><?=$roomInfo->RoomName?></option>
 <?php
 		} 
 	}
@@ -65,13 +65,13 @@ function body() {
 		<div id="calendar">
 			<!-- //photo -->
 			<div class="photo">
-				<p class="img01"><img src="<?php echo $room->Image1;?>" width="320" id="mainImage" /></p>
+				<p class="img01"><img src="<?=$room->Image1?>" width="320" id="mainImage" /></p>
 				<div class="img02">
 				<ul>
-					<li><img src="<?php echo $room->Image1;?>" width="70" border="0" onclick="changeImage('<?php echo $room->Image1;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $room->Image2;?>" width="70" border="0" onclick="changeImage('<?php echo $room->Image2;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $room->Image3;?>" width="70" border="0" onclick="changeImage('<?php echo $room->Image3;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $room->Image4;?>" width="70" border="0" onclick="changeImage('<?php echo $room->Image4;?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$room->Image1?>" width="70" border="0" onclick="changeImage('<?=$room->Image1?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$room->Image2?>" width="70" border="0" onclick="changeImage('<?=$room->Image2?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$room->Image3?>" width="70" border="0" onclick="changeImage('<?=$room->Image3?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$room->Image4?>" width="70" border="0" onclick="changeImage('<?=$room->Image4?>')" style="cursor:pointer;"></li>
 				</ul>
 				</div>
 			</div>
@@ -88,8 +88,8 @@ function body() {
 ?>
 		<form action="process.php" method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
-			<input type="hidden" name="roomId" id="roomId" value="<?php echo $roomId;?>" />
-			<input type="hidden" name="houseId" id="roomId" value="<?php echo $houseId;?>" />
+			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
+			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
 				<col width="15%">
@@ -153,45 +153,47 @@ function body() {
 			<col />
 			<tr>
 				<td class="td01">주거형태</td>
-				<td><?php echo $house->BuildingType;?></td>
+				<td><?=$house->building?></td>
 				<td class="td01">최대인원</td>
-				<td><?php echo $room->Limit;?>명</td>
+				<td><?=$room->Limit?>명</td>
 				<td class="td01">가격(1일기준) </td>
-				<td><?php echo priceFormat($room->Fee, 1);?></td>
+				<td colspan="3"><?=number_format($room->Fee)?>원</td>
 			</tr>
 			<tr>
 				<td class="td01">세탁시설</td>
-				<td><?php echo $room->Laundary;?></td>
+				<td><?=$room->Laundary?></td>
 				<td class="td01">주방시설</td>
-				<td><?php echo $room->Kitchen;?></td>
+				<td><?=$room->Kitchen?></td>
 				<td class="td01">인터넷</td>
-				<td><?php echo $room->Network;?></td>
+				<td><?=$room->Network?></td>
+				<td class="td01">침대</td>
+				<td><?=$room->bed?></td>
 			</tr>
 			<tr>
 				<td class="td01">제출서류</td>
-				<td colspan="5"><?php echo $house->Document;?><br></td>
+				<td colspan="7"><?=$house->document_link?><br></td>
 			</tr>
 			<tr>
 				<td class="td01">선교관 소개</td>
-				<td colspan="5"><?php echo $house->Explain;?></td>
+				<td colspan="7"><?=$house->Explain?></td>
 			</tr>
 			<tr>
 				<td class="td01">주소</td>
-				<td colspan="5">
-					[<?php echo implode('-', $house->Zipcode);?>]
-					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($house->Address1.$house->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $house->Address1;?></A>
+				<td colspan="7">
+					[<?=implode('-', $house->Zipcode)?>]
+					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($house->Address1.$house->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$house->Address1?></A>
 				</td>
 			</tr>
 			<tr>
 				<td class="td01">홈페이지</td>
-				<td colspan="5">
-					<?php echo $house->HomePage;?>
+				<td colspan="7">
+					<?=$house->HomePage?>
 				</td>
 			</tr>
 			<tr>
 				<td class="td01">담당자</td>
-				<td colspan="5">
-					<?php echo $house->showContactInfo();?>
+				<td colspan="7">
+					<?=$house->showContactInfo()?>
 				</td>
 			</tr>
 		</table>
@@ -217,12 +219,12 @@ function body() {
 			return;
 		}
 		
-		location.href = "reservationDetail.php?houseId=<?php echo $houseId;?>&roomId=" + room;
+		location.href = "reservationDetail.php?houseId=<?=$houseId?>&roomId=" + room;
 	}
 	
 	function goRoomList() {
 		history.back(-1);
-		//location.href = "reservation.php?houseId=<?php echo $houseId;?>";
+		//location.href = "reservation.php?houseId=<?=$houseId?>";
 	}
 	
 	function changeImage(imgName) {
@@ -230,7 +232,7 @@ function body() {
 	}
 	
 	function callPage(y, m) {
-		var url = '/common/ajax/calendar.php?roomId=<?php echo $roomId;?>&year='+y+'&month='+m;
+		var url = '/common/ajax/calendar.php?roomId=<?=$roomId?>&year='+y+'&month='+m;
 		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
 	}
 

@@ -106,13 +106,13 @@ function textFormat($text,$stype) {
 } 
 
 function priceFormat($price, $stype) {
-	switch (($stype)) {
+	switch ($stype) {
 		case 1:
-			$retString="$".number_format($price, 2);
-			$retString=substr($retString,strlen($retString)-(strlen($retString)-1))."원";
+			$retString = "$".number_format($price, 2);
+			$retString = substr($retString,strlen($retString)-(strlen($retString)-1))."원";
 			break;
 		case 2:
-			$price = $price/1000;
+			$price = $price / 1000;
 			$retString="$".number_format($price,2);
 			$retString=substr($retString,strlen($retString)-(strlen($retString)-1));
 			break;
