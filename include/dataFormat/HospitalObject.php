@@ -28,26 +28,24 @@ class HospitalObject {
 			case "zipcode":
 				return explode("-", $this->record[$name]);
 			case "explain":
-				return str_replace(chr(13), "<br>", $this->record[$name]);
-			case "roomCount": case "RoomCount": 
-				return $this->record['roomCount'];
+				return str_replace("\n", "<br>", $this->record[$name]);
 			case "document_link": 
 				if (strlen($this->record['document']) > 0) {
-					return "<a href='/upload/room/".$this->record[$name]."'>".$this->record[$name]."</a>";
+					return "<a href='/upload/room/".$this->record['document']."'>".$this->record['document']."</a>";
 				}
 				return "없음"; 
 			case "homepage":
-				if (strlen($this->record[$name]) == 0) {
+				if (strlen($this->record['homepage']) == 0) {
 					return "없음";
-				} else if (substr($this->record[$name], 0, "4") != "http") {
-					return "<a href='http://".$this->record[$name]."' target='_blank'>http://".$this->record[$name]."</a>";
+				} else if (substr($this->record['homepage'], 0, "4") != "http") {
+					return "<a href='http://".$this->record['homepage']."' target='_blank'>http://".$this->record['homepage']."</a>";
 				} else {
-					return "<a href='".$this->record[$name]."' target='_blank'>".$this->record[$name]."</a>";
+					return "<a href='".$this->record['homepage']."' target='_blank'>".$this->record['homepage']."</a>";
 				} 
 			case "region":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['regioncode']);
-			case "status": case "StatusCode":
+			case "status": case "statuscode":
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
 			case "roomlist":

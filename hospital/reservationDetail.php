@@ -35,13 +35,13 @@ function body() {
 		<div id="calendar">
 			<!-- //photo -->
 			<div class="photo">
-				<p class="img01"><img src="<?php echo $hospital->Image1;?>" width="320" id="mainImage" /></p>
+				<p class="img01"><img src="<?=$hospital->Image1?>" width="320" id="mainImage" /></p>
 				<div class="img02">
 				<ul>
-					<li><img src="<?php echo $hospital->Image1;?>" width="70" border="0" onclick="changeImage('<?php echo $hospital->Image1;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $hospital->Image2;?>" width="70" border="0" onclick="changeImage('<?php echo $hospital->Image2;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $hospital->Image3;?>" width="70" border="0" onclick="changeImage('<?php echo $hospital->Image3;?>')" style="cursor:pointer;"></li>
-					<li><img src="<?php echo $hospital->Image4;?>" width="70" border="0" onclick="changeImage('<?php echo $hospital->Image4;?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$hospital->Image1?>" width="70" border="0" onclick="changeImage('<?=$hospital->Image1?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$hospital->Image2?>" width="70" border="0" onclick="changeImage('<?=$hospital->Image2?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$hospital->Image3?>" width="70" border="0" onclick="changeImage('<?=$hospital->Image3?>')" style="cursor:pointer;"></li>
+					<li><img src="<?=$hospital->Image4?>" width="70" border="0" onclick="changeImage('<?=$hospital->Image4?>')" style="cursor:pointer;"></li>
 				</ul>
 				</div>
 			</div>
@@ -58,7 +58,7 @@ function body() {
 ?>
 		<form action="process.php" method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
-			<input type="hidden" name="hospitalId" id="hospitalId" value="<?php echo $hospitalId;?>" />
+			<input type="hidden" name="hospitalId" id="hospitalId" value="<?=$hospitalId?>" />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
 				<col width="15%">
@@ -66,9 +66,9 @@ function body() {
 				<tr>
 					<td class="td01"><p class="reserve"><b>날짜입력</b></td>
 					<td>
-						<input type="text" name="startDate" id="startDate" value="<?php echo $fromDate;?>" class="input" readonly onclick="calendar('startDate')">
+						<input type="text" name="startDate" id="startDate" value="<?=$fromDate?>" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
-						<input type="text" name="endDate" id="endDate" class="input" value="<?php echo $toDate;?>" readonly onclick="calendar('endDate')">
+						<input type="text" name="endDate" id="endDate" class="input" value="<?=$toDate?>" readonly onclick="calendar('endDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate')">
 						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit()"></p>
 						<label class="fs11" type="text" name='resultMessage1' id='resultMessage1'></label>
@@ -92,35 +92,35 @@ function body() {
 			<col />
 			<tr>
 				<td class="td01">최대인원</td>
-				<td><?php echo $hospital->PersonLimit;?>명</td>
-				<td class="td01">가격(1일기준) </td>
-				<td><?php echo priceFormat($hospital->Price, 1);?></td>
+				<td><?=$hospital->PersonLimit?>명</td>
+				<!--td class="td01">가격(1일기준) </td>
+				<td><?=priceFormat($hospital->Price, 1)?></td-->
 			</tr>
 			<tr>
 				<td class="td01">제출서류</td>
-				<td colspan="5"><?php echo $hospital->Document;?><br></td>
+				<td colspan="3"><?=$hospital->Document?><br></td>
 			</tr>
 			<tr>
 				<td class="td01">선교관 소개</td>
-				<td colspan="5"><?php echo $hospital->Explain;?></td>
+				<td colspan="3"><?=$hospital->Explain?></td>
 			</tr>
 			<tr>
 				<td class="td01">주소</td>
-				<td colspan="5">
-					[<? echo $hospital->Zipcode[0];?>-<?php echo $hospital->Zipcode[1];?>]
-					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($hospital->Address1.$ospital->Address2);?>','win','top=0, left=500, width=550,height=450')"><?php echo $hospital->Address1;?> <?php echo $hospital->Address2;?></A>
+				<td colspan="3">
+					[<? echo $hospital->Zipcode[0]?>-<?=$hospital->Zipcode[1]?>]
+					<a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospital->Address1.$ospital->Address2)?>','win','top=0, left=500, width=550,height=450')"><?=$hospital->Address1?> <?=$hospital->Address2?></A>
 				</td>
 			</tr>
 			<tr>
 				<td class="td01">홈페이지</td>
-				<td colspan="5">
-					<?php echo $hospital->HomePage;?>
+				<td colspan="3">
+					<?=$hospital->HomePage?>
 				</td>
 			</tr>
 			<tr>
 				<td class="td01">담당자</td>
-				<td colspan="5">
-					<?php echo $hospital->showContactInfo();?>
+				<td colspan="3">
+					<?=$hospital->showContactInfo()?>
 				</td>
 			</tr>
 		</table>
@@ -142,7 +142,7 @@ function body() {
 		
 	function goHospitalList() {
 		history.back(-1);
-		//location.href = "reservation.php?hospitalId=<?php echo $hospitalId;?>";
+		//location.href = "reservation.php?hospitalId=<?=$hospitalId?>";
 	}
 	
 	function changeImage(imgName) {
@@ -150,7 +150,7 @@ function body() {
 	}
 	
 	function callPage(y, m) {
-		var url = '/common/ajax/calendar.php?hospitalId=<?php echo $hospitalId;?>&year='+y+'&month='+m;
+		var url = '/common/ajax/calendar.php?hospitalId=<?=$hospitalId?>&year='+y+'&month='+m;
 		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: insertCalendar});
 	}
 	
