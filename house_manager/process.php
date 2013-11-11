@@ -70,7 +70,6 @@ function registHouse() {
 	$house->explain = isset($_REQUEST["explain"]) ? $_REQUEST["explain"] : "";
 	$house->regionCode = isset($_REQUEST["regionCode"]) ? $_REQUEST["regionCode"] : "";
 	$house->Update();
-	$house = null;
 
 	alertGoPage("선교관 등록요청이 되었습니다.", "mission_write.php?houseId=$houseId");
 } 
@@ -343,7 +342,7 @@ function reservation() {
 	$manager = new MemberObject($house->userid);
 	$from_number="01010041004";
 	$message="선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
-	//sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
+	// sendSMSMessage($from_number, join($manager->Mobile, ""),$message);
 } 
 ?>
 

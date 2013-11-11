@@ -53,6 +53,8 @@ function body() {
 	$q[6] = "month=".($calendar['month']);
 	$q[7] = "month=".($calendar['month'] + 1);
 	//******************************************************************
+
+	$available_date_list = 'a'.str_pad('', 31, '0');
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">
@@ -182,6 +184,10 @@ function body() {
 					$end = date('d', $toDate - 86400);
 				}
 
+				if ($aRoom->roomId == $roomId) {
+					$available_date_list = substr_replace($available_date_list, str_pad('', $end - $start + 1, '1'), $start, $end - $start + 1);
+				}
+
 				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100 - $prev_margin;
 				$width = ($end - $start + 1) / date('d', $toDate - 86400) * 100;
 				$prev_margin += $margin_left + $width;
@@ -209,7 +215,7 @@ function body() {
 	if ($house->status == "승인") {
 ?>
 		<br /><br />
-		<form action="process.php" method="post" name="frmReserve" id="frmReserve">
+		<form method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
 			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId;?>" />
 			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId;?>" />
@@ -257,7 +263,7 @@ function body() {
 				</tr>
 				<tr>
 					<td colspan="2">
-						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit()">
+						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit('<?=$available_date_list?>')">
 					</td>
 				</tr>
 			</table>
@@ -379,9 +385,18 @@ function body() {
 //<![CDATA[
 	calendar_init();
 
-	function reserveSubmit() {
+	function reserveSubmit(available_date_list) {
 		var endDate = document.getElementById("endDate").value;
 		var startDate = document.getElementById("startDate").value;
+
+		var start = parseInt(startDate.substring(8, 10));
+		var end = parseInt(endDate.substring(8, 10));
+		var available = parseInt(available_date_list.substring(start, end + 1));
+
+		if (available > 0) {
+			alert('예약이 되어있는 기간입니다.');
+			return;
+		}
 
 		if (startDate.length == 0 || endDate.length == 0) {
 			alert('숙박 기간을 정확히 입력해 주세요');
@@ -392,7 +407,7 @@ function body() {
 			alert('기간이 잘못되었습니다.');
 			return;
 		}
-
+		document.getElementById("frmReserve").action = "process.php";
 		document.getElementById("frmReserve").submit();
 	}
 
