@@ -48,11 +48,11 @@ debugFooter();
 function registHouse() {
 	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
 
-	$contact[0] = $_REQUEST["contact1"];
-	$contact[1] = $_REQUEST["contact2"];
-	$contact[2] = $_REQUEST["contact3"];
-	$zipcode[0] = $_REQUEST["post1"];
-	$zipcode[1] = $_REQUEST["post2"];
+	$contact[0] = isset($_REQUEST["contact11"]) ? ($_REQUEST["contact11"] : "";
+	$contact[1] = isset($_REQUEST["contact12"]) ? ($_REQUEST["contact12"] : "";
+	$contact[2] = isset($_REQUEST["contact13"]) ? ($_REQUEST["contact13"] : "";
+	$zipcode[0] = isset($_REQUEST["post1"]) ? ($_REQUEST["post1"] : "";
+	$zipcode[1] = isset($_REQUEST["post2"]) ? ($_REQUEST["post2"] : "";
 
 	$house = new HouseObject($houseId);
 	$house->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
@@ -72,7 +72,7 @@ function registHouse() {
 	$house->Update();
 	$house = null;
 
-	alertGoPage("선교관 등록요청이 되었습니다.", "mission_write.php");
+	alertGoPage("선교관 등록요청이 되었습니다.", "mission_write.php?houseId=$houseId");
 } 
 
 function editRoom() {

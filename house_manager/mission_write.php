@@ -110,8 +110,8 @@ function body() {
 								<option value="064" <?php if ($house->Contact2[0] == "064") { print "selected"; } ?>>064</option>
 								<option value="070" <?php if ($house->Contact2[0] == "070") { print "selected"; } ?>>070</option>
 							</select> - 
-							<input type="text" name="contact22" id="contact22" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[1]?>" /> - 
-							<input type="text" name="contact33" id="contact33" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact1[2]?>" />
+							<input type="text" name="contact22" id="contact22" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact2[1]?>" /> - 
+							<input type="text" name="contact33" id="contact33" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" class="inputTxt" maxlength="4" size="10" value="<?=$house->Contact2[2]?>" />
 						</td>
 					</tr>
 					<tr>
@@ -144,37 +144,37 @@ function body() {
 					<tr>
 						<th>우편번호</th>
 						<td>
-							<input type="text" name="post1" id="post1" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[0];?>" />
+							<input type="text" name="post1" id="post1" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[0]?>" />
 							-
-							<input type="text" name="post2" id="post2" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[1];?>" />
+							<input type="text" name="post2" id="post2" class="inputTxt" size="10" readonly onclick="PostPopup();" value="<?=$house->zipcode[1]?>" />
 							<span class="btn1"><a href="javascript:void(0)" onclick="PostPopup();" style="cursor:pointer;">우편번호찾기</a></span>
 						</td>
 					</tr>
 					<tr>
 						<th>주소</th>
 						<td>
-							<input type="text" name="addr1" id="addr1" class="inputTxt" size="100" readonly onclick="PostPopup();" value="<?=$house->address1;?>" />
-							<input type="text" name="addr2" id="addr2" class="inputTxt" size="100" value="<?=$house->address2;?>" />
+							<input type="text" name="addr1" id="addr1" class="inputTxt" size="100" readonly onclick="PostPopup();" value="<?=$house->address1?>" />
+							<input type="text" name="addr2" id="addr2" class="inputTxt" size="100" value="<?=$house->address2?>" />
 							<input type="text" class="inputTxt" size="100" value="" /></td>
 					</tr>
 					<tr>
 						<th>가격(1일기준)</th>
 						<td>
-							<input type="text" name="price" id="price" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price;?>" /> 원 ~
-							<input type="text" name="price1" id="price1" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price;?>" /> 원
+							<input type="text" name="price" id="price" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price?>" /> 원 ~
+							<input type="text" name="price1" id="price1" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price?>" /> 원
 						</td>
 					</tr>
 					<tr>
 						<th>최대인원</th>
 						<td>
-							<input type="text" name="personLimit" id="personLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit;?>" /> 명 ~
-							<input type="text" name="personLimit1" id="personLimit1" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit;?>" />
+							<input type="text" name="personLimit" id="personLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit?>" /> 명 ~
+							<input type="text" name="personLimit1" id="personLimit1" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit?>" />
 						</td>
 					</tr>
 					<tr>
 						<th>방갯수</th>
 						<td>
-							<input type="text" name="roomLimit" id="roomLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->roomLimit;?>" /> 개
+							<input type="text" name="roomLimit" id="roomLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->roomLimit?>" /> 개
 						</td>
 					</tr>
 					<tr>
@@ -194,17 +194,17 @@ function body() {
 					<tr>
 						<th>홈페이지</th>
 						<td>
-							<input type="text" name="homepage" id="homepage" class="inputTxt" size="100" value="<?=$house->homepageNoLink;?>" />
+							<input type="text" name="homepage" id="homepage" class="inputTxt" size="100" value="<?=$house->homepageNoLink?>" />
 						</td>
 					</tr>
 					<tr>
 						<th>제출서류</th>
 						<td>
-							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
-							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document;?>" />
+							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID?>" />
+							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document?>" />
 							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
-							<input type="hidden" name="idDocument2" id="idDocument2" value="<?=$house->documentID2;?>" />
-							<input type="text" id="txtDocument2" name="txtDocument2" class="inputTxt" size="80" value="<?=$house->document2;?>" /> 
+							<input type="hidden" name="idDocument2" id="idDocument2" value="<?=$house->documentID2?>" />
+							<input type="text" id="txtDocument2" name="txtDocument2" class="inputTxt" size="80" value="<?=$house->document2?>" /> 
 							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document2', 'room');" style="cursor:pointer;">파일 업로드</a></span>
 					</tr>
 					<tr>
@@ -242,7 +242,7 @@ function body() {
 	}
 	
 	function frmSubmit() {
-		<?소
+		<?
 		if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 			$backURL = get_path_info();
 		?>

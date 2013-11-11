@@ -110,6 +110,8 @@ class HouseObject {
 		$this->roomcount = 0;
 		$this->documentid = -1;
 		$this->document = null;
+		$this->documentid2 = -1;
+		$this->document2 = null;
 		$this->buildingtype = 1;
 		$this->status = "S2001";
 		$this->regdate = "";
