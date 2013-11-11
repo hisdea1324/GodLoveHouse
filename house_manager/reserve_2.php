@@ -64,14 +64,14 @@ function body() {
 								<div id="content">
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
-											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[2]}&{$q[6]}";?>"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
+											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[2]}&{$q[6]}"?>"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
 											<li class="txt"><?=$calendar['year']?></li>
-											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[4]}&{$q[6]}";?>"><img src="images/btn_ynext.gif" alt="다음년도" /></a></li>
+											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[4]}&{$q[6]}"?>"><img src="images/btn_ynext.gif" alt="다음년도" /></a></li>
 										</ul>
 										<ul>
-											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[3]}&{$q[5]}";?>"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
+											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[3]}&{$q[5]}"?>"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
 											<li class="txt"><?=$calendar['month']?></li>
-											<li><a href="reserve_2.php?<? echo "{$q[0]}&{$q[1]}&{$q[3]}&{$q[7]}";?>"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
+											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[3]}&{$q[7]}"?>"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
 										</ul>
 										<ul class="tabs mt30">
 											<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
@@ -156,7 +156,7 @@ function body() {
 		//------------------------
 		// 룸 예약 정보 받아오기 
 		//------------------------
-		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$aRoom->RoomID."' AND B.roomId = C.roomId ";
+		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$aRoom->RoomID."' AND B.roomId = C.roomId AND C.reservStatus <> 'S0004' ";
 		$query = $query." AND ((endDate >= {$fromDate} AND startDate < {$toDate}) ";
 		$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate})) ";
 		$query = $query." ORDER BY startDate";
@@ -217,8 +217,8 @@ function body() {
 		<br /><br />
 		<form method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
-			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId;?>" />
-			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId;?>" />
+			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
+			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
 				<col width="15%">
@@ -336,15 +336,32 @@ function body() {
 							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px; "></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
-						<td><?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?></td>
+						<td><? 
+							if ($aResv->Status != "거절") {?>
+							<form method="post" name="frmEditDate<?=$aResv->BookNo?>" id="frmEditDate<?=$aResv->BookNo?>">
+							<input type="hidden" name="mode" id="mode" value="edit_date" />
+							<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
+							<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
+							<input type="hidden" name="bookNo" id="bookNo" value="<?=$aResv->BookNo?>" />
+							<input type="text" size="12" name="startDate<?=$aResv->BookNo?>" id="startDate<?=$aResv->BookNo?>" value="<?=date("Y-m-d", $aResv->StartDate)?>" class="input" readonly onclick="calendar('startDate<?=$aResv->BookNo?>')">
+							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate<?=$aResv->BookNo?>')"> ~
+							<input type="text" size="12" name="endDate<?=$aResv->BookNo?>" id="endDate<?=$aResv->BookNo?>" class="input" value="<?=date("Y-m-d", $aResv->EndDate)?>" readonly onclick="calendar('endDate<?=$aResv->BookNo?>')">
+							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate<?=$aResv->BookNo?>')">
+							</form>
+							<? } else { ?>
+							<?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?>
+							<? } ?>
+						</td>
 						<td><?
 							// echo "<span class=\"btn\">{$aResv->Status}</span>";
 							if ($aResv->Status == "신규예약") {
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"edit_date({$aResv->BookNo})\">날짜 변경</a></span>\r\n";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"allow({$aResv->BookNo})\">승인</a></span>\r\n";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">거절</a></span>\r\n";
 							} else if ($aResv->Status == "승인") {
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"edit_date({$aResv->BookNo})\">날짜 변경</a></span>\r\n";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"complete({$aResv->BookNo})\">완료</a></span>\r\n";
-							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">삭제</a></span>\r\n";
+							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">거절</a></span>\r\n";
 							} else {
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">삭제</a></span>\r\n";
 							}
@@ -424,6 +441,11 @@ function body() {
 	function complete(value) {
 		if (confirm('예약을 완료합니다.'))
 			location.href = 'process.php?mode=changeReservStatus&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=3&bookNo=' + value;
+	}
+
+	function edit_date(value) {
+		document.getElementById('frmEditDate' + value).action = "process.php";;
+		document.getElementById('frmEditDate' + value).submit();
 	}
 	
 	function search(value) {

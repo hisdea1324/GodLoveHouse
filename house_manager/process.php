@@ -38,6 +38,9 @@ switch ($mode) {
 	case "deleteRoom":
 		deleteRoom();
 		break;
+	case "edit_date":
+		editReservationDate();
+		break;
 	default:
 		header("Location: "."../index.php");
 		break;
@@ -48,11 +51,11 @@ debugFooter();
 function registHouse() {
 	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
 
-	$contact[0] = isset($_REQUEST["contact11"]) ? ($_REQUEST["contact11"] : "";
-	$contact[1] = isset($_REQUEST["contact12"]) ? ($_REQUEST["contact12"] : "";
-	$contact[2] = isset($_REQUEST["contact13"]) ? ($_REQUEST["contact13"] : "";
-	$zipcode[0] = isset($_REQUEST["post1"]) ? ($_REQUEST["post1"] : "";
-	$zipcode[1] = isset($_REQUEST["post2"]) ? ($_REQUEST["post2"] : "";
+	$contact[0] = isset($_REQUEST["contact11"]) ? $_REQUEST["contact11"] : "";
+	$contact[1] = isset($_REQUEST["contact12"]) ? $_REQUEST["contact12"] : "";
+	$contact[2] = isset($_REQUEST["contact13"]) ? $_REQUEST["contact13"] : "";
+	$zipcode[0] = isset($_REQUEST["post1"]) ? $_REQUEST["post1"] : "";
+	$zipcode[1] = isset($_REQUEST["post2"]) ? $_REQUEST["post2"] : "";
 
 	$house = new HouseObject($houseId);
 	$house->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
@@ -292,17 +295,18 @@ function logout() {
 } 
 
 function changeReservStatus() {
-	$status = trim($_REQUEST["status"]);
-	$houseId = trim($_REQUEST["houseId"]);
-	$roomId = trim($_REQUEST["roomId"]);
+	$status = isset($_REQUEST["status"]) ? $_REQUEST["status"] : "";
+	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
+	$roomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
+	$bookNo = isset($_REQUEST["bookNo"]) ? $_REQUEST["bookNo"] : "";
+
 	if ($status < 2 || $status > 4) {
 		alertBack("잘못된 값입니다");
 	} 
-	$bookNo = trim($_REQUEST["bookNo"]);
 
 	$reserv = new ReservationObject($bookNo);
 	if ($status == "2") {
-		$reserv->Status="S0002";
+		$reserv->Status = "S0002";
 	} else if ($status == "3") {
 		$reserv->Status = "S0003";
 	} else {
@@ -312,8 +316,24 @@ function changeReservStatus() {
 	$reserv->Update();
 	$reserv = null;
 
-	header("Location: http://".$_SERVER['HTTP_HOST']."/member/mypage_houseReserv.php?houseId=".$houseId."&roomId=".$roomId);
+	header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$roomId);
 } 
+
+function editReservationDate() {
+	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
+	$roomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
+	$bookNo = isset($_REQUEST["bookNo"]) ? $_REQUEST["bookNo"] : "";
+
+	$start = isset($_REQUEST["startDate".$bookNo]) ? $_REQUEST["startDate".$bookNo] : "";
+	$end = isset($_REQUEST["endDate".$bookNo]) ? $_REQUEST["endDate".$bookNo] : "";
+
+	$book = new ReservationObject($bookNo);
+	$book->StartDate = $start;
+	$book->EndDate = $end;
+	$book->Update();
+
+	header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
+}
 
 function reservation() {
 	$book = new ReservationObject();
@@ -329,12 +349,13 @@ function reservation() {
 	$book->resv_assoc = isset($_REQUEST["resv_assoc"]) ? $_REQUEST["resv_assoc"] : "";
 
 	if (!$book->checkId()) {
-		header("Location: "."reserve_2.php?houseId=".$houseId);
+		header("Location: reserve_2.php?houseId=".$houseId);
 	} else if (!$book->checkDate()) {
-		header("Location: "."reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
+		header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
 	}
 
 	$book->Update();
+	header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
 
 	// SMS 메세지 보내기
 	alertGoPage("예약요청 되었습니다.","reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);

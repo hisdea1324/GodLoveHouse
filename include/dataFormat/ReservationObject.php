@@ -15,6 +15,8 @@ class ReservationObject {
 			default : 
 				$this->record[$name] = $value;
 				break;
+			case 'status': 
+				$this->record['reservstatus'] = $value;
 			case 'startdate':
 			case 'enddate':
 			case 'regdate':
@@ -176,16 +178,16 @@ class ReservationObject {
 			$updateData = $updateData." hospitalId = ".$mysqli->real_escape_string($this->hospitalId).", ";
 			$updateData = $updateData." reservStatus = '".$mysqli->real_escape_string($this->reservStatus)."', ";
 			$updateData = $updateData." startDate = ".$mysqli->real_escape_string($this->startDate).", ";
-			$updateData = $updateData." endDate = ".$mysqli->real_escape_string($this->endDate)."";
+			$updateData = $updateData." endDate = ".$mysqli->real_escape_string($this->endDate).", ";
 			$updateData = $updateData." resv_name = '".$mysqli->real_escape_string($this->resv_name)."', ";
 			$updateData = $updateData." resv_phone = '".$mysqli->real_escape_string($this->resv_phone)."', ";
 			$updateData = $updateData." resv_nation = '".$mysqli->real_escape_string($this->resv_nation)."', ";
-			$updateData = $updateData." resv_assoc = '".$mysqli->real_escape_string($this->resv_assoc)."', ";
+			$updateData = $updateData." resv_assoc = '".$mysqli->real_escape_string($this->resv_assoc)."' ";
 			$query = $query.$updateData." WHERE reservationNo = ".$mysqli->real_escape_string($this->reservationNo);
 
 			$result = $mysqli->query($query);
+
 			if (!$result) {
-				echo $query; exit();
 				return false;
 			}
 		}
