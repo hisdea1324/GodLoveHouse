@@ -7,6 +7,9 @@ checkUserLogin();
 $mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
 
 switch ($mode) {
+	case "regist":
+		registHouse();
+		break;
 	case "login":
 		login();
 		break;
@@ -41,6 +44,36 @@ switch ($mode) {
 } 
 
 debugFooter();
+
+function registHouse() {
+	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
+
+	$contact[0] = $_REQUEST["contact1"];
+	$contact[1] = $_REQUEST["contact2"];
+	$contact[2] = $_REQUEST["contact3"];
+	$zipcode[0] = $_REQUEST["post1"];
+	$zipcode[1] = $_REQUEST["post2"];
+
+	$house = new HouseObject($houseId);
+	$house->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
+	$house->houseName = isset($_REQUEST["houseName"]) ? $_REQUEST["houseName"] : "";
+	$house->assocName = isset($_REQUEST["assocName"]) ? $_REQUEST["assocName"] : "";
+	$house->manager1 = isset($_REQUEST["manager"]) ? $_REQUEST["manager"] : "";
+	$house->Contact1 = implode("-", $contact);
+	$house->buildType = isset($_REQUEST["buildType"]) ? $_REQUEST["buildType"] : "";
+	$house->zipcode = implode("-", $zipcode);
+	$house->addr1 = isset($_REQUEST["addr1"]) ? $_REQUEST["addr1"] : "";
+	$house->addr2 = isset($_REQUEST["addr2"]) ? $_REQUEST["addr2"] : "";
+	$house->price = isset($_REQUEST["price"]) ? $_REQUEST["price"] : "";
+	$house->personLimit = isset($_REQUEST["personLimit"]) ? $_REQUEST["personLimit"] : "";
+	$house->roomLimit = isset($_REQUEST["roomLimit"]) ? $_REQUEST["roomLimit"] : "";
+	$house->explain = isset($_REQUEST["explain"]) ? $_REQUEST["explain"] : "";
+	$house->regionCode = isset($_REQUEST["regionCode"]) ? $_REQUEST["regionCode"] : "";
+	$house->Update();
+	$house = null;
+
+	alertGoPage("선교관 등록요청이 되었습니다.", "mission_write.php");
+} 
 
 function editRoom() {
 	$room = new RoomObject();

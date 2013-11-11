@@ -133,13 +133,13 @@ function body() {
 	for ($i = $fromDate; $i < $toDate; $i += 86400) {
 		switch (date('w', $i)) {
 			case 6:
-				print "													<th scope=\"col\"><p class=\"blue\">".date('d', $i)."</p></th>\r\n";
+				print "													<th scope=\"col\"><p class=\"blue\">".date('j', $i)."</p></th>\r\n";
 				break;
 			case 0:
-				print "													<th scope=\"col\"><p class=\"red\">".date('d', $i)."</p></th>\r\n";
+				print "													<th scope=\"col\"><p class=\"red\">".date('j', $i)."</p></th>\r\n";
 				break;
 			default:
-				print "													<th scope=\"col\">".date('d', $i)."</th>\r\n";
+				print "													<th scope=\"col\">".date('j', $i)."</th>\r\n";
 				break;
 		} 
 	}

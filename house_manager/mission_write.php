@@ -1,4 +1,4 @@
-<?php
+<?
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
 
@@ -32,6 +32,10 @@ function body() {
 					<col width="80%" />
 				</colgroup>
 				<tbody>
+					<form name="dataForm" id="dataForm" method="post">
+					<input type="hidden" name="mode" id="mode" value="regist" />
+					<input type="hidden" name="userid" id="userid" value="<?=$_SESSION["userid"]?>" />
+					<input type="hidden" name="houseId" id="houseId" value="<?=$house->HouseID?>" />
 					<tr>
 						<th>선교관이름</th>
 						<td><input type="text" name="houseName" id="houseName" class="inputTxt" maxlength="40" size="50" value="<?=$house->houseName?>" /></td>
@@ -124,7 +128,7 @@ function body() {
 						<td>
 							<select name="region" id="region">
 								<option value=''>-- 지역선택 --</option>
-							<?php 
+							<? 
 								foreach ($codeRegions as $region) {
 									if ($house->regionCode == $region->code) {
 										print "<option value='".$region->code."' selected>".$region->name."</option>";
@@ -177,7 +181,7 @@ function body() {
 						<th>선교관설명</th>
 						<td>
 							<textarea name="explain" id="explain" cols="100" rows="5">
-<?php 
+<? 
 	if ($house->explain) {
 		echo textFormat($house->explain, 2);
 	} else {
@@ -199,9 +203,9 @@ function body() {
 							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
 							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document;?>" />
 							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
-							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID;?>" />
-							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document;?>" /> 
-							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
+							<input type="hidden" name="idDocument2" id="idDocument2" value="<?=$house->documentID2;?>" />
+							<input type="text" id="txtDocument2" name="txtDocument2" class="inputTxt" size="80" value="<?=$house->document2;?>" /> 
+							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document2', 'room');" style="cursor:pointer;">파일 업로드</a></span>
 					</tr>
 					<tr>
 						<th>상태코드</th>
@@ -221,14 +225,14 @@ function body() {
 				</tbody>
 			</table>
 			<div class="aRight mt20">
-				<span class="btn2"><a href="javascript:void(0)" onclick="check();">취소</a></span>
-				<span class="btn2"><a href="javascript:void(0)" onclick="history.back(-1);">확인</a></span>
+				<span class="btn2"><a href="javascript:void(0)" onclick="check();">확인</a></span>
+				<!--span class="btn2"><a href="javascript:void(0)" onclick="history.back(-1);">취</a></span-->
 			</div>
 			<!-- // content -->
 		</div>
 	</div>
 	<!-- // rightSec -->
-<?php } ?>
+<? } ?>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -238,16 +242,16 @@ function body() {
 	}
 	
 	function frmSubmit() {
-		<?php 
-if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
-	$backURL = get_path_info();
-?>
+		<?소
+		if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
+			$backURL = get_path_info();
+		?>
 			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");
-			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
-		<?php } else { ?>
+			location.href = "../member/login.php?backURL=<?=$backURL?>";
+		<? } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?>
+		<? } ?>
 	}
 //]]>
 </script>
