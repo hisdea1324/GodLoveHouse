@@ -96,7 +96,7 @@ function editRoom() {
 	$room->ImageID4 = isset($_REQUEST["idRoomImage4"]) ? $_REQUEST["idRoomImage4"] : "";
 	$room->Update();
 
-	header("Location: "."mission_write2.php?houseId=".$_REQUEST["houseId"]."&roomId=".$_REQUEST["roomId"]);
+	header("Location: "."mission_write2.php?houseId=".$room->houseId."&roomId=".$room->roomId);
 } 
 
 function deleteRoom() {
@@ -111,7 +111,7 @@ function deleteRoom() {
 	$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = ".$mysqli->real_escape_string($houseId);
 	$result = $mysqli->query($query);
 
-	header("Location: "."mypage_houseInfo.php?houseId=".$houseId);
+	header("Location: "."reserve_2.php?houseId=".$houseId);
 } 
 
 function editUser() {

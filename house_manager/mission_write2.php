@@ -26,9 +26,16 @@ function body() {
 			<!-- content -->
 			<!--h1><?=$house->houseName?> :: <?=$room->roomName?></h1-->
 			<div class="list_year"> <!-- list_year -->
+				<ul class="mr1">
+					<? if ($room->roomId == -1) { ?>
+						<li class="txt">방 추가하기</li>
+					<? } else { ?>
+						<li class="txt"><?=$room->roomName?> 정보수정</li>
+					<? } ?>
+				</ul>
 				<ul class="tabs mt30">
 					<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
-					<li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li>
+					<!--li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li-->
 					<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
 				</ul>
 			</div>
@@ -109,24 +116,27 @@ function body() {
 					<tr>
 						<th>이미지</th>
 						<td colspan="3">
-							<!--span class="btn1"><a href="#">이미지등록</a></span> <span class="btn1g"><a href="#">+ 이미지추가</a></span><br /-->
-							<input type="button" class="btn1" name="imgUpload" id="imgUpload" value="이미지등록" onclick="uploadImage(event, 'RoomImage1', 'room')" style="cursor:pointer" /><br />
+							<span class="btn1">이미지를 클릭하세요</span> <br>
 							<input type="hidden" name="idRoomImage1" id="idRoomImage1" value="<?=$room->ImageID1?>" />
-							<img src="<?=$room->Image1?>" id="imgRoomImage1" class="img" />
+							<img src="<?=$room->Image1?>" id="imgRoomImage1" class="img" onclick="uploadImage(event, 'RoomImage1', 'room')" style="cursor:pointer" />
 							<input type="hidden" name="idRoomImage2" id="idRoomImage2" value="<?=$room->ImageID2?>" />
-							<img src="<?=$room->Image2?>" id="imgRoomImage2" class="img" />
+							<img src="<?=$room->Image2?>" id="imgRoomImage2" class="img" onclick="uploadImage(event, 'RoomImage2', 'room')" style="cursor:pointer" />
 							<input type="hidden" name="idRoomImage3" id="idRoomImage3" value="<?=$room->ImageID3?>" />
-							<img src="<?=$room->Image3?>" id="imgRoomImage3" class="img" />
+							<img src="<?=$room->Image3?>" id="imgRoomImage3" class="img" onclick="uploadImage(event, 'RoomImage3', 'room')" style="cursor:pointer" />
 							<input type="hidden" name="idRoomImage4" id="idRoomImage4" value="<?=$room->ImageID4?>" />
-							<img src="<?=$room->Image4?>" id="imgRoomImage4" class="img" />
+							<img src="<?=$room->Image4?>" id="imgRoomImage4" class="img" onclick="uploadImage(event, 'RoomImage4', 'room')" style="cursor:pointer" />
 						</td>
 					</tr>
 					</form>
 				</tbody>
 			</table>
 			<div class="aRight mt20">
-				<span class="btn2"><a href="javascript:void(0)" onclick="check();">수정</a></span>
-				<span class="btn2"><a href="javascript:void(0)" onclick="history.back(-1);">삭제</a></span>
+				<? if ($room->roomId == -1) { ?>
+					<span class="btn2"><a href="javascript:void(0)" onclick="check();">등록</a></span>
+				<? } else { ?>
+					<span class="btn2"><a href="javascript:void(0)" onclick="check();">수정</a></span>
+					<span class="btn2"><a href="process.php?mode=deleteRoom&houseId=<?=$houseId?>&roomId=<?=$roomId?>">삭제</a></span>
+				<? } ?>
 			</div>
 			<!-- // content -->
 		</div>
