@@ -316,11 +316,7 @@ class SupportHelper {
 		global $mysqli;
 
 		$query = "DELETE FROM supportItem WHERE supId = '".$mysqli->real_escape_string($supId)."'";
-		if ($result = $mysqli->query($query)) {
-			$result->close();
-		} else {
-			echo "delSupItemListBySupId function no data";
-		}
+		$result = $mysqli->query($query);
 	}
 } 
 ?>

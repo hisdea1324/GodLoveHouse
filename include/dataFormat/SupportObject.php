@@ -33,15 +33,6 @@ class SupportObject {
 					case "03003":
 						return "자원봉사";
 				} 
-			case 'email':
-				return explode('@', $this->record[$name]);
-			case 'jumin':
-			case 'phone':
-			case 'mobile':
-			case 'zipcode':
-				return explode('-', $this->record[$name]);
-			case 'post':
-				return explode('-', $this->record['zipcode']);
 			case 'supportitem':
 				return $this->items;
 			default : 
@@ -82,6 +73,7 @@ class SupportObject {
 
 	function OpenQuery($query) {
 		global $mysqli;
+
 		$result = $mysqli->query($query);
 		if (!$result) return;
 
@@ -125,9 +117,11 @@ class SupportObject {
 
 	function Open($userid, $supType) {
 		global $mysqli;
+
 		$this->userid = $userid;
 		$query = "SELECT supId, userid, name, supportType, status, jumin, phone, mobile, email, zipcode, address1, address2, regDate FROM supportInfo ";
 		$query = $query." WHERE userid = '".$mysqli->real_escape_string($userid)."' AND supportType = '".$mysqli->real_escape_string($supType)."'";
+		
 		$this->OpenQuery($query);
 	} 
 
@@ -139,7 +133,7 @@ class SupportObject {
 			$query = "INSERT INTO supportInfo (userid, supportType, status, name, jumin, phone, mobile, email, zipcode, address1, address2) VALUES ";
 			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->supporttype)."', ";
-			$insertData = $insertData."'".$mysqli->real_escape_string($m_sthis->status)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->status)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->name)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->jumin)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->phone)."', ";

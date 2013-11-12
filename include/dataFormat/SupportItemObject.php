@@ -32,11 +32,10 @@ class SupportItemObject {
 		return isset($this->record[$name]); 
     }
 
-    function __construct($supId = -1) {
-		if ($supId == -1) {
-			$this->initialize();
-		} else {
-			$this->Open($supId);
+    function __construct($supItemId = -1) {
+		$this->initialize();
+		if ($supItemId != -1) {
+			$this->Open($supItemId);
 		}
 	}
 
@@ -53,13 +52,13 @@ class SupportItemObject {
 		global $mysqli;
 		$result = $mysqli->query($query);
 
-	    while ($row = mysqli_fetch_assoc($result)) {
+		while ($row = $result->fetch_assoc()) {
 			$this->supportItemId = $row['supItemId'];
 			$this->supportId = $row['supId'];
 			$this->requestId = $row['reqId'];
 			$this->cost = $row['cost'];
 		}
-	} 
+	}
 
 	function Open($supItemId) {
 		global $mysqli;
@@ -70,10 +69,11 @@ class SupportItemObject {
 	function OpenWithIndex($supId, $reqId) {
 		global $mysqli;
 
-		$m_supportId = $supId;
-		$m_requestId = $reqId;
 		$query = "SELECT supItemId, supId, reqId, cost FROM supportItem ";
 		$query = $query."WHERE supId = '".$mysqli->real_escape_string($supId)."' AND reqId = '".$mysqli->real_escape_string($reqId)."'";
+		$this->supportId = $supId;
+		$this->requestId = $reqId;
+
 		$this->OpenByQuery($query);
 	}
 
@@ -84,11 +84,13 @@ class SupportItemObject {
 			# New Data
 			$query = "INSERT INTO supportItem (supId, reqId, cost) VALUES ";
 			$insertData="'".$this->supportId."', ";
-			$insertData = $insertData."'".$$this->requestId."', ";
-			$insertData = $insertData."'".$$this->cost."'";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->requestId)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->cost)."'";
 			$query = $query."(".$insertData.")";
-			$result = $mysqli->query($query);
 
+echo $query;
+
+			$result = $mysqli->query($query);
 			// new id
 			$this->supportItemId = $mysqli->insert_id;
 		} else {
@@ -97,6 +99,8 @@ class SupportItemObject {
 			$updateData = $updateData."reqId = ".$mysqli->real_escape_string($this->requestId).", ";
 			$updateData = $updateData."cost = ".$mysqli->real_escape_string($this->cost)." ";
 			$query = $query.$updateData." WHERE supItemId = ".$mysqli->real_escape_string($this->supportItemId);
+
+echo $query;
 			$result = $mysqli->query($query);
 		} 
 	} 

@@ -4,17 +4,24 @@ class CommentHelper {
 	var $m_pageCount;
 	var $m_pageUnit;
 
-	#  Get property
+	#  property
 	# ***********************************************
-	function Hostuserid() {
-		$Hostuserid = $this->m_hostuserid;
-	} 
+	public function __set($name, $value) { 
+		switch ($name) {
+			case "hostuserid":
+				$this->m_hostuserid = $value;
+				break;
+		}
+	}
 
-	#  Set property 
-	# ***********************************************
-	function Hostuserid($value) {
-		$this->m_hostuserid = $value;
-	} 
+	public function __get($name) { 
+		switch ($name) {
+			case "hostuserid":
+				return $this->m_hostuserid;
+			default:
+				return "";
+		}
+	}
 
 	function __construct() {
 		$this->m_hostuserid = "";
@@ -28,39 +35,34 @@ class CommentHelper {
 	} 
 
 	function getCommentList($curPage) {
-		if (strlen($this->m_hostuserid)>0) {
+		global $mysqli;
+		$ret_value = 0;	
+
+		if (strlen($this->m_hostuserid) > 0) {
 			$topNum = $this->m_pageCount * $curPage;
-
 			$query = "SELECT top {$topNum} id FROM familyComment WHERE hostuserid = '".$this->m_hostuserid."' AND parentId = -1 ORDER BY regDate DESC";
-			$commentsRS = $mysqli->Execute($query);
-			if (($commentsRS->RecordCount>0)) {
-				$commentsRS->PageSize = $this->m_pageCount;
-				$commentsRS->AbsolutePage = $curPage;
-			} 
 
-			$retValue = 0;
-			if (!$commentsRS->Eof && !$commentsRS->Bof) {
-				while(!($commentsRS->EOF || $commentsRS->BOF)) {
-					$comment = new CommentObject();
-					$comment->Open($commentsRS["id"]);
+			if ($result = $mysqli->query($query)) {
+				while ($row = $result->fetch_assoc()) {
+					$comment = new CommentObject($row["id"]);
 
-					$index=count($retValue);
-					$retValue = $index;	
-					echo $comment;
-
-					$commentsRS->MoveNext;
-				} 
-			} 
-
+					$index = count($ret_value);
+					$ret_value = $index;	
+				}
+			}
 		} 
 
-		return $retValue;
+		return $ret_value;
 	} 
 
 	function makePagingHTML($curPage) {
+		global $mysqli;
+
 		$query = "SELECT COUNT(*) AS recordCount from familyComment WHERE hostuserid = '".$this->m_hostuserid."' AND parentId = -1";
-		$countRS = $mysqli->Execute($query);
-		$total = $countRS["recordCount"];
+		$result = $mysqli->query($query);
+		while ($row = $result->fetch_assoc()) {
+			$total = $row["recordCount"];
+		}	
 
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $this->total);
 	} 

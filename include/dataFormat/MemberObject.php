@@ -34,13 +34,10 @@ class MemberObject {
 
 		switch($name) {
 			case "zipcode":
-				return array(substr($this->record["zipcode"], 0, 3), substr($this->record["zipcode"], 3, 3));
 			case "jumin":
-				return explode('-', $this->record["jumin"]);
 			case "phone":
-				return explode('-', $this->record["phone"]);
 			case "mobile":
-				return explode('-', $this->record["mobile"]);
+				return explode('-', $this->record[$name]);
 			case "email":
 				return explode('@', $this->record["email"]);
 			case "level":

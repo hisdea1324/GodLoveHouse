@@ -10,26 +10,36 @@ class CommentObject {
 	protected $record = array();
 
 	public function __set($name,$value) { 
+		$name = strtolower($name);
 		$this->record[$name] = $value;
 	}
 
 	public function __get($name) { 
+		$name = strtolower($name);
 		return $this->record[$name];
 	}
 
 	public function __isset($name) {
+		$name = strtolower($name);
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
-		$this->record['id'] = -1;
-		$this->record['parentId'] = -1;
-		$this->record['hostuserid'] = "";
-		$this->record['followId'] = "";
-		$this->record['comments'] = "";
-		$this->record['regDate'] = "";
-		$this->record['secret'] = 0;
-		$this->record['replyExist'] = false;
+    function __construct($value = -1) {
+    	$this->initialize();
+    	if ($value != -1) {
+    		$this->Open($value);
+    	}
+    }
+
+    function initialize() {
+		$this->id = -1;
+		$this->parentId = -1;
+		$this->hostuserid = "";
+		$this->followId = "";
+		$this->comments = "";
+		$this->regDate = "";
+		$this->secret = 0;
+		$this->replyExist = false;
 	}
 
 	function Open($value) {

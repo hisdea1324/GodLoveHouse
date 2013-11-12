@@ -18,8 +18,12 @@ class MissionObject {
 	public function __get($name) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'image':
 			case 'fileimage':
-				return "/upload/mission_pic/".$this->record[$name];
+				return "/upload/mission_pic/".$this->record['fileimage'];
+			case 'memo':
+			case 'praylist':
+				return str_replace("\n", "<br>", $this->record[$name]);
 			case 'familycount':
 				return count($this->family);
 			default: 

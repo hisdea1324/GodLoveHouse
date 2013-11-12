@@ -13,7 +13,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/class/DataManager.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/BoardHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/MemberHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CodeHelper.php");
-#require "class/CommentHelper.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/class/CommentHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/SupportHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/HouseHelper.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/class/HospitalHelper.php");

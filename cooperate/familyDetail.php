@@ -1,16 +1,12 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$needUserLv[1];
+needUserLv(1);
 
-$userid = trim($_REQUEST["userid"]);
-if (strlen($userid) == 0) {
+if (!isset($_REQUEST["userid"])) {
 	alertBack("잘못된 접근입니다.");
-} 
-
-$page = trim($_REQUEST["page"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
+}
+$userid = trim($_REQUEST["userid"]); 
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
 
 # 선교사 정보
 $m_Helper = new MemberHelper();
@@ -29,6 +25,7 @@ body();
 showFooter();
 
 function body() {
+	global $m_Helper, $mission, $comments;
 ?>
 	<!-- //content -->
 	<div id="content">
@@ -36,7 +33,7 @@ function body() {
 		<!-- //view -->
 		<p class="btn_right b5"><img src="../images/board/txt_family.gif" class="r5">
 <?php 
-	if ($m_Helper->getFamilyType($mission->userid.$_SESSION["userid"]) == "F0002") {
+	if ($m_Helper->getFamilyType($mission->userid, $_SESSION["userid"]) == "F0002") {
 ?>
 		<img src="../images/board/btn_family_01.gif" border="0" class="m2" onclick="joinFamily(1)" />
 <?php 
@@ -115,8 +112,9 @@ function body() {
 			</div>
 		</div>
 		<!-- 의견 리스트 -->
+
 <?php 
-	if ((count($comments)>0)) {
+	if (false && count($comments) > 0) {
 		for ($i=0; $i<=count($comments)-1; $i = $i+1) {
 			$comment = $comments[$i];
 ?>
@@ -141,7 +139,7 @@ function body() {
 ?>
 				</span>
 			</dt>
-			<dd class="wsize" id="comment<?php echo $comment->ID;?>"><?php echo str_replace(chr(13),"<br />",$comment->Comments);?></dd>
+			<dd class="wsize" id="comment<?php echo $comment->ID;?>"><?=str_replace(chr(13),"<br />", $comment->Comments)?></dd>
 			<dd class="wsize" id="commentFrm<?php echo $comment->ID;?>" style="display:none;">
 				<div class="formBox">
 					<table>

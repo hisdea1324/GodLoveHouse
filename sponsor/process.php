@@ -2,8 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$mode = trim($_REQUEST["mode"]);
-$checkUserLogin[];
+$mode = isset($_REQUEST["mode"]) ? trim($_REQUEST["mode"]) : "";
+checkUserLogin();
 
 if ($mode=="addSupport") {
 	addSupport();
@@ -66,7 +66,7 @@ function addSupport() {
 } 
 
 function addCenterSupport() {
-	// 입금 정보	
+	//입금 정보	
 	$m_Helper = new MemberHelper();
 	$account = $m_Helper->getAccountInfoByuserid($_SESSION["userid"]);
 	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
@@ -99,14 +99,13 @@ function addCenterSupport() {
 	$s_Helper->delSupItemListBySupId($support->SupportID);
 
 	//후원 상세 정보 등록	
-	$idList=explode(" ",trim($_REQUEST["idList"}));
+	$idList=explode(" ",trim($_REQUEST["idList"]));
 	$priceList=explode(" ",trim($_REQUEST["priceList"]));
 	for ($i=0; $i<=count($idList); $i = $i+1) {
 		$m_items = new SupportItemObject();
 		$m_items->OpenWithIndex($support->SupportID, $idList[$i]);
 		$m_items->Cost = $priceList[$i];
 		$m_items->Update();
-
 	}
 
 
@@ -128,16 +127,11 @@ function addServiceSupport() {
 	$support = new SupportObject();
 	$support->Open($_SESSION["userid"], $c_Helper->getSupportCode(3));
 	$support->Name = $member->Name;
-	$jumin = $member->Jumin;
-	$support->Jumin = $jumin[0].$jumin[1];
-	$phone = $member->Phone;
-	$support->Phone = $phone[0]."-".$phone[1]."-".$phone[2];
-	$mobile = $member->Mobile;
-	$support->Mobile = $mobile[0]."-".$mobile[1]."-".$mobile[2];
-	$email = $member->Email;
-	$support->Email = $email[0]."@".$email[1];
-	$zipcode = $member->Zipcode;
-	$support->Zipcode = $zipcode[0].$zipcode[1];
+	$support->Jumin = implode('-', $member->Jumin);
+	$support->Phone = implode('-', $member->Phone);
+	$support->Mobile = implode('-', $member->Mobile);
+	$support->Email = implode('@', $member->Email);
+	$support->Zipcode = implode('-', $member->Zipcode);
 	$support->Address1 = $member->Address1;
 	$support->Address2 = $member->Address2;
 	$support->SupportType = $c_Helper->getSupportCode(3);
@@ -148,12 +142,11 @@ function addServiceSupport() {
 	$s_Helper->delSupItemListBySupId($support->SupportID);
 
 	//후원 상세 정보 등록	
-	$idList=explode(",",trim($_REQUEST["check"}));
-	for ($i=0; $i<=count($idList); $i = $i+1) {
+	$idList = explode(",", trim($_REQUEST["check"]));
+	foreach ($idList as $support_item_id) {
 		$m_items = new SupportItemObject();
-		$m_items->OpenWithIndex($support->SupportID, $idList[$i]);
+		$m_items->OpenWithIndex($support->SupportID, $support_item_id);
 		$m_items->Update();
-
 	}
 
 	alertGoPage("신청되었습니다", "http://".$_SERVER['HTTP_HOST']."/sponsor/service.php");

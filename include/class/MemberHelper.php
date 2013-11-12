@@ -98,7 +98,7 @@ class MemberHelper {
 		return $support;
 	} 
 
-	function getFamilyType($missionId,$userid) {
+	function getFamilyType($missionId, $userid) {
 		global $mysqli;
 
 		$retValue = false;
