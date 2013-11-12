@@ -34,6 +34,8 @@ function showHouseManagerLeft() {
 	$h_Helper = new HouseHelper();
 	$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
 	$houseList2 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 2);
+
+	$roomId = isset($_REQUEST['roomId']) ? $_REQUEST['roomId'] : "";
 	
 	echo "<!-- leftSec -->";
 	echo "<div id=\"leftSec\">";
@@ -44,9 +46,12 @@ function showHouseManagerLeft() {
 		foreach ($house->RoomList as $room) {
 			$color_cnt++;
 			//selected
-			// 	echo "		<li class=\"on\"><a href=\"#\">미스바관<div class=\"sColor c3\"></div></a></li>";
 			$room_color[$room->roomId] = $color_cnt;
-			echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+			if ($room->roomId == $roomId) {
+				echo "		<li class=\"on\"><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+			} else {
+				echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+			}
 		}
 		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
 		echo "	</ul>";

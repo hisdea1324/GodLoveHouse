@@ -35,7 +35,9 @@ function body() {
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />
-					<col width="80%" />
+					<col width="30%" />
+					<col width="20%" />
+					<col width="30%" />
 				</colgroup>
 				<tbody>
 					<form name="dataForm" id="dataForm" method="post">
@@ -44,11 +46,11 @@ function body() {
 					<input type="hidden" name="roomId" value="<?=$room->RoomId?>" />
 					<tr>
 						<th>선교관이름</th>
-						<td><?=$house->houseName?></td>
+						<td colspan="3"><?=$house->houseName?></td>
 					</tr>
 					<tr>
 						<th>방이름</th>
-						<td>
+						<td colspan="3">
 							<input type="text" name="roomName" class="inputTxt" size="50" maxlength="20" value="<?=$room->RoomName;?>" />
 						</td>
 					</tr>
@@ -58,8 +60,6 @@ function body() {
 							<input type="radio" name="network" id="network" value="Y" class="ml20" <?php if ($room->Network == "Y") { print "checked"; } ?> /> 있음
 							<input type="radio" name="network" id="network" value="N" class="ml20" <?php if ($room->Network != "Y") { print "checked"; } ?> /> 없음 
 						</td>
-					</tr>
-					<tr>
 						<th>취사여부</th>
 						<td>
 							<input type="radio" name="kitchen" id="kitchen" value="Y" class="ml20" <?php if ($room->kitchen == "Y") { print "checked"; } ?> /> 가능
@@ -72,8 +72,6 @@ function body() {
 							<input type="radio" name="laundary" id="laundary" value="Y" class="ml20" <?php if ($room->laundary == "Y") { print "checked"; } ?> /> 가능
 							<input type="radio" name="laundary" id="laundary" value="N" class="ml20" <?php if ($room->laundary != "Y") { print "checked"; } ?> /> 불가능
 						</td>
-					</tr>
-					<tr>
 						<th>침대</th>
 						<td>
 							<input type="radio" name="bed" id="bed" value="없음" class="ml20" <?php if ($room->bed == "" || $room->bed == "없음") { print "checked"; } ?> /> 없음
@@ -84,13 +82,11 @@ function body() {
 					<tr>
 						<th>요금</th>
 						<td>
-							<input type="text" name="fee" class="inputTxt" size="30" value="<?=$room->Fee;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 원
+							<input type="text" name="fee" class="inputTxt" size="20" value="<?=$room->Fee;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 원
 						</td>
-					</tr>
-					<tr>
 						<th>방인원수</th>
 						<td>
-							<input type="text" name="limit" class="inputTxt" size="30" value="<?=$room->Limit?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 명
+							<input type="text" name="limit" class="inputTxt" size="20" value="<?=$room->Limit?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" /> 명
 						</td>
 					</tr>
 					<!--tr>
@@ -112,7 +108,7 @@ function body() {
 					</tr-->
 					<tr>
 						<th>이미지</th>
-						<td>
+						<td colspan="3">
 							<!--span class="btn1"><a href="#">이미지등록</a></span> <span class="btn1g"><a href="#">+ 이미지추가</a></span><br /-->
 							<input type="button" class="btn1" name="imgUpload" id="imgUpload" value="이미지등록" onclick="uploadImage(event, 'RoomImage1', 'room')" style="cursor:pointer" /><br />
 							<input type="hidden" name="idRoomImage1" id="idRoomImage1" value="<?=$room->ImageID1?>" />
