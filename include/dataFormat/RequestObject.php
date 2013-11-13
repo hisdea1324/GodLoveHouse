@@ -75,8 +75,6 @@ class RequestObject {
 	function Open($value) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
 		$query = "SELECT `reqId`, `title`, `explain`, `supportType`, `regDate`, `imageId` FROM requestInfo WHERE `reqId` = '".$mysqli->real_escape_string($value)."'";
 		$result = $mysqli->query($query);
 		if (!$result) return;
@@ -106,51 +104,29 @@ class RequestObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->record['regId'] == -1) {
-			$query = "INSERT INTO requestInfo (`title`, `explain`, `supportType`, `imageId`) VALUES ";
-			$query = $query."(?, ?, ?, ?)";
 
-			$stmt = $mysqli->prepare($query);
-
+		if ($this->requestId == -1) {
 			# New Data
-			$stmt->bind_param("sssi", 
-				$this->record['title'], 
-				$this->record['explain'],
-				$this->record['supportType'], 
-				$this->record['imageId']);
+			$query = "INSERT INTO requestInfo (`title`, `explain`, `supportType`, `imageId`) VALUES ";
+			$insertData="'".$this->title."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->explain)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->supportType)."', ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->imageId);
+			$query = $query."(".$insertData.")";
 
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-
-			$this->record['regId'] = $mysqli->insert_id;
+			$result = $mysqli->query($query);
+			// new id
+			$this->requestId = $mysqli->insert_id;
 		} else {
-
 			$query = "UPDATE requestInfo SET ";
-			$updateData = "`title` = ?, ";
-			$updateData = "`explain` = ?, ";
-			$updateData.= "`supportType` = ?, ";
-			$updateData.= "`imageId` = ? ";
-			$query .= $updateData." WHERE `regId` = ?";
+			$updateData="`title` = '".$mysqli->real_escape_string($this->title)."', ";
+			$updateData = $updateData."`explain` = ".$mysqli->real_escape_string($this->explain).", ";
+			$updateData = $updateData."supportType = ".$mysqli->real_escape_string($this->supportType).", ";
+			$updateData = $updateData."imageId = ".$mysqli->real_escape_string($this->imageId)." ";
+			$query = $query.$updateData." WHERE regId = ".$mysqli->real_escape_string($this->requestId);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("sssii", 
-				$this->record['title'], 
-				$this->record['explain'], 
-				$this->record['supportType'], 
-				$this->record['imageId'],
-				$this->record['regId']);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-		}
+			$result = $mysqli->query($query);
+		} 
 	}
 
 	function Delete() {

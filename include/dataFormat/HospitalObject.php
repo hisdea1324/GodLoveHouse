@@ -96,7 +96,6 @@ class HospitalObject {
 	}
 	
 	private function initialize() {
-
 		$this->hospitalId = -1;
 		$this->hospitalName = null;
 		$this->assocname = null;
@@ -191,7 +190,6 @@ class HospitalObject {
 	function Update() {
 		global $mysqli;
 
-
 		if ($this->hospitalId == -1) {
 			$query = "INSERT INTO hospital (`hospitalName`, `assocName`, 'address1', 'address2', ";
 			$query.= "'zipcode', 'regionCode', 'explain', 'userid', 'manager1', 'manager2', 'contact1', 'contact2', ";
@@ -236,8 +234,6 @@ class HospitalObject {
 			$stmt->execute();
 			$stmt->bind_result($this->hospitalId);
 			$stmt->close();
-
-
 			
 		} else {
 
@@ -322,7 +318,7 @@ class HospitalObject {
 
 		if ($this->record['contact2'] > 10) {
 			$retString = $retString." / ".$this->manager2." ".$this->record['contact2'];
-		} 
+		}
 
 		return $retString;
 	} 

@@ -147,6 +147,17 @@ function mssqlEscapeForLikeSearch($str) {
 	return $str;
 } 
 
+// function Encrypt(byval string)
+// 	dim x, i, tmp
+// 	string = "god" & string & "house"
+// 	for i = 1 to len( string )
+// 		x = mid( string, i, 1 )
+// 		tmp = tmp & chr( asc( x ) + 1 )
+// 	Next
+// 	tmp = StrReverse( tmp )
+// 	Encrypt = tmp
+// end function
+
 function Encrypt($str) {
 	$tmp = "";
 	$str = "god".$str."house";
@@ -159,13 +170,26 @@ function Encrypt($str) {
 	return $tmp;
 } 
 
-function Decrypt($encryptedstring) {
-	$encryptedstring=strrev($encryptedstring);
-	for ($i=1; $i<=strlen($encryptedstring); $i = $i+1) {
-		$x=substr($encryptedstring,$i-1,1);
-		$tmp = $tmp.chr(ord($x)-1);
+// function Decrypt(byval encryptedstring)
+// 	dim x, i, tmp
+// 	encryptedstring = strreverse( encryptedstring )
+// 	for i = 1 to len( encryptedstring )
+// 		x = mid( encryptedstring, i, 1 )
+// 		tmp = tmp & chr( asc( x ) - 1 )
+// 	next
+// 	Decrypt = tmp
+// end function
 
+function Decrypt($encryptedstring) {
+	$tmp = "";
+	$encryptedstring = strrev($encryptedstring);
+	for ($i = 1; $i <= strlen($encryptedstring); $i++) {
+		$x = substr($encryptedstring, $i - 1, 1);
+		$tmp = $tmp.chr(ord($x)-1);
 	}
+
+	$tmp = substr($tmp, 3);
+	$tmp = substr($tmp, 0, strlen($tmp) - 5);
 
 	return $tmp;
 } 

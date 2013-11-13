@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -72,154 +72,121 @@ function body() {
 	
 	<!-- div class="main" -->
 		<form name="dataForm" id="dataForm" method="post">
-		<input type="hidden" id="field" name="field" value="<?php echo $field;?>" />
-		<input type="hidden" id="keyword" name="keyword" value="<?php echo $keyword;?>" />
-		<input type="hidden" id="gotoPage" name="gotoPage" value="<?php echo $gotoPage;?>" />
+		<input type="hidden" id="field" name="field" value="<?=$field?>" />
+		<input type="hidden" id="keyword" name="keyword" value="<?=$keyword?>" />
+		<input type="hidden" id="gotoPage" name="gotoPage" value="<?=$gotoPage?>" />
 		<input type="hidden" id="mode" name="mode" value="editUser" />
 		<input type="hidden" id="missionary" name="missionary" value="1" />
-		<input type="hidden" id="userLv" name="userLv" value="<?php echo $userlv;?>" />
+		<input type="hidden" id="userLv" name="userLv" value="<?=$userlv?>" />
 		<div id="joinForm">
 			<dl>
 				<dt>
 					아이디 
 				<dd>
 					<?php if ((strlen($userid)>0)) {?>
-					<?php echo $member->userid;?> <input type="hidden" id="userid" name="userid" value="<?php echo $member->userid;?>" />
+					<?=$member->userid?> <input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
 					<?	 } else { ?>
-					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?php echo $userid;?>" />
-					<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_idcheck.gif" border=0 align="absmiddle" onclick="checkId()" style="cursor:pointer" />
+					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?=$userid?>" />
+					<img src="<?="http://".$_SERVER['SERVER_NAME']?>/images/board/btn_idcheck.gif" border=0 align="absmiddle" onclick="checkId()" style="cursor:pointer" />
 					<?php } ?>
 				<dt>
 					닉네임 
 				<dd>
-					<input type="text" id="nickName" name="nickName" maxlength="30" tabindex="2" onclick="checkName();" readonly value="<?php echo $member->nick;?>" />
-					<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_idcheck.gif" border="0" align="absmiddle" class="m2" onclick="checkName()" style="cursor:pointer" /></a>
+					<input type="text" id="nickName" name="nickName" maxlength="30" tabindex="2" onclick="checkName();" readonly value="<?=$member->nick?>" />
+					<img src="<?="http://".$_SERVER['SERVER_NAME']?>/images/board/btn_idcheck.gif" border="0" align="absmiddle" class="m2" onclick="checkName()" style="cursor:pointer" /></a>
 				<dt>
 					이름 
 				<dd>
-					<input type="text" id="name" name="name" size="20" maxlength="20" value="<?php echo $member->name;?>" />&nbsp;&nbsp;
+					<input type="text" id="name" name="name" size="20" maxlength="20" value="<?=$member->name?>" />&nbsp;&nbsp;
 					(공백없이 한글만 입력 가능)
 				<dt>
 					주민등록번호
 				<dd>
-					<?	
-							//$jumin = explode("-",$member->jumin);
-							$jumin = $member->jumin;
-					?>
-					<input type="text" id="jumin1" name="jumin1" size="8" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=6 value="<?php echo $jumin[0];?>" /> -
-					<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?php echo $jumin[1];?>" />
+					<input type="text" id="jumin1" name="jumin1" size="8" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=6 value="<?=$member->jumin[0]?>" /> -
+					<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?=$member->jumin[1]?>" />
 				<dt>
 					E-mail
 				<dd>
-					<? 
-						//$email = explode("@",$member->email);
-						$email = $member->email;
-					?>
-					<input type="text" id="email1" name="email1" size="20" maxlength=20 style="ime-mode:disabled;" value="<?php echo $email[0];?>" />@
-					<input type="text" id="email2" name="email2" size="20" style="ime-mode:disabled;" value="<?php echo $email[1];?>" />
+					<input type="text" id="email1" name="email1" size="20" maxlength=20 style="ime-mode:disabled;" value="<?=$member->email[0]?>" />@
+					<input type="text" id="email2" name="email2" size="20" style="ime-mode:disabled;" value="<?=$member->email[1]?>" />
 				<dt>
 					우편번호
 				<dd>
-					<?
-						//$zipcode = explode("-",$member->zipcode);
-						$zipcode = $member->zipcode;
-					?>
-					<input type="text" id="post1" name="post1" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[0];?>" /> - 
-					<input type="text" id="post2" name="post2" size="3" readonly onclick="PostPopup();" value="<?php echo $zipcode[1];?>" />&nbsp;
+					<input type="text" id="post1" name="post1" size="3" readonly onclick="PostPopup();" value="<?=$member->zipcode[0]?>" /> - 
+					<input type="text" id="post2" name="post2" size="3" readonly onclick="PostPopup();" value="<?=$member->zipcode[1]?>" />&nbsp;
 					<img src="/images/board/btn_zipcode.gif" border=0 align="absmiddle" name="Btn_search" onclick="PostPopup();" style="cursor:pointer;" />
 				<dt>
 					주소
 				<dd>
-					<input type="text" id="addr1" name="addr1" size="50" readonly onclick="PostPopup();" value="<?php echo $member->address1;?>" />
-					<input type="text" id="addr2" name="addr2" size="20" value="<?php echo $member->address2;?>" />
+					<input type="text" id="addr1" name="addr1" size="50" readonly onclick="PostPopup();" value="<?=$member->address1?>" />
+					<input type="text" id="addr2" name="addr2" size="20" value="<?=$member->address2?>" />
 				<dt>
 					전화번호
 				<dd>
-					<?	
-						//$phone = explode("-",$member->phone);
-						$phone = $member->phone;
-					?>
 					<select id="tel1" name="tel1">
-						<option value="02" <?php if (($phone[0]=="02")) { print "selected"; } ?>>02</option>
-						<option value="031" <?php if (($phone[0]=="031")) { print "selected"; } ?>>031</option>
-						<option value="032" <?php if (($phone[0]=="032")) { print "selected"; } ?>>032</option>
-						<option value="033" <?php if (($phone[0]=="033")) { print "selected"; } ?>>033</option>
-						<option value="041" <?php if (($phone[0]=="041")) { print "selected"; } ?>>041</option>
-						<option value="042" <?php if (($phone[0]=="042")) { print "selected"; } ?>>042</option>
-						<option value="043" <?php if (($phone[0]=="043")) { print "selected"; } ?>>043</option>
-						<option value="051" <?php if (($phone[0]=="051")) { print "selected"; } ?>>051</option>
-						<option value="052" <?php if (($phone[0]=="052")) { print "selected"; } ?>>052</option>
-						<option value="053" <?php if (($phone[0]=="053")) { print "selected"; } ?>>053</option>
-						<option value="054" <?php if (($phone[0]=="054")) { print "selected"; } ?>>054</option>
-						<option value="055" <?php if (($phone[0]=="055")) { print "selected"; } ?>>055</option>
-						<option value="061" <?php if (($phone[0]=="061")) { print "selected"; } ?>>061</option>
-						<option value="062" <?php if (($phone[0]=="062")) { print "selected"; } ?>>062</option>
-						<option value="063" <?php if (($phone[0]=="063")) { print "selected"; } ?>>063</option>
-						<option value="064" <?php if (($phone[0]=="064")) { print "selected"; } ?>>064</option>
-						<option value="070" <?php if (($phone[0]=="070")) { print "selected"; } ?>>070</option>
+						<option value="02" <?php if (($member->phone[0]=="02")) { print "selected"; } ?>>02</option>
+						<option value="031" <?php if (($member->phone[0]=="031")) { print "selected"; } ?>>031</option>
+						<option value="032" <?php if (($member->phone[0]=="032")) { print "selected"; } ?>>032</option>
+						<option value="033" <?php if (($member->phone[0]=="033")) { print "selected"; } ?>>033</option>
+						<option value="041" <?php if (($member->phone[0]=="041")) { print "selected"; } ?>>041</option>
+						<option value="042" <?php if (($member->phone[0]=="042")) { print "selected"; } ?>>042</option>
+						<option value="043" <?php if (($member->phone[0]=="043")) { print "selected"; } ?>>043</option>
+						<option value="051" <?php if (($member->phone[0]=="051")) { print "selected"; } ?>>051</option>
+						<option value="052" <?php if (($member->phone[0]=="052")) { print "selected"; } ?>>052</option>
+						<option value="053" <?php if (($member->phone[0]=="053")) { print "selected"; } ?>>053</option>
+						<option value="054" <?php if (($member->phone[0]=="054")) { print "selected"; } ?>>054</option>
+						<option value="055" <?php if (($member->phone[0]=="055")) { print "selected"; } ?>>055</option>
+						<option value="061" <?php if (($member->phone[0]=="061")) { print "selected"; } ?>>061</option>
+						<option value="062" <?php if (($member->phone[0]=="062")) { print "selected"; } ?>>062</option>
+						<option value="063" <?php if (($member->phone[0]=="063")) { print "selected"; } ?>>063</option>
+						<option value="064" <?php if (($member->phone[0]=="064")) { print "selected"; } ?>>064</option>
+						<option value="070" <?php if (($member->phone[0]=="070")) { print "selected"; } ?>>070</option>
 					</select> -
-					<input type="text" id="tel2" name="tel2" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?php echo $phone[1];?>" /> - 
-					<input type="text" id="tel3" name="tel3" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?php echo $phone[2];?>" />
+					<input type="text" id="tel2" name="tel2" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?=$member->phone[1]?>" /> - 
+					<input type="text" id="tel3" name="tel3" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?=$member->phone[2]?>" />
 				<dt>
 					휴대폰번호
 				<dd>
-					<?	
-						$mobile = $member->mobile;
-						
-						
-						echo "PHONE Number SIZE " . sizeof($mobile);
-						
-						
-						
-						if(sizeof($mobile) < 1){
-							
-							$mobile = array("010", "", "");
-							
-							//$mobile[0] = "010";
-							//$mobile[1] = "";
-							//$mobile[2] = "";
-						}
-					?>
 					<select id="hp1" name="hp1">
-						<option value="010" <?php if (($mobile[0]=="010")) { print "selected"; } ?>>010</option>
-						<option value="011" <?php if (($mobile[0]=="011")) { print "selected"; } ?>>011</option>
-						<option value="016" <?php if (($mobile[0]=="016")) { print "selected"; } ?>>016</option>
-						<option value="017" <?php if (($mobile[0]=="017")) { print "selected"; } ?>>017</option>
-						<option value="018" <?php if (($mobile[0]=="018")) { print "selected"; } ?>>018</option>
-						<option value="019" <?php if (($mobile[0]=="019")) { print "selected"; } ?>>019</option>
+						<option value="010" <?php if (($member->mobile[0]=="010")) { print "selected"; } ?>>010</option>
+						<option value="011" <?php if (($member->mobile[0]=="011")) { print "selected"; } ?>>011</option>
+						<option value="016" <?php if (($member->mobile[0]=="016")) { print "selected"; } ?>>016</option>
+						<option value="017" <?php if (($member->mobile[0]=="017")) { print "selected"; } ?>>017</option>
+						<option value="018" <?php if (($member->mobile[0]=="018")) { print "selected"; } ?>>018</option>
+						<option value="019" <?php if (($member->mobile[0]=="019")) { print "selected"; } ?>>019</option>
 					 </select> -
-					<input type="text" id="hp2" name="hp2" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?php echo $mobile[1];?>" /> - 
-					<input type="text" id="hp3" name="hp3" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?php echo $mobile[2];?>" />
+					<input type="text" id="hp2" name="hp2" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?=$member->mobile[1]?>" /> - 
+					<input type="text" id="hp3" name="hp3" size="4" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" value="<?=$member->mobile[2]?>" />
 				<dt>
 					SMS 수신동의
 				<dd>
-					<input type="checkbox" id="smsOk" name="smsOk" <?php if (($member->msgOk()==1)) { print "checked"; } ?> />
-					<input type="hidden" id="msgOk" name="msgOk" value="<?php echo $msgOk;?>" />
+					<input type="checkbox" id="smsOk" name="smsOk" <? if ($member->msgOk == 1) { print "checked"; } ?> />
+					<input type="hidden" id="msgOk" name="msgOk" value="<?=$msgOk?>" />
 				<dt>
 					&nbsp;
 				<dd>
-					<input type="button" id="btnMission" name="btnMission" value="<?php echo $btnValue;?>" onclick="checkMission()" style="cursor:pointer" />
+					<input type="button" id="btnMission" name="btnMission" value="<?=$btnValue?>" onclick="checkMission()" style="cursor:pointer" />
 			</dl>
 		</div>
 
 		<!-- //선교사일 경우 -->
-		<div id="joinMission" name="joinMission" style="display:<?php echo $display;?>;">
+		<div id="joinMission" name="joinMission" style="display:<?=$display?>;">
 			<dl>
 				<dt>
 					프로필 이미지
 				<dd>
 					<div id="showimage" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 					<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'Profile', 'mission_pic')" style="cursor:pointer" /> (190 x 120)<br />
-					<input type="hidden" name="idProfile" id="idProfile" value="<?php echo $mission->ImageID;?>" />
-					<img src="<?php echo $mission->fileImage;?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
+					<input type="hidden" name="idProfile" id="idProfile" value="<?=$mission->ImageID?>" />
+					<img src="<?=$mission->fileImage?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
 				<dt>
 					선교사명
 				<dd>
-					<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?php echo $mission->missionName;?>" />
+					<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?=$mission->missionName?>" />
 				<dt>
 					파송교회
 				<dd>
-					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?php echo $mission->church;?>" />
+					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->church?>" />
 				<dt>
 					파송교회 연락처
 				<dd>
@@ -243,13 +210,13 @@ function body() {
 						<option value="070" <?php if (($churchContact[0]=="070")) { print "selected"; } ?>>070</option>
 					</select>
 					-
-					<input type="text" name="churchContact2" id="churchContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?php echo $churchContact[1];?>" />
+					<input type="text" name="churchContact2" id="churchContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
 					-
-					<input type="text" name="churchContact3" id="churchContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?php echo $churchContact[2];?>" />
+					<input type="text" name="churchContact3" id="churchContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
 				<dt>
 					파송선교단체
 				<dd>
-					<input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?php echo $mission->ngo;?>">
+					<input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?=$mission->ngo?>">
 				<dt>
 					파송단체 연락처
 				<dd>
@@ -273,9 +240,9 @@ function body() {
 						<option value="070" <?php if (($ngoContact[0]=="070")) { print "selected"; } ?>>070</option>
 					</select>
 					-
-					<input type="text" name="ngoContact2" id="ngoContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?php echo $ngoContact[1];?>" />
+					<input type="text" name="ngoContact2" id="ngoContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?=$ngoContact[1]?>" />
 					-
-					<input type="text" name="ngoContact3" id="ngoContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?php echo $ngoContact[2];?>" />
+					<input type="text" name="ngoContact3" id="ngoContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$ngoContact[2]?>" />
 				<dt>
 					선교지
 				<dd>
@@ -297,11 +264,11 @@ function body() {
 				<dt>
 					홈페이지 주소
 				<dd>
-					<input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?php echo $mission->homepage;?>">
+					<input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?=$mission->homepage?>">
 				<dt>
 					파송관리자 이름
 				<dd>
-					<input type="text" name="manager" id="manager" maxlength="20" value="<?php echo $mission->manager;?>">
+					<input type="text" name="manager" id="manager" maxlength="20" value="<?=$mission->manager?>">
 				<dt>
 					파송관리자 연락처
 				<dd>
@@ -332,35 +299,35 @@ function body() {
 
 					</select>
 					-
-					<input type="text" name="managerContact2" id="managerContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?php echo $managerContact[1];?>" />
+					<input type="text" name="managerContact2" id="managerContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?=$managerContact[1]?>" />
 					-
-					<input type="text" name="managerContact3" id="managerContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?php echo $managerContact[2];?>" />
+					<input type="text" name="managerContact3" id="managerContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$managerContact[2]?>" />
 				<dt>
 					파송관리자 E-mail
 				<dd>
-					<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" style="ime-mode:disabled;" value="<?php echo $managerEmail[0];?>" />
+					<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" style="ime-mode:disabled;" value="<?=$managerEmail[0]?>" />
 					@
-					<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" style="ime-mode:disabled;" value="<?php echo $managerEmail[1];?>" />
+					<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" style="ime-mode:disabled;" value="<?=$managerEmail[1]?>" />
 				<dt>
 					후원 계좌번호
 				<dd>
-					<input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" style="ime-mode:disabled" value="<?php echo $mission->accountNo;?>">
+					<input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" style="ime-mode:disabled" value="<?=$mission->accountNo?>">
 				<dt>
 					은행명
 				<dd>
-					<input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?php echo $mission->bank;?>">
+					<input type="text" name="bank" id="bank" maxlength="30" size="30" value="<?=$mission->bank?>">
 				<dt>
 					예금주
 				<dd>
-					<input type="text" name="accountName" id="accountName" maxlength="20" value="<?php echo $mission->accountName;?>">
+					<input type="text" name="accountName" id="accountName" maxlength="20" value="<?=$mission->accountName?>">
 				<dt>
 					기타메모
 				<dd>
-					<textarea name="memo" id="memo" class="b10"><?php echo $memo;?></textarea>
+					<textarea name="memo" id="memo" class="b10"><?=$memo?></textarea>
 				<dt>
 					기도제목
 				<dd>
-					<textarea name="prayList" id="prayList"><?php echo $prayList;?></textarea>
+					<textarea name="prayList" id="prayList"><?=$prayList?></textarea>
 				<dt>
 					가족사항
 				<dd>
@@ -373,8 +340,8 @@ function body() {
 			$familyObj = $familyList[$num];
 ?>
 						<tr id="trFamily" align="center">
-							<input type="hidden" name="familyId" id="familyId" value="<?php echo $familyObj->familyId;?>" />
-							<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?php echo $familyObj->name;?>" /></td>
+							<input type="hidden" name="familyId" id="familyId" value="<?=$familyObj->familyId?>" />
+							<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?=$familyObj->name?>" /></td>
 							<td><select name="familyAge" id="familyAge">
 							<?php 
 			for ($i=0; $i<=99; $i = $i+1) {
@@ -406,7 +373,7 @@ function body() {
 									<option value="기타" <?php if (($familyObj->relation=="기타")) { print "selected"; } ?>>기타</option>
 								</select>
 							</td>
-							<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?php echo $familyObj->familyId?>)" /></td>
+							<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?=$familyObj->familyId?>)" /></td>
 						</tr>
 					<?php 
 
@@ -627,7 +594,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?php echo $userLv;?>&userid=<?php echo $userid;?>&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?=$userid?>&familyId=" + familyId;
 	}
 	
 	function showImage(obj, e) {

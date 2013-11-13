@@ -252,7 +252,6 @@ class HouseObject {
 			$updateData = $updateData."buildingType = ".$mysqli->real_escape_string($this->buildingType)." ";
 			$query = $query.$updateData." WHERE houseId = ".$mysqli->real_escape_string($this->houseId);
 
-echo $query; exit();
 			$result = $mysqli->query($query);
 		} 
 	} 

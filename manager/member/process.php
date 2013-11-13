@@ -48,7 +48,7 @@ function editUserNormal() {
 	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = $Encrypt[$_REQUEST["password"]];
+	$member->Password = Encrypt($_REQUEST["password"]);
 	$member->PasswordQuestion = $_REQUEST["password_quest"];
 	$member->PasswordAnswer = $_REQUEST["password_answer"];
 

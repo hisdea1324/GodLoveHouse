@@ -34,8 +34,8 @@ function showAdminHeader($strTitle, $strJSFile1, $strJSFile2, $strCSSFile) {
 	$strHeader = str_replace("[INCLUDE_JS1]", $strJS1, $strHeader);
 	$strHeader = str_replace("[INCLUDE_JS2]", $strJS2, $strHeader);
 	$strHeader = str_replace("[INCLUDE_CSS]", $strCSS, $strHeader);
-	$strHeader = str_replace("[WEBROOT]", $Application["WebRoot"], $strHeader);
-	$strHeader = str_replace("[CHARSET]", $Application["Charset"], $strHeader);
+	$strHeader = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strHeader);
+	$strHeader = str_replace("[CHARSET]", 'utf-8', $strHeader);
 
 	print $strHeader;
 } 

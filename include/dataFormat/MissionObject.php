@@ -26,6 +26,8 @@ class MissionObject {
 				return str_replace("\n", "<br>", $this->record[$name]);
 			case 'familycount':
 				return count($this->family);
+			case 'family':
+				return $this->family;
 			default: 
 				return $this->record[$name];
 		}

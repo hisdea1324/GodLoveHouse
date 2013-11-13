@@ -33,11 +33,18 @@ class MemberObject {
 		$name = strtolower($name);
 
 		switch($name) {
-			case "zipcode":
-			case "jumin":
 			case "phone":
 			case "mobile":
-				return explode('-', $this->record[$name]);
+				if (substr_count($this->record[$name], '-') != 2) {
+					$this->record[$name] .= "--";
+				}
+				return explode("-", $this->record[$name]);
+			case "zipcode":
+			case "jumin":
+				if (substr_count($this->record[$name], '-') != 1) {
+					$this->record[$name] .= "-";
+				}
+				return explode("-", $this->record[$name]);
 			case "email":
 				return explode('@', $this->record["email"]);
 			case "level":
@@ -157,7 +164,7 @@ class MemberObject {
 
 			echo "<pre>"; print_r($this); echo "</pre>";
 			$values = "'".$mysqli->real_escape_string($this->userid)."'";
-			$values .= ", '".$mysqli->real_escape_string(crypt($this->password, $this->userid))."'";
+			$values .= ", '".$mysqli->real_escape_string(Encrypt($this->password))."'";
 			$values .= ", '".$mysqli->real_escape_string($this->passquest)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->passanswer)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->memo)."'";
@@ -186,7 +193,7 @@ class MemberObject {
 
 		} else {
 
-			$query = "UPDATE member SET ";
+			$query = "UPDATE users SET ";
 			$updateData = "`nick` = '".$mysqli->real_escape_string($this->nick)."', ";
 			$updateData.= "`userlv` = ".$mysqli->real_escape_string($this->userlv).", ";
 			$updateData.= "`email` = '".$mysqli->real_escape_string($this->record['email'])."', ";
@@ -210,7 +217,7 @@ class MemberObject {
 		global $mysqli;
 
 		if ($this->userid > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM member WHERE userid = ?");
+			$stmt = $mysqli->prepare("DELETE FROM users WHERE userid = ?");
 			$stmt->bind_param("i", $this->userid);
 			$stmt->execute();
 			$stmt->close();

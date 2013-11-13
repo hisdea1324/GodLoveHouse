@@ -77,13 +77,7 @@ class MemberHelper {
 	} 
 
 	function getAccountInfoByuserid($userid = "") {
-		$account = new AccountObject();
-
-		if ($account->Open($userid) == false) {
-			$this->m_eHandler->ignoreError("Account Not Found.");
-		} 
-
-
+		$account = new AccountObject($userid);
 		return $account;
 	} 
 

@@ -11,7 +11,7 @@ if (($mode=="search") && (strlen($checkNickName)>0)) {
 	
 	
 	$membercount = 0;
-	$stmt = $mysqli->prepare("SELECT CNT(*) from member WHERE `nick` = ?");
+	$stmt = $mysqli->prepare("SELECT CNT(*) from users WHERE `nick` = ?");
 	$stmt->bind_param("s", $checkNickName);
 	$stmt->execute();
 	$stmt->bind_result($membercount);

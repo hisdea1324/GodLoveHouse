@@ -106,7 +106,7 @@ function editUserNormal() {
 	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = crypt($_REQUEST["password"]);
+	$member->Password = Encrypt($_REQUEST["password"]);
 	$member->PasswordQuestion = $_REQUEST["password_quest"];
 	$member->PasswordAnswer = $_REQUEST["password_answer"];
 
@@ -214,7 +214,7 @@ function login() {
 	$backURL = isset($_REQUEST["backURL"]) ? trim($_REQUEST["backURL"]) : "";
 
 	global $mysqli;
-	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".mysql_escape_string($userid)."' AND password = '".mysql_escape_string(Encrypt($password))."'";
+	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."' AND password = '".$mysqli->real_escape_string(Encrypt($password))."'";
 	$result = $mysqli->query($query);
 
 	if ($result->num_rows == 0) {

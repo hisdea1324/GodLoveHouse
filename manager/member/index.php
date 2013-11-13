@@ -2,8 +2,6 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-
-
 checkAuth();
 
 //페이징 갯수 
@@ -28,20 +26,14 @@ if ((strlen($order)==0)) {
 	$order="registDate DESC";
 } */
 
-
-
 // 조건문 작성
-$strWhere=makeCondition($userLv,$field,$keyword);
+$strWhere = makeCondition($userLv,$field,$keyword);
 
-$query = "SELECT * FROM member ".$strWhere;
+$query = "SELECT * FROM users ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT * ($page - 1);
 
-
-$query = "SELECT * FROM member $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
-
-
-
+$query = "SELECT * FROM users $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 
 
 // 테이블 생성
@@ -70,7 +62,7 @@ switch ($userLv) {
 
 
 $objTable->setColumn(array("회원등급","이름","회원아이디","연락처","등록일"));
-$objTable->setField(array("userLv","name","userid","mobile","registDate"));
+$objTable->setField(array("userlv","name","userid","mobile","registdate"));
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("userid"));
 $objTable->setGotoPage($page);

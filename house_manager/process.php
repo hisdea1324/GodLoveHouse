@@ -231,7 +231,7 @@ function login() {
 	$backURL = isset($_REQUEST["backURL"]) ? trim($_REQUEST["backURL"]) : "";
 
 	global $mysqli;
-	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".mysql_escape_string($userid)."' AND password = '".mysql_escape_string(Encrypt($password))."'";
+	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."' AND password = '".$mysqli->real_escape_string(Encrypt($password))."'";
 	$result = $mysqli->query($query);
 
 	if ($result->num_rows == 0) {

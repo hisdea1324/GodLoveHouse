@@ -8,20 +8,9 @@
 class AccountObject {
 	protected $record = array();
 
-	public function __set($name,$value) { 
+	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch ($name) {
-			case "method" :
-				if($value == "CM5")
-					$this->record['method'] = 1;
-				else if($value == "DIRECT")
-					$this->record['method'] = 2;
-				else if($value == "ZIRO")
-					$this->record['method'] = 3;
-				break;
-
-			case "jumin" : 
-				$this->record[$name] = join("-", $value);
 			default : 
 				$this->record[$name] = $value;
 				break;
@@ -32,11 +21,11 @@ class AccountObject {
 		$name = strtolower($name);
 		switch ($name) {
 			case "method" :
-				if ($this->record[$name] == 1) 
+				if ($this->record[$name] == "1") 
 					return "CMS";
-				else if ($this->record[$name] == 2) 
+				else if ($this->record[$name] == "2") 
 					return "DIRECT";
-				else if ($this->record[$name] == 3) 
+				else if ($this->record[$name] == "3")
 					return "GIRO";
 				else
 					return "";

@@ -7,40 +7,30 @@ global $mysqli;
 checkAuth();
 
 //페이징 갯수 
-$PAGE_COUNT=15;
-$PAGE_UNIT=10;
+$PAGE_COUNT = 15;
+$PAGE_UNIT = 10;
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$order = trim($_REQUEST["order"]);
-$page = trim($_REQUEST["page"]);
-$status = trim($_REQUEST["status"]);
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($field)==0)) {
-	$field="hospitalName";
-} 
-if ((strlen($order)==0)) {
-	$order="regDate DESC";
-} 
-if ((strlen($status)==0)) {
-	$status="S2002";
-} 
+$hospitalId = isset($_REQUEST["hospitalId"]) ? trim($_REQUEST["hospitalId"]) : "";
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "hospitalName";
+$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+$order = isset($_REQUEST["order"]) ? trim($_REQUEST["order"]) : "regDate DESC";
+$page = isset($_REQUEST["page"]) ? trim($_REQUEST["page"]) : 1;
+$status = isset($_REQUEST["status"]) ? trim($_REQUEST["status"]) : "S2002";
 
 // 조건문 작성
-$strWhere=makeCondition($status,$field,$keyword);
+$strWhere = makeCondition($status, $field, $keyword);
 
-$query = "SELECT COUNT(*) AS recordCount FROM hospital ".$strWhere;
+// 페이지 네비게이션 
+$query = "SELECT * FROM hospital ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
-$topNum = $PAGE_COUNT*$page;
 
-$query = "SELECT top ".$topNum." * FROM hospital ".$strWhere." ORDER BY ".$order;
-$result = $mysqli->query($query);
+// 현재 페이지에 보여줄 레코드 
+$topNum = $PAGE_COUNT * ($page - 1);
+$query = "SELECT * FROM hospital $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
-if (($status=="S2002")) {
+if ($status=="S2002") {
 	$objTable->setButton(array("수정","대기"));
 } else {
 	$objTable->setButton(array("수정","삭제","승인"));
@@ -51,7 +41,7 @@ $objTable->setField(array("hospitalId","hospitalName","userid","contact1","perso
 $objTable->setOrder($order);
 $objTable->setKeyValue(array("hospitalId"));
 $objTable->setGotoPage($page);
-$htmlTable = $objTable->getTable($result);
+$htmlTable = $objTable->getTable($query);
 
 showAdminHeader("관리툴 - 선교관관리","","","");
 body();
@@ -165,5 +155,4 @@ if (($status=="S2002")) {
 		}
 	}
 //]]>
-</script>	
-
+</script>

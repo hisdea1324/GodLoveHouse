@@ -2,8 +2,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 global $mysqli;
 
-$userid = trim($_REQUEST["userid"]);
-$password = trim($_REQUEST["password"]);
+$userid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
+$password = isset($_REQUEST["password"]) ? trim($_REQUEST["password"]) : "";
 
 #값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.
 if (strlen($userid) == 0 || strlen($password) == 0) {
@@ -11,43 +11,19 @@ if (strlen($userid) == 0 || strlen($password) == 0) {
 	MoveToPage("index.php");
 }
 
-$query = "SELECT * FROM member WHERE userid = '".$userid."'";
-$result = $mysqli->query($query);
-
-if (!$result) {
-	echo "db access something wrong!!";
+$member = new MemberObject($userid);
+if ($member->password != Encrypt($password)) {
+	echo "no matched password!!";
 	//header("Location: "."index.php?userid=".$userid);
 	MoveToPage("index.php?userid=".$userid);
-}
-
-if ($result->num_rows > 0) {
-	$obj = $result->fetch_object();
-	echo "<br>".$obj->password."<br>";
-	echo crypt($password, $obj->userid)."<br>";
-	
-	if ($obj->password != crypt($password, $obj->userid)) {
-		echo "no matched password!!";
-		//header("Location: "."index.php?userid=".$userid);
-		MoveToPage("index.php?userid=".$userid);
-	} else {
-		$_SESSION['userid'] = $userid;
-		$_SESSION['userLv'] = $obj->userLv;
-		echo "{$userid} loggined!!";
-		//header("Location: "."main.php");
-		MoveToPage("main.php");
-	}
-	
-	/* free result set */
-	$result->close();
 } else {
-	# 관리자 생성
-	$member = new MemberObject();
-	$member->userid = "lovehouse";
-	$member->password = "6394";
-	$member->userLv = "9";
-	$member->Update();
-	echo "new manager created!!";
-	//header("Location: "."index.php?userid=".$userid);
-	MoveToPage("index.php?userid=".$userid);
+	$_SESSION['userid'] = $userid;
+	$_SESSION['userLv'] = $obj->userLv;
+	echo "{$userid} loggined!!";
+	//header("Location: "."main.php");
+	MoveToPage("main.php");
 }
+
+/* free result set */
+$result->close();
 ?>

@@ -202,13 +202,11 @@ class RoomObject {
 		global $mysqli;
 
 		if ($this->roomId > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM room WHERE roomId = ?");
-			$stmt->bind_param("i", $this->roomId);
-			$stmt->execute();
-			$stmt->close();
+			$query = "DELETE FROM room WHERE roomId = ".$mysqli->real_escape_string($this->roomId);
+			$result = $mysqli->query($query);
 			
-			$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = '".$this->houseId."'";
-			$mysqli->real_query($query);
+			$query = "UPDATE house SET roomCount = roomCount - 1 WHERE houseId = '".$mysqli->real_escape_string($this->houseId)."'";
+			$result = $mysqli->query($query);
 		}
 	} 
 	

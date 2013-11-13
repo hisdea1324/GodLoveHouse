@@ -2,10 +2,10 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
-$hospitalId = trim($_REQUEST["hospitalId"]);
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$gotoPage = trim($_REQUEST["gotoPage"]);
+$hospitalId = isset($_REQUEST["hospitalId"]) ? trim($_REQUEST["hospitalId"]) : "";
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
+$gotoPage = isset($_REQUEST["gotoPage"]) ? trim($_REQUEST["gotoPage"]) : "";
 
 $c_Helper = new CodeHelper();
 $codeResions = $c_Helper->getLocalCodeList();
@@ -22,6 +22,7 @@ showAdminFooter();
 function body() {
 	global $CurUrl, $strPage, $htmlTable, $gotoPage, $codeResions, $codeStatus;
 	global $field, $keyword;
+	global $hospitalObj;
 ?>
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
