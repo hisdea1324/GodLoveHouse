@@ -191,6 +191,11 @@ class HouseHelper {
 	} 
 
 	function setReservationListConditionWithRoom($search, $houseId, $roomId, $fromDate = 0, $toDate = 0) {
+		if ($roomId == "") {
+			$this->setReservationListConditionWithHouse($search, $houseId, $fromDate, $toDate);
+			return;
+		}
+
 		switch ($search) {
 			case "1":
 				$this->m_StrConditionQuery = " AND C.reservStatus = 'S0001' AND A.houseId = '".$houseId."' AND B.roomId = '".$roomId."'";

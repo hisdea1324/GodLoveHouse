@@ -13,6 +13,11 @@ class HouseObject {
 	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'personlimit':
+			case 'personlimit1':
+			case 'roomlimit':
+			case 'roomlimit1':
+				$this->record[$name] = is_numeric($value) ? $value : 0;
 			default:
 				$this->record[$name] = $value; 
 				break;
@@ -24,7 +29,14 @@ class HouseObject {
 		switch ($name) {
 			case "contact1":
 			case "contact2":
+				if (substr_count($this->record[$name], '-') != 2) {
+					$this->record[$name] .= "--";
+				}
+				return explode("-", $this->record[$name]);
 			case "zipcode":
+				if (substr_count($this->record[$name], '-') != 1) {
+					$this->record[$name] .= "-";
+				}
 				return explode("-", $this->record[$name]);
 			case "explain":
 				return str_replace("\n", "<br>", $this->record[$name]);
@@ -82,7 +94,7 @@ class HouseObject {
 	# ***********************************************
 	function __construct($houseId = -1) {
 		$this->initialize();
-		if ($houseId > -1) {
+		if ($houseId != -1) {
 			$this->Open($houseId);
 		}
 	}
@@ -102,7 +114,9 @@ class HouseObject {
 		$this->contact2 = "--";
 		$this->price = "무료";
 		$this->personlimit = 0;
+		$this->personlimit1 = 0;
 		$this->roomlimit = 0;
+		$this->roomlimit1 = 0;
 		$this->housename = null;
 		$this->homepage = null;
 		$this->roomcount = 0;
@@ -139,7 +153,9 @@ class HouseObject {
 			$this->contact2 = $row['contact2'];
 			$this->price = $row['price'];
 			$this->personlimit = $row['personLimit'];
+			$this->personlimit1 = $row['personLimit1'];
 			$this->roomlimit = $row['roomLimit'];
+			$this->roomlimit1 = $row['roomLimit1'];
 			$this->housename = $row['houseName'];
 			$this->homepage = $row['homepage'];
 			$this->roomcount = $row['roomCount'];
@@ -176,112 +192,76 @@ class HouseObject {
 		global $mysqli;
 
 		if ($this->houseId == -1) {
-			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userid`, ";
-			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `roomLimit`, `houseName`, ";
-			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-
 			# New Data
-			$stmt->bind_param("ssssssssssssiissiisi", 
-				$this->assocName,
-				$this->address1,
-				$this->address2,
-				$this->zipcode,
-				$this->regionCode,
-				$this->explain,
-				$this->userid,
-				$this->manager1,
-				$this->contact1, 
-				$this->manager2, 
-				$this->contact2, 
-				$this->price, 
-				$this->personLimit, 
-				$this->roomLimit, 
-				$this->houseName, 
-				$this->homepage, 
-				$this->roomCount, 
-				$this->documentId, 
-				$this->document, 
-				$this->buildingType);
-		
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-			
-			$this->houseId = $mysqli->insert_id;
-			
+			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userid`, ";
+			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `personLimit1`, `roomLimit`, `roomLimit1`, `houseName`, ";
+			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
+			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->assocName)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->address1)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->address2)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['zipcode'])."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->regionCode)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->explain)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->userid)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->manager1)."',";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['contact1'])."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->manager2)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['contact2'])."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->price)."', ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->personLimit).", ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->personLimit1).", ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->roomLimit).", ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->roomLimit1).", ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->houseName)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->homepage)."', ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->roomCount).", ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->documentId).", ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->document)."', ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->buildingType);
+			$query = $query."(".$insertData.")";
+
+			$result = $mysqli->query($query);
+
+			// new id
+			$this->supportid = $mysqli->insert_id;
+
 		} else {
 			$query = "UPDATE house SET ";
-			$updateData = "`assocName` = ?, ";
-			$updateData = $updateData."`address1` = ?, ";
-			$updateData = $updateData."`address2` = ?, ";
-			$updateData = $updateData."`regionCode` = ?, ";
-			$updateData = $updateData."`zipcode` = ?, ";
-			$updateData = $updateData."`explain` = ?, ";
-			$updateData = $updateData."`userid` = ?, ";
-			$updateData = $updateData."`manager1` = ?, ";
-			$updateData = $updateData."`contact1` = ?, ";
-			$updateData = $updateData."`manager2` = ?, ";
-			$updateData = $updateData."`contact2` = ?, ";
-			$updateData = $updateData."`price` = ?, ";
-			$updateData = $updateData."`personLimit` = ?, ";
-			$updateData = $updateData."`roomLimit` = ?, ";
-			$updateData = $updateData."`houseName` = ?, ";
-			$updateData = $updateData."`homepage` = ?, ";
-			$updateData = $updateData."`roomCount` = ?, ";
-			$updateData = $updateData."`document` = ?, ";
-			$updateData = $updateData."`documentId` = ?, ";
-			$updateData = $updateData."`buildingType` = ? ";
-			$query = $query.$updateData." WHERE `houseId` = ?";
+			$updateData="assocName = '".$mysqli->real_escape_string($this->assocName)."', ";
+			$updateData = $updateData."address1 = '".$mysqli->real_escape_string($this->address1)."', ";
+			$updateData = $updateData."address2 = '".$mysqli->real_escape_string($this->address2)."', ";
+			$updateData = $updateData."regionCode = '".$mysqli->real_escape_string($this->regionCode)."', ";
+			$updateData = $updateData."`zipcode` = '".$mysqli->real_escape_string($this->record['zipcode'])."', ";
+			$updateData = $updateData."`explain` = '".$mysqli->real_escape_string($this->explain)."', ";
+			$updateData = $updateData."`userid` = '".$mysqli->real_escape_string($this->userid)."', ";
+			$updateData = $updateData."manager1 = '".$mysqli->real_escape_string($this->manager1)."', ";
+			$updateData = $updateData."contact1 = '".$mysqli->real_escape_string($this->record['contact1'])."', ";
+			$updateData = $updateData."manager2 = '".$mysqli->real_escape_string($this->manager2)."' ";
+			$updateData = $updateData."contact2 = '".$mysqli->real_escape_string($this->record['contact2'])."', ";
+			$updateData = $updateData."`price` = '".$mysqli->real_escape_string($this->price)."', ";
+			$updateData = $updateData."personLimit = ".$mysqli->real_escape_string($this->personLimit).", ";
+			$updateData = $updateData."personLimit1 = ".$mysqli->real_escape_string($this->personLimit1).", ";
+			$updateData = $updateData."roomLimit = ".$mysqli->real_escape_string($this->roomLimit).", ";
+			$updateData = $updateData."roomLimit1 = ".$mysqli->real_escape_string($this->roomLimit1).", ";
+			$updateData = $updateData."houseName = '".$mysqli->real_escape_string($this->houseName)."', ";
+			$updateData = $updateData."`homepage` = '".$mysqli->real_escape_string($this->homepage)."', ";
+			$updateData = $updateData."roomCount = ".$mysqli->real_escape_string($this->roomCount).", ";
+			$updateData = $updateData."`document` = '".$mysqli->real_escape_string($this->document)."', ";
+			$updateData = $updateData."documentId = ".$mysqli->real_escape_string($this->documentId).", ";
+			$updateData = $updateData."buildingType = ".$mysqli->real_escape_string($this->buildingType)." ";
+			$query = $query.$updateData." WHERE houseId = ".$mysqli->real_escape_string($this->houseId);
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("sssssssssssiiissiisii", 
-				$this->assocName, 
-				$this->address1, 
-				$this->address2, 
-				$this->zipcode, 
-				$this->regionCode, 
-				$this->explain, 
-				$this->userid, 
-				$this->manager1, 
-				$this->contact1, 
-				$this->manager2, 
-				$this->contact2, 
-				$this->price, 
-				$this->personLimit, 
-				$this->roomLimit, 
-				$this->houseName, 
-				$this->homepage, 
-				$this->roomCount, 
-				$this->documentId, 
-				$this->document, 
-				$this->buildingType, 
-				$this->houseId);
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-		}
+echo $query; exit();
+			$result = $mysqli->query($query);
+		} 
 	} 
 	
 	function Delete() {
 		global $mysqli;
 
-		if ($this->houseId > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM house WHERE `houseId` = ?");
-			$stmt->bind_param("d", $this->houseId);
-			$stmt->execute();
-			$stmt->close();
-		}
+		$query = "DELETE FROM house WHERE houseId = ".$mysqli->real_escape_string($this->houseId);
+		$result = $mysqli->query($query);
 	}
 	
 	function SetRoom($value) {

@@ -21,11 +21,24 @@ function body() {
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
-			<strong>Home</strong> &gt; 예약관리 &gt; <?=$house->houseName?> &gt; 정보수정
+			<strong>Home</strong> &gt; 예약관리 <? 
+			echo "&gt; {$house->houseName} ";
+			echo "&gt; 정보수정";
+			?>
 		</div>
 		<div id="content">
 			<!-- content -->
 			<!--h1>선교관 정보수정 - <?=$house->houseName?></h1-->
+			<div class="list_year"> 
+				<ul class="mr1">
+					<li class="txt"><?=$house->houseName?></li>
+				</ul>
+				<ul class="tabs mt30">
+						<li><a href="reserve_2.php?houseId=<?=$houseId?>">예약 현황 보기</a></li>
+						<li class="on"><a href="mission_write.php?houseId=<?=$houseId?>">정보수정</a></li>
+						<li><a href="mission_write2.php?houseId=<?=$houseId?>">방 추가하기</a></li>
+				</ul>
+			</div>
 			<table class="write mt30">
 				<colgroup>
 					<col width="20%" />
@@ -155,20 +168,20 @@ function body() {
 						<td>
 							<input type="text" name="addr1" id="addr1" class="inputTxt" size="100" readonly onclick="PostPopup();" value="<?=$house->address1?>" />
 							<input type="text" name="addr2" id="addr2" class="inputTxt" size="100" value="<?=$house->address2?>" />
-							<input type="text" class="inputTxt" size="100" value="" /></td>
+						</td>
 					</tr>
 					<tr>
 						<th>가격(1일기준)</th>
 						<td>
 							<input type="text" name="price" id="price" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price?>" /> 원 ~
-							<input type="text" name="price1" id="price1" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price?>" /> 원
+							<input type="text" name="price1" id="price1" class="inputTxt" size="10" style="ime-mode:disabled;" value="<?=$house->price1?>" /> 원
 						</td>
 					</tr>
 					<tr>
 						<th>최대인원</th>
 						<td>
 							<input type="text" name="personLimit" id="personLimit" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit?>" /> 명 ~
-							<input type="text" name="personLimit1" id="personLimit1" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit?>" />
+							<input type="text" name="personLimit1" id="personLimit1" class="inputTxt" size="10" style="ime-mode:disabled;" onKeyPress="CheckNumber(event);" value="<?=$house->personLimit1?>" />
 						</td>
 					</tr>
 					<tr>

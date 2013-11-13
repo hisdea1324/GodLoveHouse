@@ -88,8 +88,6 @@ class SupportItemObject {
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->cost)."'";
 			$query = $query."(".$insertData.")";
 
-echo $query;
-
 			$result = $mysqli->query($query);
 			// new id
 			$this->supportItemId = $mysqli->insert_id;
@@ -100,7 +98,6 @@ echo $query;
 			$updateData = $updateData."cost = ".$mysqli->real_escape_string($this->cost)." ";
 			$query = $query.$updateData." WHERE supItemId = ".$mysqli->real_escape_string($this->supportItemId);
 
-echo $query;
 			$result = $mysqli->query($query);
 		} 
 	} 

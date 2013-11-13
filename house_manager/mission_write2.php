@@ -20,23 +20,35 @@ function body() {
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
-			<strong>Home</strong> &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 정보수정
-		</div>
+			<strong>Home</strong> <? 
+			echo "&gt; {$house->houseName} ";
+			if ($room->roomId != -1) {
+				echo "&gt; {$room->roomName} ";
+				echo "&gt; 정보 수정";
+			} else {
+				echo "&gt; 방 추가하기";
+			}
+		?></div>
 		<div id="content">
 			<!-- content -->
 			<!--h1><?=$house->houseName?> :: <?=$room->roomName?></h1-->
-			<div class="list_year"> <!-- list_year -->
+			<div class="list_year"> 
 				<ul class="mr1">
-					<? if ($room->roomId == -1) { ?>
-						<li class="txt">방 추가하기</li>
+					<? if ($room->roomId != -1) { ?>
+						<li class="txt"><?=$house->houseName?> | <?=$room->roomName?></li>
 					<? } else { ?>
-						<li class="txt"><?=$room->roomName?> 정보수정</li>
+						<li class="txt">방 추가하기</li>
 					<? } ?>
 				</ul>
 				<ul class="tabs mt30">
-					<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
-					<!--li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li-->
-					<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+					<? if ($room->roomId != -1) { ?>
+						<li><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+						<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+					<? } else { ?>
+						<li><a href="reserve_2.php?houseId=<?=$houseId?>">예약 현황 보기</a></li>
+						<li><a href="mission_write.php?houseId=<?=$houseId?>">정보수정</a></li>
+						<li class="on"><a href="mission_write2.php?houseId=<?=$houseId?>">방 추가하기</a></li>
+					<? } ?>
 				</ul>
 			</div>
 			<table class="write mt30">

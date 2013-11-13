@@ -41,7 +41,7 @@ function showHouseManagerLeft() {
 	echo "<div id=\"leftSec\">";
 	$color_cnt = 0;
 	foreach ($houseList1 as $house) {
-		echo "	<h2><a href=\"reserve_1.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
+		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
 			$color_cnt++;

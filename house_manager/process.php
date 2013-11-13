@@ -68,8 +68,10 @@ function registHouse() {
 	$house->addr1 = isset($_REQUEST["addr1"]) ? $_REQUEST["addr1"] : "";
 	$house->addr2 = isset($_REQUEST["addr2"]) ? $_REQUEST["addr2"] : "";
 	$house->price = isset($_REQUEST["price"]) ? $_REQUEST["price"] : "";
-	$house->personLimit = isset($_REQUEST["personLimit"]) ? $_REQUEST["personLimit"] : "";
-	$house->roomLimit = isset($_REQUEST["roomLimit"]) ? $_REQUEST["roomLimit"] : "";
+	$house->personLimit = isset($_REQUEST["personLimit"]) ? $_REQUEST["personLimit"] : 0;
+	$house->personLimit1 = isset($_REQUEST["personLimit1"]) ? $_REQUEST["personLimit1"] : 0;
+	$house->roomLimit = isset($_REQUEST["roomLimit"]) ? $_REQUEST["roomLimit"] : 0;
+	$house->roomLimit1 = isset($_REQUEST["roomLimit1"]) ? $_REQUEST["roomLimit1"] : 0;
 	$house->explain = isset($_REQUEST["explain"]) ? $_REQUEST["explain"] : "";
 	$house->regionCode = isset($_REQUEST["regionCode"]) ? $_REQUEST["regionCode"] : "";
 	$house->Update();

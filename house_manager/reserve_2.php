@@ -2,6 +2,9 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin();
 
+$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
+$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+
 showHouseManagerHeader();
 showHouseManagerLeft();
 body();
@@ -9,10 +12,9 @@ showHouseManagerFooter();
 
 function body() {
 	global $mysqli;
-	global $room_color;
 
-	$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
-	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
+	global $houseId, $roomId, $room_color;
+
 	$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
 	$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
 
@@ -59,8 +61,13 @@ function body() {
 							<!-- rightSec -->
 							<div id="rightSec">
 								<div class="lnb">
-									<strong>Home</strong> &gt; <?=$house->houseName?> &gt; <?=$room->roomName?> &gt; 예약 현황 보기
-								</div>
+									<strong>Home</strong> <? 
+									echo "&gt; {$house->houseName} ";
+									if ($room->roomId != -1) {
+										echo "&gt; {$room->roomName} ";
+									}
+									echo "&gt; 예약 현황 보기";
+								?></div>
 								<div id="content">
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
@@ -74,9 +81,14 @@ function body() {
 											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[3]}&{$q[7]}"?>"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
 										</ul>
 										<ul class="tabs mt30">
-											<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
-											<!--li><a href="javascript:void(0)" onclick="alert('준비중입니다.');">달력보기</a></li-->
-											<li><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+											<? if ($room->roomId != -1) { ?>
+												<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">예약 현황 보기</a></li>
+												<li><a href="mission_write2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>">정보수정</a></li>
+											<? } else { ?>
+												<li class="on"><a href="reserve_2.php?houseId=<?=$houseId?>">예약 현황 보기</a></li>
+												<li><a href="mission_write.php?houseId=<?=$houseId?>">정보수정</a></li>
+												<li><a href="mission_write2.php?houseId=<?=$houseId?>">방 추가하기</a></li>
+											<? } ?>
 										</ul>
 									</div> <!-- // list_year -->
 									<!-- cal_month -->
@@ -331,20 +343,22 @@ function body() {
 		</div-->
 		<!-- // content -->
 
-<?php
-	if ($house->status == "승인") {
-?>
-		<br /><br />
+
+		<div>
 		<form method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
 			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
 			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
+			<br />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
-			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
+			<table class="write mt30" width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
 				<col width="15%">
 				<col />
+<?php
+	if ($roomId != "" && $house->status == "승인") {
+?>
 				<tr>
-					<td class="td01"><p class="reserve"><b>날짜입력</b></td>
+					<th><p class="reserve"><b>날짜입력</b></td>
 					<td>
 						<input type="text" name="startDate" id="startDate" value="" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
@@ -354,25 +368,25 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>이름</b></td>
+					<th><p class="reserve"><b>이름</b></td>
 					<td>
 						<input type="text" name="resv_name" id="resv_name" value="<?=$member->name?>" class="input">
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>연락처</b></td>
+					<th><p class="reserve"><b>연락처</b></td>
 					<td>
 						<input type="text" name="resv_phone" id="resv_phone" value="<?=$member->mobile[0]?>-<?=$member->mobile[1]?>-<?=$member->mobile[2]?>" class="input">
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>선교지</b></td>
+					<th><p class="reserve"><b>선교지</b></td>
 					<td>
 						<input type="text" name="resv_nation" id="resv_nation" value="<?=$mission->nation?>" class="input">
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>파송 단체</b></td>
+					<th><p class="reserve"><b>파송 단체</b></td>
 					<td>
 						<? if ($mission->church) { ?>
 						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">
@@ -382,15 +396,21 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td> </td>
+					<td align="right" width="100%">
 						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit('<?=$available_date_list?>')">
 					</td>
 				</tr>
+<? } else { ?>
+				<tr>
+					<td>
+							예약을 위해 방을 선택해 주세요<br /><br /><br /><br /><br /><br /><br /><br /><br />
+					</td>
+				</tr>
+<? } ?>
 			</table>
 		</form>
-<?php 
-} 
-?>
+		</div>
 
 	</div>
 </div>
