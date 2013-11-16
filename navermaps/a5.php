@@ -1,7 +1,4 @@
-﻿<?php // asp2php (vbscript) converted on Fri Apr 12 22:35:58 2013
- ?>
-<?php header("Content-type: "."text/html;charset=euc-kr"); ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
@@ -11,21 +8,35 @@
 </head>
 
 <?php 
-$Naddress = $_REQUEST["Naddr"];
-//Naddress= server.URLEncode(request("addr"))
-//response.write "1 :"&request("addr") & "							 "
-//response.write "3 :"& Naddress
-//451884 291241 
-//Naddress = "경기도 금촌검산 유승아파트 102호 203호"
-$queryVal = $Naddress;
+$x = 0;
+$y = 0;
+$queryVal = isset($_REQUEST["Naddr"]) ? rawurlencode($_REQUEST["Naddr"]) : "";
 
-//java.net.URLEncoder.encode(address)$queryVal=rawurlencode($Naddress);
-//queryVal = server.UrlEncode(Trim(Naddress))
-//queryVal = addressy
-//response.write "4:" & queryVal
-if (!($queryVal=="")) {
-//response.write queryVal &"-1-"	
-$REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&encoding=utf-8&query=".$queryVal;
+$REQUEST_URL = "http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e9d76ee1&encoding=utf-8&query=".$queryVal;
+
+$curl_handle = curl_init();
+curl_setopt($curl_handle, CURLOPT_URL, $REQUEST_URL);
+curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl_handle, CURLOPT_USERAGENT, 'http://www.godlovehouse.net');
+$content = curl_exec($curl_handle);
+$response = curl_getinfo($curl_handle);
+curl_close($curl_handle);
+
+
+$obj_xml = simplexml_load_string($content); 
+$x = $obj_xml->item->point->x; 
+$y = $obj_xml->item->point->y; 
+
+
+//$budget74 = simplexml_load_file($REQUEST_URL);
+//if ($budget74->status!='OK') die("네이버맵API에서 주소에 대한 좌표를 받아 오는데 실패하였습니다!");
+/*
+$lat = $budget74->result->geometry->location->lat;
+$lng = $budget74->result->geometry->location->lng;
+echo "lat:{$lat}, lng:{$lng}";
+[출처] [geocoding api] php 에서 google maps api 사용하여 좌표 정보 얻어오기|작성자 얼룩푸우
+
 //response.write REQUEST_URL	
 // $xml is of type "MSXML2.ServerXMLHTTP"
 	$xml->Open("GET", $REQUEST_URL, false);
@@ -55,12 +66,7 @@ $REQUEST_URL="http://map.naver.com/api/geocode.php?key=481c0483e27994558af69d54e
 	} 
 
 } 
-
-$xml = null;
-
-$dom = null;
-
-//response.write "																 " & x & " " & y
+*/
 ?>
 
 <body style="margin:0px 0px 0px 0px">
@@ -71,7 +77,7 @@ $dom = null;
 // 기본 지도 생성
 var mapObj = new NMap(document.getElementById('mapContainer'),550,450);
 //mapObj.setBound(<?php echo $x;?><%,<?php echo $y;?><%, <?php echo $x;?><%,<?php echo $y;?><%); 
-mapObj.setCenterAndZoom(new NPoint(<?php echo $x;?><%,<?php echo $y;?><%),3);
+mapObj.setCenterAndZoom(new NPoint(<?=$x?>,<?=$y?>),3);
 mapObj.zoomOut();
 
 // 확대, 축소를 위한 컨트롤을 생성합니다.
@@ -86,7 +92,7 @@ var mapBtns = new NMapBtns();
 	mapObj.addControl(mapBtns);
 
 var iconUrl = "http://www.godlovehouse.net/navermaps/GLH.gif";
-var marker = new NMark(NPoint(<?php echo $x;?><%,<?php echo $y;?><%), new NIcon(iconUrl, new NSize(22, 29)));
+var marker = new NMark(NPoint(<?=$x?>,<?=$y?>), new NIcon(iconUrl, new NSize(22, 29)));
 	mapObj.addOverlay(marker);
 
 </script>
