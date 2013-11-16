@@ -93,7 +93,7 @@ function body() {
 								<li><b>운영</b> : <?=$hospitalObj->AssocName?></li>
 								<li><b>주소</b> : <a href="javascript:void(0)" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($hospitalObj->Address1.$hospitalObj->Address2)?>','win','top=0, left=500,width=550,height=450')"><?=$hospitalObj->Address1?> <?=$hospitalObj->Address2?></a></li>
 								<li><b>담당자</b> : <?=$hospitalObj->Manager1?></li>
-				<li><b>요금</b> : <?=$hospitalObj->showFee()?></li>
+								<!--li><b>요금</b> : <?=$hospitalObj->showFee()?></li-->
 							</ul>
 						</td>
 						<td class="ltd">
