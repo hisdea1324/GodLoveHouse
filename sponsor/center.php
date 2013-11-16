@@ -45,7 +45,7 @@ function body() {
 				</td>
 				<td class="ltd"><?php echo textFormat($requestInfo->Explain, 1);?></td>
 				<td>
-					<input type="checkbox" name="chkCenter" id="chkCenter" value="<?php echo $requestInfo->RequestID;?>" class="chk"<? if (!$supporter->IsNew && $supporter->Support($requestInfo->RequestID)) {?> checked<? } ?> />
+					<input type="checkbox" name="chkCenter[]" id="chkCenter[]" value="<?=$requestInfo->RequestID?>" class="chk"<? if (!$supporter->IsNew && $supporter->Support($requestInfo->RequestID)) {?> checked<? } ?> />
 				</td>
 <?php 
 

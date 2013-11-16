@@ -1,17 +1,18 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-$needUserLv[1];
+needUserLv(1);
+print_r($_REQUEST);
 
 $sumPrice = $_REQUEST["sumPrice"];
-$IdList=explode(",",$_REQUEST["IdList"]);
-for ($i=0; $i<=count($IdList); $i = $i+1) {
-	$price[$i] = $_REQUEST["price".($i+1)];
+$IdList = explode(",", $_REQUEST["idList"]);
 
+foreach ($IdList as $num=>$value) {
+	$price[$num] = $_REQUEST["price".($num+1)];
 }
 
 $s_Helper = new SupportHelper();
 $member = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
-if ($member->IsNew()) {
+if ($member->IsNew {
 	$m_Helper = new MemberHelper();
 	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 } 

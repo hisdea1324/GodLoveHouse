@@ -45,17 +45,13 @@ function addSupport() {
 				$reqItemList[$i]->Update();
 				$checkValue=true;
 			} 
-
 		}
 		if (!$checkValue && strlen($reqItemList[$i]->SendUser) > 0 && $reqItemList[$i]->SendUser == $_SESSION["userid"]) {
 			//해당 항목 예약 삭제
 			$reqItemList[$i]->SendUser = "";
 			$reqItemList[$i]->Update();
 		} 
-
-
 	}
-
 
 	# 후원 상세 정보	$supportItem = new SupportItemObject();
 	$supportItem->OpenWithIndex($support->SupportID, $_REQUEST["reqId"]);

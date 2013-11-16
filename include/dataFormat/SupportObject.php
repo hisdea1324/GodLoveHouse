@@ -13,6 +13,8 @@ class SupportObject {
 	public function __set($name,$value) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'supporttype':
+				$this->record['suptype'] = $value;
 			default : 
 				$this->record[$name] = $value;
 				break;
@@ -132,7 +134,7 @@ class SupportObject {
 			# New Data
 			$query = "INSERT INTO supportInfo (userid, supportType, status, name, jumin, phone, mobile, email, zipcode, address1, address2) VALUES ";
 			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
-			$insertData = $insertData."'".$mysqli->real_escape_string($this->supporttype)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->suptype)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->status)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->name)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->jumin)."', ";
@@ -143,15 +145,15 @@ class SupportObject {
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->address1)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->address2)."'";
 			$query = $query."(".$insertData.")";
-			$result = $mysqli->query($query);
 
+			$result = $mysqli->query($query);
 			// new id
 			$this->supportid = $mysqli->insert_id;
 
 		} else {
 			$query = "UPDATE supportInfo SET ";
 			$updateData="name = '".$mysqli->real_escape_string($this->name)."', ";
-			$updateData = $updateData."supportType = '".$mysqli->real_escape_string($this->supporttype)."',";
+			$updateData = $updateData."supportType = '".$mysqli->real_escape_string($this->suptype)."',";
 			$updateData = $updateData."status = '".$mysqli->real_escape_string($this->status)."',";
 			$updateData = $updateData."jumin = '".$mysqli->real_escape_string($this->jumin)."',";
 			$updateData = $updateData."phone = '".$mysqli->real_escape_string($this->phone)."',";
@@ -161,6 +163,7 @@ class SupportObject {
 			$updateData = $updateData."address1 = '".$mysqli->real_escape_string($this->address1)."',";
 			$updateData = $updateData."address2 = '".$mysqli->real_escape_string($this->address2)."'";
 			$query = $query.$updateData." WHERE supId = ".$mysqli->real_escape_string($this->supportid);
+
 			$result = $mysqli->query($query);
 		} 
 	} 
@@ -192,7 +195,7 @@ class SupportObject {
 			}
 		} 
 
-		return -1;
+		return 0;
 	} 
 
 	function changeStatus() {
