@@ -212,7 +212,7 @@ class RoomObject {
 	
 	function showFee() {
 		if ($this->fee > 0) {
-			return priceFormat($this->fee, 1)." / 일";
+			return number_format($this->Fee)."원 / 일";
 		} else {
 			return "무료";
 		} 

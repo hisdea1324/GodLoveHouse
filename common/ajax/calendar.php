@@ -68,7 +68,7 @@ if ($result = $mysqli->query($query)) {
 		$day_of_week = strtolower(date("D", $start_timestamp));
 		$select = (isset($date_set[$start_timestamp])) ? "select" : "";
 		
-		$day = date("d", $start_timestamp);
+		$day = date("j", $start_timestamp);
 		$month = date("m", $start_timestamp);
 		
 		if ($day_of_week == "sun") {

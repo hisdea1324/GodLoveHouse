@@ -19,12 +19,10 @@ if (isset($_SESSION["userid"])) {
 	$mission = $m_Helper->getMissionInfoByuserid();
 }
 
-setTestValue($member);
-
 if ($house->StatusCode == "S2002") {
 	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif");
 } else {
-	showHeader("HOME > 선교관 >	기타 선교관 안내","living","tit_0201.gif");
+	showHeader("HOME > 선교관 > 기타 선교관 안내","living","tit_0201.gif");
 } 
 
 body();
@@ -157,7 +155,7 @@ function body() {
 				<td class="td01">최대인원</td>
 				<td><?=$room->Limit?>명</td>
 				<td class="td01">가격(1일기준) </td>
-				<td colspan="3"><?=number_format($room->Fee)?>원</td>
+				<td colspan="3"><?=$room->showFee()?></td>
 			</tr>
 			<tr>
 				<td class="td01">세탁시설</td>
