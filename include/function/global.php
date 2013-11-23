@@ -244,6 +244,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	if (isset($_SERVER["QUERY_STRING"])) {
 		$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
 		$queryString = preg_replace('/^&/i', '?', $queryString);
+		$queryString .= "&";
 	} else {
 		$queryString = "";
 	}
@@ -261,7 +262,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 		$nextPage = $totalPage;
 	} 
 
-	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."&page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
 	for ($i = 1; $i <= $totalPage; $i++) {
 		if ($i - $page == 0) {
 			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
@@ -305,17 +306,17 @@ function makePagingN($page, $pageCount, $pageUnit, $total) {
 		$nextPage = $totalPage;
 	} 
 
-	$str = "<div class='paging'><a href='".$linkUrl."page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
+	$str = "<div class='paging'><a href='".$linkUrl."&page=1'> <img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_02.gif' alt=''/></a> <a href='".$linkUrl."&page=".$prevPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_pre_01.gif' alt='' /></a> <span class='pagingText'>";
 	for ($i = 1; $i <= $totalPage; $i++) {
 		if (($i-$page==0)) {
-			$str = $str."<b><a href='".$linkUrl."page=".$i."'>".$i."</a></b> | ";
+			$str = $str."<b><a href='".$linkUrl."&page=".$i."'>".$i."</a></b> | ";
 		} else {
-			$str = $str."<a href='".$linkUrl."page=".$i."'>".$i."</a> | ";
+			$str = $str."<a href='".$linkUrl."&page=".$i."'>".$i."</a> | ";
 		} 
 	}
 
 	$str=substr($str,0,strlen($str)-2);
-	$str = $str."</span> <a href='".$linkUrl."page=".$nextPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."page=".$totalPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_02.gif' alt='' /></a> </div>";
+	$str = $str."</span> <a href='".$linkUrl."&page=".$nextPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_01.gif' alt='' /></a> <a href='".$linkUrl."&page=".$totalPage."'><img src='http://".$_SERVER['HTTP_HOST']."/images/board/btn_next_02.gif' alt='' /></a> </div>";
 	return $str;
 } 
 ?>

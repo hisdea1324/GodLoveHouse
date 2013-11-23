@@ -163,7 +163,12 @@ class tableBuilder {
 	
 				$rowString = $rowString . "<tr bgcolor='#FFFFFF' align='center' height='28' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">\r\n" . chr(13);
 				foreach ($this->fieldList as $field) {
-					$rowString = $rowString . "	<td>" . textFormat($row[$field], 1) . "</td>\r\n" . chr(13);
+					if (is_numeric($row[$field]) && strlen($row[$field]) == 10) {
+						# 날짜 표기임
+						$rowString = $rowString . "	<td>" . date("Y-m-d",$row[$field]) . "</td>\r\n" . chr(13);
+					} else {
+						$rowString = $rowString . "	<td>" . textFormat($row[$field], 1) . "</td>\r\n" . chr(13);
+					}
 				}
 	
 				if ($this->buttonCount >= 0) {
@@ -174,17 +179,16 @@ class tableBuilder {
 	
 					$rowString = $rowString . "</td>\r\n" . chr(13);
 				}
-	
-				$pagingString = $pagingString . "</tr>\r\n" . chr(13);
-				$pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">\r\n" . chr(13);
-				for ($i = 0; $i < $this->fieldCount + 1; $i++) {
-					$pagingString = $pagingString . "	<td>&nbsp;</td>\r\n" . chr(13);
-				}
-				$pagingString = $pagingString . "</tr>\r\n" . chr(13);
+				// $pagingString = $pagingString . "</tr>\r\n" . chr(13);
+				// $pagingString = $pagingString . "<tr bgcolor=\"#FFFFFF\" height='25' onMouseOver=\"this.style.background='#eaf2f4';\" onMouseOut=\"this.style.background='#FFFFFF';\">\r\n" . chr(13);
+				// for ($i = 0; $i < $this->fieldCount + 1; $i++) {
+				// 	$pagingString = $pagingString . "	<td>&nbsp;</td>\r\n" . chr(13);
+				// }
+				// $pagingString = $pagingString . "</tr>\r\n" . chr(13);
 			}
 		}
 
-		return $this->tableHeader() . $rowString . $pagingString . $this->tableFooter();
+		return $this->tableHeader() . $rowString . $this->tableFooter();
 	}
 
 	function displayListPage() {

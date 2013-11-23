@@ -8,23 +8,11 @@ checkAuth();
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-
 $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $userLv = (isset($_REQUEST["userLv"])) ? trim($_REQUEST["userLv"]) : 0;
 $order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "registDate DESC";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
-
-/*
-if ((strlen($page)==0)) {
-	$page=1;
-} 
-if ((strlen($userLv)==0)) {
-	$userLv=0;
-} 
-if ((strlen($order)==0)) {
-	$order="registDate DESC";
-} */
 
 // 조건문 작성
 $strWhere = makeCondition($userLv,$field,$keyword);
@@ -34,7 +22,6 @@ $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 $topNum = $PAGE_COUNT * ($page - 1);
 
 $query = "SELECT * FROM users $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
-
 
 // 테이블 생성
 $objTable = new tableBuilder();

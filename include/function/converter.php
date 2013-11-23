@@ -81,9 +81,9 @@ function dateFormat($sdate,$stype) {
 	return $retString;
 } 
 
-function textFormat($text,$stype) {
-	if ((!!isset($text))) {
-		switch (($stype)) {
+function textFormat($text, $stype) {
+	if (isset($text)) {
+		switch ($stype) {
 			case 1:
 				# CR&LF만 <br>로 수정	
 				$retString=str_replace(chr(13),"<br>",$text);
