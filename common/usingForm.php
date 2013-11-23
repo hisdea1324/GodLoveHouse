@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>::: God's LoveHouse :::</title>
-<link href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/css/style.css" rel="stylesheet" type="text/css">
-<script language='javascript' src='<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/js/flash.js'></script>
-<script language='javascript' src='<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/js/function.js'></script>
+<link href="/include/css/style.css" rel="stylesheet" type="text/css">
+<script language='javascript' src='/include/js/flash.js'></script>
+<script language='javascript' src='/include/js/function.js'></script>
 </head>
 <body>
 <div id="popup">

@@ -10,76 +10,76 @@ function body() {
 		<!-- //content -->
 		<div id="content">
 				<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
 		<ul class="child">
-					<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/noimg.gif"></li>
+					<li><img src="/images/board/noimg.gif"></li>
 			<li class="name">에미누엘(남)</li>
 			<li>[2008-08-08]</li>
 			<li>과테말라</li>
 			<li><input name="" type="checkbox" value="" class="chk"></li>
 				</ul>
-		<p class="btn_right"><a href="#"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_support2.gif" border="0"></a></p>
+		<p class="btn_right"><a href="#"><img src="/images/board/btn_support2.gif" border="0"></a></p>
 		</div>
 		<!-- content// -->
 <?php } ?>

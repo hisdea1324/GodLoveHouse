@@ -94,7 +94,7 @@ function body() {
 			<script src="/community/js/addthis_widget.js" type="text/javascript"></script>
 			<script language="javascript">
 			function sns_share(sns_type,c_title) {
-				var now_u = "http:#"+"<?=$_SERVER[SERVER_NAME]?>"+"<?=$_SERVER[REQUEST_URI]?>";
+				var now_u = "http:#"+"<?=$_SERVER[HTTP_HOST]?>"+"<?=$_SERVER[REQUEST_URI]?>";
 				switch(sns_type) {
 					case "fb" : # 페이스북
 						share_url = "http:#www.facebook.com/sharer.php?u="+now_u;

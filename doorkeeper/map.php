@@ -10,7 +10,7 @@ function body() {
 		<!-- //content -->
 		<div id="content">
 		<iframe src="/doorkeeper/daum_map.php" frameborder="0" border="0" width="700" height="400"></iframe>
-		<!--img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_010501.gif"-->
+		<!--img src="/images/sub/img_010501.gif"-->
 		</div>
 		<!-- content// -->
 <?php } ?>

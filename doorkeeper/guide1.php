@@ -11,10 +11,10 @@ function body() {
 		<div id="content">
 			<div class="tab">
 				<ul>
-					<li><a href="guide.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_01','','<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0101_on.gif',1)"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0101.gif" name="tab_01"></a></li>
-					<li><a href="guide1.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_02','','<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0102_on.gif',1)"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0102_on.gif" name="tab_02"></a></li>
-					<li><a href="guide2.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_03','','<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0103_on.gif',1)"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0103.gif" name="tab_03"></a></li>
-					<li><a href="guide3.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_04','','<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0104_on.gif',1)"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/tab_0104.gif" name="tab_04"></a></li>
+					<li><a href="guide.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_01','','/images/sub/tab_0101_on.gif',1)"><img src="/images/sub/tab_0101.gif" name="tab_01"></a></li>
+					<li><a href="guide1.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_02','','/images/sub/tab_0102_on.gif',1)"><img src="/images/sub/tab_0102_on.gif" name="tab_02"></a></li>
+					<li><a href="guide2.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_03','','/images/sub/tab_0103_on.gif',1)"><img src="/images/sub/tab_0103.gif" name="tab_03"></a></li>
+					<li><a href="guide3.php" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('tab_04','','/images/sub/tab_0104_on.gif',1)"><img src="/images/sub/tab_0104.gif" name="tab_04"></a></li>
 				</ul>
 			</div>
 			<H3>준수사항</H3>

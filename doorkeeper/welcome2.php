@@ -9,12 +9,12 @@ function body() {
 ?>
 		<!-- //content -->
 		<div id="content">
-			<p class="b20 gline"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010201.gif" class="b20"></p>
-		<p class="b20 gline"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010202.gif" class="b20"></p>
-		<p class="b20 gline"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010203.gif" class="b20"></p>
-		<p class="b20 gline"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010204.gif" class="b20"></p>
-		<p class="b20 gline"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010206.gif" class="b20"></p>
-		<p class="b20"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_01010205.gif"></p>
+			<p class="b20 gline"><img src="/images/sub/img_01010201.gif" class="b20"></p>
+		<p class="b20 gline"><img src="/images/sub/img_01010202.gif" class="b20"></p>
+		<p class="b20 gline"><img src="/images/sub/img_01010203.gif" class="b20"></p>
+		<p class="b20 gline"><img src="/images/sub/img_01010204.gif" class="b20"></p>
+		<p class="b20 gline"><img src="/images/sub/img_01010206.gif" class="b20"></p>
+		<p class="b20"><img src="/images/sub/img_01010205.gif"></p>
 		</div>
 		<!-- content// -->
 <?php } ?>

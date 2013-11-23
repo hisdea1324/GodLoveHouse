@@ -18,6 +18,6 @@ function body() {
 			<H4>후원금</H4>
 			<p class="b30">1. 한 어린이를 위한 후원금은 월 $32 입니다. <br>
 				2. Check 으로 납부 하시거나, EFT 자동이체를 통하여 납부 하실 수 있습니다. (‘후원금 납부 안내문’ 과 ‘EFT 신청서’를 클릭 하세요.) </p>
-		<p><a href="#"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_040201.gif" border="0" class="r15"></a><a href="kidsList.php"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_040202.gif" border="0"></a></p></div>
+		<p><a href="#"><img src="/images/sub/img_040201.gif" border="0" class="r15"></a><a href="kidsList.php"><img src="/images/sub/img_040202.gif" border="0"></a></p></div>
 		<!-- content// -->
 <?php } ?>

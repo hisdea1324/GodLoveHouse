@@ -9,7 +9,7 @@ function body() {
 ?>
 		<!-- //content -->
 		<div id="content">
-			<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/sub/img_vision.gif">
+			<img src="/images/sub/img_vision.gif">
 		</div>
 		<!-- content// -->
 <?php } ?>

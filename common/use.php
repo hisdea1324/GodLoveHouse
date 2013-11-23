@@ -3,13 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>::: God's love house :::</title>
-<link href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/css/style.css" rel="stylesheet" type="text/css">
-<script language='javascript' src='<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/js/flash.js'></script>
-<script language='javascript' src='<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/js/function.js'></script>
+<link href="/include/css/style.css" rel="stylesheet" type="text/css">
+<script language='javascript' src='/include/js/flash.js'></script>
+<script language='javascript' src='/include/js/function.js'></script>
 </head>
 <body>
 <div id="popup">
-	<p class="popup_tit"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/popup/tit_use.gif"></p>
+	<p class="popup_tit"><img src="/images/popup/tit_use.gif"></p>
 	<!-- //content -->
 	<p class="fc_02 b">제 1 장 총 칙</p><br>
 
@@ -205,7 +205,7 @@
 
 	<!-- content// -->
 </div>
-<p class="close"><a href="#" onclick="self.close();"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/popup/btn_close.gif" border="0"></a></p>
+<p class="close"><a href="#" onclick="self.close();"><img src="/images/popup/btn_close.gif" border="0"></a></p>
 </body>
 </html>
 

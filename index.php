@@ -11,22 +11,22 @@ function body() {
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab">
 			<tr>
 				<td>
-			<img name="imgNotice" id="imgNotice" src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_01_on.gif" border="0" style="cursor:hand" onclick="selectTab(1)"><img name="imgFree" id="imgFree" src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_02.gif" border="0" style="cursor:hand" onclick="selectTab(2)">
+			<img name="imgNotice" id="imgNotice" src="/images/main/tab_01_on.gif" border="0" style="cursor:hand" onclick="selectTab(1)"><img name="imgFree" id="imgFree" src="/images/main/tab_02.gif" border="0" style="cursor:hand" onclick="selectTab(2)">
 		</td>
-				<td align="right"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/btn_more.gif" border="0" style="cursor:hand" onclick="clickMore()"></td>
+				<td align="right"><img src="/images/main/btn_more.gif" border="0" style="cursor:hand" onclick="clickMore()"></td>
 			</tr>
 		</table>
 		<ul class="notice" id="shortList" name="shortList">
 		</ul>
 	</div>
 	<div class="dan2"> 
-		<a href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/living/reservation.php"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(600, 400, '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/common/usingForm.php', 'usingForm')"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/link_02.gif" border="0"></a><a href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/cooperate/family.php"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/link_03.gif" border="0"></a>
+		<a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(600, 400, '/common/usingForm.php', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a>
 	</div>
 	<div class="dan3">
 		<ul class="link">
-			<li class="bot"><a href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/doorkeeper/map.php"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/link_04.gif" border="0"></a></li>
-		<li><a href="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/community/board.php?groupId=impression"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/link_05.gif" border="0"></a></li>
-		<li><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/img_bank.gif"></li>
+			<li class="bot"><a href="/doorkeeper/map.php"><img src="/images/main/link_04.gif" border="0"></a></li>
+		<li><a href="/community/board.php?groupId=impression"><img src="/images/main/link_05.gif" border="0"></a></li>
+		<li><img src="/images/main/img_bank.gif"></li>
 		</ul>
 	</div>
 <?php }	?>
@@ -41,12 +41,12 @@ function body() {
 	}
 		function selectTab(selected) {
 		if (selected == 1) {
-			document.getElementById('imgNotice').src = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_01_on.gif';
-			document.getElementById('imgFree').src = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_02.gif';
+			document.getElementById('imgNotice').src = '/images/main/tab_01_on.gif';
+			document.getElementById('imgFree').src = '/images/main/tab_02.gif';
 			selectedBoard = 'notice';
 		} else {
-			document.getElementById('imgNotice').src = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_01.gif';
-			document.getElementById('imgFree').src = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/main/tab_02_on.gif';
+			document.getElementById('imgNotice').src = '/images/main/tab_01.gif';
+			document.getElementById('imgFree').src = '/images/main/tab_02_on.gif';
 			selectedBoard = 'free';
 		}
 		

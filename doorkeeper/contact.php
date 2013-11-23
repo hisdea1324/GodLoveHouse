@@ -50,7 +50,7 @@ function body() {
 				</tr>
 			</table>
 			<!-- write// -->
-		<p class="btn_right"><a href="#"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_cancel.gif" border="0" class="m2"></a><a href="#"><img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/btn_ok.gif" border="0" class="m2"></a></p>
+		<p class="btn_right"><a href="#"><img src="/images/board/btn_cancel.gif" border="0" class="m2"></a><a href="#"><img src="/images/board/btn_ok.gif" border="0" class="m2"></a></p>
 		</div>
 		<!-- content// -->
 <?php } ?>

@@ -71,9 +71,9 @@ function body() {
 				예약날짜
 			<dd>
 				<input type="text" name="fromDate" id="fromDate" value="<?php echo $fromDate;?>" style="width:100px" class="input" readonly onclick="calendar('fromDate')">
-				<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('fromDate')" style="cursor:hand;"> ~
+				<img src="/images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('fromDate')" style="cursor:hand;"> ~
 				<input type="text" name="toDate" id="toDate" value="<?php echo $toDate;?>" style="width:100px" class="input" readonly onclick="calendar('toDate')">
-				<img src="<?php echo "http://".$_SERVER['SERVER_NAME'];?>/images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('toDate')" style="cursor:hand;">
+				<img src="/images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('toDate')" style="cursor:hand;">
 			<dt>
 				예약자 정보
 			<dd>
@@ -102,7 +102,7 @@ function body() {
 
 <?php } ?>
 
-<script language='javascript' src='<?php echo "http://".$_SERVER['SERVER_NAME'];?>/include/js/calendar.js'></script>
+<script language='javascript' src='/include/js/calendar.js'></script>
 <script type="text/javascript">
 //<![CDATA[
 	calendar_init();

@@ -155,7 +155,7 @@ function body() {
 	}
 	
 	function goShowUser(userid) {
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/manager/member/editForm.php?mode=editUser&userid=' + userid;
+		location.href = '/manager/member/editForm.php?mode=editUser&userid=' + userid;
 	}
 
 	function goChange(supId) {

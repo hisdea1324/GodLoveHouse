@@ -20,7 +20,7 @@ function shortList() {
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_array()) {
 			print "<li><span>".dateFormat($row["regDate"], 1)."</span> ";
-			print "<a href='http://".$_SERVER['SERVER_NAME']."/community/view.php?groupId=".$groupId."&id=".$row["id"]."'>".titleFormat($row["title"], 18);
+			print "<a href='/community/view.php?groupId=".$groupId."&id=".$row["id"]."'>".titleFormat($row["title"], 18);
 			print "</a></li>";
 		}
 	} else {

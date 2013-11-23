@@ -82,14 +82,11 @@ function body() {
 			<dl>
 				<dt>
 					아이디 
-				<dd>
-					<? if (strlen($member->userid) > 0) { ?>
+				<dd><? if (strlen($member->userid) > 0) { ?>
 						<?=$member->userid?> <input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
 					<?	 } else { ?>
 					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?=$userid?>" />
-					<img src="/images/board/btn_idcheck.gif" border=0 align="absmiddle" onclick="checkId()" style="cursor:pointer" />
-					<? } ?>
-				<dt>
+				<? } ?><dt>
 					닉네임 
 				<dd>
 					<input type="text" id="nickName" name="nickName" maxlength="30" tabindex="2" onclick="checkName();" readonly value="<?=$member->nick?>" />

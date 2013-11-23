@@ -159,12 +159,12 @@ function body() {
 
 	function goShowRoom(roomId) 
 	{
-		window.open('<?php echo "http://".$_SERVER['SERVER_NAME'];?>/living/reservationDetail.php?roomId=' + roomId, 'new', '');
+		window.open('/living/reservationDetail.php?roomId=' + roomId, 'new', '');
 	}
 	
 	function goShowUser(userid) 
 	{
-		location.href = '<?php echo "http://".$_SERVER['SERVER_NAME'];?>/' + 'manager/member/editForm.php?mode=editUser&userid=' + userid;
+		location.href = '/' + 'manager/member/editForm.php?mode=editUser&userid=' + userid;
 	}
 
 	function goEdit(reservId) 
