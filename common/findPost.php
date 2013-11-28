@@ -4,9 +4,11 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $dong = (isset($_REQUEST["dong"])) ? $_REQUEST["dong"] : "";
 $zipListTemplete = "		<tr><td width='17%' bgcolor='f5f5f5'> [zip1] - [zip2] </td><td width='83%' bgcolor='#F5F5F5'> <a href=\"javascript:sendzip('[zip1]','[zip2]','[addr2]')\"><font color='#6A6A6A'>[addr1]</font></a> </td>	</tr>";
 
+$dong = preg_replace('/(\d*)(가|동|로|면|읍)$/', '', $dong);
+
 if ($dong > "") {
 	global $mysqli;
-	$query = "SELECT zipcode, sido, gugun, dong, bunji FROM zipcode WHERE dong LIKE '%".mysql_escape_string($dong)."%'";
+	$query = "SELECT zipcode, sido, gugun, dong, bunji FROM zipcode WHERE dong LIKE '".mysql_escape_string($dong)."%'";
 	
 	$dongList = "";
 	if ($result = $mysqli->query($query)) {
