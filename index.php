@@ -39,7 +39,8 @@ function body() {
 	function clickMore() {
 		location.href = 'community/board.php?groupId=' + selectedBoard;
 	}
-		function selectTab(selected) {
+	
+	function selectTab(selected) {
 		if (selected == 1) {
 			document.getElementById('imgNotice').src = '/images/main/tab_01_on.gif';
 			document.getElementById('imgFree').src = '/images/main/tab_02.gif';
@@ -53,7 +54,8 @@ function body() {
 		var url = 'ajax.php?mode=board&groupId=' + selectedBoard;
 		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: cb_callPage});
 	}
-		function cb_callPage(reqResult) {
+
+	function cb_callPage(reqResult) {
 		var dataobj = reqResult.responseText;
 		document.getElementById('shortList').innerHTML = dataobj;
 	}

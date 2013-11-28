@@ -26,8 +26,8 @@ $y = $obj_xml->item->point->y;
 </head>
 
 <body style="margin:0px 0px 0px 0px">
-<script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=97c064093c192ebb34eb5763117f3cb8">
-<? #script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=481c0483e27994558af69d54e9d76ee1" ?>
+<? #script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=97c064093c192ebb34eb5763117f3cb8" ?>
+<script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=481c0483e27994558af69d54e9d76ee1">
 </script>
 <div id='mapContainer' style='width:550px;height:450px'></div> 
 <script type="text/javascript">
