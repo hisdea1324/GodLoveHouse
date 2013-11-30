@@ -27,7 +27,11 @@ $y = $obj_xml->item->point->y;
 
 <body style="margin:0px 0px 0px 0px">
 <? #script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=97c064093c192ebb34eb5763117f3cb8" ?>
+<? if ($_SERVER['HTTP_HOST'] == "www.godlovehouse.net") { ?>
 <script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=481c0483e27994558af69d54e9d76ee1">
+<? } else { ?>
+<script type="text/JavaScript" src="http://maps.naver.com/js/naverMap.naver?key=52a36e62b8ee8a23ba09eeb5d33021af">
+<? } ?>
 </script>
 <div id='mapContainer' style='width:550px;height:450px'></div> 
 <script type="text/javascript">
@@ -47,7 +51,7 @@ var mapBtns = new NMapBtns();
 	mapBtns.setValign("top");
 	mapObj.addControl(mapBtns);
 
-var iconUrl = "http://www.godlovehouse.net/navermaps/GLH.gif";
+var iconUrl = "http://www.godlovehouse.net/navermaps/GLH.png";
 var marker = new NMark(NPoint(<?=$x?>,<?=$y?>), new NIcon(iconUrl, new NSize(22, 29)));
 	mapObj.addOverlay(marker);
 
