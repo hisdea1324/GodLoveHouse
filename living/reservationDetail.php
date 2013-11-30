@@ -144,19 +144,31 @@ function body() {
 			<form action="process.php" method="post" name="frmReserve" id="frmReserve">
 			<input type="hidden" name="mode" id="mode" value="reservation" />
 			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
-			<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
+			<input type="hidden" name="houseId" id="houseId" value="<?=$houseId?>" />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
-				<col width="15%">
+				<col width="20%">
 				<col />
 				<tr>
-					<td class="td01"><p class="reserve"><b>날짜입력</b></td>
+					<td class="td01"><p class="reserve"><b>희망 사용 기간</b></td>
 					<td>
 						<input type="text" name="startDate" id="startDate" value="<?=$fromDate?>" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
 						<input type="text" name="endDate" id="endDate" class="input" value="<?=$toDate?>" readonly onclick="calendar('endDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate')">
 						<label class="fs11" type="text" name='resultMessage1' id='resultMessage1'></label>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>희망 입주 시간</b></td>
+					<td>
+						<select type="text" name="arrival_time" id="arrival_time">
+							<? 
+							for ($i = 6; $i <= 22; $i++) {
+								echo "<option value='{$i}시'>{$i}시</option>";
+							} 
+							?>
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -172,19 +184,32 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>선교지</b></td>
+					<td class="td01"><p class="reserve"><b>입주 인원수</b></td>
 					<td>
-						<input type="text" name="resv_nation" id="resv_nation" value="<?=$mission->nation?>" class="input">
+						<select type="text" name="people_number" id="people_number">
+							<? 
+							for ($i = 1; $i <= 10; $i++) {
+								echo "<option value='{$i}명'>{$i}명</option>";
+							} 
+							?>
+						</select>
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>파송 단체</b></td>
+					<td class="td01"><p class="reserve"><b>방문 목적</b></td>
 					<td>
-						<? if ($mission->church) { ?>
-						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">
-						<? } else { ?>
-						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->ngo?>" class="input">
-						<? } ?>
+						
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="병원" class="input"> 병원
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="단체행사" class="input"> 단체행사 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="안식년" class="input"> 안식년 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="자녀교육" class="input"> 자녀교육 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="기타" class="input"> 기타 
+					</td>
+				</tr>
+				<tr>
+					<td class="td01"><p class="reserve"><b>메모</b></td>
+					<td>
+						<textarea type="text" name="memo" id="memo"></textarea>
 					</td>
 				</tr>
 				<tr>

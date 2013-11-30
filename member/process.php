@@ -301,7 +301,7 @@ function changeReservStatus() {
 	$reserv->Update();
 	$reserv = null;
 
-	header("Location: http://".$_SERVER['HTTP_HOST']."/member/mypage_houseReserv.php?houseId=".$houseId."&roomId=".$roomId);
+	header("Location: http://".$_SERVER['HTTP_HOST']."/member/mypage_missionary.php");
 } 
 
 function reservation() {

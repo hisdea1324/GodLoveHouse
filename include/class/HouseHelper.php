@@ -305,10 +305,10 @@ class HouseHelper {
 	function getReservationList($query) {
 		global $mysqli;
 		
+		$reserveInfo = array();
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
-				$reserveInfo = new ReservationObject();
-				$reserveInfo->Open($row["reservationNo"]);
+				array_push($reserveInfo, new ReservationObject($row["reservationNo"]));
 			}
 		}
 

@@ -61,8 +61,10 @@ function reservation() {
 	$book->userid = $_SESSION['userid'];
 	$book->resv_name = $_REQUEST['resv_name'];
 	$book->resv_phone = $_REQUEST['resv_phone'];
-	$book->resv_nation = $_REQUEST['resv_nation'];
-	$book->resv_assoc = $_REQUEST['resv_assoc'];
+	$book->arrival_time = $_REQUEST['arrival_time'];
+	$book->people_number = $_REQUEST['people_number'];
+	$book->purpose = implode(',', $_REQUEST['purpose']);
+	$book->memo = $_REQUEST['memo'];
 
 	if (!$book->checkId()) {
 		header("Location: "."reservation.php?houseId=".$houseId);
