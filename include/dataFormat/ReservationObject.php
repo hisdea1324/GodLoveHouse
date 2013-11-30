@@ -50,6 +50,9 @@ class ReservationObject {
 					$this->record[$name] = time();
 				}
 				return $this->record[$name];
+			case 'duration':
+				$duration = ($this->enddate - $this->startdate) / (24 * 60 * 60);
+				return $duration;
 			default:
 				return $this->record[$name];
 		}

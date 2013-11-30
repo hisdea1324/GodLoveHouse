@@ -235,12 +235,18 @@ function body() {
 
 		<div class="search">
 			<span class="mr20"><strong>SEARCH ></strong></span>
-			<select name="status" id="status" onchange="search(this.value)">
+			<select name="room" id="room" onchange="searchRoom(this.value)">
 				<option value="0">전체</option>
-				<option value="1" <?php if ($search == "1") { ?> selected <?php } ?>>신규예약</option>
-				<option value="2" <?php if ($search == "2") { ?> selected <?php } ?>>승인</option>
-				<option value="3" <?php if ($search == "3") { ?> selected <?php } ?>>완료</option>
-				<option value="4" <?php if ($search == "4") { ?> selected <?php } ?>>거절</option>
+<? foreach ($house->RoomList as $aRoom) { ?>
+				<option value="<?=$aRoom->roomid?>" <?php if ($aRoom->roomId == $roomId) { ?> selected <? } ?>><?=$aRoom->roomName?></option>
+<? } ?>
+			</select>
+			<select name="status" id="status" onchange="search(this.value)">
+				<option value="">전체</option>
+				<option value="1" <? if ($search == "1") { ?> selected <? } ?>>신규예약</option>
+				<option value="2" <? if ($search == "2") { ?> selected <? } ?>>승인</option>
+				<option value="3" <? if ($search == "3") { ?> selected <? } ?>>완료</option>
+				<option value="4" <? if ($search == "4") { ?> selected <? } ?>>거절</option>
 			</select>
 			<!--span class="btn1"><a href="javascript:void(0)" onclick="search(this.value)">검색</a></span-->
 		</div>
@@ -252,15 +258,15 @@ function body() {
 					<col width="10%" />
 					<col width="10%" />
 					<col width="20%" />
-					<col width="30%" />
-					<col width="30%" />
+					<col width="35%" />
+					<col width="25%" />
 				</colgroup>
 				<thead>
 					<tr>
 						<th>예약번호</th>
 						<th>이름</th>
 						<th>선교관 / 방이름</th>
-						<th>일정</th>
+						<th>기간 / 일정</th>
 						<th>상태</th>
 					</tr>
 				</thead>
@@ -289,6 +295,7 @@ function body() {
 						<td><? 
 							if ($aResv->Status != "거절") {?>
 							<form method="post" name="frmEditDate<?=$aResv->BookNo?>" id="frmEditDate<?=$aResv->BookNo?>">
+							<?=$aResv->duration?>일 / 
 							<input type="hidden" name="mode" id="mode" value="edit_date" />
 							<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
 							<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
@@ -299,7 +306,7 @@ function body() {
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate<?=$aResv->BookNo?>')">
 							</form>
 							<? } else { ?>
-							<?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?>
+							<?=$aResv->duration?>일  / <?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?>
 							<? } ?>
 						</td>
 						<td><?
@@ -501,8 +508,16 @@ function body() {
 	}
 
 	function edit_date(value) {
-		document.getElementById('frmEditDate' + value).action = "process.php";;
+		document.getElementById('frmEditDate' + value).action = "process.php";
 		document.getElementById('frmEditDate' + value).submit();
+	}
+	
+	function searchRoom(room) {
+		if (room != 0) {
+			location.href = 'reserve_2.php?houseId=<?=$houseId?>&roomId=' + room;
+		} else {
+			location.href = 'reserve_2.php?houseId=<?=$houseId?>';
+		}
 	}
 	
 	function search(value) {
