@@ -344,11 +344,13 @@ function reservation() {
 	$book->StartDate = isset($_REQUEST["startDate"]) ? $_REQUEST["startDate"] : "";
 	$book->EndDate = isset($_REQUEST["endDate"]) ? $_REQUEST["endDate"] : "";
 	$book->RoomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
-	$book->userid = $_SESSION["userid"];
+	$book->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
 	$book->resv_name = isset($_REQUEST["resv_name"]) ? $_REQUEST["resv_name"] : "";
 	$book->resv_phone = isset($_REQUEST["resv_phone"]) ? $_REQUEST["resv_phone"] : "";
-	$book->resv_nation = isset($_REQUEST["resv_nation"]) ? $_REQUEST["resv_nation"] : "";
-	$book->resv_assoc = isset($_REQUEST["resv_assoc"]) ? $_REQUEST["resv_assoc"] : "";
+	$book->arrival_time = isset($_REQUEST["arrival_time"]) ? $_REQUEST['arrival_time'] : "";
+	$book->people_number = isset($_REQUEST["people_number"]) ? $_REQUEST['people_number'] : "";
+	$book->purpose = isset($_REQUEST["purpose"]) ? implode(',', $_REQUEST['purpose']) : "";
+	$book->memo = isset($_REQUEST["memo"]) ? $_REQUEST['memo'] : "";
 
 	if (!$book->checkId()) {
 		header("Location: reserve_2.php?houseId=".$houseId);

@@ -17,6 +17,10 @@ function uploadFile(event, tag, path) {
 	centerWinOpen(400,250,ROOT + "common/uploadFile.php?tag=" + tag + "&path=" + path, "uploadFile");
 }
 
+function searchUser() {
+	centerWinOpen(400,250,ROOT + "common/searchUser.php","idCheck");
+}
+
 function checkId() {
 	centerWinOpen(400,250,ROOT + "common/searchId.php","idCheck");
 }

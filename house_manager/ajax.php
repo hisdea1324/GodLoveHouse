@@ -101,16 +101,32 @@ function getUserProfile2() {
 	$reservationNo = isset($_REQUEST["reservationNo"]) ? $_REQUEST["reservationNo"] : "";
 	$resv = new ReservationObject($reservationNo);
 
+	$m_helper = new MemberHelper();
+	$member = $m_helper->getMemberByuserid($resv->userid);
+	$mission = $m_helper->getMissionInfoByuserid($resv->userid);
+	
 	print "<div class=\"tit\">";
 	print "	신청자 정보";
 	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
 	print "</div>";
 	print "<ul>";
-	print "	<li><p>성명</p> ".(($resv->resv_name) ? $resv->resv_name : "-")."</li>";
-	print "	<li><p>연락처</p> ".(($resv->resv_phone) ? $resv->resv_phone : "-")."</li>";
-	print "	<li><p>파송 국가</p> ".(($resv->resv_nation) ? $resv->resv_name : "-")."</li>";
-	print "	<li><p>지원 단체</p> ".(($resv->resv_assoc) ? $resv->resv_assoc : "-")."</li>";
+	print "<li><p>회원아이디</p> ".$member->userid."</li>";
+	print "<li><p>회원이름(별명)</p> ".$member->Name."(".$member->Nick.")</li>";
+	print "<li><p>회원연락처</p> ".implode('-',$member->mobile)."</li>";
+	if ($member->Name != $resv->resv_name) {
+		print "<li><p>예약자성명</p> ".(($resv->resv_name) ? $resv->resv_name : "-")."</li>";
+	}
+	if (implode('-',$member->mobile) != $resv->resv_phone) {
+		print "<li><p>예약자연락처</p> ".(($resv->resv_phone) ? $resv->resv_phone : "-")."</li>";
+	}
+	print "<li><p>인원수</p> ".(($resv->people_number) ? $resv->people_number : "-")."</li>";
+	print "<li><p>희망입주시간</p> ".(($resv->arrival_time) ? $resv->arrival_time : "-")."</li>";
+	print "<li><p>방문목적</p> ".(($resv->purpose) ? $resv->purpose : "-")."</li>";
+	print "<li><p>메모</p> ".(($resv->memo) ? $resv->memo : "-")."</li>";
+	print "<li><p>지역</p> ".(($mission->Nation) ? $mission->Nation : "-")."</li>";
+	print "<li><p>파송교회</p> ".(($mission->Church) ? $mission->Church : "-")."</li>";
+	print "<li><p>파송단체</p> ".(($mission->Ngo) ? $mission->Ngo : "-")."</li>";
 	print "</ul>";
-
 }
+
 ?>

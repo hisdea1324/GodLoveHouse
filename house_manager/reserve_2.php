@@ -358,7 +358,7 @@ function body() {
 	if ($roomId != "" && $house->status == "승인") {
 ?>
 				<tr>
-					<th><p class="reserve"><b>날짜입력</b></td>
+					<th><p class="reserve"><b>날짜입력</b></th>
 					<td>
 						<input type="text" name="startDate" id="startDate" value="" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
@@ -368,31 +368,62 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<th><p class="reserve"><b>이름</b></td>
+					<th><p class="reserve"><b>희망 입주 시간</b></th>
 					<td>
-						<input type="text" name="resv_name" id="resv_name" value="<?=$member->name?>" class="input">
+						<select type="text" name="arrival_time" id="arrival_time">
+							<? 
+							for ($i = 6; $i <= 22; $i++) {
+								echo "<option value='{$i}시'>{$i}시</option>";
+							} 
+							?>
+						</select>
 					</td>
 				</tr>
 				<tr>
-					<th><p class="reserve"><b>연락처</b></td>
+					<th><p class="reserve"><b>회원아이디</b></th>
 					<td>
-						<input type="text" name="resv_phone" id="resv_phone" value="<?=$member->mobile[0]?>-<?=$member->mobile[1]?>-<?=$member->mobile[2]?>" class="input">
+						<input type="text" name="userid" id="userid" value="" class="input" readonly onclick="searchUser();" />
 					</td>
 				</tr>
 				<tr>
-					<th><p class="reserve"><b>선교지</b></td>
+					<th><p class="reserve"><b>이름</b></th>
 					<td>
-						<input type="text" name="resv_nation" id="resv_nation" value="<?=$mission->nation?>" class="input">
+						<input type="text" name="resv_name" id="resv_name" value="" class="input">
 					</td>
 				</tr>
 				<tr>
-					<th><p class="reserve"><b>파송 단체</b></td>
+					<th><p class="reserve"><b>연락처</b></th>
 					<td>
-						<? if ($mission->church) { ?>
-						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->church?>" class="input">
-						<? } else { ?>
-						<input type="text" name="resv_assoc" id="resv_assoc" value="<?=$mission->ngo?>" class="input">
-						<? } ?>
+						<input type="text" name="resv_phone" id="resv_phone" value="" class="input">
+					</td>
+				</tr>
+				<tr>
+					<th><p class="reserve"><b>입주 인원수</b></th>
+					<td>
+						<select type="text" name="people_number" id="people_number">
+							<? 
+							for ($i = 1; $i <= 10; $i++) {
+								echo "<option value='{$i}명'>{$i}명</option>";
+							} 
+							?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th><p class="reserve"><b>방문 목적</b></th>
+					<td>
+						
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="병원" class="input"> 병원
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="단체행사" class="input"> 단체행사 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="안식년" class="input"> 안식년 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="자녀교육" class="input"> 자녀교육 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="기타" class="input"> 기타 
+					</td>
+				</tr>
+				<tr>
+					<th><p class="reserve"><b>메모</b></th>
+					<td>
+						<textarea type="text" name="memo" id="memo"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -425,13 +456,19 @@ function body() {
 	function reserveSubmit(available_date_list) {
 		var endDate = document.getElementById("endDate").value;
 		var startDate = document.getElementById("startDate").value;
+		var userid = document.getElementById("userid").value;
 
-		var start = parseInt(startDate.substring(8, 10));
-		var end = parseInt(endDate.substring(8, 10));
-		var available = parseInt(available_date_list.substring(start, end + 1));
+		// var start = parseInt(startDate.substring(8, 10));
+		// var end = parseInt(endDate.substring(8, 10));
+		// var available = parseInt(available_date_list.substring(start, end + 1));
 
-		if (available > 0) {
-			alert('예약이 되어있는 기간입니다.');
+		// if (available > 0) {
+			// alert('예약이 되어있는 기간입니다.');
+			// return;
+		// }
+		
+		if (userid.length == 0) {
+			alert('회원을 선택해 주세요');
 			return;
 		}
 

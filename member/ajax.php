@@ -3,19 +3,19 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $mode = trim($_REQUEST["mode"]);
 switch (($mode)) {
 	case "checkuserid":
-confirmuserid();
+		confirmuserid();
 		break;
 	case "checkNick":
-confirmNick();
+		confirmNick();
 		break;
 	case "checkNID":
-confirmNID();
+		confirmNID();
 		break;
 	case "checkPassword":
-confirmPassword();
+		confirmPassword();
 		break;
 	case "getUserProfile":
-getUserProfile();
+		getUserProfile();
 		break;
 } 
 
