@@ -21,8 +21,7 @@ function show_request_variable_list() {
 # pattern3 = "[^-가-힣a-zA-Z0-9/ ]" '숫자와 영어 한글만 
 # pattern4 = "<[^>]*>"	 '태그만
 # pattern5 = "[^-a-zA-Z0-9/ ]"		'영어 숫자만
-function public() {	
-	RegixCheck($sText,$sPattern);
+function RegixCheck($sText,$sPattern) {
 	$regEx = new RegExp();
 
 	$regEx->Pattern = $sPattern; #  패턴을 설정합니다.	

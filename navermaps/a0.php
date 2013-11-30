@@ -6,7 +6,7 @@
 <title>GOD Love House</title>
 </head>
 <?php // asp2php (vbscript) converted on Fri Apr 12 22:35:58 2013
- $CODEPAGE="65001";?>
+ $CODEPAGE="65001"?>
 
 
 <?php 
@@ -66,8 +66,8 @@ var mapObj = new NMap(document.getElementById('mapContainer'),550,450);
 //var infowin = new NInfoWindow();
 
 
-	//mapObj.setBound(<?php echo $x;?><%,<?php echo $y;?><%, <?php echo $x;?><%,<?php echo $y;?><%); 
-	mapObj.setCenterAndZoom(new NPoint(<?php echo $x;?><%,<?php echo $y;?><%),3);		//현위치
+	//mapObj.setBound(<?=$x?>, <?=$y?>, <?=$x?><?=$y?>); 
+	mapObj.setCenterAndZoom(new NPoint(<?=$x?>, <?=$y?>),3);		//현위치
 	mapObj.zoomOut();
 
 
@@ -86,7 +86,7 @@ var mapBtns = new NMapBtns();
 	mapObj.addControl(mapBtns);
 
 	var iconUrl = "http://www.godlovehouse.net/navermaps/GLH.gif";
-	var marker = new NMark(NPoint(<?php echo $x;?><%,<?php echo $y;?><%), new NIcon(iconUrl, new NSize(15, 14)));
+	var marker = new NMark(NPoint(<?=$x?>, <?=$y?>), new NIcon(iconUrl, new NSize(15, 14)));
 		mapObj.addOverlay(marker);
 
 

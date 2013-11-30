@@ -70,8 +70,8 @@ $dom = null;
 <script type="text/javascript">
 // 기본 지도 생성
 var mapObj = new NMap(document.getElementById('mapContainer'),550,450);
-//mapObj.setBound(<?php echo $x;?><%,<?php echo $y;?><%, <?php echo $x;?><%,<?php echo $y;?><%); 
-mapObj.setCenterAndZoom(new NPoint(<?php echo $x;?><%,<?php echo $y;?><%),3);
+//mapObj.setBound(<?=$x?>,<?=$y?>, <?=$x?>,<?=$y?>); 
+mapObj.setCenterAndZoom(new NPoint(<?=$x?>,<?=$y?>),3);
 mapObj.zoomOut();
 
 // 확대, 축소를 위한 컨트롤을 생성합니다.
@@ -86,7 +86,7 @@ var mapBtns = new NMapBtns();
 	mapObj.addControl(mapBtns);
 
 var iconUrl = "http://www.godlovehouse.net/navermaps/GLH.gif";
-var marker = new NMark(NPoint(<?php echo $x;?><%,<?php echo $y;?><%), new NIcon(iconUrl, new NSize(30, 28)));
+var marker = new NMark(NPoint(<?=$x?>,<?=$y?>), new NIcon(iconUrl, new NSize(30, 28)));
 	mapObj.addOverlay(marker);
 
 </script>

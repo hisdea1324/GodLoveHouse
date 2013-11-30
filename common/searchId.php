@@ -5,7 +5,7 @@ $mode = trim($_REQUEST["mode"]);
 $checkuserid = trim($_REQUEST["userid"]);
 $isExist = "N";
 
-if ($mode == "search") && (strlen($checkuserid) > 3) {
+if (($mode == "search") && (strlen($checkuserid) > 3)) {
 	$query = "SELECT * FROM users WHERE userid = '".$mysqli->real_escape_string($checkuserid)."'";
 	$result = $mysqli->query($query);
 	if ($result) {

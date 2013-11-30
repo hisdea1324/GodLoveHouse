@@ -6,7 +6,7 @@
 <title>GOD Love House</title>
 </head>
 <?php // asp2php (vbscript) converted on Fri Apr 12 22:35:58 2013
- $CODEPAGE="65001";?>
+ $CODEPAGE="65001"?>
 <?php header("Content-type: "."text/html;charset=utf-8"); ?>
 
 <?php 
@@ -65,8 +65,8 @@ $dom = null;
 <script type="text/javascript">
 // 기본 지도 생성
 var mapObj = new NMap(document.getElementById('mapContainer'),550,450);
-//mapObj.setBound(<?php echo $x;?><%,<?php echo $y;?><%, <?php echo $x;?><%,<?php echo $y;?><%); 
-mapObj.setCenterAndZoom(new NPoint(<?php echo $x;?><%,<?php echo $y;?><%),3);
+//mapObj.setBound(<?=$x?>,<?=$y?>, <?=$x?>,<?=$y?>); 
+mapObj.setCenterAndZoom(new NPoint(<?=$x?>,<?=$y?>),3);
 mapObj.zoomOut();
 
 // 확대, 축소를 위한 컨트롤을 생성합니다.

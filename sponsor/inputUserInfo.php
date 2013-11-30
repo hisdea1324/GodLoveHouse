@@ -12,7 +12,7 @@ foreach ($IdList as $num=>$value) {
 
 $s_Helper = new SupportHelper();
 $member = $s_Helper->getCenterSupportByuserid($_SESSION["userid"]);
-if ($member->IsNew {
+if ($member->IsNew) {
 	$m_Helper = new MemberHelper();
 	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 } 

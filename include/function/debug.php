@@ -5,8 +5,7 @@
 # == 변수 : oErr(Object)
 # == 반환 : none
 # ===================================================================
-function public() {	
-	print_error_msg($oErr);
+function print_error_msg($oErr) {
 
 	foreach ($oErr->Errors as $errLoop) {
 		println("#############");

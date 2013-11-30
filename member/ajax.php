@@ -51,7 +51,7 @@ function confirmNick() {
 	}
 
 	$query = "SELECT * FROM users WHERE nick = '".$mysqli->real_escape_string($nick)."'";
-	$result = $mysqli->query($query)
+	$result = $mysqli->query($query);
 
 	if ($result && $result->num_rows > 0) {
 		print "<b><font color=red>이 닉네임은 사용할 수 없습니다.</font></b>";

@@ -1,44 +1,11 @@
 <?php 
 # ===================================================================
-# == 설명 : pattern을 찾아서 replace, 대소문자 구분안함
-# == 이름 : eregi_replace(sPattern, sReplace, sText)
-# == 변수 : sPattern(String), sReplace(String), sReplace(sText)
-# == 반환 : String
-# ===================================================================
-function public() {	
-	eregi_replace($sPattern,$sReplace,$sText);
-	$oRegEx = new RegExp();
-
-	$oRegEx->Pattern = $sPattern; # # 패턴 설정	
-	$oRegEx->IgnoreCase=true; # # 대소문자 구분 여부	
-	$oRegEx->Global=true; # # 전체 문서에서 검색
-	return $oRegEx->replace($sText, $sReplace); # # Replace String	
-} 
-
-# ===================================================================
-# == 설명 : pattern을 찾아서 replace, 대소문자 구분
-# == 이름 : ereg_replace(sPattern, sReplace, sText)
-# == 변수 : sPattern(String), sReplace(String), sReplace(sText)
-# == 반환 : String
-# ===================================================================
-function public() {	
-	ereg_replace($sPattern,$sReplace,$sText);
-	$oRegEx = new RegExp();
-
-	$oRegEx->Pattern = $sPattern; # # 패턴 설정	
-	$oRegEx->IgnoreCase=false; # # 대소문자 구분 여부	
-	$oRegEx->Global=true; # # 전체 문서에서 검색
-	return $oRegEx->replace($sText, $sReplace); # # Replace String	
-} 
-
-# ===================================================================
 # == 설명 : 허용태그 외의 모든 태그제거 함수
 # == 이름 : strip_tags(sContent, sAllowTags)
 # == 변수 : sContent(String), sAllowTags(String)
 # == 반환 : String
 # ===================================================================
-function public() {	
-	strip_tags($sContent,$sAllowTags);
+function strip_tags($sContent,$sAllowTags) {
 
 	$tags=str_replace(",","|",$sAllowTags);
 	$sContent=eregi_replace("<(/?)(?!/|".$tags.")([^<>]*)?>","&lt;$1$2&gt;",$sContent);
@@ -53,8 +20,7 @@ function public() {
 # == 변수 : sText(String),iPos(Integer)
 # == 반환 : String
 # ===================================================================
-function public() {	
-	append_tag_br($sText,$iPos);
+function append_tag_br($sText,$iPos) {
 	$iTextLen=strlen($sText);
 
 	if (($iTextLen%$iPos)==0) {
