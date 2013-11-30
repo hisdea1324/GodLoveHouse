@@ -22,8 +22,7 @@ function addCode() {
 } 
 
 function deleteCode() {
-	$objCode = new CodeObject();
-	$objCode->OpenById($_REQUEST["id"]);
+	$objCode = new CodeObject($_REQUEST["id"], "id");
 	$objCode->Delete();
 	//header("Location: "."index.php");
 	//echo '<meta http-equiv="Refresh" content="0; url=index.php">';

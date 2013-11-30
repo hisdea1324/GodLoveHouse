@@ -54,7 +54,7 @@ class CodeHelper {
 				break;
 		} 
 		return $value;
-	} 
+	}
 
 	function getCodeListByType($value, $index) {
 		global $mysqli;
@@ -66,11 +66,11 @@ class CodeHelper {
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
 				$return = $row;
-			} 
-		} 
+			}
+		}
 
 		return $result;
-	} 
+	}
 
 	function getCodeList($query) {
 		global $mysqli;
@@ -78,14 +78,13 @@ class CodeHelper {
 		
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
-				$codeInfo = new CodeObject();
-				$codeInfo->Open($row["code"]);
+				$codeInfo = new CodeObject($row["code"]);
 				$return[] = $codeInfo;
-			} 
-		} 
+			}
+		}
 
 		return $return;
-	} 
+	}
 
 	function getNationCodeList() {
 		$query = "SELECT code FROM `code` WHERE type = '선교지' ORDER BY name";
@@ -95,21 +94,21 @@ class CodeHelper {
 	function getSupportCodeList() {
 		$query = "SELECT code FROM `code` WHERE type = '후원타입' ORDER BY name";
 		return $this->getCodeList($query);
-	} 
+	}
 
 	function getLocalCodeList() {
 		$query = "SELECT code FROM `code` WHERE type = '지역코드' ORDER BY name";
 		return $this->getCodeList($query);
-	} 
+	}
 
 	function getHouseStatusCodeList() {
 		$query = "SELECT code FROM `code` WHERE type = '상태코드2' ORDER BY name";
 		return $this->getCodeList($query);
-	} 
+	}
 
 	function getStatusCodeList() {
 		$query = "SELECT code FROM `code` WHERE type = '상태코드' ORDER BY name";
 		return $this->getCodeList($query);
-	} 
-} 
+	}
+}
 ?>

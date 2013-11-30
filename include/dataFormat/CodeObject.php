@@ -8,7 +8,6 @@
 class CodeObject {
 	protected $record = array();
 
-
 	public function __set($name,$value) { 
 		switch ($name) {
 			case 'Code':
@@ -42,98 +41,36 @@ class CodeObject {
 		return isset($this->record[$name]); 
     }
 
-    function __construct() {
-		$this->record['id'] = -1;
-		$this->record['code'] = "";
-		$this->record['type'] = "";
-		$this->record['name'] = "";
-	}
-
-
-	function Open($value) {
-		global $mysqli;
-
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * FROM code WHERE `code` = ? ";
-
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("s", $value);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+    function __construct($value = "", $field = "code") {
+		$this->initialize();
+		if ($value != "") {
+			$this->Open($field, $value);
 		}
 	}
 
-	function OpenById($value) {
+    function initialize() {
+		$this->id = -1;
+		$this->code = "";
+		$this->type = "";
+		$this->name = "";
+	}
+
+	function Open($field, $value) {
 		global $mysqli;
 
-		$column = array();
-		/* create a prepared statement */
-		$query = "SELECT * FROM code WHERE `id` = ? ";
+		$query = "SELECT * FROM code WHERE `".$mysqli->real_escape_string($field)."` = '".$mysqli->real_escape_string($value)."'";
 
-		if ($stmt = $mysqli->prepare($query)) {
-
-			/* bind parameters for markers */
-			$stmt->bind_param("i", $value);
-
-			/* execute query */
-			$stmt->execute();
-			
-			$metaResults = $stmt->result_metadata();
-			$fields = $metaResults->fetch_fields();
-			$statementParams='';
-			
-			//build the bind_results statement dynamically so I can get the results in an array
-			foreach ($fields as $field) {
-				if (empty($statementParams)) {
-					$statementParams.="\$column['".$field->name."']";
-				} else {
-					$statementParams.=", \$column['".$field->name."']";
-				}
-			}
-
-
-			$statment = "\$stmt->bind_result($statementParams);";
-			eval($statment);
-			
-			while($stmt->fetch()){
-				//Now the data is contained in the assoc array $column. Useful if you need to do a foreach, or 
-				//if your lazy and didn't want to write out each param to bind.
-				$this->record = $column;
-			}
-			
-			/* close statement */
-			$stmt->close();
+		$result = $mysqli->query($query);
+		if (!$result) return;
+		
+		while ($row = $result->fetch_assoc()) {
+			$this->id = $row['id'];
+			$this->code = $row['code'];
+			$this->name = $row['name'];
+			$this->type = $row['type'];
 		}
+		
+		$result->close();
 	}
 
 	function Update() {
