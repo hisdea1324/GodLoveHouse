@@ -12,7 +12,6 @@ showHouseManagerFooter();
 
 function body() {
 	global $mysqli;
-
 	global $houseId, $roomId, $room_color;
 
 	$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";

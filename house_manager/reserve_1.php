@@ -11,8 +11,42 @@ function body() {
 	$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
 	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
 
+	$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
+	$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
+
 	$h_helper = new HouseHelper();
 	$house = $h_helper->getHouseInfoById($houseId);
+
+	//******************************************************************
+	// 달력 세팅
+	$calendar['year'] = isset($_REQUEST["year"]) ? trim($_REQUEST["year"]) : date("Y");
+	$calendar['month'] = isset($_REQUEST["month"]) ? trim($_REQUEST["month"]) : date("m");
+	setTestValue($calendar);
+
+	$fromDate = mktime(0, 0, 0, $calendar['month'], 1, $calendar['year']);
+	$toDate = mktime(0, 0, 0, $calendar['month'] + 1, 1, $calendar['year']);
+
+	// year month correcting
+	$calendar['year'] = date('Y', $fromDate);
+	$calendar['month'] = date('m', $fromDate);
+
+	$s_Helper = new supportHelper();
+	$dailySupport = $s_Helper->getDailySupport($fromDate, $toDate);
+	$senders = $s_Helper->getSender($fromDate, $toDate);
+	//******************************************************************
+
+	//******************************************************************
+	// request query pre setting
+	$q[0] = "houseId=".$houseId;
+	$q[1] = "roomId=".$roomId;
+	$q[2] = "year=".($calendar['year'] - 1);
+	$q[3] = "year=".$calendar['year'];
+	$q[4] = "year=".($calendar['year'] + 1);
+	$q[5] = "month=".($calendar['month'] - 1);
+	$q[6] = "month=".($calendar['month']);
+	$q[7] = "month=".($calendar['month'] + 1);
+	//******************************************************************
+	
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">
@@ -24,19 +58,19 @@ function body() {
 									<!--h1><?=$house->houseName?> <span class="btn1"><a href="mission_write.php?houseId=<?=$houseId?>">선교관 정보수정</a></span></h1-->
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
-											<li><a href="#"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
-											<li class="txt">2013</li>
-											<li><a href="#"><img src="images/btn_ynext.gif" alt="다음년도" /></a></li>
+											<li><a href="reserve_1.php?<?="{$q[0]}&{$q[1]}&{$q[2]}&{$q[6]}"?>"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>
+											<li class="txt"><?=$calendar['year']?></li>
+											<li><a href="reserve_1.php?<?="{$q[0]}&{$q[1]}&{$q[4]}&{$q[6]}"?>"><img src="images/btn_ynext.gif" alt="다음년도" /></a></li>
 										</ul>
 										<ul>
-											<li><a href="#"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
-											<li class="txt">03</li>
-											<li><a href="#"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
+											<li><a href="reserve_1.php?<?="{$q[0]}&{$q[1]}&{$q[3]}&{$q[5]}"?>"><img src="images/btn_yprev.gif" alt="이전달" /></a></li>
+											<li class="txt"><?=$calendar['month']?></li>
+											<li><a href="reserve_1.php?<?="{$q[0]}&{$q[1]}&{$q[3]}&{$q[7]}"?>"><img src="images/btn_ynext.gif" alt="다음달" /></a></li>
 										</ul>
-										<ul class="tabs mt30">
+										<!--ul class="tabs mt30">
 											<li class="on"><a href="reserve_1.php">달력보기</a></li>
 											<li><a href="reserve_2.php">방전체보기</a></li>
-										</ul>
+										</ul-->
 									</div> <!-- // list_year -->
 									<div class="cal_month mt20"> <!-- cal_month -->
 										<table>
@@ -61,36 +95,51 @@ function body() {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
+												<? for ($i = 0; $i < date("w", $fromDate); $i++) { ?>
+													<? if ($i == 0) { ?>
+													<tr>
+													<? } ?>
 													<td>
 														<div class="cal_day">
-															<p class="red"></p>
+															<p> </p>
 														</div>									
 													</td>
+													<? if ($i == 6) { ?>
+													</tr>
+													<? } ?>
+												<? } ?>
+												<? for ($i = $fromDate; $i < $toDate; $i += 86400) { ?>
+													<? if (date('w', $i) == 0) { ?>
+													<tr>
+													<? } ?>
 													<td>
 														<div class="cal_day">
-															<p></p>
+														<? if (date('w', $i) == 0) { ?>
+															<p class="red"><a href="#"><?=date('d', $i)?></a></p>
+														<? } else if (date('w', $i) == 6) { ?>
+															<p class="blue"><a href="#"><?=date('d', $i)?></a></p>
+														<? } else { ?>
+															<p><a href="#"><?=date('d', $i)?></a></p>
+														<? } ?>
+														</div>
+													</td>
+													<? if (date('w', $i) == 6) { ?>
+													</tr>
+													<? } ?>
+												<? } ?>
+												<? for ($i = date("w", $toDate); $i <= 6; $i++) { ?>
+													<? if ($i == 0) { break; } ?>
+													<td>
+														<div class="cal_day">
+															<p> </p>
 														</div>									
 													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">1</a></p>
-															<div class="view" style="display:none">
+													<? if ($i == 6) { ?>
+													</tr>
+													<? } ?>
+												<? } ?>
+												
+															<!--div class="view" style="display:none">
 																<div class="tit">2013.05.05 예약현황</div>
 																<ul>
 																	<li>[샬롬관] 정진화집사 (4인)</li>
@@ -108,207 +157,15 @@ function body() {
 																<li class="cb3"><a href="#">오재호선교1/샬롬관</a></li>
 																<li class="cb4"><a href="#">오재호선교1/샬롬관</a></li>
 																<li class="cb5"><a href="#">오재호선교1/샬롬관</a></li>
-															</ul>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"><a href="#">2</a></p>
-														</div>									
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div class="cal_day">
-															<p class="red"><a href="#">3</a></p>
-															<ul>
+															</ul-->
+															
+															<!--ul>
 																<li class="cb6" style="width:299%;"><a href="#">오재호선교1/샬롬관 오재호선교1/샬롬관 오재호선교1/샬롬관</a></li>
 																<li class="cb7"><a href="#">오재호선교1/샬롬관</a></li>
 																<li class="cb8"><a href="#">오재호선교1/샬롬관</a></li>
 																<li class="cb9"><a href="#">오재호선교1/샬롬관</a></li>
 																<li class="cb10"><a href="#">오재호선교1/샬롬관</a></li>
-															</ul>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">4</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">5</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">6</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">7</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">8</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"><a href="#">9</a></p>
-														</div>									
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div class="cal_day">
-															<p class="red"><a href="#">10</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">11</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">12</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">13</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">14</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">15</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"><a href="#">16</a></p>
-														</div>									
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div class="cal_day">
-															<p class="red"><a href="#">17</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">18</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">19</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">20</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">21</p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">22</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"><a href="#">23</a></p>
-														</div>									
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div class="cal_day">
-															<p class="red"><a href="#">24</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">25</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">26</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">27</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">28</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p><a href="#">29</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"><a href="#">30</a></p>
-														</div>									
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<div class="cal_day">
-															<p class="red"><a href="#">31</a></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p></p>
-														</div>									
-													</td>
-													<td>
-														<div class="cal_day">
-															<p class="blue"></p>
-														</div>									
-													</td>
-												</tr>
+															</ul-->
 											</tbody>
 										</table>
 									</div> <!-- // cal_month -->

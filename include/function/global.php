@@ -44,6 +44,9 @@ function showHouseManagerLeft() {
 		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
+			if ($color_cnt >= 10)
+				$color_cnt %= 10;
+			
 			$color_cnt++;
 			//selected
 			$room_color[$room->roomId] = $color_cnt;
