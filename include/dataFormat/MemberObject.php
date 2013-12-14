@@ -70,7 +70,7 @@ class MemberObject {
     	$this->isNew = true;
     	$this->initialize();
 
-		if ($userid != -1) {
+		if ($userid != -1 && $userid != "") {
 			$this->Open($userid);
 		}
 	}
@@ -86,9 +86,9 @@ class MemberObject {
 		$this->userlv = 0;
 		$this->email = "";
 		$this->jumin = "000000-0000000";
-		$this->address1 = "a";
-		$this->address2 = "a";
-		$this->zipcode = "000000";
+		$this->address1 = "";
+		$this->address2 = "";
+		$this->zipcode = "000-000";
 		$this->phone = "";
 		$this->mobile = "000-000-0000";
 		$this->msgok = 0;

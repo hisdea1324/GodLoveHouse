@@ -192,10 +192,18 @@ function needUserLv($level) {
 }
 
 function checkUserLogin() {
-	if (!isset($_SESSION['userid'])) {
-		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
-	} 
-} 
+	if (isset($_SESSION['userid']) && $_SESSION['userid'] != "") {
+		return;
+	}
+	if (isset($_SESSION['userName']) && $_SESSION['userName'] != "") {
+		return;
+	}
+	if (isset($_SESSION['userLv']) && $_SESSION['userLv'] != "") {
+		return;
+	}
+	
+	header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
+}
 
 function checkAuthorize($groupId, $checkMode) {
 	if (strlen($groupId) == 0) {

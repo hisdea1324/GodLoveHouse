@@ -647,12 +647,12 @@ function body() {
 		var tblObj = document.getElementById("tblFamily");
 		var deleteLimit = 1;
 		
-		if((tblObj.rows.length - 1) <= deleteLimit) {
-			alert("삭제할 행이 없습니다\r\n기존 항목 삭제는 관계 컬럼의 삭제버튼을 이용해 주세요");
+		if ((tblObj.rows.length - 1) <= deleteLimit) {
+			alert("삭제할 행이 없습니다. 기존 항목 삭제는 관계 컬럼의 삭제버튼을 이용해 주세요");
 			return;
 		}
 		
-		if(tblObj.rows.length > 1) {
+		if (tblObj.rows.length > 1) {
 			tblObj.deleteRow(tblObj.rows.length - 1);
 		} else {
 			alert("삭제할 행이 없습니다");
