@@ -20,7 +20,7 @@ function body() {
 		</ul>
 	</div>
 	<div class="dan2"> 
-		<a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(600, 400, '/common/usingForm.php', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a>
+		<a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(860, 600, '/common/usingForm.php', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a>
 	</div>
 	<div class="dan3">
 		<ul class="link">
