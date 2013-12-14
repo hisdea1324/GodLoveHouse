@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-checkUserLogin();
+checkUserLogin(7);
 
 $roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
 $houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";

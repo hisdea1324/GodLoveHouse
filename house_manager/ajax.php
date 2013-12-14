@@ -1,5 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
+checkUserLogin(7);
+
 $mode = isset($_REQUEST["mode"]) ? trim($_REQUEST["mode"]) : "";
 
 switch ($mode) {

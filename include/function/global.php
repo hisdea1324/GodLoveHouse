@@ -191,7 +191,7 @@ function needUserLv($level) {
 	return true;
 }
 
-function checkUserLogin() {
+function checkUserLogin($user_lv = 0) {
 	if (isset($_SESSION['userid']) && $_SESSION['userid'] != "") {
 		return;
 	}
@@ -199,6 +199,10 @@ function checkUserLogin() {
 		return;
 	}
 	if (isset($_SESSION['userLv']) && $_SESSION['userLv'] != "") {
+		return;
+	}
+	
+	if ($_SESSION['userLv'] >= $user_lv) {
 		return;
 	}
 	
