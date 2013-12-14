@@ -216,9 +216,9 @@ function body() {
 							<input type="hidden" name="idDocument" id="idDocument" value="<?=$house->documentID?>" />
 							<input type="text" id="txtDocument" name="txtDocument" class="inputTxt" size="80" value="<?=$house->document?>" />
 							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document', 'room');" style="cursor:pointer;">파일 업로드</a></span>
-							<input type="hidden" name="idDocument2" id="idDocument2" value="<?=$house->documentID2?>" />
+							<!--input type="hidden" name="idDocument2" id="idDocument2" value="<?=$house->documentID2?>" />
 							<input type="text" id="txtDocument2" name="txtDocument2" class="inputTxt" size="80" value="<?=$house->document2?>" /> 
-							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document2', 'room');" style="cursor:pointer;">파일 업로드</a></span>
+							<span class="btn1"><a href="javascript:void(0)" onclick="uploadImage(event, 'Document2', 'room');" style="cursor:pointer;">파일 업로드</a></span-->
 					</tr>
 					<tr>
 						<th>상태코드</th>
@@ -226,7 +226,7 @@ function body() {
 							<select name="status" id="status">
 							<?php 
 								foreach ($codeStatus as $status) {
-									if ($house->status == $status->code) {
+									if ($house->statusCode == $status->code) {
 										print "<option value='".$status->code."' selected>".$status->name."</option>";
 									} else {
 										print "<option value='".$status->code."'>".$status->name."</option>";

@@ -37,7 +37,7 @@ function upload() {
 
 	$attach = new AttachFile();
 	$attach->userid = $_SESSION["userid"];
-	$attach->Name = $_FILES['imgFile']['name'];
+	$attach->Name = $filename;
 	$attach->Update();
 ?>
 <html>

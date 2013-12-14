@@ -13,10 +13,11 @@ class HouseObject {
 	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch ($name) {
+			case 'price':
+			case 'price1':
 			case 'personlimit':
 			case 'personlimit1':
 			case 'roomlimit':
-			case 'roomlimit1':
 				$this->record[$name] = is_numeric($value) ? $value : 0;
 			default:
 				$this->record[$name] = $value; 
@@ -46,12 +47,12 @@ class HouseObject {
 				}
 				return "없음"; 
 			case "homepage":
-				if (strlen($this->record['homepage']) == 0) {
+				if (strlen($this->record['homepage']) == 0 || $this->record['homepage'] == '0' || strpos($this->record['homepage'], '없음')) {
 					return "없음";
 				} else if (substr($this->record['homepage'], 0, "4") != "http") {
-					return "<a href='http://".$this->record['homepage']."' target='_blank'>http://".$this->record['homepage']."</a>";
+					return "http://".$this->record['homepage'];
 				} else {
-					return "<a href='".$this->record['homepage']."' target='_blank'>".$this->record['homepage']."</a>";
+					return $this->record['homepage'];
 				} 
 			case "building":
 				switch ($this->record['buildingtype']) {
@@ -114,11 +115,11 @@ class HouseObject {
 		$this->contact1 = "--";
 		$this->manager2 = null;
 		$this->contact2 = "--";
-		$this->price = "무료";
+		$this->price = 0;
+		$this->price1 = 0;
 		$this->personlimit = 0;
 		$this->personlimit1 = 0;
 		$this->roomlimit = 0;
-		$this->roomlimit1 = 0;
 		$this->housename = null;
 		$this->homepage = null;
 		$this->roomcount = 0;
@@ -154,10 +155,10 @@ class HouseObject {
 			$this->manager2 = $row['manager2'];
 			$this->contact2 = $row['contact2'];
 			$this->price = $row['price'];
+			$this->price = $row['price1'];
 			$this->personlimit = $row['personLimit'];
 			$this->personlimit1 = $row['personLimit1'];
 			$this->roomlimit = $row['roomLimit'];
-			$this->roomlimit1 = $row['roomLimit1'];
 			$this->housename = $row['houseName'];
 			$this->homepage = $row['homepage'];
 			$this->roomcount = $row['roomCount'];
@@ -196,7 +197,7 @@ class HouseObject {
 		if ($this->houseId == -1) {
 			# New Data
 			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userid`, ";
-			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `personLimit`, `personLimit1`, `roomLimit`, `roomLimit1`, `houseName`, ";
+			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `price1`, `personLimit`, `personLimit1`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
 			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->assocName)."', ";
@@ -210,11 +211,11 @@ class HouseObject {
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['contact1'])."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->manager2)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['contact2'])."', ";
-			$insertData = $insertData."'".$mysqli->real_escape_string($this->price)."', ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->price).", ";
+			$insertData = $insertData.$mysqli->real_escape_string($this->price1).", ";
 			$insertData = $insertData.$mysqli->real_escape_string($this->personLimit).", ";
 			$insertData = $insertData.$mysqli->real_escape_string($this->personLimit1).", ";
 			$insertData = $insertData.$mysqli->real_escape_string($this->roomLimit).", ";
-			$insertData = $insertData.$mysqli->real_escape_string($this->roomLimit1).", ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->houseName)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->homepage)."', ";
 			$insertData = $insertData.$mysqli->real_escape_string($this->roomCount).", ";
@@ -239,14 +240,15 @@ class HouseObject {
 			$updateData = $updateData."`userid` = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData."manager1 = '".$mysqli->real_escape_string($this->manager1)."', ";
 			$updateData = $updateData."contact1 = '".$mysqli->real_escape_string($this->record['contact1'])."', ";
-			$updateData = $updateData."manager2 = '".$mysqli->real_escape_string($this->manager2)."' ";
+			$updateData = $updateData."manager2 = '".$mysqli->real_escape_string($this->manager2)."', ";
 			$updateData = $updateData."contact2 = '".$mysqli->real_escape_string($this->record['contact2'])."', ";
-			$updateData = $updateData."`price` = '".$mysqli->real_escape_string($this->price)."', ";
+			$updateData = $updateData."`price` = ".$mysqli->real_escape_string($this->price).", ";
+			$updateData = $updateData."price1 = ".$mysqli->real_escape_string($this->price1).", ";
 			$updateData = $updateData."personLimit = ".$mysqli->real_escape_string($this->personLimit).", ";
 			$updateData = $updateData."personLimit1 = ".$mysqli->real_escape_string($this->personLimit1).", ";
 			$updateData = $updateData."roomLimit = ".$mysqli->real_escape_string($this->roomLimit).", ";
-			$updateData = $updateData."roomLimit1 = ".$mysqli->real_escape_string($this->roomLimit1).", ";
 			$updateData = $updateData."houseName = '".$mysqli->real_escape_string($this->houseName)."', ";
+			$updateData = $updateData."`status` = '".$mysqli->real_escape_string($this->statuscode)."', ";
 			$updateData = $updateData."`homepage` = '".$mysqli->real_escape_string($this->homepage)."', ";
 			$updateData = $updateData."roomCount = ".$mysqli->real_escape_string($this->roomCount).", ";
 			$updateData = $updateData."`document` = '".$mysqli->real_escape_string($this->document)."', ";
