@@ -45,7 +45,7 @@ showAdminFooter();
 function body() {
 		global $field, $keyword, $gotoPage;
 		global $display, $btnValue, $churchContact, $ngoContect, $managerContact, $managerEmail, $memo, $prayList;
-		global $userid, $userlv;
+		global $userid, $userLv;
 		global $member, $mission;
 ?>
 	<div class="sub">
@@ -77,7 +77,7 @@ function body() {
 		<input type="hidden" id="gotoPage" name="gotoPage" value="<?=$gotoPage?>" />
 		<input type="hidden" id="mode" name="mode" value="editUser" />
 		<input type="hidden" id="missionary" name="missionary" value="1" />
-		<input type="hidden" id="userLv" name="userLv" value="<?=$userlv?>" />
+		<input type="hidden" id="userLv" name="userLv" value="<?=$userLv?>" />
 		<div id="joinForm">
 			<dl>
 				<dt>
@@ -96,11 +96,13 @@ function body() {
 				<dd>
 					<input type="text" id="name" name="name" size="20" maxlength="20" value="<?=$member->name?>" />&nbsp;&nbsp;
 					(공백없이 한글만 입력 가능)
+				<!-- 
 				<dt>
 					주민등록번호
 				<dd>
 					<input type="text" id="jumin1" name="jumin1" size="8" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=6 value="<?=$member->jumin[0]?>" /> -
-					<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?=$member->jumin[1]?>" />
+	 				<input type="password" id="jumin2" name="jumin2" size="14" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength=7 value="<?=$member->jumin[1]?>" />
+	 			-->
 				<dt>
 					E-mail
 				<dd>
@@ -159,6 +161,12 @@ function body() {
 				<dd>
 					<input type="checkbox" id="smsOk" name="smsOk" <? if ($member->msgOk == 1) { print "checked"; } ?> />
 					<input type="hidden" id="msgOk" name="msgOk" value="<?=$msgOk?>" />
+				<dt>
+					<strong>패스워드</strong>
+				<dd>
+					<input type="text" id="password" name="password" size="20" maxlength="20" value="" />&nbsp;&nbsp;
+					<font color="red">(* 주의해 주세요. 공백으로 두면 패스워드가 변경되지 않습니다.)</font>
+
 				<dt>
 					&nbsp;
 				<dd>
@@ -468,12 +476,12 @@ function body() {
 			document.getElementById("name").focus();
 			return;
 		}
-		if (document.getElementById("jumin1").value == "" || document.getElementById("jumin1").value.length < 6 || 
-			document.getElementById("jumin2").value == "" || document.getElementById("jumin2").value.length < 7) {
-			alert("주민등록번호를 확인해주세요.");
-			document.getElementById("jumin1").select();
-			return;
-		}
+		// if (document.getElementById("jumin1").value == "" || document.getElementById("jumin1").value.length < 6 || 
+			// document.getElementById("jumin2").value == "" || document.getElementById("jumin2").value.length < 7) {
+			// alert("주민등록번호를 확인해주세요.");
+			// document.getElementById("jumin1").select();
+			// return;
+		// }
 		if (document.getElementById("email1").value == "" || document.getElementById("email2").value == "") {
 			alert("이메일 주소를 확인해주세요.");
 			document.getElementById("email1").select();

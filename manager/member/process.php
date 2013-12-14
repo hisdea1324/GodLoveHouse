@@ -30,61 +30,47 @@ switch ($mode) {
 
 function editUser() {
 	# 비밀번호 체크, 아이디 체크 해야함
-	$missionary = trim($_REQUEST["missionary"]);
-	$userLv = trim($_REQUEST["userLv"]);
+	$missionary = isset($_REQUEST["missionary"]) ? trim($_REQUEST["missionary"]) : "0";
+	$userLv = isset($_REQUEST["userLv"]) ? trim($_REQUEST["userLv"]) : "0";
 
-	if (($missionary=="1")) {
+	if ($missionary == "1") {
 		addUserMissionary();
 	} 
 
 	editUserNormal();
-
+	
 	header("Location: http://".$_SERVER['HTTP_HOST']."/manager/member/index.php?userLv=".$userLv);
 } 
 
 function editUserNormal() {
-	$member = new MemberObject();
+	$member = new MemberObject($_REQUEST["userid"]);
 
-	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = Encrypt($_REQUEST["password"]);
-	$member->PasswordQuestion = $_REQUEST["password_quest"];
-	$member->PasswordAnswer = $_REQUEST["password_answer"];
+	if (isset($_REQUEST["password"])) {
+		$member->Password = Encrypt($_REQUEST["password"]);
+	}
 
-	$jumin[0] = $_REQUEST["jumin1"];
-	$jumin[1] = $_REQUEST["jumin2"];
-	$member->Jumin = $jumin;
+	// $jumin[0] = $_REQUEST["jumin1"];
+	// $jumin[1] = $_REQUEST["jumin2"];
+	// $member->Jumin = $jumin;
 
-	$email[0] = $_REQUEST["email1"];
-	$email[1] = $_REQUEST["email2"];
-	$member->Email = $email;
-
-	$post[0] = $_REQUEST["post1"];
-	$post[1] = $_REQUEST["post2"];
-	$member->Post = $post;
+	$member->Email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
+	$member->Post = $_REQUEST["post1"]."-".$_REQUEST["post2"];
 	$member->Address1 = $_REQUEST["addr1"];
 	$member->Address2 = $_REQUEST["addr2"];
 
-	$tel[0] = $_REQUEST["tel1"];
-	$tel[1] = $_REQUEST["tel2"];
-	$tel[2] = $_REQUEST["tel3"];
-	$member->Phone = $tel;
+	$member->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel3"];
+	$member->Mobile = $_REQUEST["hp1"]."-".$_REQUEST["hp2"]."-".$_REQUEST["hp3"];
 
-	$mobile[0] = $_REQUEST["hp1"];
-	$mobile[1] = $_REQUEST["hp2"];
-	$mobile[2] = $_REQUEST["hp3"];
-	$member->Mobile = $mobile;
+	$member->CheckMessageOption = isset($_REQUEST["smsOk"]) ? $_REQUEST["smsOk"] : "0";
 
-	$member->CheckMessageOption = $_REQUEST["smsOk"];
-
-	$missionary = trim($_REQUEST["missionary"]);
-	if (($missionary=="1")) {
-		$member->UserLevel=3;
+	$missionary = isset($_REQUEST["missionary"]) ? trim($_REQUEST["missionary"]) : "0";
+	if ($missionary == "1") {
+		$member->UserLevel = 3;
 	} else {
-		$member->UserLevel=1;
-	} 
-
+		$member->UserLevel = 1;
+	}
 
 	$member->Update();
 } 
