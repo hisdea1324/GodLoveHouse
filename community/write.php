@@ -121,18 +121,18 @@ function body() {
 			<td class="td01">이미지</td>
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
-				<input type="button" name="imgUpload" id="imgUpload" value=" 이미지 업로드 " onclick="uploadImage(event, 'boardImage', 'board')" style="cursor:pointer" /> <br />
-				<input type="text" name="idboardImage" id="idboardImage" value="" readonly />
-				<input type="text" name="txtboardImage" id="txtboardImage" value="" readonly />
+				<input type="button" name="imgUpload" id="imgUpload" value=" 이미지 업로드 " onclick="uploadImage(event, 'boardImage', 'board')" style="cursor:pointer" />
+				<input type="hidden" name="idboardImage" id="idboardImage" value="" />
+				<input type="text" name="txtboardImage" id="txtboardImage" size="80" value="" readonly /> <br />
 			</td>
 		</tr>
 		<tr>
 			<td class="td01">파일</td>
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
-				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" /> <br />
-				<input type="text" name="idboardFile" id="idboardFile" value="" readonly />
-				<input type="text" name="txtboardFile" id="txtboardFile" value="" readonly />
+				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" />
+				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
+				<input type="text" name="txtboardFile" id="txtboardFile" value="" size="80" readonly /> <br />
 			</td>
 		</tr>
 		</form>
