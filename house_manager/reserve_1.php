@@ -54,7 +54,7 @@ function body() {
 	$reservations = array();
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_assoc()) {
-			array_push($reservation, $row);
+			array_push($reservations, $row);
 		}
 	}
 ?>
