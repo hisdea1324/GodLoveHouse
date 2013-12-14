@@ -1,22 +1,28 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
+$upload = isset($_REQUEST["upload"]) ? trim($_REQUEST["upload"]) : "";
 $tag = isset($_REQUEST["tag"]) ? trim($_REQUEST["tag"]) : "";
 $path = isset($_REQUEST["path"]) ? trim($_REQUEST["path"]) : "";
 
-if (strlen($tag) == 0) {
+if ($upload == "true") {
 	upload();
 } else {
 	uploadForm();
-} 
+}
 
 function upload() {	
-	global $path;
-	$tag = isset($_REQUEST["tagName"]) ? trim($_REQUEST["tagName"]) : "";
+	global $path, $tag;
 
-	$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
-	$uploadfile = $uploaddir . basename($_FILES['imgFile']['name']);
-
+	$count = "";
+	do {
+		$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
+		$uploadfile = $uploaddir . basename($count.$_FILES['imgFile']['name']);
+		$filename = $count.$_FILES['imgFile']['name'];
+		$count += 1;
+	} while (file_exists($uploadfile));
+	
+	
 	echo '<pre>';
 	if (move_uploaded_file($_FILES['imgFile']['tmp_name'], $uploadfile)) {
 	    echo "파일이 유효하고, 성공적으로 업로드 되었습니다.\n";
@@ -24,8 +30,8 @@ function upload() {
 	    print "파일 업로드 공격의 가능성이 있습니다!\n";
 	}
 
-	echo '자세한 디버깅 정보입니다:';
-	print_r($_FILES);
+	// echo '자세한 디버깅 정보입니다:';
+	// print_r($_FILES);
 
 	print "</pre>";
 
@@ -86,7 +92,8 @@ function uploadForm() {
 						<table border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="e0e0e0">
 							<form id="frmUploadImage" name="frmUploadImage" method="post" enctype="multipart/form-data" onSubmit="return checkFile();">
 							<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-							<input type="hidden" id="tagName" name="tagName" value="<?=$tag?>" />
+							<input type="hidden" id="upload" name="upload" value="true" />
+							<input type="hidden" id="tag" name="tag" value="<?=$tag?>" />
 							<input type="hidden" id="path" name="path" value="<?=$path?>" />
 							<tr>
 								<td bgcolor="f5f5f5" align="center">

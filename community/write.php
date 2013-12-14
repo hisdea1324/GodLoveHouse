@@ -122,8 +122,8 @@ function body() {
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value=" 이미지 업로드 " onclick="uploadImage(event, 'boardImage', 'board')" style="cursor:pointer" /> <br />
-				<input type="hidden" name="idboardImage" id="idboardImage" value="" />
-				<input type="hidden" name="txtboardImage" id="txtboardImage" value="" />
+				<input type="text" name="idboardImage" id="idboardImage" value="" readonly />
+				<input type="text" name="txtboardImage" id="txtboardImage" value="" readonly />
 			</td>
 		</tr>
 		<tr>
@@ -131,8 +131,8 @@ function body() {
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" /> <br />
-				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
-				<input type="hidden" name="txtboardFile" id="txtboardFile" value="" />
+				<input type="text" name="idboardFile" id="idboardFile" value="" readonly />
+				<input type="text" name="txtboardFile" id="txtboardFile" value="" readonly />
 			</td>
 		</tr>
 		</form>

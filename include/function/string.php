@@ -55,8 +55,8 @@ function auto_link($sText) {
 
 	#  ASP seems to be not supporting .MultiLine method.
 	# oReg.MultiLine = True
-	$oReg->pattern="(w+):# ([^/:]+)(:d*b)?([^# n<]*).*n";
-	$oReg->pattern="http:# ([0-9a-zA-Z./@:~?&=_-]+)";
+	$oReg->pattern="(w+):// ([^/:]+)(:d*b)?([^# n<]*).*n";
+	$oReg->pattern="http:// ([0-9a-zA-Z./@:~?&=_-]+)";
 	$sText = $oReg->replace($sText);
 
 	#  Second Pass for mail	

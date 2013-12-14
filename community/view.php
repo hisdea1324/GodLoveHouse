@@ -84,34 +84,34 @@ function body() {
 				</table>
 			<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td><a class="addthis_button_facebook"><img src="/images/icon_face.gif" alt="페이스북 공유하기"></a></td>
-						<td><a class="addthis_button_twitter"><img src="/images/icon_t.gif" alt="트위터 공유하기"></a></td>
+						<td><a class="addthis_button_facebook"><img src="/images/icon_face.gif" style="cursor:pointer;" onclick="javascript:sns_share('fb','<?=$board->Title?>');" alt="페이스북 공유하기"></a></td>
+						<td><a class="addthis_button_twitter"><img src="/images/icon_t.gif" style="cursor:pointer;" onclick="javascript:sns_share('tt','<?=$board->Title?>');" alt="트위터 공유하기"></a></td>
 						<td><img src="/images/icon_me.gif" style="cursor:pointer;" onclick="javascript:sns_share('m2d','<?=$board->Title?>');" alt="미투데이 공유하기"></td>
 						<td><img src="/images/icon_yo.gif" style="cursor:pointer;" onclick="javascript:sns_share('yzm','<?=$board->Title?>');" alt="요즘 공유하기"></td>
 						<td><img src="/images/icon_cy.gif" style="cursor:pointer;" onclick="javascript:sns_share('cwd','<?=$board->Title?>');" alt="싸이공감 공유하기"></td>
 					</tr>
 				</table>
-			<script src="/community/js/addthis_widget.js" type="text/javascript"></script>
+			<!--script src="/include/js/addthis_widget.js" type="text/javascript"></script-->
 			<script language="javascript">
-			function sns_share(sns_type,c_title) {
-				var now_u = "http:#"+"<?=$_SERVER[HTTP_HOST]?>"+"<?=$_SERVER[REQUEST_URI]?>";
+			function sns_share(sns_type, c_title) {
+				var now_u = "http://"+"<?=$_SERVER['HTTP_HOST']?>"+"<?=$_SERVER['REQUEST_URI']?>";
 				switch(sns_type) {
-					case "fb" : # 페이스북
-						share_url = "http:#www.facebook.com/sharer.php?u="+now_u;
+					case "fb" : // 페이스북
+						share_url = "http://www.facebook.com/sharer.php?u="+now_u;
 						break;
-					case "tt" : # 트위터
-						share_url = "http:#twitter.com/share?url="+now_u;
+					case "tt" : // 트위터
+						share_url = "http://twitter.com/share?url="+now_u;
 						break;
-					case "m2d" : # 미투데이
-						share_url = "http:#me2day.net/posts/new?new_post[body]="+c_title+" "+now_u;
+					case "m2d" : // 미투데이
+						share_url = "http://me2day.net/posts/new?new_post[body]="+c_title+" "+now_u;
 						share_url = encodeURI(share_url);
 						break;
-					case "yzm" : # daum 요즘
-						share_url = "http:#yozm.daum.net/api/popup/prePost?prefix="+c_title+"&link="+now_u;
+					case "yzm" : // daum 요즘
+						share_url = "http://yozm.daum.net/api/popup/prePost?prefix="+c_title+"&link="+now_u;
 						share_url = encodeURI(share_url);
 						break;
-					case "cwd" : # Cyworld
-						share_url = "http:#csp.cyworld.com/bi/bi_recommend_pop.php?string="+c_title+"&url="+now_u;
+					case "cwd" : // Cyworld
+						share_url = "http://csp.cyworld.com/bi/bi_recommend_pop.php?string="+c_title+"&url="+now_u;
 						break;
 				}
 				window.open(share_url,"SNS","left=100,top=100,width=500,height=500,scrollbars=yes,resizable=yes");
