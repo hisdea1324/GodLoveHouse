@@ -151,7 +151,6 @@ class BoardGroup {
 		} else {
 			return false;
 		} 
-
 	} 
 
 	function ReadPermission() {

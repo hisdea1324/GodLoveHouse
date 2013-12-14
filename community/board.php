@@ -103,7 +103,7 @@ function body() {
 ?>
 				<tr>
 				<td><?=$boardObj->id?></td>
-				<td class="ltd"><?$boardObj->ReplyImage?><a href="view.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><?=$boardObj->Title?></a></td>
+				<td class="ltd"><?=$boardObj->ReplyImage?><a href="view.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><?=$boardObj->Title?></a></td>
 				<td><?=$boardObj->userid?></td>
 				<td><?=date("Y.m.d", $boardObj->RegDate)?></td>
 				<td><?=$boardObj->CountView?></td>

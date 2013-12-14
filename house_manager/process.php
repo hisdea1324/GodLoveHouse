@@ -10,20 +10,8 @@ switch ($mode) {
 	case "regist":
 		registHouse();
 		break;
-	case "login":
-		login();
-		break;
-	case "logout":
-		logout();
-		break;
 	case "editUser":
 		editUser();
-		break;
-	case "deleteFamily":
-		deleteFamily();
-		break;
-	case "withdrawal":
-		deleteUser();
 		break;
 	case "changeReservStatus":
 		changeReservStatus();
@@ -223,82 +211,6 @@ function editUserMissionary() {
 	}
 
 
-} 
-
-function deleteUser() {
-	# 비밀번호 체크, 아이디 체크 해야함;
-	logout();
-} 
-
-function login() {
-	$userid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
-	$password = isset($_REQUEST["password"]) ? trim($_REQUEST["password"]) : "";
-	$backURL = isset($_REQUEST["backURL"]) ? trim($_REQUEST["backURL"]) : "";
-
-	global $mysqli;
-	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."' AND password = '".$mysqli->real_escape_string(Encrypt($password))."'";
-	$result = $mysqli->query($query);
-
-	if ($result->num_rows == 0) {
-		header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
-		return;
-	}
-
-	while ($row = $result->fetch_array()) {
-		$_SESSION['userid'] = $userid;
-		$_SESSION['userNick'] = $row["nick"];
-		$_SESSION['userName'] = $row["name"];
-		$_SESSION['userLv'] = $row["userLv"];
-
-		switch ($_SESSION['userLv']) {
-			case 9:
-				$_SESSION['userTitle'] = "Super";
-				break;
-			case 7:
-				$_SESSION['userTitle'] = "Manager";
-				break;
-			case 3:
-				$_SESSION['userTitle'] = "Missionary";
-				break;
-			default:
-				$_SESSION['userTitle'] = "Normal";
-				break;
-		} 
-		if (strlen($backURL) > 0) {
-			header("Location: ".URLDecode($backURL));
-		} else {
-			header("Location: "."../index.php");
-		} 
-		return;
-	}
-
-	//값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.	
-	header("Location: "."../index.php");
-} 
-
-function deleteFamily() {
-	$familyId = trim($_REQUEST["familyId"]);
-	$userid = trim($_REQUEST["userid"]);
-	$userLv = trim($_REQUEST["userLv"]);
-
-	$familyMember = new MissionaryFamily();
-	$familyMember->FamilyID = $familyId;
-	$familyMember->delete();
-
-	$ObjQuery = null;
-
-
-	header("Location: "."mypage_member.php?userLv=".$userLv."&userid=".$userid);
-} 
-
-function logout() {
-	$_SESSION['userid'] = '';
-	$_SESSION['userNick'] = '';
-	$_SESSION['userName'] = '';
-	$_SESSION['userLv'] = '';
-	$_SESSION['userTitle'] = '';
-
-	header("Location: http://".$_SERVER["HTTP_HOST"]."/index.php");
 } 
 
 function changeReservStatus() {

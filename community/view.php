@@ -121,9 +121,9 @@ function body() {
 			<!-- view# -->
 		<p class="btn_right">
 		<a href="board.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>"><img src="../images/board/btn_list.gif" border="0" class="m2"></a>
-		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_modify.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=editPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
-		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_reply.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=replyPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
-		<?php if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_delete.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='process.php?mode=deletePost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
+		<? if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_modify.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=editPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
+		<? if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_reply.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='write.php?mode=replyPost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
+		<? if ($boardGrp->WritePermission()) { ?><img src="../images/board/btn_delete.gif" border="0" class="m2" style="cursor:hand" onclick="location.href='process.php?mode=deletePost&groupId=<?=$groupId?>&id=<?=$id?>';"><?php } ?>
 		</p>
 		</div>
 		<!-- content# -->

@@ -26,7 +26,8 @@ class BoardObject {
 						$replyImageTag = $replyImageTag."&nbsp;&nbsp;";
 					}
 
-					$replyImageTag = $replyImageTag."<img src=\"../images/board/icon_board_reply.gif\" border=\"0\"> ";
+					$replyImageTag = $replyImageTag."<img src='../images/board/icon_board_reply.gif' border='0'> ";
+					
 					return $replyImageTag;
 				} 
 				break;
