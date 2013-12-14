@@ -13,15 +13,15 @@ if (strlen($userid) == 0 || strlen($password) == 0) {
 
 $member = new MemberObject($userid);
 if ($member->password != Encrypt($password)) {
+	header("Location: "."index.php?userid=".$userid);
 	echo "no matched password!!";
-	//header("Location: "."index.php?userid=".$userid);
-	MoveToPage("index.php?userid=".$userid);
+	//MoveToPage("index.php?userid=".$userid);
 } else {
 	$_SESSION['userid'] = $userid;
-	$_SESSION['userLv'] = $obj->userLv;
+	$_SESSION['userLv'] = $member->userLv;
+	header("Location: "."main.php");
 	echo "{$userid} loggined!!";
-	//header("Location: "."main.php");
-	MoveToPage("main.php");
+	//MoveToPage("main.php");
 }
 
 /* free result set */
