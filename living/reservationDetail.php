@@ -129,12 +129,16 @@ function body() {
 					<?=$house->HomePage?>
 				</td>
 			</tr>
+			<?
+			/*
 			<tr>
 				<td class="td01">담당자</td>
 				<td colspan="7">
 					<?=$house->showContactInfo()?>
 				</td>
 			</tr>
+			 */
+			 ?>
 		</table>
 <br>
 <?php
