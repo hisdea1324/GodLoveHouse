@@ -37,10 +37,6 @@ function body() {
 	// year month correcting
 	$calendar['year'] = date('Y', $fromDate);
 	$calendar['month'] = date('m', $fromDate);
-
-	$s_Helper = new supportHelper();
-	$dailySupport = $s_Helper->getDailySupport($fromDate, $toDate);
-	$senders = $s_Helper->getSender($fromDate, $toDate);
 	//******************************************************************
 
 	//******************************************************************

@@ -8,6 +8,8 @@ body();
 showHouseManagerFooter();
 
 function body() {
+	global $mysqli;
+	
 	$roomId = (isset($_REQUEST["roomId"])) ? trim($_REQUEST["roomId"]) : "";
 	$houseId = (isset($_REQUEST["houseId"])) ? trim($_REQUEST["houseId"]) : "";
 
@@ -29,10 +31,6 @@ function body() {
 	// year month correcting
 	$calendar['year'] = date('Y', $fromDate);
 	$calendar['month'] = date('m', $fromDate);
-
-	$s_Helper = new supportHelper();
-	$dailySupport = $s_Helper->getDailySupport($fromDate, $toDate);
-	$senders = $s_Helper->getSender($fromDate, $toDate);
 	//******************************************************************
 
 	//******************************************************************
@@ -47,6 +45,18 @@ function body() {
 	$q[7] = "month=".($calendar['month'] + 1);
 	//******************************************************************
 	
+	$query = "SELECT A.houseId, B.roomName, C.* FROM house A, room B, reservation C";
+	$query = $query." WHERE A.userid = '{$_SESSION['userid']}' AND A.houseId = B.houseId AND B.roomId = C.roomId AND C.reservStatus <> 'S0004'";
+	$query = $query." AND ((endDate >= {$fromDate} AND startDate < {$toDate})";
+	$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate}))";
+	$query = $query." ORDER BY startDate";
+
+	$reservations = array();
+	if ($result = $mysqli->query($query)) {
+		while ($row = $result->fetch_assoc()) {
+			array_push($reservation, $row);
+		}
+	}
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">
