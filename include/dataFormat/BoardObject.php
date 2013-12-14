@@ -167,11 +167,17 @@ class BoardObject {
 	function AddView() {
 		global $mysqli;
 
-		if ($this->id > -1) {
+		if (!isset($_SESSION['board_view_list'])) {
+			$_SESSION['board_view_list'] = array();
+		}
+
+		if ($this->id > -1 && array_search($this->id, $_SESSION['board_view_list']) === FALSE) {
 			$query = "UPDATE board SET `countView` = `countView` + 1 WHERE `id` = ".$this->id;
 			$result = $mysqli->query($query);
-
+			
 			$this->countView++;
+
+			array_push($_SESSION['board_view_list'], $this->id);
 		} 
 	}
 
