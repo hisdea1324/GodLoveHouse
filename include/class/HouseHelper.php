@@ -71,7 +71,7 @@ class HouseHelper {
 	#  method : Return Object List
 	# ************************************************************
 	function setCondition($houseId, $regionCode, $fromDate, $toDate) {
-		$strWhere = " WHERE B.status = 'S2002' AND A.houseId = B.houseId ";
+		$strWhere = " WHERE B.status = 'S2002' AND A.houseId = B.houseId AND A.hide = 0 ";
 		if (strlen($houseId) > 0) {
 			$strWhere = $strWhere." AND A.houseId = '{$houseId}'";
 		} 
@@ -90,7 +90,7 @@ class HouseHelper {
 	} 
 
 	function setEtcCondition($regionCode) {
-		$strWhere=" WHERE B.status = 'S2001' AND A.houseId = B.houseId ";
+		$strWhere=" WHERE B.status = 'S2001' AND A.houseId = B.houseId AND A.hide = 0 ";
 		if (strlen($regionCode) > 0) {
 			$strWhere = $strWhere." AND B.regionCode = '{$regionCode}'";
 		} 

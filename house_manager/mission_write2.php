@@ -126,6 +126,17 @@ function body() {
 						</td>
 					</tr-->
 					<tr>
+						<th>메모</th>
+						<td colspan="3">
+							<textarea name="explain" id="explain" cols="100" rows="5">
+<?
+	if ($room->explain) {
+		echo textFormat($room->explain, 2);
+	}
+?></textarea>	
+						</td>
+					</tr>
+					<tr>
 						<th>이미지</th>
 						<td colspan="3">
 							<span class="btn1">이미지를 클릭하세요</span> <br>
@@ -137,6 +148,12 @@ function body() {
 							<img src="<?=$room->Image3?>" id="imgRoomImage3" class="img" onclick="uploadImage(event, 'RoomImage3', 'room')" style="cursor:pointer" />
 							<input type="hidden" name="idRoomImage4" id="idRoomImage4" value="<?=$room->ImageID4?>" />
 							<img src="<?=$room->Image4?>" id="imgRoomImage4" class="img" onclick="uploadImage(event, 'RoomImage4', 'room')" style="cursor:pointer" />
+						</td>
+					</tr>
+					<tr>
+						<th>숨김</th>
+						<td colspan="3">
+							<input type="checkbox" name="hide" id="hide" value="1" class="ml20" <? if ($room->hide == "1") { print "checked"; } ?> />
 						</td>
 					</tr>
 					</form>

@@ -94,6 +94,8 @@ function editRoom() {
 	$room->bed = isset($_REQUEST["bed"]) ? $_REQUEST["bed"] : "";
 	$room->Limit = isset($_REQUEST["limit"]) ? $_REQUEST["limit"] : "";
 	$room->Fee = isset($_REQUEST["fee"]) ? $_REQUEST["fee"] : "";
+	$room->explain = isset($_REQUEST["explain"]) ? $_REQUEST["explain"] : "";
+	$room->hide = isset($_REQUEST["hide"]) ? $_REQUEST["hide"] : 0;
 
 	$room->ImageID1 = isset($_REQUEST["idRoomImage1"]) ? $_REQUEST["idRoomImage1"] : "";
 	$room->ImageID2 = isset($_REQUEST["idRoomImage2"]) ? $_REQUEST["idRoomImage2"] : "";

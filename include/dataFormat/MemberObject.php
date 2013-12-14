@@ -178,11 +178,12 @@ class MemberObject {
 			$values .= ", '".$mysqli->real_escape_string($this->record['phone'])."'";
 			$values .= ", '".$mysqli->real_escape_string($this->record['mobile'])."'";
 			$values .= ", ".$mysqli->real_escape_string($this->msgok);
+			$values .= ", ".time();
 
 			$query = "INSERT INTO `users` (`userid`, `password`, `passquest`, `passanswer`, ";
 			$query = $query."`memo`, `name`, `nick`, `userlv`, ";
 			$query = $query."`email`, `jumin`, `address1`, `address2`, ";	
-			$query = $query."`zipcode`, `phone`, `mobile`, `msgok`) VALUES ";
+			$query = $query."`zipcode`, `phone`, `mobile`, `msgok`, registdate) VALUES ";
 			$query = $query."($values)";
 
 			$result = $mysqli->query($query);

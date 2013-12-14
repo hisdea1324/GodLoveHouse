@@ -81,6 +81,7 @@ class RoomObject {
 		$this->imageId2 = -1;
 		$this->imageId3 = -1;
 		$this->imageId4 = -1;
+		$this->hide = 0;
 
 		$this->image = array("ex_01.gif","ex_01.gif","ex_01.gif","ex_01.gif");
 	} 
@@ -103,6 +104,7 @@ class RoomObject {
 			$this->laundary = $row['laundary'];
 			$this->bed = $row['bed'];
 			$this->fee = $row['fee'];
+			$this->hide = $row['hide'];
 			$this->imageId1 = $row['imageId1'];
 			$this->imageId2 = $row['imageId2'];
 			$this->imageId3 = $row['imageId3'];
@@ -156,10 +158,11 @@ class RoomObject {
 			$values .= ", ".$mysqli->real_escape_string($this->imageId2);
 			$values .= ", ".$mysqli->real_escape_string($this->imageId3);
 			$values .= ", ".$mysqli->real_escape_string($this->imageId4);
+			$values .= ", ".$mysqli->real_escape_string($this->hide);
 
 			$query = "INSERT INTO room (`houseId`, `roomName`, `limit`, `explain`, ";
 			$query = $query."`network`, `kitchen`, `laundary`, `bed`, `fee`, ";
-			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`) VALUES ";
+			$query = $query."`imageId1`, `imageId2`, `imageId3`, `imageId4`, `hide`) VALUES ";
 			$query = $query."($values)";
 
 			$result = $mysqli->query($query);
@@ -183,6 +186,7 @@ class RoomObject {
 			$updateData = $updateData."`laundary` = '".$mysqli->real_escape_string($this->laundary)."', ";
 			$updateData = $updateData."`bed` = '".$mysqli->real_escape_string($this->bed)."', ";
 			$updateData = $updateData."`fee` = ".$mysqli->real_escape_string($this->fee).", ";
+			$updateData = $updateData."`hide` = ".$mysqli->real_escape_string($this->hide).", ";
 			$updateData = $updateData."`imageId1` = ".$mysqli->real_escape_string($this->imageId1).", ";
 			$updateData = $updateData."`imageId2` = ".$mysqli->real_escape_string($this->imageId2).", ";
 			$updateData = $updateData."`imageId3` = ".$mysqli->real_escape_string($this->imageId3).", ";

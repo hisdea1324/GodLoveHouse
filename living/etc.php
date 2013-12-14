@@ -43,7 +43,7 @@ function body() {
 				</select>
 		 <img src="../images/board/btn_search.gif" border="0" align="absmiddle" style="cursor:pointer;" onclick="frmSubmit()">
 		</div>
-		 <input type="hidden" name="page" id="page" value="<?php echo $page;?>" />
+		 <input type="hidden" name="page" id="page" value="<?=$page?>" />
 		</form>
 			<!-- search// -->
 			<!-- //list -->
@@ -75,21 +75,21 @@ function body() {
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
 			<tr>
-				<td><?php echo (($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1);?></td>
+				<td><?=(($page - 1) * $h_Helper->PAGE_COUNT) + ($i + 1)?></td>
 				<td>
-					<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?>">
-					<img src="<?php echo $roomObj->Image1;?>" width="120" height="75" border="0" class="img"></a></td>
+					<a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?>">
+					<img src="<?=$roomObj->Image1?>" width="120" height="75" border="0" class="img"></a></td>
 							<td>
-					<a href="reservationDetail.php?houseId=<?php echo $roomObj->HouseID;?>&roomId=<?php echo $roomObj->RoomID;?>">
-					<?php echo $houseObj->HouseName;?><br />(<?php echo $roomObj->RoomName;?>)
+					<a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?>">
+					<?=$houseObj->HouseName?><br />(<?=$roomObj->RoomName?>)
 					</a>
 				</td>
 				<td class="ltd">
 					<ul class="intro">
-						<li><b>운영</b> : <?php echo $houseObj->AssocName;?></li>
-						<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?php echo rawurlencode($houseObj->Address1.$houseObj->Address2);?>','win','top=0, left=500,width=550,height=450')"><?php echo $houseObj->Address1;?></a></li>
-						<li><b>담당자</b> : <?php echo $houseObj->Manager1;?></li>
-						<li><b>요금</b> : <?php echo $roomObj->showFee();?></li>
+						<li><b>운영</b> : <?=$houseObj->AssocName?></li>
+						<li><b>주소</b> : <a href="#" Onclick="javascript:window.open('../navermaps/a5.php?Naddr=<?=rawurlencode($houseObj->Address1.$houseObj->Address2)?>','win','top=0, left=500,width=550,height=450')"><?=$houseObj->Address1?></a></li>
+						<li><b>담당자</b> : <?=$houseObj->Manager1?></li>
+						<li><b>요금</b> : <?=$roomObj->showFee()?></li>
 					</ul>
 				</td>
 				<td class="ltd">
@@ -104,7 +104,7 @@ function body() {
 			</div>
 			<!-- list// -->
 			<!-- //page -->
-			<?php echo $strPage;?>
+			<?=$strPage?>
 			<!-- page// -->
 		</div>
 	<!-- content// -->
@@ -130,7 +130,7 @@ function body() {
 		if (house.length == 0) {
 			return;
 		}
-		location.href = "etc.php?region=<?php echo $regionCode;?>&houseId=" + house;
+		location.href = "etc.php?region=<?=$regionCode?>&houseId=" + house;
 	}
 	
 	function frmSubmit() {
