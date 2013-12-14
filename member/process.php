@@ -79,9 +79,9 @@ function deleteRoom() {
 
 function editUser() {
 	# 비밀번호 체크, 아이디 체크 해야함
-	$missionary = trim($_REQUEST["missionary"]);
+	$missionary = isset($_REQUEST["missionary"]) ? trim($_REQUEST["missionary"]) : "";
 
-	if (($missionary=="1")) {
+	if ($missionary == "1") {
 		editUserMissionary();
 	} 
 
@@ -90,12 +90,11 @@ function editUser() {
 	$getURL = $_SERVER["HTTP_REFERER"];
 
 	$parsedURL = ParsingURL($getURL);
-	if ((strcmp($parsedURL["path"],"/member/join.php")==0)) {
+	if (strcmp($parsedURL["path"],"/member/join.php") == 0) {
 		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
 	} else {
 		$returnURL = $parsedURL["path"];
 	} 
-
 
 	alertGoPage("가입 되었습니다.",$returnURL);
 } 
@@ -110,37 +109,28 @@ function editUserNormal() {
 	$member->PasswordQuestion = $_REQUEST["password_quest"];
 	$member->PasswordAnswer = $_REQUEST["password_answer"];
 
-	$jumin[0] = $_REQUEST["jumin1"];
-	$jumin[1] = $_REQUEST["jumin2"];
-	$member->Jumin = $jumin;
+	// $jumin[0] = $_REQUEST["jumin1"];
+	// $jumin[1] = $_REQUEST["jumin2"];
+	// $member->Jumin = $jumin;
 
-	$email[0] = $_REQUEST["email1"];
-	$email[1] = $_REQUEST["email2"];
-	$member->Email = $email;
+	$member->Email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
 
-	$post[0] = $_REQUEST["post1"];
-	$post[1] = $_REQUEST["post2"];
-	$member->Post = $post;
+	$member->Post = $_REQUEST["post1"]."-".$_REQUEST["post2"];
 	$member->Address1 = $_REQUEST["addr1"];
 	$member->Address2 = $_REQUEST["addr2"];
 
-	$tel[0] = $_REQUEST["tel1"];
-	$tel[1] = $_REQUEST["tel2"];
-	$tel[2] = $_REQUEST["tel3"];
-	$member->Phone = $tel;
+	$member->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel3"];
 
-	$mobile[0] = $_REQUEST["hp1"];
-	$mobile[1] = $_REQUEST["hp2"];
-	$mobile[2] = $_REQUEST["hp3"];
-	$member->Mobile = $mobile;
+	$member->Mobile = $_REQUEST["hp1"]."-".$_REQUEST["hp2"]."-".$_REQUEST["hp3"];
 
-	$member->CheckMessageOption = $_REQUEST["smsOk"];
+	$member->CheckMessageOption = isset($_REQUEST["smsOk"]) ? $_REQUEST["smsOk"] : "0";
 
 	$member->UserLevel = $_REQUEST["level"];
-	if (($_REQUEST["missionary"]=="1" && $_REQUEST["level"]==1)) {
+	
+	$missionary = isset($_REQUEST["missionary"]) ? $_REQUEST["missionary"] : "0";
+	if ($missionary == "1" && $_REQUEST["level"] == 1) {
 		$member->UserLevel=3;
 	} 
-
 
 	$member->Update();
 } 
@@ -242,7 +232,7 @@ function login() {
 				$_SESSION['userTitle'] = "Normal";
 				break;
 		} 
-		if (strlen($backURL) > 0) {
+		if (strlen($backURL) > 0 && strpos($backURL, "login") === False) {
 			header("Location: ".URLDecode($backURL));
 		} else {
 			header("Location: "."../index.php");

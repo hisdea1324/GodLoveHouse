@@ -162,7 +162,6 @@ class MemberObject {
 
 		if ($this->isNew) {
 
-			echo "<pre>"; print_r($this); echo "</pre>";
 			$values = "'".$mysqli->real_escape_string($this->userid)."'";
 			$values .= ", '".$mysqli->real_escape_string(Encrypt($this->password))."'";
 			$values .= ", '".$mysqli->real_escape_string($this->passquest)."'";
