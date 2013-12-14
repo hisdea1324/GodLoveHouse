@@ -261,7 +261,7 @@ function body() {
 						<th>예약번호</th>
 						<th>이름</th>
 						<th>선교관 / 방이름</th>
-						<th>기간 / 일정</th>
+						<th>일정</th>
 						<th>상태</th>
 					</tr>
 				</thead>
@@ -287,10 +287,9 @@ function body() {
 							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px; "></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
-						<td><? 
-							if ($aResv->Status != "거절") {?>
+						<td style="text-align: left;">
+							<? if ($aResv->Status != "거절") {?>
 							<form method="post" name="frmEditDate<?=$aResv->BookNo?>" id="frmEditDate<?=$aResv->BookNo?>">
-							<?=$aResv->duration?>일 / 
 							<input type="hidden" name="mode" id="mode" value="edit_date" />
 							<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
 							<input type="hidden" name="houseId" id="roomId" value="<?=$houseId?>" />
@@ -301,8 +300,10 @@ function body() {
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate<?=$aResv->BookNo?>')">
 							</form>
 							<? } else { ?>
-							<?=$aResv->duration?>일  / <?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?>
-							<? } ?>
+							<?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?> <br />
+							<? } ?> 
+							예약기간: <?=$aResv->duration?>일<br />
+							예약날짜: <?=date("Y.m.d", $aResv->RegDate)?>
 						</td>
 						<td><?
 							// echo "<span class=\"btn\">{$aResv->Status}</span>";
