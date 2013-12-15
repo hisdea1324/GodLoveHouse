@@ -215,7 +215,8 @@ class MemberObject {
 
 	function Delete() {
 		global $mysqli;
-		$query = "DELETE FROM users WHERE userid = '" . $this->userid . "'"; 
+		
+		$query = "DELETE FROM users WHERE userid = '" . $mysqli->real_escape_string($this->userid) . "'";
 		$result = $mysqli->query($query);
 		return $result;
 	} 

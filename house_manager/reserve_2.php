@@ -204,7 +204,7 @@ function body() {
 					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
 				}
 
-				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\"></div>\r\n";
+				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\" onclick=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\"></div>\r\n";
 			}
 
 			$result->close();
@@ -284,7 +284,7 @@ function body() {
 								echo $member->Nick;
 							} 
 							?></label>
-							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px; "></div>
+							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px;" onclick="unshowProfile('pf2_', '<?=$aResv->BookNo?>')"></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
 						<td style="text-align: left;">

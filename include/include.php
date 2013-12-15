@@ -46,6 +46,14 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/ReservationObject.ph
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/BoardGroup.php");
 
+if (isset($_SESSION['userid']) && strlen($_SESSION['userid']) > 0) {
+	if (isset($_SESSION['userLv']) && $_SESSION['userLv'] == "") {
+		global $mysqli;
+		$member = new MemberObject($_SESSION['userid']);
+		$_SESSION['userLv'] = $member->userlv;
+	}
+}
+
 function MoveToPage($page) {
 	//header("Location: ".$page);
 	echo '<meta http-equiv="Refresh" content="0; url='.$page.'">';

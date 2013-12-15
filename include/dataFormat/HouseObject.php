@@ -72,7 +72,7 @@ class HouseObject {
 				$c_Helper = new CodeHelper();
 				return $c_Helper->getCodeName($this->record['status']);
 			case "statuscode":
-				return $this->record['status'];
+				return str_pad($this->record['status'], 5, '0', STR_PAD_LEFT);
 			case "roomlist":
 				$rooms = array();
 				foreach ($this->mRoom as $room) {

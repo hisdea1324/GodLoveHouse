@@ -115,7 +115,7 @@ class HouseHelper {
 		$rooms = array();
 		
 		$topNum = $this->m_pageCount * ($curPage - 1);
-		$query = "SELECT A.roomId, B.houseId FROM room A, house B {$this->m_StrConditionQuery} ORDER BY A.fee ASC LIMIT {$topNum}, {$this->m_pageCount}";
+		$query = "SELECT A.roomId, B.houseId FROM room A, house B {$this->m_StrConditionQuery} ORDER BY A.roomId ASC LIMIT {$topNum}, {$this->m_pageCount}";
 
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {
