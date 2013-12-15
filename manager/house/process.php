@@ -34,24 +34,15 @@ switch (($mode)) {
 function editHouse() {
 	$house = new HouseObject();
 
-	$contact[0] = $_REQUEST["contact11"];
-	$contact[1] = $_REQUEST["contact12"];
-	$contact[2] = $_REQUEST["contact13"];
-	$contact2[0] = $_REQUEST["contact21"];
-	$contact2[1] = $_REQUEST["contact22"];
-	$contact2[2] = $_REQUEST["contact23"];
-	$zipcode[0] = $_REQUEST["post1"];
-	$zipcode[1] = $_REQUEST["post2"];
-
 	$house->houseId = $_REQUEST["houseId"];
 	$house->userid = $_REQUEST["userid"];
 	$house->houseName = $_REQUEST["houseName"];
 	$house->assocName = $_REQUEST["assocName"];
 	$house->manager1 = $_REQUEST["manager1"];
-	$house->contact1 = $contact;
-	$house->contact2 = $contact2;
+	$house->contact1 = $_REQUEST["contact11"]."-".$_REQUEST["contact12"]."-".$_REQUEST["contact13"];
+	$house->contact2 = $_REQUEST["contact21"]."-".$_REQUEST["contact22"]."-".$_REQUEST["contact23"];
 	$house->buildingType = $_REQUEST["buildType"];
-	$house->zipcode = $zipcode;
+	$house->zipcode = $_REQUEST["post1"]."-".$_REQUEST["post2"];
 	$house->address1 = $_REQUEST["addr1"];
 	$house->address2 = $_REQUEST["addr2"];
 	$house->price = $_REQUEST["price"];
@@ -137,23 +128,14 @@ function confirmHouse() {
 function editHospital() {
 	$hospital = new HospitalObject();
 
-	$contact[0] = $_REQUEST["contact11"];
-	$contact[1] = $_REQUEST["contact12"];
-	$contact[2] = $_REQUEST["contact13"];
-	$contact2[0] = $_REQUEST["contact21"];
-	$contact2[1] = $_REQUEST["contact22"];
-	$contact2[2] = $_REQUEST["contact23"];
-	$zipcode[0] = $_REQUEST["post1"];
-	$zipcode[1] = $_REQUEST["post2"];
-
 	$hospital->HospitalID = $_REQUEST["hospitalId"];
 	$hospital->userid = $_REQUEST["userid"];
 	$hospital->HospitalName = $_REQUEST["hospitalName"];
 	$hospital->AssocName = $_REQUEST["assocName"];
 	$hospital->Manager1 = $_REQUEST["manager1"];
-	$hospital->Contact1 = $contact;
-	$hospital->Contact2 = $contact2;
-	$hospital->Zipcode = $zipcode;
+	$hospital->Contact1 = $_REQUEST["contact11"]."-".$_REQUEST["contact12"]."-".$_REQUEST["contact13"];
+	$hospital->Contact2 = $_REQUEST["contact21"]."-".$_REQUEST["contact22"]."-".$_REQUEST["contact23"];
+	$hospital->Zipcode = $_REQUEST["post1"]."-".$_REQUEST["post2"];
 	$hospital->Address1 = $_REQUEST["addr1"];
 	$hospital->Address2 = $_REQUEST["addr2"];
 	$hospital->Price = $_REQUEST["price"];

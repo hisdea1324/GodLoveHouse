@@ -199,8 +199,7 @@ class HouseObject {
 			$query = "INSERT INTO house (`assocName`, `address1`, `address2`, `zipcode`, `regionCode`, `explain`, `userid`, ";
 			$query = $query."`manager1`, `contact1`, `manager2`, `contact2`, `price`, `price1`, `personLimit`, `personLimit1`, `roomLimit`, `houseName`, ";
 			$query = $query."`homepage`, `roomCount`, `documentId`, `document`, `buildingType`) VALUES ";
-			$insertData="'".$mysqli->real_escape_string($this->userid)."', ";
-			$insertData = $insertData."'".$mysqli->real_escape_string($this->assocName)."', ";
+			$insertData = "'".$mysqli->real_escape_string($this->assocName)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->address1)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->address2)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['zipcode'])."', ";

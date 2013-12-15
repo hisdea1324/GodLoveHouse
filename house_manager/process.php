@@ -91,7 +91,7 @@ function editRoom() {
 	$room->ImageID4 = isset($_REQUEST["idRoomImage4"]) ? $_REQUEST["idRoomImage4"] : "";
 	$room->Update();
 
-	header("Location: "."mission_write2.php?houseId=".$room->houseId."&roomId=".$room->roomId);
+	alertGoPage("변경 되었습니다.", "mission_write2.php?houseId=".$room->houseId."&roomId=".$room->roomId);
 } 
 
 function deleteRoom() {
@@ -207,10 +207,7 @@ function editUserMissionary() {
 		$familyMember->Sex = $familySex[$i];
 		$familyMember->Relation = $familyRelation[$i];
 		$familyMember->Update();
-
 	}
-
-
 } 
 
 function changeReservStatus() {
