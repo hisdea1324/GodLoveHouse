@@ -97,6 +97,7 @@ class tableBuilder {
 		$pathInfo = get_path_info();
 		if (isset($_SERVER["QUERY_STRING"])) {
 			$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
+			$queryString = preg_replace('/(&*)order=(\w+)/i', '', $_SERVER["QUERY_STRING"]);
 			$queryString = preg_replace('/^&/i', '?', $queryString);
 		} else {
 			$queryString = "";
@@ -116,13 +117,13 @@ class tableBuilder {
 			for ($i = 0; $i < $this->columnCount; $i++) {
 				if ($this->order == $this->fieldList[$i]) {
 					if ($this->orderType == "ASC") {
-						$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+DESC'><u>" . $this->columnList[$i] . "△ </u></a></th>\r\n" . chr(13);
+						$retString = $retString . "	<th><a href='" . $linkUrl . "&order=" . $this->fieldList[$i] . "+DESC'><u>" . $this->columnList[$i] . "△ </u></a></th>\r\n" . chr(13);
 					} else
 						if ($this->order == $this->fieldList[$i]) {
-							$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "+ASC'><u>" . $this->columnList[$i] . "▽ </u></a></th>\r\n" . chr(13);
+							$retString = $retString . "	<th><a href='" . $linkUrl . "&order=" . $this->fieldList[$i] . "+ASC'><u>" . $this->columnList[$i] . "▽ </u></a></th>\r\n" . chr(13);
 						}
 				} else {
-					$retString = $retString . "	<th><a href='" . $linkUrl . "order=" . $this->fieldList[$i] . "'>" . $this->columnList[$i] . "</a></th>\r\n" . chr(13);
+					$retString = $retString . "	<th><a href='" . $linkUrl . "&order=" . $this->fieldList[$i] . "'>" . $this->columnList[$i] . "</a></th>\r\n" . chr(13);
 				}
 			}
 		} else {

@@ -136,18 +136,9 @@ function addUserMissionary() {
 
 function deleteUser() {
 	$userid = trim($_REQUEST["userid"]);
-
-	$ObjQuery = new DataManager();
-
-	$ObjQuery->setTable("users");
-	$ObjQuery->setCondition("userid = '".$userid."'");
-	$ObjQuery->delete();
-
-	$ObjQuery->setTable("missionary");
-	$ObjQuery->delete();
-
-	$ObjQuery = null;
-
+	
+	$user = new MemberObject($userid);
+	$user->Delete();
 
 	header("Location: "."index.php");
 } 

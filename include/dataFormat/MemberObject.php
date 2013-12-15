@@ -215,13 +215,9 @@ class MemberObject {
 
 	function Delete() {
 		global $mysqli;
-
-		if ($this->userid > -1) {
-			$stmt = $mysqli->prepare("DELETE FROM users WHERE userid = ?");
-			$stmt->bind_param("i", $this->userid);
-			$stmt->execute();
-			$stmt->close();
-		}
+		$query = "DELETE FROM users WHERE userid = '" . $this->userid . "'"; 
+		$result = $mysqli->query($query);
+		return $result;
 	} 
 }
 ?>
