@@ -218,7 +218,16 @@ function body() {
 				</tr>
 				<tr>
 					<td colspan="2">
+					<?
+					if (isset($_SESSION['userLv']) && $_SESSION['userLv'] <= 1) {
+					?>
+						첫번째 방법. 예약은 선교사로 회원 등급을 변경한 뒤에 가능합니다. <a href="/member/mypage_member.php">[회원 정보 변경 하기]</a><br />
+						두번째 방법. 선교관 이용 신청서 양식을 보내주시면 이용할 수 있습니다. <a href="javascript:void(0);" onclick="centerWinOpen(860, 600, '/common/usingForm.php', 'usingForm')">[다운로드]</a><br />
+					<?
+					} else {
+					?>
 						<img src="../images/board/btn_reserve.gif" border="0" align="right" align="absmiddle" class="m5" onclick="reserveSubmit()">
+					<? } ?>
 					</td>
 				</tr>
 			</table>
@@ -271,7 +280,7 @@ function body() {
 	
 	function reserveSubmit() {
 <?php 
-if (isset($_SESSION['UserLv']) && $_SESSION['UserLv'] <= 1) {
+if (isset($_SESSION['userLv']) && $_SESSION['userLv'] <= 1) {
 ?>
 			alert('선교사 혹은 선교관리자 회원이 되어야 예약이 가능합니다.');
 			return;
