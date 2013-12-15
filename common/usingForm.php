@@ -11,7 +11,7 @@
 <div id="popup">
 	<img src="../images/submit_form1.jpg" alt="센터이용 신청서" usemap="#usingForm">
 	<map name="usingForm">
-	  <area shape="rect" coords="260,24,397,58" href="../images/submit_form1.hwp" alt="신청서 다운로드">
+	  <area shape="rect" coords="260,24,397,58" href="../images/submit_form1.docx" alt="신청서 다운로드">
 	  <area shape="rect" coords="115,840,325,860" href="mailto:godlovehouse@nate.com" alt="메일 보내기">
 	</map>
 </div>
