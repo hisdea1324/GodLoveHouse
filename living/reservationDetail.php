@@ -126,7 +126,13 @@ function body() {
 			<tr>
 				<td class="td01">홈페이지</td>
 				<td colspan="7">
-					<?=$house->HomePage?>
+					<?
+					if (strpos($house->HomePage, '없음') || strpos($house->HomePage, 'http') == false) {
+						echo "<a href=\"{$house->HomePage}\" target=\"_blank\">{$house->HomePage}</a>";
+					} else {
+						echo $house->HomePage;
+					}
+					?>
 				</td>
 			</tr>
 			<?
