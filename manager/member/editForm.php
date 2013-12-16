@@ -27,15 +27,14 @@ if ($member->userLv != "3") {
 } else {
 	$display="";
 	$btnValue="선교사 정보 입력취소";
-	$churchContact=explode("-",$mission->churchContact);
-	$ngoContact=explode("-",$mission->ngoContact);
-	$managerContact=explode("-",$mission->managerContact);
-	$managerEmail=explode("@",$mission->managerEmail);
+	$churchContact = explode("-", $mission->churchContact);
+	$ngoContact = explode("-", $mission->ngoContact);
+	$managerContact = explode("-", $mission->managerContact);
+	$managerEmail = explode("@", $mission->managerEmail);
 	$memo = $mission->memo;
 	$prayList = $mission->prayList;
 	$familyList = $mission->family;
 } 
-
 
 checkAuth();
 showAdminHeader("관리툴 - 회원등록","","","");
@@ -44,9 +43,9 @@ showAdminFooter();
 
 function body() {
 		global $field, $keyword, $gotoPage;
-		global $display, $btnValue, $churchContact, $ngoContect, $managerContact, $managerEmail, $memo, $prayList;
+		global $display, $btnValue, $churchContact, $ngoContact, $managerContact, $managerEmail, $memo, $prayList;
 		global $userid, $userLv;
-		global $member, $mission;
+		global $member, $mission, $codes;
 ?>
 	<div class="sub">
 	<a href="editForm.php">회원등록</a> | 
@@ -390,12 +389,11 @@ function body() {
 							<input type="hidden" name="familyId" id="familyId" value="-1" />
 							<td><input type="text" name="familyName" id="familyName" style="width:150px" /></td>
 							<td><select name="familyAge" id="familyAge">
-							<?php 
-		for ($i=0; $i<=99; $i = $i+1) {
-			print "<option value='".(strftime("%Y",-$i))."'>".($i+1)."세, ".(strftime("%Y",-$i))." </option>";
+<?php 
+	for ($i = 0; $i <= 99; $i++) {
+		print "<option value='".(date('Y') - $i)."'>".($i + 1)."세, ".(date('Y') - $i)." </option>";
 
-		}
-
+	}
 ?>
 							</select></td>
 							<td><select name="familySex" id="familySex"><option value="남자">남자</option><option value="여자">여자</option></select></td>

@@ -33,6 +33,7 @@ showFooter();
 
 function body() {
 	global $member, $account, $mission;
+	global $codes;
 ?>
 		<!-- //content -->
 	<!-- //정보 -->
@@ -427,14 +428,11 @@ function body() {
 					<input type="hidden" name="familyId" id="familyId" value="-1" />
 					<td><input type="text" name="familyName" id="familyName" style="width:150px" /></td>
 					<td><select name="familyAge" id="familyAge">
-					<?php 
-		for ($i=0; $i<=99; $i = $i+1) {
-?>
-						<option value='<?php echo (strftime("%Y",-$i));?>'><?php echo ($i+1);?>세, <?php echo (strftime("%Y",-$i));?> </option>
-					<?php 
+<?php 
+	for ($i = 0; $i <= 99; $i++) {
+		print "<option value='".(date('Y') - $i)."'>".($i + 1)."세, ".(date('Y') - $i)." </option>";
 
-		}
-
+	}
 ?>
 					</select></td>
 					<td><select name="familySex" id="familySex"><option value="남자">남자</option><option value="여자">여자</option></select></td>

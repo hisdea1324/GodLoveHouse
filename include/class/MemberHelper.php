@@ -68,11 +68,6 @@ class MemberHelper {
 
 	function getMissionInfoByuserid($userid = "") {
 		$mission = new MissionObject($userid);
-
-		if ($mission->userid != "") {
-			$this->m_eHandler->ignoreError("Member Not Found.");
-		} 
-
 		return $mission;
 	} 
 

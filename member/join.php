@@ -8,6 +8,7 @@ body();
 showFooter();
 
 function body() {
+	global $codes;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -365,13 +366,11 @@ function body() {
 			<tr id="trFamily">
 				<td><input type="text" name="familyName" id="familyName" style="width:130px"></td>
 				<td><select name="familyAge" id="familyAge">
-				<?php 
-	$year=substr(time(),0,4);
-	for ($i=0; $i<=99; $i = $i+1) {
-		print "<option value='".(strftime("%Y",-$i))."'>".($i+1)."세, ".(strftime("%Y",-$i))." </option>";
+<?php 
+	for ($i = 0; $i <= 99; $i++) {
+		print "<option value='".(date('Y') - $i)."'>".($i + 1)."세, ".(date('Y') - $i)." </option>";
 
 	}
-
 ?>
 				</select></td>
 				<td><select name="familySex" id="familySex"><option value="0">남자</option><option value="1">여자</option></select></td>

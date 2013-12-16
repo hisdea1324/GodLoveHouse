@@ -40,7 +40,7 @@ class MissionObject {
 
     function __construct($value = -1) {
 		$this->initialize();
-    	if ($value > -1) {
+    	if ($value > -1 && $value != "") {
     		$this->Open($value);
     	}
 	}
@@ -49,9 +49,9 @@ class MissionObject {
 		$this->userid = "";
 		$this->missionName = "";
 		$this->church = "";
-		$this->churchContact = "";
+		$this->churchContact = "--";
 		$this->ngo = "";
-		$this->ngoContact = "";
+		$this->ngoContact = "--";
 		$this->nationCode = "";
 		$this->nation = "";
 		$this->accountNo = "";
@@ -59,7 +59,7 @@ class MissionObject {
 		$this->accountName = "";
 		$this->homepage = "";
 		$this->manager = "";
-		$this->managerContact = "";
+		$this->managerContact = "--";
 		$this->managerEmail = "";
 		$this->memo = "";
 		$this->prayList = "";
