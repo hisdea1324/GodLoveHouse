@@ -8,19 +8,18 @@ $dong = preg_replace('/(\d*)(가|동|로|면|읍)$/', '', $dong);
 
 if ($dong > "") {
 	global $mysqli;
-	$query = "SELECT zipcode, sido, gugun, dong, ri, bunji, note FROM zipcode WHERE dong LIKE '".mysql_escape_string($dong)."%'";
+	$query = "SELECT zipcode, sido, gugun, dong, bunji, note FROM zipcode WHERE dong LIKE '%".mysql_escape_string($dong)."%'";
 	
 	$dongList = "";
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_array()) {
-			$zip1 = substr($row["zipcode"],0,3);
-			$zip2 = substr($row["zipcode"],strlen($row["zipcode"])-(3));
-			$addr1 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"])." ".trim($row["ri"])." ".trim($row["bunji"])." ".trim($row["note"]);
+			$zipcode = explode('-', $row["zipcode"]);
+			$addr1 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"])." ".trim($row["bunji"])." ".trim($row["note"]);
 			$addr2 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"]);
 			$addr1 = trim($addr1);
 			$addr2 = trim($addr2);
 	
-			$dongList = $dongList.str_replace("[addr2]",$addr2,str_replace("[addr1]",$addr1,str_replace("[zip2]",$zip2,str_replace("[zip1]",$zip1,$zipListTemplete))));
+			$dongList = $dongList.str_replace("[addr2]",$addr2,str_replace("[addr1]",$addr1,str_replace("[zip2]",$zipcode[1],str_replace("[zip1]",$zipcode[0],$zipListTemplete))));
 		} 
 	}
 } 
