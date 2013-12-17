@@ -17,7 +17,7 @@ function upload() {
 	$count = "";
 	do {
 		$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
-		$uploadfile = $uploaddir . basename($count.$_FILES['imgFile']['name']);
+		$uploadfile = $uploaddir.basename($count.$_FILES['imgFile']['name']);
 		$filename = $count.$_FILES['imgFile']['name'];
 		$count += 1;
 	} while (file_exists($uploadfile));
@@ -91,7 +91,7 @@ function uploadForm() {
 					<td align="center">
 						<table border="0" cellpadding="0" cellspacing="1" width="100%" bgcolor="e0e0e0">
 							<form id="frmUploadImage" name="frmUploadImage" method="post" enctype="multipart/form-data" onSubmit="return checkFile();">
-							<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
 							<input type="hidden" id="upload" name="upload" value="true" />
 							<input type="hidden" id="tag" name="tag" value="<?=$tag?>" />
 							<input type="hidden" id="path" name="path" value="<?=$path?>" />

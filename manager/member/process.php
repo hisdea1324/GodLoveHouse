@@ -159,13 +159,11 @@ function deleteFamily() {
 } 
 
 function changeUser($userLv) {
-	$member = new MemberObject();
-
 	$userid = trim($_REQUEST["userid"]);
-	$member->Open($userid);
-	$member->UserLevel = $userLv;
+	$member = new MemberObject($userid);
+	$member->userLv = $userLv;
 	$member->Update();
 
-	header("Location: "."index.php");
+	header("Location: "."index.php?userLv=$userLv");
 } 
 ?>

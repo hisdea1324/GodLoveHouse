@@ -68,10 +68,12 @@ $objTable = null;
 
 
 function makeCondition($userLv,$field,$keyword) {
-	if (($userLv>0)) {
-		$strWhere=" WHERE userLv = '".$userLv."'";
+	if ($userLv == 1) {
+		$strWhere = " WHERE userLv BETWEEN 0 AND 1 ";
+	} else if ($userLv > 1) {
+		$strWhere = " WHERE userLv = '".$userLv."' ";
 	} else {
-		$strWhere=" WHERE userLv BETWEEN 0 AND 8 ";
+		$strWhere = " WHERE userLv BETWEEN 0 AND 8 ";
 	} 
 
 	if ((strlen($field)>0 && strlen($keyword)>0)) {
@@ -143,8 +145,8 @@ function body() {
 	
 	function clickButton(no, userid) {
 		switch(no) {
-<?php switch (($userLv)) {
-	case "1":
+<? switch ($userLv) {
+	case"0": case "1": 
 ?>
 			case 0: changeGrade(1, userid); break;
 			case 1: changeGrade(2, userid); break;
