@@ -15,9 +15,6 @@ function body() {
 			<p class="b5">* <img src="../images/sub/member_txt_01.gif"></p>
 			<!-- //write -->
 	<form name="dataForm" id="dataForm" method="post">
-	<input type="hidden" id="field" name="field" value="<?php echo $field;?>" />
-	<input type="hidden" id="keyword" name="keyword" value="<?php echo $keyword;?>" />
-	<input type="hidden" id="gotoPage" name="gotoPage" value="<?php echo $gotoPage;?>" />
 	<input type="hidden" id="mode" name="mode" value="editUser" />
 	<input type="hidden" id="level" name="level" value="1" />
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
@@ -178,19 +175,19 @@ function body() {
 				<tr>
 					<td class="td01">선교사명<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" />
+						<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="23" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">파송교회<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="text" name="church" id="church" maxlength="30" tabindex="23" /> (* 파송교회 혹은 파송선교단체를 꼭 입력해야 합니다.)
+						<input type="text" name="church" id="church" maxlength="30" tabindex="24" /> (* 파송교회 혹은 파송선교단체를 꼭 입력해야 합니다.)
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">파송교회 연락처<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<select name="churchContact1" id="churchContact1" tabindex="24">
+						<select name="churchContact1" id="churchContact1" tabindex="25">
 				<option value="02">02</option>
 				<option value="031">031</option>
 				<option value="032">032</option>
@@ -210,9 +207,9 @@ function body() {
 				<option value="070">070</option>
 						</select>
 						-
-						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" />
+						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" />
 						-
-						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" />
+						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="27" />
 					</td>
 				</tr>
 				<tr>
@@ -364,26 +361,25 @@ function body() {
 			<table id="tblFamily" name="tbmFamily" width="100%" border="0" cellspacing="0" cellpadding="0" class="board_con">
 			<tr><th>이름</th><th>나이</th><th>성별</th><th>관계</th></tr>
 			<tr id="trFamily">
-				<td><input type="text" name="familyName" id="familyName" style="width:130px"></td>
-				<td><select name="familyAge" id="familyAge">
+				<td><input type="text" name="familyName[]" id="familyName[]" style="width:130px"></td>
+				<td><select name="familyAge[]" id="familyAge[]">
 <?php 
 	for ($i = 0; $i <= 99; $i++) {
 		print "<option value='".(date('Y') - $i)."'>".($i + 1)."세, ".(date('Y') - $i)." </option>";
-
 	}
 ?>
 				</select></td>
-				<td><select name="familySex" id="familySex"><option value="0">남자</option><option value="1">여자</option></select></td>
+				<td><select name="familySex[]" id="familySex[]"><option value="남자">남자</option><option value="여자">여자</option></select></td>
 				<td>
-					<select name="familyRelation" id="familyRelation">
-					<option value="0">부모</option><option value="1">배우자</option>
-					<option value="2">자녀</option><option value="3">형제</option>
-					<option value="4">기타</option>
+					<select name="familyRelation[]" id="familyRelation[]">
+					<option value="부모">부모</option><option value="배우자">배우자</option>
+					<option value="자녀">자녀</option><option value="형제">형제</option>
+					<option value="기타">기타</option>
 					</select>
 				</td>
 			</tr>
 			</table>
-			<input type="hidden" id="familyNum" name="familyNum" value="0">
+			<input type="hidden" id="familyNum[]" name="familyNum[]" value="0">
 			<p class="right" valign="absmiddle">
 				<input type="button" value=" 추가 " border="0" style="cursor:pointer" onclick='addRelation()' onfocus='this.blur();'>
 				<input type="button" value=" 삭제 " border="0" style="cursor:pointer" onclick='DelRelation()' onfocus='this.blur();'>
@@ -393,8 +389,8 @@ function body() {
 				<tr>
 					<td class="td01">가족사항 공개여부 </td>
 					<td>
-			<input name="flagFalily" id="flagFalily" type="radio" value="1" class="chk" checked><span style="padding-right:50px">공개</span>
-			<input name="flagFalily" id="flagFalily" type="radio" value="0" class="chk">비공개
+						<input name="flagFalily" id="flagFalily" type="radio" value="1" class="chk" checked><span style="padding-right:50px">공개</span>
+						<input name="flagFalily" id="flagFalily" type="radio" value="0" class="chk">비공개
 					</td>
 				</tr>
 		<!--tr>
@@ -560,7 +556,7 @@ function body() {
 		var indexLimit = 10;
 		var limitMessage = "가족은";
 		
-		if(index >= indexLimit) {
+		if (index >= indexLimit) {
 			alert(limitMessage + " 최대 " + indexLimit + "항목입니다.");
 			return;
 		}

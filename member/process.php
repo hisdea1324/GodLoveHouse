@@ -96,6 +96,7 @@ function editUser() {
 		$returnURL = $parsedURL["path"];
 	} 
 
+	exit();
 	alertGoPage("가입 되었습니다.",$returnURL);
 } 
 
@@ -125,7 +126,7 @@ function editUserNormal() {
 
 	$member->CheckMessageOption = isset($_REQUEST["smsOk"]) ? $_REQUEST["smsOk"] : "0";
 
-	$member->UserLevel = $_REQUEST["level"];
+	$member->userlv = $_REQUEST["level"];
 	
 	$missionary = isset($_REQUEST["missionary"]) ? $_REQUEST["missionary"] : "0";
 	if ($missionary == "1" && $_REQUEST["level"] == 1) {
@@ -150,7 +151,7 @@ function editUserMissionary() {
 	$mission->AccountName = $_REQUEST["accountName"];
 	$mission->Memo = $_REQUEST["memo"];
 	$mission->PrayList = $_REQUEST["prayList"];
-	$mission->FlagFamily = $_REQUEST["flagFamily"];
+	$mission->FlagFamily = $_REQUEST["flagFalily"];
 
 	$managerEmail1 = $_REQUEST["managerEmail1"];
 	$managerEmail2 = $_REQUEST["managerEmail2"];
@@ -173,24 +174,21 @@ function editUserMissionary() {
 
 	$mission->Update();
 
-	$familyId=explode(",",$_REQUEST["familyId"]);
-	$familyName=explode(",",$_REQUEST["familyName"]);
-	$familyAge=explode(",",$_REQUEST["familyAge"]);
-	$familySex=explode(",",$_REQUEST["familySex"]);
-	$familyRelation=explode(",",$_REQUEST["familyRelation"]);
-	for ($i=0; $i<=count($familyName); $i = $i+1) {
-		$familyMember = new MissionaryFamily();
+	$familyName = $_REQUEST["familyName"];
+	$familyAge = $_REQUEST["familyAge"];
+	$familySex = $_REQUEST["familySex"];
+	$familyRelation = $_REQUEST["familyRelation"];
+	$familyId = isset($_REQUEST["familyId"]) ? $_REQUEST["familyId"] : array();
+	
+	for ($i = 0; $i < count($familyName); $i++) {
+		$familyMember = (count($familyId) > 0) ? new MissionaryFamily($familyId[$i]) : new MissionaryFamily();
 		$familyMember->userid = $_REQUEST["userid"];
-		$familyMember->familyID = $familyId[$i];
 		$familyMember->Name = $familyName[$i];
 		$familyMember->Age = $familyAge[$i];
 		$familyMember->Sex = $familySex[$i];
 		$familyMember->Relation = $familyRelation[$i];
 		$familyMember->Update();
-
 	}
-
-
 } 
 
 function deleteUser() {

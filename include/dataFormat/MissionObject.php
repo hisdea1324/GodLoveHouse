@@ -129,95 +129,65 @@ class MissionObject {
 		global $mysqli;
 
 		if ($this->userid == "") {
+			$values = "'".$mysqli->real_escape_string($this->userid)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->missionname)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->church)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->churchcontact)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->ngo)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->ngocontact)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->nationcode)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->accountno)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->bank)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->accountname)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->homepage)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->manager)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->managercontact)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->manageremail)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->memo)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->praylist)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->approval)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->imageid)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->flagfamily)."'";
+
 			$query = "INSERT INTO missionary (`userid`, `missionname`, `church`, `churchcontact`, ";
 			$query = $query."`ngo`, `ngocontact`, `nationcode`, `accountno`, ";
 			$query = $query."`bank`, `accountname`, `homepage`, `manager`, ";	
 			$query = $query."`managercontact`, `manageremail`, `memo`, `praylist`, ";
 			$query = $query."`approval`, `imageid`, `flagfamily`) VALUES ";
-			$query = $query."(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$query = $query."($values)";
 
-			$stmt = $mysqli->prepare($query);
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 
-			# New Data
-			$stmt->bind_param("ssssssssssssssssiss", 
-				$this->userid, 
-				$this->missionname, 
-				$this->church, 
-				$this->churchcontact, 
-				$this->ngo, 
-				$this->ngocontact, 
-				$this->nationcode, 
-				$this->accountno, 
-				$this->bank, 
-				$this->accountname, 
-				$this->homepage, 
-				$this->manager,
-				$this->managercontact,
-				$this->manageremail,
-				$this->memo,
-				$this->praylist,
-				$this->approval,
-				$this->imageid,
-				$this->flagfamily);
-
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
-			
 		} else {
 
 			$query = "UPDATE missionary SET ";
-			$updateData = "`missionname` = ?, ";
-			$updateData.= "`church` = ?, ";
-			$updateData.= "`churchcontact` = ?, ";
-			$updateData.= "`ngo` = ?, ";
-			$updateData.= "`ngocontact` = ?, ";
-			$updateData.= "`nationcode` = ?, ";
-			$updateData.= "`accountno` = ?, ";
-			$updateData.= "`bank` = ?, ";
-			$updateData.= "`accountname` = ?, ";
-			$updateData.= "`homepage` = ?, ";
-			$updateData.= "`manager` = ?, ";
-			$updateData.= "`managercontact` = ?, ";
-			$updateData.= "`manageremail` = ?, ";
-			$updateData.= "`memo` = ?, ";
-			$updateData.= "`praylist` = ?, ";
-			$updateData.= "`approval` = ?, ";
-			$updateData.= "`imageid` = ?, ";
-			$updateData.= "`flagfamily` = ? ";
-			$query .= $updateData." WHERE `userid` = ?";
+			$updateData = "`missionname` = '".$mysqli->real_escape_string($this->missionname)."', ";
+			$updateData.= "`church` = ".$mysqli->real_escape_string($this->church).", ";
+			$updateData.= "`churchcontact` = '".$mysqli->real_escape_string($this->churchcontact)."', ";
+			$updateData.= "`ngo` = '".$mysqli->real_escape_string($this->ngo)."', ";
+			$updateData.= "`ngocontact` = '".$mysqli->real_escape_string($this->ngocontact)."', ";
+			$updateData.= "`nationcode` = '".$mysqli->real_escape_string($this->nationcode)."', ";
+			$updateData.= "`accountno` = '".$mysqli->real_escape_string($this->accountno)."', ";
+			$updateData.= "`bank` = '".$mysqli->real_escape_string($this->bank)."', ";
+			$updateData.= "`accountname` = '".$mysqli->real_escape_string($this->accountname)."', ";
+			$updateData.= "`homepage` = '".$mysqli->real_escape_string($this->homepage)."', ";
+			$updateData.= "`manager` = '".$mysqli->real_escape_string($this->manager)."', ";
+			$updateData.= "`managercontact` = '".$mysqli->real_escape_string($this->managercontact)."', ";
+			$updateData.= "`manageremail` = '".$mysqli->real_escape_string($this->manageremail)."', ";
+			$updateData.= "`memo` = '".$mysqli->real_escape_string($this->memo)."', ";
+			$updateData.= "`praylist` = '".$mysqli->real_escape_string($this->praylist)."', ";
+			$updateData.= "`approval` = '".$mysqli->real_escape_string($this->approval)."', ";
+			$updateData.= "`imageid` = '".$mysqli->real_escape_string($this->imageid)."', ";
+			$updateData.= "`flagfamily` = '".$mysqli->real_escape_string($this->flagfamily)."' ";
+			$query .= $updateData." WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
 
-			# create a prepared statement
-			$stmt = $mysqli->prepare($query);
-			
-			$stmt->bind_param("ssssssssssssssssiss", 
-				$this->missionname, 
-				$this->church, 
-				$this->churchcontact, 
-				$this->ngo, 
-				$this->ngocontact, 
-				$this->nationcode, 
-				$this->accountno, 
-				$this->bank, 
-				$this->accountname, 
-				$this->homepage, 
-				$this->manager,
-				$this->managercontact,
-				$this->manageremail,
-				$this->memo,
-				$this->praylist,
-				$this->approval,
-				$this->imageid,
-				$this->flagfamily);
-				$this->userid;
-				
-			# execute query
-			$stmt->execute();
-		
-			# close statement
-			$stmt->close();
+			$result = $mysqli->query($query);
+			if (!$result) {
+				return false;
+			}
 		}
 	} 
 

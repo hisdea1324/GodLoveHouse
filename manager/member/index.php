@@ -146,7 +146,7 @@ function body() {
 	function clickButton(no, userid) {
 		switch(no) {
 <? switch ($userLv) {
-	case"0": case "1": 
+	case "1": 
 ?>
 			case 0: changeGrade(1, userid); break;
 			case 1: changeGrade(2, userid); break;

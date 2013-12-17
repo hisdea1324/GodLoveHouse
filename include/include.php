@@ -32,7 +32,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/CodeObject.php");
 #require "dataFormat/CommentObject.php";
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MemberObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MissionObject.php");
-#require "dataFormat/MissionaryFamily.php";
+require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/MissionaryFamily.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/AccountObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/SupportObject.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/dataFormat/SupportItemObject.php");

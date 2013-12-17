@@ -178,7 +178,7 @@ function body() {
 			<!-- 개인정보// -->
 
 		<?php 
-	if ($member->Level!="3") {
+	if ($member->userLv!="3") {
 		$display="none";
 		$churchContact = array("","","");
 		$ngoContact = array("","","");
@@ -372,48 +372,41 @@ function body() {
 					<td>			
 			<table id="tblFamily" name="tbmFamily" width="100%" border="0" cellspacing="0" cellpadding="0" class="board_con">
 			<tr><th>이름</th><th>나이</th><th>성별</th><th>관계</th><th>삭제</th></tr>
-			<?php 
-	$year=substr(time(),0,4);
-	if ((strlen($mission->userid)>0)) {
-		for ($num=0; $num<=count($familyList); $num = $num+1) {
-			$familyObj = $familyList[$num];
+<?php 
+	if (strlen($mission->userid) > 0) {
+		foreach ($familyList as $familyObj) {
 ?>
 				<tr id="trFamily" align="center">
-					<input type="hidden" name="familyId" id="familyId" value="<?=$familyObj->familyID?>" />
-					<td><input type="text" name="familyName" id="familyName" style="width:150px" value="<?=$familyObj->Name?>" /></td>
-					<td><select name="familyAge" id="familyAge">
-					<?php 
-			for ($i=0; $i<=99; $i = $i+1) {
-				if (((strftime("%Y",-$i)) == $familyObj->Age)) {
+					<input type="hidden" name="familyId[]" id="familyId[]" value="<?=$familyObj->id?>" />
+					<td><input type="text" name="familyName[]" id="familyName[]" style="width:150px" value="<?=$familyObj->Name?>" /></td>
+					<td><select name="familyAge[]" id="familyAge[]">
+<?php 
+			for ($i = 0; $i<=99; $i++) {
+				if ((date('Y') - $i) == $familyObj->Age) {
 ?>
-							<option value='<?php echo (strftime("%Y",-$i));?>' selected><?php echo ($i+1);?>세, <?php echo (strftime("%Y",-$i));?> </option>
-						<?php 
-				}
-					else
-				{
+							<option value='<?=(date('Y') - $i)?>' selected><?=($i + 1)?>세, <?=(date('Y') - $i)?> </option>
+<?php 
+				} else {
 ?>
-							<option value='<?php echo (strftime("%Y",-$i));?>'><?php echo ($i+1);?>세, <?php echo (strftime("%Y",-$i));?> </option>
-						<?php 
+							<option value='<?=(date('Y') - $i)?>'><?=($i + 1)?>세, <?=(date('Y') - $i)?> </option>
+<?php 
 				} 
-
-
 			}
-
 ?>
 					</select></td>
 					<td>
-						<select name="familySex" id="familySex">
-							<option value="남자"<?			 if (($familyObj->Sex=="남자")) { ?> selected<?			 } ?>>남자</option>
-							<option value="여자"<?			 if (($familyObj->Sex=="여자")) { ?> selected<?			 } ?>>여자</option>
+						<select name="familySex[]" id="familySex[]">
+							<option value="남자"<? if (($familyObj->Sex=="남자")) { ?> selected<? } ?>>남자</option>
+							<option value="여자"<? if (($familyObj->Sex=="여자")) { ?> selected<? } ?>>여자</option>
 						</select>
 					</td>
 					<td>
-						<select name="familyRelation" id="familyRelation">
-							<option value="부모"<?			 if (($familyObj->Relation=="부모")) { ?> selected<?			 } ?>>부모</option>
-							<option value="배우자"<?			 if (($familyObj->Relation=="배우자")) { ?> selected<?			 } ?>>배우자</option>
-							<option value="자녀"<?			 if (($familyObj->Relation=="자녀")) { ?> selected<?			 } ?>>자녀</option>
-							<option value="형제"<?			 if (($familyObj->Relation=="형제")) { ?> selected<?			 } ?>>형제</option>
-							<option value="기타"<?			 if (($familyObj->Relation=="기타")) { ?> selected<?			 } ?>>기타</option>
+						<select name="familyRelation[]" id="familyRelation[]">
+							<option value="부모"<? if (($familyObj->Relation=="부모")) { ?> selected<?	 } ?>>부모</option>
+							<option value="배우자"<? if (($familyObj->Relation=="배우자")) { ?> selected<? } ?>>배우자</option>
+							<option value="자녀"<? if (($familyObj->Relation=="자녀")) { ?> selected<? } ?>>자녀</option>
+							<option value="형제"<? if (($familyObj->Relation=="형제")) { ?> selected<? } ?>>형제</option>
+							<option value="기타"<? if (($familyObj->Relation=="기타")) { ?> selected<? } ?>>기타</option>
 						</select>
 					</td>
 					<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?=$familyObj->familyID?>)" /></td>
