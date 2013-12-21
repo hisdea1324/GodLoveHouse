@@ -92,22 +92,26 @@ function editUser() {
 	$parsedURL = ParsingURL($getURL);
 	if (strcmp($parsedURL["path"],"/member/join.php") == 0) {
 		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
+		alertGoPage("가입 되었습니다.",$returnURL);
 	} else {
 		$returnURL = $parsedURL["path"];
+		alertGoPage("수정 되었습니다.",$returnURL);
 	} 
-
-	alertGoPage("가입 되었습니다.",$returnURL);
 } 
 
 function editUserNormal() {
-	$member = new MemberObject();
+	$member = new MemberObject($_REQUEST["userid"]);
 
-	$member->userid = $_REQUEST["userid"];
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	$member->Password = Encrypt($_REQUEST["password"]);
-	$member->PasswordQuestion = $_REQUEST["password_quest"];
-	$member->PasswordAnswer = $_REQUEST["password_answer"];
+	
+	if (isset($_REQUEST["password"]) && $_REQUEST["password"] != "") {
+		$member->Password = $_REQUEST["password"];
+	}
+	if (isset($_REQUEST["password_quest"])) {
+		$member->PasswordQuestion = $_REQUEST["password_quest"];
+		$member->PasswordAnswer = $_REQUEST["password_answer"];
+	}
 
 	// $jumin[0] = $_REQUEST["jumin1"];
 	// $jumin[1] = $_REQUEST["jumin2"];
@@ -129,8 +133,10 @@ function editUserNormal() {
 	
 	$missionary = isset($_REQUEST["missionary"]) ? $_REQUEST["missionary"] : "0";
 	if ($missionary == "1" && $_REQUEST["level"] == 1) {
-		$member->UserLevel=3;
-	} 
+		$member->userlv = 3;
+	} else if ($member->userlv == 3) {
+		$member->userlv = 1;
+	}
 
 	$member->Update();
 } 

@@ -180,12 +180,12 @@ function setTestValue($value) {
 function needUserLv($level) {
 	if (!isset($_SESSION['userid'])) {
 		header("Location: http://".$_SERVER["HTTP_HOST"]."/member/login.php");
-		return false;
+		exit();
 	}
 
 	if ($_SESSION['userLv'] < $level) {
 		alertBack("권한이 없습니다");
-		return false;
+		exit();
 	}
 
 	return true;

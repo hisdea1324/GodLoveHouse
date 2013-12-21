@@ -70,6 +70,20 @@ function body() {
 					<td><?=$member->userid?></td>
 				</tr>
 				<tr>
+					<td class="td01">비밀번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+					<td>
+						<input type="password" id="password" name="password" style="ime-mode:disabled" maxlength="20" tabindex="5" />&nbsp;&nbsp;
+						<font color="red">(* 주의해 주세요. 공백으로 두면 패스워드가 변경되지 않습니다.)</font>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01">비밀번호확인<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+					<td>
+						<input type="password" id="password_confirm" name="password_confirm" style="ime-mode:disabled" maxlength="20" tabindex="6" onkeyup="checkPassword();" />
+						<label class="fs11" type="text" name='resultMessage5' id='resultMessage5'></label>
+					</td>
+				</tr>
+				<tr>
 					<td class="td01">닉네임<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
 						<input type="text" name="nickName" id="nickName" maxlength="30" tabindex="1" value="<?=$member->Nick?>" onkeyup="checkNick(this.value);" />
@@ -83,16 +97,6 @@ function body() {
 						<label class="fs11" type="text" name='resultMessage3' id='resultMessage3'>(공백없이 한글만 입력가능)</label>
 					</td>
 				</tr>
-				<!--tr>
-					<td class="td01">주민등록번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
-					<td>
-				<?	 $jumin = $member->Jumin?>
-						<input type="text" name="jumin1" id="jumin1" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="6" style="width:100px" tabindex="3" value="<?=$jumin[0]?>" />
-						-
-						<input type="password" name="jumin2" id="jumin2" onkeyup="checkNID();" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="7" style="width:100px" tabindex="4" value="<?=$jumin[1]?>" />
-			<label class="fs11" type="text" name='resultMessage4' id='resultMessage4'></label>
-					</td>
-				</tr-->
 				<tr>
 					<td class="td01"> E-mail<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
@@ -527,14 +531,14 @@ function body() {
 			document.getElementById("name").focus();
 			return;
 		}
-		/*
-		if (document.getElementById("password").value == "" || 
+		
+		if (document.getElementById("password").value != "" && 
 			document.getElementById("password").value != document.getElementById("password_confirm").value) {
 			alert("비밀번호를 확인해주세요.");
 			document.getElementById("password").focus();
 			return;
 		}
-		*/
+		
 // 		if (document.getElementById("jumin1").value == "" || document.getElementById("jumin1").value.length < 6 || 
 // 			document.getElementById("jumin2").value == "" || document.getElementById("jumin2").value.length < 7) {
 // 			alert("주민등록번호를 확인해주세요.");
@@ -577,7 +581,14 @@ function body() {
 		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}
-	
+
+	function checkPassword()	{
+		var pw1 = document.getElementById("password").value;
+		var pw2 = document.getElementById("password_confirm").value;
+		var url = 'ajax.php?mode=checkPassword&pw1='+pw1+'&pw2='+pw2;
+		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultPassword});
+	}
+		
 	function checkMissionary() {
 		return true;
 	}

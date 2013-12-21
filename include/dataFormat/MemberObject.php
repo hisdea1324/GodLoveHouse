@@ -16,10 +16,17 @@
 class MemberObject {
 	protected $record = array();
 	protected $isNew = false;
+	protected $change_password = false;
 
 	public function __set($name, $value) { 
 		$name = strtolower($name);
 		switch($name) {
+			case "password":
+				if (isset($this->record['password']) && $this->record['password'] != Encrypt($value)) {
+					$this->change_password = true;
+					$this->record['password'] = $value;
+				}
+				break;
 			case "post":
 				$this->record['zipcode'] = $value; 
 				break;
@@ -77,7 +84,7 @@ class MemberObject {
 
 	private function initialize() {
 		$this->userid = "";
-		$this->password = "";
+		$this->record['password'] = "";
 		$this->passquest = 0;
 		$this->passanswer = "";
 		$this->memo = "";
@@ -92,6 +99,7 @@ class MemberObject {
 		$this->phone = "";
 		$this->mobile = "000-000-0000";
 		$this->msgok = 0;
+		$this->change_password = false;
 	}
 
 
@@ -104,7 +112,7 @@ class MemberObject {
 		
 		while ($row = $result->fetch_assoc()) {
 			$this->userid = $row['userid'];
-			$this->password = $row['password'];
+			$this->record['password'] = $row['password'];
 			$this->passquest = $row['passquest'];
 			$this->passanswer = $row['passanswer'];
 			$this->memo = $row['memo'];
@@ -121,6 +129,7 @@ class MemberObject {
 			$this->msgok = $row['msgok'];
 
 			$this->isNew = false;
+			$this->change_password = false;
 		}
 		$result->close();
 	}
@@ -134,7 +143,7 @@ class MemberObject {
 		
 		while ($row = $result->fetch_assoc()) {
 			$this->userid = $row['userid'];
-			$this->password = $row['password'];
+			$this->record['password'] = $row['password'];
 			$this->passquest = $row['passquest'];
 			$this->passanswer = $row['passanswer'];
 			$this->memo = $row['memo'];
@@ -151,6 +160,7 @@ class MemberObject {
 			$this->msgok = $row['msgok'];
 
 			$this->isNew = false;
+			$this->change_password = false;
 		}
 		$result->close();
 	}
@@ -195,7 +205,10 @@ class MemberObject {
 
 			$query = "UPDATE users SET ";
 			$updateData = "`nick` = '".$mysqli->real_escape_string($this->nick)."', ";
-			$updateData = "`password` = '".$mysqli->real_escape_string(Encrypt($this->password))."', ";
+			$updateData = "`name` = '".$mysqli->real_escape_string($this->name)."', ";
+			if ($this->change_password) {
+				$updateData = "`password` = '".$mysqli->real_escape_string(Encrypt($this->password))."', ";
+			}
 			$updateData.= "`userlv` = ".$mysqli->real_escape_string($this->userlv).", ";
 			$updateData.= "`email` = '".$mysqli->real_escape_string($this->record['email'])."', ";
 			$updateData.= "`jumin` = '".$mysqli->real_escape_string($this->record['jumin'])."', ";
@@ -209,7 +222,6 @@ class MemberObject {
 
 			$result = $mysqli->query($query);
 			if (!$result) {
-				echo $query; exit();
 				return false;
 			}
 		}
