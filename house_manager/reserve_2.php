@@ -12,7 +12,7 @@ showHouseManagerFooter();
 
 function body() {
 	global $mysqli;
-	global $houseId, $roomId, $room_color;
+	global $houseId, $roomId;
 
 	$toDate = isset($_REQUEST["toDate"]) ? trim($_REQUEST["toDate"]) : "";
 	$fromDate = isset($_REQUEST["fromDate"]) ? trim($_REQUEST["fromDate"]) : "";
@@ -198,10 +198,11 @@ function body() {
 				$margin_left = ($start - 1) / date('d', $toDate - 86400) * 100 - $prev_margin;
 				$width = ($end - $start + 1) / date('d', $toDate - 86400) * 100;
 				$prev_margin += $margin_left + $width;
+				$color_id = $aRoom->RoomID % 10 + 1;
 				if ($row["resv_name"]) {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$room_color[$aRoom->RoomID]."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
 				}
 
 				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\" onclick=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\"></div>\r\n";

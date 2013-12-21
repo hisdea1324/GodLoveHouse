@@ -17,10 +17,6 @@ function showHouseManagerHeader() {
 }
 
 function showHouseManagerLeft() {
-	global $room_color;
-	if (!is_array($room_color)) {
-		$room_color = array();
-	}
 	checkUserLogin();
 
 	$m_Helper = new MemberHelper();
@@ -39,21 +35,16 @@ function showHouseManagerLeft() {
 	
 	echo "<!-- leftSec -->";
 	echo "<div id=\"leftSec\">";
-	$color_cnt = 0;
 	foreach ($houseList1 as $house) {
 		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
-			if ($color_cnt >= 10)
-				$color_cnt %= 10;
-			
-			$color_cnt++;
 			//selected
-			$room_color[$room->roomId] = $color_cnt;
+			$color_id = $room->RoomID % 10 + 1;
 			if ($room->roomId == $roomId) {
-				echo "		<li class=\"on\"><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+				echo "		<li class=\"on\"><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
 			} else {
-				echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_cnt}\"></div></a></li>";
+				echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
 			}
 		}
 		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";

@@ -46,7 +46,11 @@ function body() {
 	//******************************************************************
 	
 	$query = "SELECT A.houseId, A.houseName, B.roomName, C.* FROM house A, room B, reservation C";
-	$query = $query." WHERE A.userid = '{$_SESSION['userid']}' AND A.houseId = B.houseId AND B.roomId = C.roomId AND C.reservStatus <> 'S0004'";
+	if ($_SESSION['userid'] == "lovehouse") {
+		$query = $query." WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.reservStatus <> 'S0004'";
+	} else {
+		$query = $query." WHERE A.userid = '{$_SESSION['userid']}' AND A.houseId = B.houseId AND B.roomId = C.roomId AND C.reservStatus <> 'S0004'";
+	}
 	$query = $query." AND ((endDate >= {$fromDate} AND startDate < {$toDate})";
 	$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate}))";
 	$query = $query." ORDER BY startDate";
@@ -63,6 +67,7 @@ function body() {
 			if (!isset($reservations[$start_date])) {
 				$reservations[$start_date] = array();
 			}
+			$row['name'] = "{$row['houseName']}_{$row['roomName']}";
 			array_push($reservations[$start_date], $row);
 			
 			$start_week = $start_date + (7 - date('w', $start_date)) * 24 * 60 * 60;
@@ -75,6 +80,7 @@ function body() {
 					if (!isset($reservations[$iter_date])) {
 						$reservations[$iter_date] = array();
 					}
+					$row['name'] = "";
 					array_push($reservations[$iter_date], $row);
 					$iter_date += 7 * 24 * 60 * 60;
 				}
@@ -153,7 +159,7 @@ function body() {
 														<? $resv_count = 0; ?>
 													<tr>
 													<? } ?>
-													<td>
+													<td valign="top">
 														<div class="cal_day">
 														<? if (date('w', $i) == 0) { ?>
 															<p class="red"><a href="#"><?=date('d', $i)?></a></p>
@@ -175,9 +181,13 @@ function body() {
 																	$day_count = ($reserv['endDate'] - $i) / (24 * 60 * 60);
 																	$width = ($day_count > 7) ? 699 : 100 * $day_count - 1;
 																	$day_of_week = date('w', $i);
-																	$width -= $day_of_week * 100;
-																	$color_id = (ord(substr($reserv['houseId'], 0)) + ord(substr($reserv['roomId'], -1))) % 10 + 1;
-																	echo "<li class=\"cb$color_id\" style=\"width:$width%;\"><a href=\"#\">{$reserv['userid']}/{$reserv['houseName']}/{$reserv['roomName']}</a></li>";
+																	$width -= $day_of_week * 101;
+																	$color_id = $reserv['roomId'] % 10 + 1;
+																	if ($width < 150 && strlen($reserv['name']) > 10) {
+																		echo "<li class=\"cb$color_id\" style=\"width:$width%; cursor:pointer; \"><a href=\"reserve_2.php?houseId={$reserv['houseId']}&roomId={$reserv['roomId']}\"><strong>{$reserv['houseName']}</strong></a></li>";
+																	} else {
+																		echo "<li class=\"cb$color_id\" style=\"width:$width%; cursor:pointer; \"><a href=\"reserve_2.php?houseId={$reserv['houseId']}&roomId={$reserv['roomId']}\"><strong>{$reserv['name']}</strong> ({$reserv['userid']})</a></li>";
+																	}
 																	$resv_count++;
 																}
 																echo "</ul>";
