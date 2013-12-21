@@ -6,11 +6,11 @@ $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $userLv = (isset($_REQUEST["userLv"])) ? trim($_REQUEST["userLv"]) : 0;
 $gotoPage = (isset($_REQUEST["gotoPage"])) ? trim($_REQUEST["gotoPage"]) : "";
-$userid = (isset($_REQUEST["userid"])) ? trim($_REQUEST["userid"]) : "";
+$uid = (isset($_REQUEST["userid"])) ? trim($_REQUEST["userid"]) : "";
 
 $m_Helper = new MemberHelper();
-$member = $m_Helper->getMemberByuserid($userid);
-$mission = $m_Helper->getMissionInfoByuserid($userid);
+$member = $m_Helper->getMemberByuserid($uid);
+$mission = $m_Helper->getMissionInfoByuserid($uid);
 
 $c_Helper = new CodeHelper();
 $codes = $c_Helper->getNationCodeList();
@@ -44,7 +44,7 @@ showAdminFooter();
 function body() {
 		global $field, $keyword, $gotoPage;
 		global $display, $btnValue, $churchContact, $ngoContact, $managerContact, $managerEmail, $memo, $prayList;
-		global $userid, $userLv;
+		global $uid, $userLv;
 		global $member, $mission, $codes;
 ?>
 	<div class="sub">
@@ -84,7 +84,7 @@ function body() {
 				<dd><? if (strlen($member->userid) > 0) { ?>
 						<?=$member->userid?> <input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
 					<?	 } else { ?>
-					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?=$userid?>" />
+					<input type="text" id="userid" name="userid" size="20" onclick="checkId(event);" style="ime-mode:disabled;" readonly value="<?=$uid?>" />
 				<? } ?><dt>
 					닉네임 
 				<dd>
@@ -597,7 +597,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?=$userid?>&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?=$uid?>&familyId=" + familyId;
 	}
 	
 	function showImage(obj, e) {
