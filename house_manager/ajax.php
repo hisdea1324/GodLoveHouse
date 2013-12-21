@@ -25,16 +25,16 @@ switch ($mode) {
 function confirmuserid() {
 	global $mysqli;
 
-	$userid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
-	if (strlen($userid) == 0) {
+	$uid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
+	if (strlen($uid) == 0) {
 		print "";
 		return;
-	} else if (strlen($userid) < 4) {
+	} else if (strlen($uid) < 4) {
 		print "<b><font color=red>아이디는 4자 이상만 가능합니다.</font></b>";
 		return;
 	} 
 
-	$query = "SELECT * FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."'";
+	$query = "SELECT * FROM users WHERE userid = '".$mysqli->real_escape_string($uid)."'";
 	$result = $mysqli->query($query);
 	if ($result && $result->num_rows > 0) {
 		print "<b><font color=red>이 아이디는 사용할 수 없습니다.</font></b>";

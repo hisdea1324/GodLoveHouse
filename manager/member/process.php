@@ -47,9 +47,7 @@ function editUserNormal() {
 
 	$member->Name = $_REQUEST["name"];
 	$member->Nick = $_REQUEST["nickName"];
-	if (isset($_REQUEST["password"])) {
-		$member->Password = Encrypt($_REQUEST["password"]);
-	}
+	$member->password = $_REQUEST["password"];
 
 	// $jumin[0] = $_REQUEST["jumin1"];
 	// $jumin[1] = $_REQUEST["jumin2"];
@@ -62,7 +60,6 @@ function editUserNormal() {
 
 	$member->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel3"];
 	$member->Mobile = $_REQUEST["hp1"]."-".$_REQUEST["hp2"]."-".$_REQUEST["hp3"];
-
 	$member->CheckMessageOption = isset($_REQUEST["smsOk"]) ? $_REQUEST["smsOk"] : "0";
 
 	$missionary = isset($_REQUEST["missionary"]) ? trim($_REQUEST["missionary"]) : "0";
@@ -135,9 +132,9 @@ function addUserMissionary() {
 } 
 
 function deleteUser() {
-	$userid = trim($_REQUEST["userid"]);
+	$uid = trim($_REQUEST["userid"]);
 	
-	$user = new MemberObject($userid);
+	$user = new MemberObject($uid);
 	$user->Delete();
 
 	header("Location: "."index.php");
@@ -145,7 +142,7 @@ function deleteUser() {
 
 function deleteFamily() {
 	$familyId = trim($_REQUEST["familyId"]);
-	$userid = trim($_REQUEST["userid"]);
+	$uid = trim($_REQUEST["userid"]);
 	$userLv = trim($_REQUEST["userLv"]);
 
 	$familyMember = new MissionaryFamily();
@@ -155,12 +152,12 @@ function deleteFamily() {
 	$ObjQuery = null;
 
 
-	header("Location: "."editForm.php?userLv=".$userLv."&userid=".$userid);
+	header("Location: "."editForm.php?userLv=".$userLv."&userid=".$uid);
 } 
 
 function changeUser($userLv) {
-	$userid = trim($_REQUEST["userid"]);
-	$member = new MemberObject($userid);
+	$uid = trim($_REQUEST["userid"]);
+	$member = new MemberObject($uid);
 	$member->userLv = $userLv;
 	$member->Update();
 

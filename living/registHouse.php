@@ -30,26 +30,26 @@ function body() {
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 		<form name="dataForm" id="dataForm" method="post">
 		<input type="hidden" name="mode" id="mode" value="regist" />
-		<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION["userid"];?>" />
-		<input type="hidden" name="houseId" id="houseId" value="<?php echo $houseObj->HouseID;?>" />
+		<input type="hidden" name="userid" id="userid" value="<?=$_SESSION["userid"]?>" />
+		<input type="hidden" name="houseId" id="houseId" value="<?=$houseObj->HouseID?>" />
 				<col width="20%" />
 				<col />
 				<tr>
 					<td class="td01">선교관 이름 </td>
 					<td>
-						<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?php echo $houseObj->HouseName;?>" onFocus="checkLogin();" />
+						<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?=$houseObj->HouseName?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">운영단체</td>
 					<td>
-						<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2"	value="<?php echo $houseObj->AssocName;?>" onFocus="checkLogin();" />
+						<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2"	value="<?=$houseObj->AssocName?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">담당자 이름 </td>
 					<td>
-						<input type="text" name="manager" id="manager" maxlength="30" tabindex="3" value="<?php echo $houseObj->Manager1;?>" onFocus="checkLogin();" />
+						<input type="text" name="manager" id="manager" maxlength="30" tabindex="3" value="<?=$houseObj->Manager1?>" onFocus="checkLogin();" />
 					</td>
 				</tr>			 
 				<tr>
@@ -81,9 +81,9 @@ function body() {
 							<option value="070" <?php if (($houseObj->Contact1[0]=="070")) { print "selected"; } ?>>070</option>
 						</select>
 						-
-						<input type="text" name="contact2" id="contact2" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $houseObj->Contact1[1];?>" onFocus="checkLogin();" />
+						<input type="text" name="contact2" id="contact2" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?=$houseObj->Contact1[1]?>" onFocus="checkLogin();" />
 						-
-						<input type="text" name="contact3" id="contact3" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $houseObj->Contact1[2];?>" onFocus="checkLogin();" />
+						<input type="text" name="contact3" id="contact3" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?=$houseObj->Contact1[2]?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
@@ -120,45 +120,45 @@ function body() {
 				<tr>
 					<td class="td01">우편번호</td>
 					<td>
-						<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="9" value="<?php echo $houseObj->Zipcode[0];?>" onFocus="checkLogin();" />
+						<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="9" value="<?=$houseObj->Zipcode[0]?>" onFocus="checkLogin();" />
 						-
-						<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?php echo $houseObj->Zipcode[1];?>" onFocus="checkLogin();" />
+						<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?=$houseObj->Zipcode[1]?>" onFocus="checkLogin();" />
 						<img src="../images/board/btn_zipcode.gif" border="0" align="absmiddle" class="m2" onclick="PostPopup();"></td>
 				</tr>
 				<tr>
 					<td class="td01">주소</td>
 					<td>
-						<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" tabindex="10" value="<?php echo $houseObj->Address1;?>" onFocus="checkLogin();" />
+						<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" tabindex="10" value="<?=$houseObj->Address1?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="11" value="<?php echo $houseObj->Address2;?>" onFocus="checkLogin();" />
+						<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="11" value="<?=$houseObj->Address2?>" onFocus="checkLogin();" />
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">가격(1일 기준) </td>
 					<td>
-						<input type="text" name="price" id="price" style="width:100px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?php echo $houseObj->Price;?>" onFocus="checkLogin();" /> 원
+						<input type="text" name="price" id="price" style="width:100px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?=$houseObj->Price?>" onFocus="checkLogin();" /> 원
 			</td>
 				</tr>
 				<tr>
 					<td class="td01">최대 인원수 </td>
 					<td>
-						<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="13" value="<?php echo $houseObj->PersonLimit;?>" onFocus="checkLogin();" /> 명
+						<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="13" value="<?=$houseObj->PersonLimit?>" onFocus="checkLogin();" /> 명
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">방갯수</td>
 					<td>
-						<input type="text" name="roomLimit" id="roomLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="14" value="<?php echo $houseObj->RoomLimit;?>" onFocus="checkLogin();" /> 개
+						<input type="text" name="roomLimit" id="roomLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="14" value="<?=$houseObj->RoomLimit?>" onFocus="checkLogin();" /> 개
 					</td>
 				</tr>
 				<tr>
 					<td class="td01"> 선교관 설명 </td>
 					<td>
-						<textarea name="explain" id="roomLimit" tabindex="15" onFocus="checkLogin();"><?php echo textFormat($houseObj->Explain, 2);?></textarea>
+						<textarea name="explain" id="roomLimit" tabindex="15" onFocus="checkLogin();"><?=$houseObj->Explain?></textarea>
 					</td>
 				</tr>
 		</form>
@@ -179,7 +179,7 @@ function body() {
 		$backURL = get_path_info();
 	?>
 			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");
-			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
+			location.href = "../member/login.php?backURL=<?=$backURL?>";
 	<? } ?>
 	}
 

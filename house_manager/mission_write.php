@@ -196,7 +196,7 @@ function body() {
 							<textarea name="explain" id="explain" cols="100" rows="5">
 <? 
 	if ($house->explain) {
-		echo textFormat($house->explain, 2);
+		echo $house->explain;
 	} else {
 		echo "운영자 소개: \n\n방벙보 소개:\n\n";
 	}

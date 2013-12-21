@@ -96,7 +96,6 @@ function editUser() {
 		$returnURL = $parsedURL["path"];
 	} 
 
-	exit();
 	alertGoPage("가입 되었습니다.",$returnURL);
 } 
 
@@ -197,21 +196,22 @@ function deleteUser() {
 } 
 
 function login() {
-	$userid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
+	$uid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
 	$password = isset($_REQUEST["password"]) ? trim($_REQUEST["password"]) : "";
 	$backURL = isset($_REQUEST["backURL"]) ? trim($_REQUEST["backURL"]) : "";
 
 	global $mysqli;
-	$query = "SELECT nick, name, userLv FROM users WHERE userid = '".$mysqli->real_escape_string($userid)."' AND password = '".$mysqli->real_escape_string(Encrypt($password))."'";
+	$query = "SELECT userid, nick, name, userLv FROM users WHERE userid = '".$mysqli->real_escape_string($uid)."' AND password = '".$mysqli->real_escape_string(Encrypt($password))."'";
 	$result = $mysqli->query($query);
 
 	if ($result->num_rows == 0) {
-		header("Location: "."login.php?userid=".$userid."&backURL=".$backURL);
-		return;
+		$returnURL = "login.php?userid=".$uid."&backURL=".$backURL;
+		alertGoPage("로그인 실패하였습니다. 아이디와 비밀번호를 확인해 주세요", $returnURL);
+		exit();
 	}
 
 	while ($row = $result->fetch_array()) {
-		$_SESSION['userid'] = $userid;
+		$_SESSION['userid'] = $row['userid'];
 		$_SESSION['userNick'] = $row["nick"];
 		$_SESSION['userName'] = $row["name"];
 		$_SESSION['userLv'] = $row["userLv"];
@@ -229,13 +229,13 @@ function login() {
 			default:
 				$_SESSION['userTitle'] = "Normal";
 				break;
-		} 
+		}
 		if (strlen($backURL) > 0 && strpos($backURL, "login") === False) {
 			header("Location: ".URLDecode($backURL));
 		} else {
 			header("Location: "."../index.php");
 		} 
-		return;
+		exit();
 	}
 
 	//값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.	
@@ -244,7 +244,7 @@ function login() {
 
 function deleteFamily() {
 	$familyId = trim($_REQUEST["familyId"]);
-	$userid = trim($_REQUEST["userid"]);
+	$uid = trim($_REQUEST["userid"]);
 	$userLv = trim($_REQUEST["userLv"]);
 
 	$familyMember = new MissionaryFamily();
@@ -254,7 +254,7 @@ function deleteFamily() {
 	$ObjQuery = null;
 
 
-	header("Location: "."mypage_member.php?userLv=".$userLv."&userid=".$userid);
+	header("Location: "."mypage_member.php?userLv=".$userLv."&userid=".$uid);
 } 
 
 function logout() {

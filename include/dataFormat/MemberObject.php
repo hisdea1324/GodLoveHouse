@@ -195,6 +195,7 @@ class MemberObject {
 
 			$query = "UPDATE users SET ";
 			$updateData = "`nick` = '".$mysqli->real_escape_string($this->nick)."', ";
+			$updateData = "`password` = '".$mysqli->real_escape_string(Encrypt($this->password))."', ";
 			$updateData.= "`userlv` = ".$mysqli->real_escape_string($this->userlv).", ";
 			$updateData.= "`email` = '".$mysqli->real_escape_string($this->record['email'])."', ";
 			$updateData.= "`jumin` = '".$mysqli->real_escape_string($this->record['jumin'])."', ";
@@ -208,6 +209,7 @@ class MemberObject {
 
 			$result = $mysqli->query($query);
 			if (!$result) {
+				echo $query; exit();
 				return false;
 			}
 		}

@@ -25,10 +25,10 @@ function body() {
 	
 ?>
 	<div class="sub">
-	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
+	<a href="editHouse.php?mode=addHouse&keyword=<?=$keyword?>&field=<?=$field?>">선교관추가</a> | 
 	<a href="index.php">등록된 선교관</a> | 
 	<a href="index.php?status=S2001">대기중 선교관</a> | 
-	<a href="editHospital.php??mode=addHospital&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">병원 추가</a> | 
+	<a href="editHospital.php??mode=addHospital&keyword=<?=$keyword?>&field=<?=$field?>">병원 추가</a> | 
 	<a href="hospital.php">등록된 병원</a> | 
 	<a href="hospital.php?status=S2001">대기중 병원</a>
 	</div>
@@ -37,7 +37,7 @@ function body() {
 		<div class="lSec">
 		<ul>
 			<li><img src="/images/manager/lm_0200.gif"></li>
-		<li><a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="/images/manager/lm_0201.gif"></a></li>
+		<li><a href="editHouse.php?mode=addHouse&keyword=<?=$keyword?>&field=<?=$field?>"><img src="/images/manager/lm_0201.gif"></a></li>
 		<li><a href="index.php"><img src="/images/manager/lm_0202.gif"></a></li>
 		<li><a href="index.php?status=S2001"><img src="/images/manager/lm_0203.gif"></a></li>
 		<li><img src="/images/manager/lm_bot.gif"></li>
@@ -47,27 +47,27 @@ function body() {
 	<div class="rSec">
 		<dl>
 		<form name="dataForm" id="dataForm" method="post">
-		<input type="hidden" name="field" id="field" value="<?php echo $field;?>" />
-		<input type="hidden" name="keyword" id="keyword" value="<?php echo $keyword;?>" />
-		<input type="hidden" name="gotoPage" id="gotoPage" value="<?php echo $gotoPage;?>" />
+		<input type="hidden" name="field" id="field" value="<?=$field?>" />
+		<input type="hidden" name="keyword" id="keyword" value="<?=$keyword?>" />
+		<input type="hidden" name="gotoPage" id="gotoPage" value="<?=$gotoPage?>" />
 		<input type="hidden" name="mode" id="mode" value="editHouse" />
-		<input type="hidden" name="houseId" id="houseId" value="<?php echo $houseObj->houseId;?>" />
+		<input type="hidden" name="houseId" id="houseId" value="<?=$houseObj->houseId?>" />
 			<dt>
 				선교관 이름 
 			<dd>
-				<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?php echo $houseObj->houseName;?>" />
+				<input type="text" name="houseName" id="houseName" maxlength="40" tabindex="1" value="<?=$houseObj->houseName?>" />
 			<dt>
 				선교관 관리자
 			<dd>
-				<input type="text" name="userid" id="userid" maxlength="50" tabindex="2" value="<?php echo $houseObj->userid;?>" /> (관리자의 userid를 입력하세요)
+				<input type="text" name="userid" id="userid" maxlength="50" tabindex="2" value="<?=$houseObj->userid?>" /> (관리자의 userid를 입력하세요)
 			<dt>
 				운영단체
 			<dd>
-				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?php echo $houseObj->assocName;?>" />
+				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?=$houseObj->assocName?>" />
 			<dt>
 				담당자 이름1
 			<dd>
-				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?php echo $houseObj->manager1;?>" //>
+				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?=$houseObj->manager1?>" //>
 			<dt>
 				담당자 연락처1
 			<dd>
@@ -97,14 +97,14 @@ function body() {
 					<option value="070" <?php if ($houseObj->contact1[0] == "070") { print "selected"; } ?>>070</option>
 				</select>
 				-
-				<input type="text" name="contact12" id="contact12" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $houseObj->contact1[1];?>" />
+				<input type="text" name="contact12" id="contact12" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?=$houseObj->contact1[1]?>" />
 				-
-				<input type="text" name="contact13" id="contact13" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $houseObj->contact1[2];?>" />
+				<input type="text" name="contact13" id="contact13" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?=$houseObj->contact1[2]?>" />
 				
 			<!--dt>
 				담당자 이름2
 			<dd>
-				<input type="text" name="manager2" id="manager2" maxlength="30" tabindex="3" value="<?php echo $houseObj->manager2;?>" /-->
+				<input type="text" name="manager2" id="manager2" maxlength="30" tabindex="3" value="<?=$houseObj->manager2?>" /-->
 			<dt>
 				담당자 연락처2
 			<dd>
@@ -134,9 +134,9 @@ function body() {
 					<option value="070" <?php if (($houseObj->contact2[0]=="070")) { print "selected"; } ?>>070</option>
 				</select>
 				-
-				<input type="text" name="contact22" id="contact22" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $houseObj->contact2[1];?>" />
+				<input type="text" name="contact22" id="contact22" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?=$houseObj->contact2[1]?>" />
 				-
-				<input type="text" name="contact23" id="contact23" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $houseObj->contact2[2];?>" />
+				<input type="text" name="contact23" id="contact23" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?=$houseObj->contact2[2]?>" />
 			<dt>
 				주거형태
 			<dd>
@@ -169,40 +169,40 @@ function body() {
 			<dt>
 				우편번호
 			<dd>
-				<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?php echo $houseObj->zipcode[0];?>" />
+				<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?=$houseObj->zipcode[0]?>" />
 				-
-				<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?php echo $houseObj->zipcode[1];?>" />
+				<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?=$houseObj->zipcode[1]?>" />
 				<input type="button" value="검색" onclick="PostPopup();" style="cursor:pointer;"></td>
 			<dt>
 				주소
 			<dd>
-				<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" value="<?php echo $houseObj->address1;?>" />
-				<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="9" value="<?php echo $houseObj->address2;?>" />
+				<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" value="<?=$houseObj->address1?>" />
+				<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="9" value="<?=$houseObj->address2?>" />
 			<dt>
 				가격(1일 기준)
 			<dd>
-				<input type="text" name="price" id="price" style="width:80px;ime-mode:disabled;" tabindex="10" value="<?php echo $houseObj->price;?>" />
+				<input type="text" name="price" id="price" style="width:80px;ime-mode:disabled;" tabindex="10" value="<?=$houseObj->price?>" />
 			<dt>
 				최대 인원수
 			<dd>
-				<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="11" value="<?php echo $houseObj->personLimit;?>" /> 명
+				<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="11" value="<?=$houseObj->personLimit?>" /> 명
 			<dt>
 				방갯수
 			<dd>
-				<input type="text" name="roomLimit" id="roomLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?php echo $houseObj->roomLimit;?>" /> 개
+				<input type="text" name="roomLimit" id="roomLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="12" value="<?=$houseObj->roomLimit?>" /> 개
 			<dt>
 				홈페이지
 			<dd>
-				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?php echo $houseObj->homepageNoLink;?>" />
+				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$houseObj->homepageNoLink?>" />
 			<dt>
 				선교관 설명 
 			<dd>
-				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?php echo textFormat($houseObj->explain, 2);?></textarea>	
+				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?=$houseObj->explain?></textarea>	
 			<dt>
 				제출서류
 			<dd>
-				<input type="hidden" name="idDocument" id="idDocument" value="<?php echo $houseObj->documentID;?>" />
-				<input type="text" id="txtDocument" name="txtDocument" size="60" value="<?php echo $houseObj->document;?>" />
+				<input type="hidden" name="idDocument" id="idDocument" value="<?=$houseObj->documentID?>" />
+				<input type="text" id="txtDocument" name="txtDocument" size="60" value="<?=$houseObj->document?>" />
 				<input type="button" name="imgUpload" id="imgUpload" value="파일 업로드" onclick="uploadImage(event, 'Document', 'room')" style="cursor:pointer" /> 
 			<dt>
 				상태코드
@@ -239,16 +239,16 @@ function body() {
 	}
 	
 	function frmSubmit() {
-		<?php 
+		<? 
 if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 	$backURL = get_path_info();
 ?>
 			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");
-			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
-		<?php } else { ?>
+			location.href = "../member/login.php?backURL=<?=$backURL?>";
+		<? } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?>
+		<? } ?>
 	}
 //]]>
 </script>

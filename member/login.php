@@ -1,7 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 
-$userid = (isset($_REQUEST["userid"])) ? $_REQUEST["userid"] : "";
+$uid = (isset($_REQUEST["userid"])) ? $_REQUEST["userid"] : "";
 if (isset($_REQUEST["backURL"])) {
 	$backURL = URLEncode(trim($_REQUEST["backURL"]));
 } else if (isset($_SERVER["HTTP_REFERER"])) {
@@ -15,7 +15,7 @@ body();
 showFooter();
 
 function body() {
-	global $userid, $backURL;
+	global $uid, $backURL;
 ?>
 		<!-- //content -->
 		<div id="content">
@@ -35,7 +35,7 @@ function body() {
 							<input type="password" name="password" id="password" style="width:150px" tabindex="2" onKeyPress="CheckEnter(event);">
 						</td>
 					</tr>
-			<?php if (strlen($userid) > 0) {
+			<?php if (strlen($uid) > 0) {
 ?>
 					<tr>
 						<td>

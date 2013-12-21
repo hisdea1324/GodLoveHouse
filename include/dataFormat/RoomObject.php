@@ -21,8 +21,6 @@ class RoomObject {
 	public function __get($name) {
 		$name = strtolower($name);
 		switch ($name) {
-			case "explain":
-				return str_replace(chr(13), "<br>", $this->record[$name]);
 			case "image1":
 				if (strlen($this->image[0]) > 0) {
 					return "/upload/room/".$this->image[0];

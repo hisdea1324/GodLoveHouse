@@ -25,10 +25,10 @@ function body() {
 	global $hospitalObj;
 ?>
 	<div class="sub">
-	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
+	<a href="editHouse.php?mode=addHouse&keyword=<?=$keyword?>&field=<?=$field?>">선교관추가</a> | 
 	<a href="index.php">등록된 선교관</a> | 
 	<a href="index.php?status=S2001">대기중 선교관</a> | 
-	<a href="editHospital.php??mode=addHospital&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">병원 추가</a> | 
+	<a href="editHospital.php??mode=addHospital&keyword=<?=$keyword?>&field=<?=$field?>">병원 추가</a> | 
 	<a href="hospital.php">등록된 병원</a> | 
 	<a href="hospital.php?status=S2001">대기중 병원</a>
 	</div>
@@ -37,7 +37,7 @@ function body() {
 		<div class="lSec">
 		<ul>
 			<li><img src="/images/manager/lm_0200.gif"></li>
-		<li><a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="/images/manager/lm_0201.gif"></a></li>
+		<li><a href="editHouse.php?mode=addHouse&keyword=<?=$keyword?>&field=<?=$field?>"><img src="/images/manager/lm_0201.gif"></a></li>
 		<li><a href="index.php"><img src="/images/manager/lm_0202.gif"></a></li>
 		<li><a href="index.php?status=S2001"><img src="/images/manager/lm_0203.gif"></a></li>
 		<li><img src="/images/manager/lm_bot.gif"></li>
@@ -47,28 +47,28 @@ function body() {
 	<div class="rSec">
 		<dl>
 		<form name="dataForm" id="dataForm" method="post">
-		<input type="hidden" name="field" id="field" value="<?php echo $field;?>" />
-		<input type="hidden" name="keyword" id="keyword" value="<?php echo $keyword;?>" />
-		<input type="hidden" name="gotoPage" id="gotoPage" value="<?php echo $gotoPage;?>" />
+		<input type="hidden" name="field" id="field" value="<?=$field?>" />
+		<input type="hidden" name="keyword" id="keyword" value="<?=$keyword?>" />
+		<input type="hidden" name="gotoPage" id="gotoPage" value="<?=$gotoPage?>" />
 		<input type="hidden" name="mode" id="mode" value="editHospital" />
-		<input type="hidden" name="HospitalId" id="hospitalId" value="<?php echo $hospitalObj->HospitalID;?>" />
+		<input type="hidden" name="HospitalId" id="hospitalId" value="<?=$hospitalObj->HospitalID?>" />
 			<dt>
 				병원 이름 
 			<dd>
-				<input type="text" name="hospitalName" id="hospitalName" maxlength="40" tabindex="1" value="<?php echo $hospitalObj->HospitalName;?>" />
+				<input type="text" name="hospitalName" id="hospitalName" maxlength="40" tabindex="1" value="<?=$hospitalObj->HospitalName?>" />
 			<dt>
 				병원 관리자
 			<dd>
-				<input type="text" name="userid" id="userid" maxlength="50" tabindex="2" value="<?php echo $hospitalObj->userid;?>" /> (관리자의 userid를 입력하세요)
+				<input type="text" name="userid" id="userid" maxlength="50" tabindex="2" value="<?=$hospitalObj->userid?>" /> (관리자의 userid를 입력하세요)
 			<dt>
 				운영단체
 			<dd>
-				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?php echo $hospitalObj->AssocName;?>" />
+				<input type="text" name="assocName" id="assocName" maxlength="50" tabindex="2" value="<?=$hospitalObj->AssocName?>" />
 			<dt>
 				담당자 이름1
 			<dd>
-				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?php echo $hospitalObj->Manager1;?>" //>
-			<?	 $contact1 = $hospitalObj->Contact1;?>
+				<input type="text" name="manager1" id="manager1" maxlength="30" tabindex="3" value="<?=$hospitalObj->Manager1?>" //>
+			<?	 $contact1 = $hospitalObj->Contact1?>
 			<dt>
 				담당자 연락처1
 			<dd>
@@ -98,15 +98,15 @@ function body() {
 					<option value="070" <?php if (($contact1[0]=="070")) { print "selected"; } ?>>070</option>
 				</select>
 				-
-				<input type="text" name="contact12" id="contact12" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $contact1[1];?>" />
+				<input type="text" name="contact12" id="contact12" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?=$contact1[1]?>" />
 				-
-				<input type="text" name="contact13" id="contact13" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $contact1[2];?>" />
+				<input type="text" name="contact13" id="contact13" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?=$contact1[2]?>" />
 				
 			<!--dt>
 				담당자 이름2
 			<dd>
-				<input type="text" name="manager2" id="manager2" maxlength="30" tabindex="3" value="<?php echo $hospitalObj->Manager2;?>" /-->
-			<?	 $contact2 = $hospitalObj->Contact2;?>
+				<input type="text" name="manager2" id="manager2" maxlength="30" tabindex="3" value="<?=$hospitalObj->Manager2?>" /-->
+			<?	 $contact2 = $hospitalObj->Contact2?>
 			<dt>
 				담당자 연락처2
 			<dd>
@@ -136,9 +136,9 @@ function body() {
 					<option value="070" <?php if (($contact2[0]=="070")) { print "selected"; } ?>>070</option>
 				</select>
 				-
-				<input type="text" name="contact22" id="contact22" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?php echo $contact2[1];?>" />
+				<input type="text" name="contact22" id="contact22" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="5" value="<?=$contact2[1]?>" />
 				-
-				<input type="text" name="contact23" id="contact23" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?php echo $contact2[2];?>" />
+				<input type="text" name="contact23" id="contact23" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="6" value="<?=$contact2[2]?>" />
 			<dt>
 				지역코드
 			<dd>
@@ -158,40 +158,40 @@ function body() {
 
 ?>
 				</select>
-			<?	 $zipcode = $hospitalObj->Zipcode;?>
+			<?	 $zipcode = $hospitalObj->Zipcode?>
 			<dt>
 				우편번호
 			<dd>
-				<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?php echo $zipcode[0];?>" />
+				<input type="text" name="post1" id="post1" style="width:50px" readonly onclick="PostPopup();" tabindex="8" value="<?=$zipcode[0]?>" />
 				-
-				<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?php echo $zipcode[1];?>" />
+				<input type="text" name="post2" id="post2" style="width:50px" readonly onclick="PostPopup();" value="<?=$zipcode[1]?>" />
 				<input type="button" value="검색" onclick="PostPopup();" style="cursor:pointer;"></td>
 			<dt>
 				주소
 			<dd>
-				<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" value="<?php echo $hospitalObj->Address1;?>" />
-				<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="9" value="<?php echo $hospitalObj->Address2;?>" />
+				<input type="text" name="addr1" id="addr1" style="width:80%" readonly onclick="PostPopup();" value="<?=$hospitalObj->Address1?>" />
+				<input type="text" name="addr2" id="addr2" style="width:50%" tabindex="9" value="<?=$hospitalObj->Address2?>" />
 			<dt>
 				가격(1일 기준)
 			<dd>
-				<input type="text" name="price" id="price" style="width:80px;ime-mode:disabled;" tabindex="10" value="<?php echo $hospitalObj->Price;?>" />
+				<input type="text" name="price" id="price" style="width:80px;ime-mode:disabled;" tabindex="10" value="<?=$hospitalObj->Price?>" />
 			<dt>
 				일일 진료 인원
 			<dd>
-				<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="11" value="<?php echo $hospitalObj->PersonLimit;?>" /> 명
+				<input type="text" name="personLimit" id="personLimit" style="width:50px;ime-mode:disabled;" onKeyPress="CheckNumber(event);" tabindex="11" value="<?=$hospitalObj->PersonLimit?>" /> 명
 			<dt>
 				홈페이지
 			<dd>
-				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?php echo $hospitalObj->HomepageNoLink;?>" />
+				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$hospitalObj->HomepageNoLink?>" />
 			<dt>
 				병원 설명 
 			<dd>
-				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?php echo textFormat($hospitalObj->Explain, 2);?></textarea>	
+				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?=$hospitalObj->Explain?></textarea>	
 			<dt>
 				제출서류
 			<dd>
-				<input type="hidden" name="idDocument" id="idDocument" value="<?php echo $hospitalObj->DocumentID;?>" />
-				<input type="text" id="txtDocument" name="txtDocument" size="60" value="<?php echo $hospitalObj->Document;?>" />
+				<input type="hidden" name="idDocument" id="idDocument" value="<?=$hospitalObj->DocumentID?>" />
+				<input type="text" id="txtDocument" name="txtDocument" size="60" value="<?=$hospitalObj->Document?>" />
 				<input type="button" name="imgUpload" id="imgUpload" value="파일 업로드" onclick="uploadImage(event, 'Document', 'room')" style="cursor:pointer" /> 
 			<dt>
 				상태코드
@@ -216,29 +216,29 @@ function body() {
 			<dd>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'HospitalImage1', 'room')" style="cursor:pointer" /> (320x220)<br />
-				<input type="hidden" name="idHospitalImage1" id="idHospitalImage1" value="<?php echo $hospitalObj->ImageID1;?>" />
-				<img src="<?php echo $hospitalObj->Image1;?>" id="imgHospitalImage1" width="320" height="220" onclick="showImage(1, this, event)" alt="크게보기" style="cursor:pointer" />
+				<input type="hidden" name="idHospitalImage1" id="idHospitalImage1" value="<?=$hospitalObj->ImageID1?>" />
+				<img src="<?=$hospitalObj->Image1?>" id="imgHospitalImage1" width="320" height="220" onclick="showImage(1, this, event)" alt="크게보기" style="cursor:pointer" />
 			<dt>
 				이미지 2
 			<dd>
 				<div id="showimage2" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'HospitalImage2', 'room')" style="cursor:pointer" /> (320x220)<br />
-				<input type="hidden" name="idHospitalImage2" id="idHospitalImage2" value="<?php echo $hospitalObj->ImageID2;?>" />
-				<img src="<?php echo $hospitalObj->Image2;?>" id="imgHospitalImage2" width="320" height="220" onclick="showImage(2, this, event)" alt="크게보기" style="cursor:pointer" />
+				<input type="hidden" name="idHospitalImage2" id="idHospitalImage2" value="<?=$hospitalObj->ImageID2?>" />
+				<img src="<?=$hospitalObj->Image2?>" id="imgHospitalImage2" width="320" height="220" onclick="showImage(2, this, event)" alt="크게보기" style="cursor:pointer" />
 			<dt>
 				이미지 3
 			<dd>
 				<div id="showimage3" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'HospitalImage3', 'room')" style="cursor:pointer" /> (320x220)<br />
-				<input type="hidden" name="idHospitalImage3" id="idHospitalImage3" value="<?php echo $hospitalObj->ImageID3;?>" />
-				<img src="<?php echo $hospitalObj->Image3;?>" id="imgHospitalImage3" width="320" height="220" onclick="showImage(3, this, event)" alt="크게보기" style="cursor:pointer" />
+				<input type="hidden" name="idHospitalImage3" id="idHospitalImage3" value="<?=$hospitalObj->ImageID3?>" />
+				<img src="<?=$hospitalObj->Image3?>" id="imgHospitalImage3" width="320" height="220" onclick="showImage(3, this, event)" alt="크게보기" style="cursor:pointer" />
 			<dt> 
 				이미지 4
 			<dd>
 				<div id="showimage4" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'HospitalImage4', 'room')" style="cursor:pointer" /> (320x220)<br />
-				<input type="hidden" name="idHospitalImage4" id="idHospitalImage4" value="<?php echo $hospitalObj->ImageID4;?>" />
-				<img src="<?php echo $hospitalObj->Image4;?>" id="imgHospitalImage4" width="320" height="220" onclick="showImage(4, this, event)" alt="크게보기" style="cursor:pointer" />
+				<input type="hidden" name="idHospitalImage4" id="idHospitalImage4" value="<?=$hospitalObj->ImageID4?>" />
+				<img src="<?=$hospitalObj->Image4?>" id="imgHospitalImage4" width="320" height="220" onclick="showImage(4, this, event)" alt="크게보기" style="cursor:pointer" />
 			<dt>&nbsp;
 			<dd>
 				<img src="/images/board/btn_ok.gif" border="0" onclick="check();" style="cursor:hand;">&nbsp;&nbsp;&nbsp;
@@ -262,11 +262,11 @@ if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 	$backURL = get_path_info();
 ?>
 			alert("병원등록은 로그인을 하신후에 할 수 있습니다.");
-			location.href = "../member/login.php?backURL=<?php echo $backURL;?>";
-		<?php } else { ?>
+			location.href = "../member/login.php?backURL=<?=$backURL?>";
+		<? } else { ?>
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
-		<?php } ?>
+		<? } ?>
 	}
 //]]>
 </script>

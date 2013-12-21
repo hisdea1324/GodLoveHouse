@@ -131,7 +131,7 @@ function body() {
 							<textarea name="explain" id="explain" cols="100" rows="5">
 <?
 	if ($room->explain) {
-		echo textFormat($room->explain, 2);
+		echo $room->explain;
 	}
 ?></textarea>	
 						</td>
@@ -160,6 +160,7 @@ function body() {
 				</tbody>
 			</table>
 			<div class="aRight mt20">
+				<span class="btn2"><a href="javascript:void(0)" onclick="window.opener.document.location.href='/living/reservationDetail.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>';">메인화면보기</a></span>
 				<? if ($room->roomId == -1) { ?>
 					<span class="btn2"><a href="javascript:void(0)" onclick="check();">등록</a></span>
 				<? } else { ?>
