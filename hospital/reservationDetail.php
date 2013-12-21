@@ -102,7 +102,7 @@ function body() {
 			</tr>
 			<tr>
 				<td class="td01">선교관 소개</td>
-				<td colspan="3"><?=$hospital->Explain?></td>
+				<td colspan="3"><?=str_replace("\r\n", "<br>", $hospital->Explain)?></td>
 			</tr>
 			<tr>
 				<td class="td01">주소</td>
