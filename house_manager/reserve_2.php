@@ -426,7 +426,12 @@ function body() {
 				<tr>
 					<th><p class="reserve"><b>메모</b></th>
 					<td>
-						<textarea type="text" name="memo" id="memo"></textarea>
+
+							<textarea name="memo" id="memo" cols="100" rows="10">
+<? 
+		echo "선교사 이름: \n\n선교사 연락처: \n\n선교사 email: \n\n선교지: \n\n파송 기관: \n\n";
+?>
+							</textarea>	
 					</td>
 				</tr>
 				<tr>

@@ -45,7 +45,7 @@ function body() {
 	$q[7] = "month=".($calendar['month'] + 1);
 	//******************************************************************
 	
-	$query = "SELECT A.houseId, B.roomName, C.* FROM house A, room B, reservation C";
+	$query = "SELECT A.houseId, A.houseName, B.roomName, C.* FROM house A, room B, reservation C";
 	$query = $query." WHERE A.userid = '{$_SESSION['userid']}' AND A.houseId = B.houseId AND B.roomId = C.roomId AND C.reservStatus <> 'S0004'";
 	$query = $query." AND ((endDate >= {$fromDate} AND startDate < {$toDate})";
 	$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate}))";
@@ -54,9 +54,39 @@ function body() {
 	$reservations = array();
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_assoc()) {
-			array_push($reservations, $row);
+			if ($row['startDate'] < mktime(0, 0, 0, date('m', $fromDate), 1, date('Y', $fromDate))) {
+				$start_date = mktime(0, 0, 0, date('m', $fromDate), 1, date('Y', $fromDate));
+			} else {
+				$start_date = $row['startDate'];
+			}
+			
+			if (!isset($reservations[$start_date])) {
+				$reservations[$start_date] = array();
+			}
+			array_push($reservations[$start_date], $row);
+			
+			$start_week = $start_date + (7 - date('w', $start_date)) * 24 * 60 * 60;
+			$end_week = $row['endDate'] + (7 - date('w', $row['endDate'])) * 24 * 60 * 60;
+			
+			if ($end_week != $start_week) {
+				$iter_date = $start_date + (7 - date('w', $start_date)) * 24 * 60 * 60;
+				$next_month = mktime(0, 0, 0, date('m', $start_date) + 1, 1, date('Y', $start_date));
+				while ($iter_date < $row['endDate'] && $iter_date < $next_month) {
+					if (!isset($reservations[$iter_date])) {
+						$reservations[$iter_date] = array();
+					}
+					array_push($reservations[$iter_date], $row);
+					$iter_date += 7 * 24 * 60 * 60;
+				}
+			}
 		}
 	}
+	// echo "<pre>";
+	// foreach (array_keys($reservations) as $temp) {
+		// echo date("Y-m-d", $temp)."\r\n";
+	// }
+	// print_r($reservations);
+	// echo "</pre>";
 ?>
 							<!-- rightSec -->
 							<div id="rightSec">
@@ -120,6 +150,7 @@ function body() {
 												<? } ?>
 												<? for ($i = $fromDate; $i < $toDate; $i += 86400) { ?>
 													<? if (date('w', $i) == 0) { ?>
+														<? $resv_count = 0; ?>
 													<tr>
 													<? } ?>
 													<td>
@@ -131,6 +162,27 @@ function body() {
 														<? } else { ?>
 															<p><a href="#"><?=date('d', $i)?></a></p>
 														<? } ?>
+														<? 
+															if (isset($reservations[$i])) {
+																echo "<ul>";
+																if (!isset($resv_count)) {
+																	$resv_count = 0;
+																}
+																for ($j = 0; $j < $resv_count; $j++) {
+																	echo "<li><br></li>";
+																}
+																foreach ($reservations[$i] as $reserv) {
+																	$day_count = ($reserv['endDate'] - $i) / (24 * 60 * 60);
+																	$width = ($day_count > 7) ? 699 : 100 * $day_count - 1;
+																	$day_of_week = date('w', $i);
+																	$width -= $day_of_week * 100;
+																	$color_id = (ord(substr($reserv['houseId'], 0)) + ord(substr($reserv['roomId'], -1))) % 10 + 1;
+																	echo "<li class=\"cb$color_id\" style=\"width:$width%;\"><a href=\"#\">{$reserv['userid']}/{$reserv['houseName']}/{$reserv['roomName']}</a></li>";
+																	$resv_count++;
+																}
+																echo "</ul>";
+															}
+														?>
 														</div>
 													</td>
 													<? if (date('w', $i) == 6) { ?>

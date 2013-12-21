@@ -198,7 +198,7 @@ function body() {
 	if ($house->explain) {
 		echo $house->explain;
 	} else {
-		echo "운영자 소개: \n\n방벙보 소개:\n\n";
+		echo "운영자 소개: \n\n방정보 소개:\n\n";
 	}
 ?>
 							</textarea>	
