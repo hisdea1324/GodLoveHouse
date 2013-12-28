@@ -115,7 +115,7 @@ function body() {
 						<textarea name="contents" id="contents" style="width:600px; height:300px;"><?=$boardInfo->contents?></textarea>
 					</td>
 				</tr>
-		<tr>
+		<!--tr>
 			<td class="td01">이미지</td>
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
@@ -123,16 +123,16 @@ function body() {
 				<input type="hidden" name="idboardImage" id="idboardImage" value="" />
 				<input type="text" name="txtboardImage" id="txtboardImage" size="80" value="" readonly /> <br />
 			</td>
-		</tr>
-		<!-- <tr>
-			<td class="td01">파일</td>
+		</tr-->
+		<tr>
+			<td class="td01">파일첨부</td>
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" />
 				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
 				<input type="text" name="txtboardFile" id="txtboardFile" value="" size="80" readonly /> <br />
 			</td>
-		</tr> -->
+		</tr>
 		</form>
 			</table>
 			<!-- write// -->
