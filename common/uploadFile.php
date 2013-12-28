@@ -16,7 +16,7 @@ function upload() {
 
 	$count = "";
 	do {
-		$uploaddir = "/home/hosting_users/godlovehouse/www/upload/$path/";
+		$uploaddir = "/home/hosting_users/godlovehouse/www/upload/board/";
 		$uploadfile = $uploaddir . basename($count.$_FILES['fileName']['name']);
 		$filename = $count.$_FILES['fileName']['name'];
 		$count += 1;
@@ -56,7 +56,8 @@ function choice() {
 	/*
 	if (opener.pasteHTMLDemo != null) {
 		opener.pasteAttachFile();
-	}*/
+	}
+	*/
 	window.close();
 }
 //-->

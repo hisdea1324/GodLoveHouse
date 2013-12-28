@@ -34,7 +34,7 @@ class BoardObject {
 			case 'boardid':
 				return $this->record['id'];
 			case "contents":
-				return str_replace("\n", "<br>", $this->record[$name]);				
+				return stripslashes($this->record[$name]);
 			default:
 				return $this->record[$name];
 				break;

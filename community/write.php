@@ -75,46 +75,44 @@ function body() {
 	global $boardInfo, $boardGrp;
 	global $mode, $page, $groupId;
 ?>
-	<!--link href="css/default.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js/HuskyEZCreator.js" charset="utf-8"></script-->
+	<script type="text/javascript" src="editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 		<!-- //content -->
 		<div id="content">
 			<!-- //write -->
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 			<form name="writeForm" id="writeForm" method="post" action="process.php">
-		<input type="hidden" name="mode" id="mode" value="<?php echo $mode;?>" />
-		<input type="hidden" name="groupId" id="groupId" value="<?php echo $groupId;?>" />
-		<input type="hidden" name="id" id="id" value="<?php echo $boardInfo->id;?>" />
-		<input type="hidden" name="answerId" id="answerId" value="<?php echo $boardInfo->answerId;?>" />
-		<input type="hidden" name="answerNum" id="answerNum" value="<?php echo $boardInfo->answerNum;?>" />
-		<input type="hidden" name="answerLv" id="answerLv" value="<?php echo $boardInfo->answerLv;?>" />
-		<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION["userid"];?>" />
+			<input type="hidden" name="mode" id="mode" value="<?=$mode?>" />
+			<input type="hidden" name="groupId" id="groupId" value="<?=$groupId?>" />
+			<input type="hidden" name="id" id="id" value="<?=$boardInfo->id?>" />
+			<input type="hidden" name="answerId" id="answerId" value="<?=$boardInfo->answerId?>" />
+			<input type="hidden" name="answerNum" id="answerNum" value="<?=$boardInfo->answerNum?>" />
+			<input type="hidden" name="answerLv" id="answerLv" value="<?=$boardInfo->answerLv?>" />
+			<input type="hidden" name="userid" id="userid" value="<?=$_SESSION["userid"]?>" />
 			<col width="15%">
 		<col />
 				<tr>
 					<td class="td01">제목</td>
 					<td>
-						<input type="text" id="title" name="title" style="width:600px" value="<?php echo $boardInfo->title;?>">
+						<input type="text" id="title" name="title" style="width:600px" value="<?=$boardInfo->title?>">
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">작성자</td>
-					<td><?php echo $boardInfo->userid;?></td>
+					<td><?=$boardInfo->userid?></td>
 				</tr>
-		<?php if (($boardInfo->id>-1)) {
-?>
+		<? if ($boardInfo->id > -1) { ?>
 				<tr>
 					<td class="td01">수정자</td>
 					<td>
-						<?php echo $_SESSION["userid"];?> (작성자는 수정한 사람 아이디로 바뀝니다.)
+						<?=$_SESSION["userid"]?> (작성자는 수정한 사람 아이디로 바뀝니다.)
 					</td>
 				</tr>
-		<?php } ?>
+		<? } ?>
 				<tr>
 					<td class="td01">내용</td>
 					<td>
-			<textarea name="contents" id="contents" style="width:600px; height:300px;"><?php echo $boardInfo->contents;?></textarea>
+						<textarea name="contents" id="contents" style="width:600px; height:300px;"><?=$boardInfo->contents?></textarea>
 					</td>
 				</tr>
 		<tr>
@@ -126,7 +124,7 @@ function body() {
 				<input type="text" name="txtboardImage" id="txtboardImage" size="80" value="" readonly /> <br />
 			</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="td01">파일</td>
 			<td>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
@@ -134,46 +132,45 @@ function body() {
 				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
 				<input type="text" name="txtboardFile" id="txtboardFile" value="" size="80" readonly /> <br />
 			</td>
-		</tr>
+		</tr> -->
 		</form>
 			</table>
 			<!-- write// -->
 		<p class="btn_right">
 		<img src="../images/board/btn_ok.gif" border="0" class="m2" onclick="javascript:frmSubmit(this)" style="cursor:pointer"> 
-		<a href="board.php?groupId=<?php echo $groupId;?>&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>"><img src="../images/board/btn_cancel.gif" border="0" class="m2"></a>
+		<a href="board.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>"><img src="../images/board/btn_cancel.gif" border="0" class="m2"></a>
 		</p>
 		</div>
 		<!-- content// -->
 
 <script language="javascript">
-/*
 var oEditors = [];
-	nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors,
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
 	elPlaceHolder: "contents",
-	sSkinURI: "SEditorSkin.html",
-	fCreator: "createSEditorInIFrame"
-]);
-*/
-function pasteHTMLDemo(){
-	image = "/upload/board/" + document.getElementById("txtboardImage").value;
-	sHTML = "<span style='color:#FF0000'><img src='" + image + "' /></span>";
-	oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
-}
+	sSkinURI: "editor/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
 
-function pasteAttachFile(){
-	fileName = document.getElementById("txtboardFile").value;
-	sHTML = "<span style='color:#FF0000'><a href='/upload/board/" + fileName + "'>download : " + fileName + "</a></span>";
-	//oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
-}
+// function pasteHTMLDemo(){
+	// image = "/upload/board/" + document.getElementById("txtboardImage").value;
+	// sHTML = "<span style='color:#FF0000'><img src='" + image + "' /></span>";
+	// oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
+// }
+
+// function pasteAttachFile(){
+	// fileName = document.getElementById("txtboardFile").value;
+	// sHTML = "<span style='color:#FF0000'><a href='/upload/board/" + fileName + "'>download : " + fileName + "</a></span>";
+	// oEditors.getById["contents"].exec("PASTE_HTML", [sHTML]);
+// }
 
 function showHTML(){
-	//alert(oEditors.getById["contents"].getIR());
+	alert(oEditors.getById["contents"].getIR());
 }
 
 function frmSubmit(elClicked){
-	//oEditors.getById["contents"].exec("UPDATE_IR_FIELD", []);
-	
+	oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
 	var theForm = document.getElementById("writeForm");
 	
 	if (document.getElementById('title').value == "") {
@@ -187,7 +184,7 @@ function frmSubmit(elClicked){
 		return false;
 	}
 	
-	theForm.submit();
+    theForm.submit();
 }
 </script>
 <?php } ?>
