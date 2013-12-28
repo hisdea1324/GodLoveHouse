@@ -17,6 +17,8 @@ function body() {
 
 	setTestValue($room);
 ?>
+	<script type="text/javascript" src="/community/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
@@ -128,12 +130,12 @@ function body() {
 					<tr>
 						<th>메모</th>
 						<td colspan="3">
-							<textarea name="explain" id="explain" cols="100" rows="5">
+							<textarea name="explain" id="explain" style="width:600px; height:300px;">
 <?
 	if ($room->explain) {
 		echo $room->explain;
 	}
-?></textarea>	
+?></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -174,9 +176,23 @@ function body() {
 	<!-- // rightSec -->
 <?php } ?>
 
-<script type="text/javascript">
+<script language="javascript">
 //<![CDATA[
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+	elPlaceHolder: "explain",
+	sSkinURI: "/community/editor/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+	function showHTML(){
+		alert(oEditors.getById["contents"].getIR());
+	}
+	
 	function check() {
+		oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
+		
 		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}

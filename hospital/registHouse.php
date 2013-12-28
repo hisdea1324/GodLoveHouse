@@ -142,7 +142,7 @@ function body() {
 				<tr>
 					<td class="td01"> 병원 설명 </td>
 					<td>
-						<textarea name="explain" id="roomLimit" tabindex="15" onFocus="checkLogin();">
+						<textarea name="explain" id="explain" tabindex="15" onFocus="checkLogin();">
 							<?php 
 								//echo $textFormat[$hospitalObj->explain][2];
 								echo $hospitalObj->explain;

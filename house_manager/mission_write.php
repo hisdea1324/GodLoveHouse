@@ -18,6 +18,8 @@ function body() {
 
 	setTestValue($house);
 ?>
+	<script type="text/javascript" src="/community/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
 	<!-- rightSec -->
 	<div id="rightSec">
 		<div class="lnb">
@@ -193,15 +195,14 @@ function body() {
 					<tr>
 						<th>선교관설명</th>
 						<td>
-							<textarea name="explain" id="explain" cols="100" rows="5">
+							<textarea name="explain" id="explain" style="width:600px; height:300px;">
 <? 
 	if ($house->explain) {
 		echo $house->explain;
 	} else {
-		echo "운영자 소개: \n\n방정보 소개:\n\n";
+		echo "운영자 소개: <br><br>방정보 소개:<br><br>";
 	}
-?>
-							</textarea>	
+?></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -224,7 +225,7 @@ function body() {
 						<th>상태코드</th>
 						<td>
 							<select name="status" id="status">
-							<?php 
+							<? 
 								foreach ($codeStatus as $status) {
 									if ($house->statusCode == $status->code) {
 										print "<option value='".$status->code."' selected>".$status->name."</option>";
@@ -247,14 +248,29 @@ function body() {
 	<!-- // rightSec -->
 <? } ?>
 
-<script type="text/javascript">
+<script language="javascript">
 //<![CDATA[
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+	elPlaceHolder: "explain",
+	sSkinURI: "/community/editor/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+	function showHTML(){
+		alert(oEditors.getById["contents"].getIR());
+	}
+
 	function check() {
+		oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
+		
 		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}
 	
 	function frmSubmit() {
+		oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
 		<?
 		if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 			$backURL = get_path_info();

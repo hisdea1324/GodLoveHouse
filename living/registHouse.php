@@ -158,7 +158,7 @@ function body() {
 				<tr>
 					<td class="td01"> 선교관 설명 </td>
 					<td>
-						<textarea name="explain" id="roomLimit" tabindex="15" onFocus="checkLogin();"><?=$houseObj->Explain?></textarea>
+						<textarea name="explain" id="explain" tabindex="15" onFocus="checkLogin();"><?=$houseObj->Explain?></textarea>
 					</td>
 				</tr>
 		</form>

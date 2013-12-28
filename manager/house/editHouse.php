@@ -24,6 +24,8 @@ function body() {
 	global $houseObj, $codeRegions, $codeStatus;
 	
 ?>
+	<script type="text/javascript" src="/community/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?=$keyword?>&field=<?=$field?>">선교관추가</a> | 
 	<a href="index.php">등록된 선교관</a> | 
@@ -197,7 +199,14 @@ function body() {
 			<dt>
 				선교관 설명 
 			<dd>
-				<textarea name="explain" id="explain" tabindex="14" cols=50 rows=5><?=$houseObj->explain?></textarea>	
+				<textarea name="explain" id="explain" tabindex="14" style="width:600px; height:300px;">
+<? 
+	if ($houseObj->explain) {
+		echo $houseObj->explain;
+	} else {
+		echo "운영자 소개: <br><br>방정보 소개:<br><br>";
+	}
+?></textarea>
 			<dt>
 				제출서류
 			<dd>
@@ -231,9 +240,22 @@ function body() {
 
 <?php } ?>
 
-<script type="text/javascript">
+<script language="javascript">
 //<![CDATA[
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+	elPlaceHolder: "explain",
+	sSkinURI: "/community/editor/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+	function showHTML(){
+		alert(oEditors.getById["contents"].getIR());
+	}
+
 	function check() {
+		oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
 		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}
@@ -246,6 +268,7 @@ if (!isset($_SESSION['userid']) || strlen($_SESSION['userid'])==0) {
 			alert("선교관등록은 로그인을 하신후에 할 수 있습니다.");
 			location.href = "../member/login.php?backURL=<?=$backURL?>";
 		<? } else { ?>
+			oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
 			document.getElementById("dataForm").action="process.php";
 			document.getElementById("dataForm").submit();
 		<? } ?>

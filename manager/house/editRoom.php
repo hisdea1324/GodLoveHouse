@@ -22,6 +22,8 @@ function body() {
 	global $keyword, $field, $page;
 	global $house, $room;
 ?>
+	<script type="text/javascript" src="/community/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
 	<div class="sub">
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
 	<a href="index.php">등록된 선교관</a> | 
@@ -80,6 +82,15 @@ function body() {
 			<dd>
 				<input type="text" name="limit" size="20" value="<?php echo $room->Limit;?>" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" />
 			<dt>
+				 설명 
+			<dd>
+				<textarea name="explain" id="explain" tabindex="14" style="width:600px; height:300px;">
+<? 
+	if ($room->explain) {
+		echo $room->explain;
+	}
+?></textarea>
+			<dt>
 				이미지 1
 			<dd>
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
@@ -117,9 +128,24 @@ function body() {
 	</div>
 <?php } ?>
 
-<script type="text/javascript">
+
+<script language="javascript">
 //<![CDATA[
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+	elPlaceHolder: "explain",
+	sSkinURI: "/community/editor/SmartEditor2Skin.html",
+	fCreator: "createSEditor2"
+});
+
+	function showHTML(){
+		alert(oEditors.getById["contents"].getIR());
+	}
+	
 	function check() {
+		oEditors.getById["explain"].exec("UPDATE_CONTENTS_FIELD", []);
+		
 		document.getElementById("dataForm").action="process.php";
 		document.getElementById("dataForm").submit();
 	}
