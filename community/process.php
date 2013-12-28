@@ -30,6 +30,7 @@ function editPost() {
 	$board->Title = isset($_REQUEST["title"]) ? $_REQUEST["title"] : "";
 	$board->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
 	$board->Contents = isset($_REQUEST["contents"]) ? $_REQUEST["contents"] : "";
+	$board->attachFile = isset($_REQUEST["idboardFile"]) ? $_REQUEST["idboardFile"] : "";
 
 	$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
 	$keyword = isset($_REQUEST["keyword"]) ? trim($_REQUEST["keyword"]) : "";
@@ -54,6 +55,7 @@ function replyPost() {
 	$board->userid = isset($_REQUEST["userid"]) ? $_REQUEST["userid"] : "";
 	$board->Title = isset($_REQUEST["title"]) ? $_REQUEST["title"] : "";
 	$board->Contents = isset($_REQUEST["contents"]) ? $_REQUEST["contents"] : "";
+	$board->attachFile = isset($_REQUEST["idboardFile"]) ? $_REQUEST["idboardFile"] : "";
 	$board->AnswerID = isset($_REQUEST["answerId"]) ? $_REQUEST["answerId"] : "";
 	$board->AnswerNum = isset($_REQUEST["answerNum"]) ? $_REQUEST["answerNum"] : "";
 	$board->AnswerLv = isset($_REQUEST["answerLv"]) ? $_REQUEST["answerLv"] : "";

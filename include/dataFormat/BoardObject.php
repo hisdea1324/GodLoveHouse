@@ -35,6 +35,28 @@ class BoardObject {
 				return $this->record['id'];
 			case "contents":
 				return stripslashes($this->record[$name]);
+			case "attachfile":
+				return $this->record['attachfile'];
+			case "attachfilelink":
+				global $mysqli;
+				$query = "SELECT name FROM attachFile WHERE id = {$this->record['attachfile']}";
+				$result = $mysqli->query($query);
+				if ($result) {
+					$row = $result->fetch_assoc();
+					return "<a href=\"/upload/board/{$row['name']}\" target=\"_blank\">{$row['name']}</a>";
+				} else {
+					return "";
+				}
+			case "attachfilename":
+				global $mysqli;
+				$query = "SELECT name FROM attachFile WHERE id = {$this->record['attachfile']}";
+				$result = $mysqli->query($query);
+				if ($result) {
+					$row = $result->fetch_assoc();
+					return $row['name'];
+				} else {
+					return "";
+				}
 			default:
 				return $this->record[$name];
 				break;
@@ -63,6 +85,7 @@ class BoardObject {
 		$this->regDate = "";
 		$this->editDate = "";
 		$this->userid = (isset($_SESSION["userid"])) ? trim($_SESSION["userid"]) : 0;
+		$this->attachFile = "";
 		$this->countView = 0;
 		$this->countComment = 0;
 		$this->answerId = -1;
@@ -89,6 +112,7 @@ class BoardObject {
 			$this->userid = $row['userid'];
 			$this->countView = $row['countView'];
 			$this->countComment = $row['countComment'];
+			$this->attachFile = $row['attachFile'];
 			$this->answerId = $row['answerId'];
 			$this->answerNum = $row['answerNum'];
 			$this->answerLv = $row['answerLv'];
@@ -110,9 +134,10 @@ class BoardObject {
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerId);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerNum);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerLv);
+			$temp = $temp.", ".$mysqli->real_escape_string($this->record['attachfile']);
 			$temp = $temp.", ".time();
 
-			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `regDate`) VALUES ($temp)";
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `regDate`, `attachFile`) VALUES ($temp)";
 
 			$result = $mysqli->query($query);
 			if (!$result) {
@@ -140,6 +165,7 @@ class BoardObject {
 			$updateData = $updateData." `userid` = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData." countView = '".$mysqli->real_escape_string($this->countView)."', ";
 			$updateData = $updateData." countComment = '".$mysqli->real_escape_string($this->countComment)."', ";
+			$updateData = $updateData." attachFile = ".$mysqli->real_escape_string($this->record['attachfile']).", ";
 			$updateData = $updateData." answerId = ".$mysqli->real_escape_string($this->answerId).", ";
 			$updateData = $updateData." answerNum = ".$mysqli->real_escape_string($this->answerNum).", ";
 			$updateData = $updateData." answerLv = ".$mysqli->real_escape_string($this->answerLv);

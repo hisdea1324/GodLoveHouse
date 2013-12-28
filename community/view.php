@@ -60,8 +60,8 @@ function body() {
 			<!-- #view -->
 			<div class="bg_view">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="board_view">
-					<col width="10%">
-					<col width="20%">
+					<col width="13%">
+					<col width="17%">
 					<col width="15%">
 					<col width="20%">
 					<col width="10%">
@@ -80,6 +80,10 @@ function body() {
 					</tr>
 					<tr>
 						<td colspan="6" class="td02"><?=$board->Contents?></td>
+					</tr>
+					<tr>
+						<td class="td01">파일 첨부</td>
+						<td colspan="5"><?=$board->attachfilelink?></td>
 					</tr>
 				</table>
 			<table border="0" cellspacing="0" cellpadding="0">

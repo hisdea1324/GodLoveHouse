@@ -13,10 +13,10 @@ $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 $b_Helper = new BoardHelper();
 $boardGrp = $b_Helper->getBoardGroupByGroupId($groupId);
 if (strcmp($mode,"replyPost") == 0) {
-# for reply	
+	# for reply	
 	$boardInfo = $b_Helper->getReplyInfoById($id);
 } else {
-# for edit & new insert	
+	# for edit & new insert	
 	$boardInfo = $b_Helper->getBoardInfoById($id);
 } 
 
@@ -130,11 +130,11 @@ function body() {
 				<div id="showimage1" style="position:absolute;visibility:hidden;border:1px solid black"></div>
 				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" />
 				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
-				<input type="text" name="txtboardFile" id="txtboardFile" value="" size="80" readonly /> <br />
+				<input type="text" name="txtboardFile" id="txtboardFile" value="<?=$boardInfo->attachFileName?>" size="80" readonly /> <br />
 			</td>
 		</tr>
 		</form>
-			</table>
+		</table>
 			<!-- write// -->
 		<p class="btn_right">
 		<img src="../images/board/btn_ok.gif" border="0" class="m2" onclick="javascript:frmSubmit(this)" style="cursor:pointer"> 
@@ -172,7 +172,7 @@ function frmSubmit(elClicked){
 	oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
 
 	var theForm = document.getElementById("writeForm");
-	
+
 	if (document.getElementById('title').value == "") {
 		alert("제목을 입력하세요.");
 		document.getElementById('title').focus();
@@ -183,7 +183,7 @@ function frmSubmit(elClicked){
 		document.getElementById('contents').focus();
 		return false;
 	}
-	
+
     theForm.submit();
 }
 </script>
