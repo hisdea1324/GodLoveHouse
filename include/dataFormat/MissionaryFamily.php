@@ -93,7 +93,6 @@ class MissionaryFamily {
 			$updateData.= "`relation` = '".$mysqli->real_escape_string($this->relation)."' ";
 			$query .= $updateData." WHERE `id` = '".$mysqli->real_escape_string($this->id)."'";
 
-			echo $query;
 			$result = $mysqli->query($query);
 			if (!$result) {
 				return false;

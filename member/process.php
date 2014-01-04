@@ -87,12 +87,10 @@ function editUser() {
 
 	$result = editUserNormal();
 
-	$getURL = $_SERVER["HTTP_REFERER"];
-
-	$parsedURL = ParsingURL($getURL);
+	$parsedURL = ParsingURL($_SERVER["HTTP_REFERER"]);
 	if ($result === false) {
 		alertBack("데이터에 문제가 있습니다. 다시 정확히 입력해 주세요.");
-	} else if (strcmp($parsedURL["path"],"/member/join.php") == 0) {
+	} else if (strpos($_SERVER["HTTP_REFERER"], "join.php") !== false) {
 		$returnURL = "http://".$_SERVER['HTTP_HOST']."/member/login.php";
 		alertGoPage("가입 되었습니다.",$returnURL);
 	} else {

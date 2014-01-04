@@ -14,7 +14,7 @@ if ($dong > "") {
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_array()) {
 			$zipcode = explode('-', $row["zipcode"]);
-			$addr1 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"])." ".trim($row["bunji"])." ".trim($row["note"]);
+			$addr1 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"])." ".trim($row["bunji"]);
 			$addr2 = trim($row["sido"])." ".trim($row["gugun"])." ".trim($row["dong"]);
 			$addr1 = trim($addr1);
 			$addr2 = trim($addr2);

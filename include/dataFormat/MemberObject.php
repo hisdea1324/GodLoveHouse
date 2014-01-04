@@ -78,6 +78,7 @@ class MemberObject {
     	$this->initialize();
 
 		if ($userid != -1 && $userid != "") {
+			$this->userid = $userid;
 			$this->Open($userid);
 		}
 	}
@@ -169,7 +170,7 @@ class MemberObject {
 
 	function Update() {
 		global $mysqli;
-		if (len(trim($this->userid)) <= 2) {
+		if (strlen(trim($this->userid)) <= 2) {
 			// userid 길이가 2보다 작으면 에러 
 			return false;
 		}
