@@ -1,4 +1,4 @@
-<?php
+<?
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 //***************************************************************
 // member edit page
@@ -130,23 +130,23 @@ function body() {
 					<td class="td01">전화번호</td>
 					<td>
 						<select id="tel1" name="tel1" tabindex="11">
-							<option value="02"<?php if ($member->Phone[0] == "02") { ?> selected<?php } ?>>02</option>
-							<option value="031"<?php if ($member->Phone[0] == "031") { ?> selected<?php } ?>>031</option>
-							<option value="032"<?php if ($member->Phone[0] == "032") { ?> selected<?php } ?>>032</option>
-							<option value="033"<?php if ($member->Phone[0] == "033") { ?> selected<?php } ?>>033</option>
-							<option value="041"<?php if ($member->Phone[0] == "041") { ?> selected<?php } ?>>041</option>
-							<option value="042"<?php if ($member->Phone[0] == "042") { ?> selected<?php } ?>>042</option>
-							<option value="043"<?php if ($member->Phone[0] == "043") { ?> selected<?php } ?>>043</option>
-							<option value="051"<?php if ($member->Phone[0] == "051") { ?> selected<?php } ?>>051</option>
-							<option value="052"<?php if ($member->Phone[0] == "052") { ?> selected<?php } ?>>052</option>
-							<option value="053"<?php if ($member->Phone[0] == "053") { ?> selected<?php } ?>>053</option>
-							<option value="054"<?php if ($member->Phone[0] == "054") { ?> selected<?php } ?>>054</option>
-							<option value="055"<?php if ($member->Phone[0] == "055") { ?> selected<?php } ?>>055</option>
-							<option value="061"<?php if ($member->Phone[0] == "061") { ?> selected<?php } ?>>061</option>
-							<option value="062"<?php if ($member->Phone[0] == "062") { ?> selected<?php } ?>>062</option>
-							<option value="063"<?php if ($member->Phone[0] == "063") { ?> selected<?php } ?>>063</option>
-							<option value="064"<?php if ($member->Phone[0] == "064") { ?> selected<?php } ?>>064</option>
-							<option value="070"<?php if ($member->Phone[0] == "070") { ?> selected<?php } ?>>070</option>
+							<option value="02"<? if ($member->Phone[0] == "02") { ?> selected<? } ?>>02</option>
+							<option value="031"<? if ($member->Phone[0] == "031") { ?> selected<? } ?>>031</option>
+							<option value="032"<? if ($member->Phone[0] == "032") { ?> selected<? } ?>>032</option>
+							<option value="033"<? if ($member->Phone[0] == "033") { ?> selected<? } ?>>033</option>
+							<option value="041"<? if ($member->Phone[0] == "041") { ?> selected<? } ?>>041</option>
+							<option value="042"<? if ($member->Phone[0] == "042") { ?> selected<? } ?>>042</option>
+							<option value="043"<? if ($member->Phone[0] == "043") { ?> selected<? } ?>>043</option>
+							<option value="051"<? if ($member->Phone[0] == "051") { ?> selected<? } ?>>051</option>
+							<option value="052"<? if ($member->Phone[0] == "052") { ?> selected<? } ?>>052</option>
+							<option value="053"<? if ($member->Phone[0] == "053") { ?> selected<? } ?>>053</option>
+							<option value="054"<? if ($member->Phone[0] == "054") { ?> selected<? } ?>>054</option>
+							<option value="055"<? if ($member->Phone[0] == "055") { ?> selected<? } ?>>055</option>
+							<option value="061"<? if ($member->Phone[0] == "061") { ?> selected<? } ?>>061</option>
+							<option value="062"<? if ($member->Phone[0] == "062") { ?> selected<? } ?>>062</option>
+							<option value="063"<? if ($member->Phone[0] == "063") { ?> selected<? } ?>>063</option>
+							<option value="064"<? if ($member->Phone[0] == "064") { ?> selected<? } ?>>064</option>
+							<option value="070"<? if ($member->Phone[0] == "070") { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" id="tel2" name="tel2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="12" maxlength="4" value="<?=$member->Phone[1]?>" />
@@ -158,30 +158,30 @@ function body() {
 					<td class="td01">휴대폰번호</td>
 					<td>
 						<select id="hp1" name="hp1" tabindex="14">
-							<option value="010"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>010</option>
-							<option value="011"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>011</option>
-							<option value="016"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>016</option>
-							<option value="017"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>017</option>
-							<option value="018"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>018</option>
-							<option value="019"<?php if ($member->Mobile[0] == "070") { ?> selected<?php } ?>>019</option>
+							<option value="010"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>010</option>
+							<option value="011"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>011</option>
+							<option value="016"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>016</option>
+							<option value="017"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>017</option>
+							<option value="018"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>018</option>
+							<option value="019"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>019</option>
 						</select>
 						-
 						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?=$member->Mobile[1]?>" />
 						-
 						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?=$member->Mobile[2]?>" />
-						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="21"<?php if ($member->CheckMessageOption == 1) {?> checked<?php } ?> />
+						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="21"<? if ($member->CheckMessageOption == 1) {?> checked<? } ?> />
 						SMS 수신동의 
 					</td>
 				</tr>
 			</table>
 			<p class="right b10">
-				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="22"<?php if ($member->Level=="3") {
-?> checked<?php } ?> />
+				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="22"<? if ($member->Level=="3") {
+?> checked<? } ?> />
 				<span class="fc_01 b">선교사일 경우 추가입력</span></p>
 			<!-- //write -->
 			<!-- 개인정보// -->
 
-		<?php 
+		<? 
 	if ($member->userLv!="3") {
 		$display="none";
 		$churchContact = array("","","");
@@ -219,23 +219,23 @@ function body() {
 					<td class="td01">파송교회 연락처 </td>
 					<td>
 				<select name="churchContact1" id="churchContact1" tabindex="24">
-				<option value="02"<?php if (($churchContact[0]=="02")) { ?> selected<?php } ?>>02</option>
-				<option value="031"<?php if (($churchContact[0]=="031")) { ?> selected<?php } ?>>031</option>
-				<option value="032"<?php if (($churchContact[0]=="032")) { ?> selected<?php } ?>>032</option>
-				<option value="033"<?php if (($churchContact[0]=="033")) { ?> selected<?php } ?>>033</option>
-				<option value="041"<?php if (($churchContact[0]=="041")) { ?> selected<?php } ?>>041</option>
-				<option value="042"<?php if (($churchContact[0]=="042")) { ?> selected<?php } ?>>042</option>
-				<option value="043"<?php if (($churchContact[0]=="043")) { ?> selected<?php } ?>>043</option>
-				<option value="051"<?php if (($churchContact[0]=="051")) { ?> selected<?php } ?>>051</option>
-				<option value="052"<?php if (($churchContact[0]=="052")) { ?> selected<?php } ?>>052</option>
-				<option value="053"<?php if (($churchContact[0]=="053")) { ?> selected<?php } ?>>053</option>
-				<option value="054"<?php if (($churchContact[0]=="054")) { ?> selected<?php } ?>>054</option>
-				<option value="055"<?php if (($churchContact[0]=="055")) { ?> selected<?php } ?>>055</option>
-				<option value="061"<?php if (($churchContact[0]=="061")) { ?> selected<?php } ?>>061</option>
-				<option value="062"<?php if (($churchContact[0]=="062")) { ?> selected<?php } ?>>062</option>
-				<option value="063"<?php if (($churchContact[0]=="063")) { ?> selected<?php } ?>>063</option>
-				<option value="064"<?php if (($churchContact[0]=="064")) { ?> selected<?php } ?>>064</option>
-				<option value="070"<?php if (($churchContact[0]=="070")) { ?> selected<?php } ?>>070</option>
+				<option value="02"<? if (($churchContact[0]=="02")) { ?> selected<? } ?>>02</option>
+				<option value="031"<? if (($churchContact[0]=="031")) { ?> selected<? } ?>>031</option>
+				<option value="032"<? if (($churchContact[0]=="032")) { ?> selected<? } ?>>032</option>
+				<option value="033"<? if (($churchContact[0]=="033")) { ?> selected<? } ?>>033</option>
+				<option value="041"<? if (($churchContact[0]=="041")) { ?> selected<? } ?>>041</option>
+				<option value="042"<? if (($churchContact[0]=="042")) { ?> selected<? } ?>>042</option>
+				<option value="043"<? if (($churchContact[0]=="043")) { ?> selected<? } ?>>043</option>
+				<option value="051"<? if (($churchContact[0]=="051")) { ?> selected<? } ?>>051</option>
+				<option value="052"<? if (($churchContact[0]=="052")) { ?> selected<? } ?>>052</option>
+				<option value="053"<? if (($churchContact[0]=="053")) { ?> selected<? } ?>>053</option>
+				<option value="054"<? if (($churchContact[0]=="054")) { ?> selected<? } ?>>054</option>
+				<option value="055"<? if (($churchContact[0]=="055")) { ?> selected<? } ?>>055</option>
+				<option value="061"<? if (($churchContact[0]=="061")) { ?> selected<? } ?>>061</option>
+				<option value="062"<? if (($churchContact[0]=="062")) { ?> selected<? } ?>>062</option>
+				<option value="063"<? if (($churchContact[0]=="063")) { ?> selected<? } ?>>063</option>
+				<option value="064"<? if (($churchContact[0]=="064")) { ?> selected<? } ?>>064</option>
+				<option value="070"<? if (($churchContact[0]=="070")) { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
@@ -250,23 +250,23 @@ function body() {
 					<td class="td01">파송선교단체 연락처 </td>
 					<td>
 				<select name="ngoContact1" id="ngoContact1" tabindex="24">
-				<option value="02"<?php if (($ngoContact[0]=="02")) { ?> selected<?php } ?>>02</option>
-				<option value="031"<?php if (($ngoContact[0]=="031")) { ?> selected<?php } ?>>031</option>
-				<option value="032"<?php if (($ngoContact[0]=="032")) { ?> selected<?php } ?>>032</option>
-				<option value="033"<?php if (($ngoContact[0]=="033")) { ?> selected<?php } ?>>033</option>
-				<option value="041"<?php if (($ngoContact[0]=="041")) { ?> selected<?php } ?>>041</option>
-				<option value="042"<?php if (($ngoContact[0]=="042")) { ?> selected<?php } ?>>042</option>
-				<option value="043"<?php if (($ngoContact[0]=="043")) { ?> selected<?php } ?>>043</option>
-				<option value="051"<?php if (($ngoContact[0]=="051")) { ?> selected<?php } ?>>051</option>
-				<option value="052"<?php if (($ngoContact[0]=="052")) { ?> selected<?php } ?>>052</option>
-				<option value="053"<?php if (($ngoContact[0]=="053")) { ?> selected<?php } ?>>053</option>
-				<option value="054"<?php if (($ngoContact[0]=="054")) { ?> selected<?php } ?>>054</option>
-				<option value="055"<?php if (($ngoContact[0]=="055")) { ?> selected<?php } ?>>055</option>
-				<option value="061"<?php if (($ngoContact[0]=="061")) { ?> selected<?php } ?>>061</option>
-				<option value="062"<?php if (($ngoContact[0]=="062")) { ?> selected<?php } ?>>062</option>
-				<option value="063"<?php if (($ngoContact[0]=="063")) { ?> selected<?php } ?>>063</option>
-				<option value="064"<?php if (($ngoContact[0]=="064")) { ?> selected<?php } ?>>064</option>
-				<option value="070"<?php if (($ngoContact[0]=="070")) { ?> selected<?php } ?>>070</option>
+				<option value="02"<? if (($ngoContact[0]=="02")) { ?> selected<? } ?>>02</option>
+				<option value="031"<? if (($ngoContact[0]=="031")) { ?> selected<? } ?>>031</option>
+				<option value="032"<? if (($ngoContact[0]=="032")) { ?> selected<? } ?>>032</option>
+				<option value="033"<? if (($ngoContact[0]=="033")) { ?> selected<? } ?>>033</option>
+				<option value="041"<? if (($ngoContact[0]=="041")) { ?> selected<? } ?>>041</option>
+				<option value="042"<? if (($ngoContact[0]=="042")) { ?> selected<? } ?>>042</option>
+				<option value="043"<? if (($ngoContact[0]=="043")) { ?> selected<? } ?>>043</option>
+				<option value="051"<? if (($ngoContact[0]=="051")) { ?> selected<? } ?>>051</option>
+				<option value="052"<? if (($ngoContact[0]=="052")) { ?> selected<? } ?>>052</option>
+				<option value="053"<? if (($ngoContact[0]=="053")) { ?> selected<? } ?>>053</option>
+				<option value="054"<? if (($ngoContact[0]=="054")) { ?> selected<? } ?>>054</option>
+				<option value="055"<? if (($ngoContact[0]=="055")) { ?> selected<? } ?>>055</option>
+				<option value="061"<? if (($ngoContact[0]=="061")) { ?> selected<? } ?>>061</option>
+				<option value="062"<? if (($ngoContact[0]=="062")) { ?> selected<? } ?>>062</option>
+				<option value="063"<? if (($ngoContact[0]=="063")) { ?> selected<? } ?>>063</option>
+				<option value="064"<? if (($ngoContact[0]=="064")) { ?> selected<? } ?>>064</option>
+				<option value="070"<? if (($ngoContact[0]=="070")) { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" name="ngoContact2" id="ngoContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$ngoContact[1]?>" />
@@ -277,17 +277,17 @@ function body() {
 					<td class="td01">선교지</td>
 					<td>
 						<select name="nation" id="nation" tabindex="32">
-			<?php 
+			<? 
 	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
 		$codeObj = $codes[$i];
 		if (($codeObj->Code == $mission->NationCode)) {
 ?>
 					<option value="<?=$codeObj->Code?>" selected><?=$codeObj->Name?></option>
-				<?php 
+				<? 
 		} else {
 ?>
 					<option value="<?=$codeObj->Code?>"><?=$codeObj->Name?></option>
-				<?php 
+				<? 
 		} 
 
 
@@ -309,29 +309,29 @@ function body() {
 					<td class="td01">파송관리자 연락처 </td>
 					<td>
 				<select name="managerContact1" id="managerContact1" tabindex="24">
-				<option value="010"<?php if (($managerContact[0]=="010")) { ?> selected<?php } ?>>010</option>
-				<option value="011"<?php if (($managerContact[0]=="011")) { ?> selected<?php } ?>>011</option>
-				<option value="016"<?php if (($managerContact[0]=="016")) { ?> selected<?php } ?>>016</option>
-				<option value="017"<?php if (($managerContact[0]=="017")) { ?> selected<?php } ?>>017</option>
-				<option value="018"<?php if (($managerContact[0]=="018")) { ?> selected<?php } ?>>018</option>
-				<option value="019"<?php if (($managerContact[0]=="019")) { ?> selected<?php } ?>>019</option>
-				<option value="02"<?php if (($managerContact[0]=="02")) { ?> selected<?php } ?>>02</option>
-				<option value="031"<?php if (($managerContact[0]=="031")) { ?> selected<?php } ?>>031</option>
-				<option value="032"<?php if (($managerContact[0]=="032")) { ?> selected<?php } ?>>032</option>
-				<option value="033"<?php if (($managerContact[0]=="033")) { ?> selected<?php } ?>>033</option>
-				<option value="041"<?php if (($managerContact[0]=="041")) { ?> selected<?php } ?>>041</option>
-				<option value="042"<?php if (($managerContact[0]=="042")) { ?> selected<?php } ?>>042</option>
-				<option value="043"<?php if (($managerContact[0]=="043")) { ?> selected<?php } ?>>043</option>
-				<option value="051"<?php if (($managerContact[0]=="051")) { ?> selected<?php } ?>>051</option>
-				<option value="052"<?php if (($managerContact[0]=="052")) { ?> selected<?php } ?>>052</option>
-				<option value="053"<?php if (($managerContact[0]=="053")) { ?> selected<?php } ?>>053</option>
-				<option value="054"<?php if (($managerContact[0]=="054")) { ?> selected<?php } ?>>054</option>
-				<option value="055"<?php if (($managerContact[0]=="055")) { ?> selected<?php } ?>>055</option>
-				<option value="061"<?php if (($managerContact[0]=="061")) { ?> selected<?php } ?>>061</option>
-				<option value="062"<?php if (($managerContact[0]=="062")) { ?> selected<?php } ?>>062</option>
-				<option value="063"<?php if (($managerContact[0]=="063")) { ?> selected<?php } ?>>063</option>
-				<option value="064"<?php if (($managerContact[0]=="064")) { ?> selected<?php } ?>>064</option>
-				<option value="070"<?php if (($managerContact[0]=="070")) { ?> selected<?php } ?>>070</option>
+				<option value="010"<? if (($managerContact[0]=="010")) { ?> selected<? } ?>>010</option>
+				<option value="011"<? if (($managerContact[0]=="011")) { ?> selected<? } ?>>011</option>
+				<option value="016"<? if (($managerContact[0]=="016")) { ?> selected<? } ?>>016</option>
+				<option value="017"<? if (($managerContact[0]=="017")) { ?> selected<? } ?>>017</option>
+				<option value="018"<? if (($managerContact[0]=="018")) { ?> selected<? } ?>>018</option>
+				<option value="019"<? if (($managerContact[0]=="019")) { ?> selected<? } ?>>019</option>
+				<option value="02"<? if (($managerContact[0]=="02")) { ?> selected<? } ?>>02</option>
+				<option value="031"<? if (($managerContact[0]=="031")) { ?> selected<? } ?>>031</option>
+				<option value="032"<? if (($managerContact[0]=="032")) { ?> selected<? } ?>>032</option>
+				<option value="033"<? if (($managerContact[0]=="033")) { ?> selected<? } ?>>033</option>
+				<option value="041"<? if (($managerContact[0]=="041")) { ?> selected<? } ?>>041</option>
+				<option value="042"<? if (($managerContact[0]=="042")) { ?> selected<? } ?>>042</option>
+				<option value="043"<? if (($managerContact[0]=="043")) { ?> selected<? } ?>>043</option>
+				<option value="051"<? if (($managerContact[0]=="051")) { ?> selected<? } ?>>051</option>
+				<option value="052"<? if (($managerContact[0]=="052")) { ?> selected<? } ?>>052</option>
+				<option value="053"<? if (($managerContact[0]=="053")) { ?> selected<? } ?>>053</option>
+				<option value="054"<? if (($managerContact[0]=="054")) { ?> selected<? } ?>>054</option>
+				<option value="055"<? if (($managerContact[0]=="055")) { ?> selected<? } ?>>055</option>
+				<option value="061"<? if (($managerContact[0]=="061")) { ?> selected<? } ?>>061</option>
+				<option value="062"<? if (($managerContact[0]=="062")) { ?> selected<? } ?>>062</option>
+				<option value="063"<? if (($managerContact[0]=="063")) { ?> selected<? } ?>>063</option>
+				<option value="064"<? if (($managerContact[0]=="064")) { ?> selected<? } ?>>064</option>
+				<option value="070"<? if (($managerContact[0]=="070")) { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" name="managerContact2" id="managerContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$managerContact[1]?>" />
@@ -376,7 +376,7 @@ function body() {
 					<td>			
 			<table id="tblFamily" name="tbmFamily" width="100%" border="0" cellspacing="0" cellpadding="0" class="board_con">
 			<tr><th>이름</th><th>나이</th><th>성별</th><th>관계</th><th>삭제</th></tr>
-<?php 
+<? 
 	if (strlen($mission->userid) > 0) {
 		foreach ($familyList as $familyObj) {
 ?>
@@ -384,16 +384,16 @@ function body() {
 					<input type="hidden" name="familyId[]" id="familyId[]" value="<?=$familyObj->id?>" />
 					<td><input type="text" name="familyName[]" id="familyName[]" style="width:150px" value="<?=$familyObj->Name?>" /></td>
 					<td><select name="familyAge[]" id="familyAge[]">
-<?php 
+<? 
 			for ($i = 0; $i<=99; $i++) {
 				if ((date('Y') - $i) == $familyObj->Age) {
 ?>
 							<option value='<?=(date('Y') - $i)?>' selected><?=($i + 1)?>세, <?=(date('Y') - $i)?> </option>
-<?php 
+<? 
 				} else {
 ?>
 							<option value='<?=(date('Y') - $i)?>'><?=($i + 1)?>세, <?=(date('Y') - $i)?> </option>
-<?php 
+<? 
 				} 
 			}
 ?>
@@ -415,7 +415,7 @@ function body() {
 					</td>
 					<td><input type="button" name="btnDelFamily" id="btnDelFamily" value="삭제" style="cursor:pointer;" onclick="deleteFamily(<?=$familyObj->familyID?>)" /></td>
 				</tr>
-			<?php 
+			<? 
 
 		}
 
@@ -425,7 +425,7 @@ function body() {
 					<input type="hidden" name="familyId" id="familyId" value="-1" />
 					<td><input type="text" name="familyName" id="familyName" style="width:150px" /></td>
 					<td><select name="familyAge" id="familyAge">
-<?php 
+<? 
 	for ($i = 0; $i <= 99; $i++) {
 		print "<option value='".(date('Y') - $i)."'>".($i + 1)."세, ".(date('Y') - $i)." </option>";
 
@@ -442,7 +442,7 @@ function body() {
 					</td>
 					<td>&nbsp;</td>
 				</tr>
-			<?php 
+			<? 
 	} 
 
 ?>
@@ -477,7 +477,7 @@ function body() {
 			</table>
 		</div>
 		<!-- content// -->
-<?php } ?>
+<? } ?>
 
 
 <script type="text/javascript">
@@ -662,7 +662,7 @@ function body() {
 	}
 	
 	function deleteFamily(familyId) {
-		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?php echo $userid?>&familyId=" + familyId;
+		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?=$userid?>&familyId=" + familyId;
 	}
 //]]>
 </script>

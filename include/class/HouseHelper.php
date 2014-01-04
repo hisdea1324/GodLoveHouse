@@ -156,11 +156,11 @@ class HouseHelper {
 
 	function getHouseListByuserid($userid, $houseType) {
 		if ($userid == "lovehouse") {
-			$query = "SELECT houseId FROM house WHERE status = 'S2002'";
+			$query = "SELECT houseId FROM house WHERE status IN ('S2002','S2004')";
 		} elseif ($houseType == 1) {
 			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2002'";
 		} else {
-			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND (status = 'S2001')";
+			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND (status IN ('S2004')";
 		} 
 
 		return $this->getHouseList($query);
@@ -328,11 +328,20 @@ class HouseHelper {
 		return $this->getReservationList($query);
 	} 
 
-	function getReservationListByUser($curPage) {
+	function getReservationListByUser($curPage, $status = "0") {
 		global $mysqli;
 
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
 		$query = $query."WHERE A.houseId = B.houseId AND B.roomId = C.roomId AND C.userid = '".$mysqli->real_escape_string($_SESSION['userid'])."' ";
+		if ($status == "1") {
+			$query .= " AND C.reservStatus = 'S0001'";
+		} else if ($status == "2") {
+			$query .= " AND C.reservStatus = 'S0002'";
+		} else if ($status == "3") {
+			$query .= " AND C.reservStatus = 'S0003'";
+		} else if ($status == "4") {
+			$query .= " AND C.reservStatus = 'S0004'";
+		}
 		$query = $query."ORDER BY C.regDate DESC";
 		return $this->getReservationList($query);
 	} 

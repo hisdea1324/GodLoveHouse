@@ -227,6 +227,7 @@ function body() {
 							<select name="status" id="status">
 							<? 
 								foreach ($codeStatus as $status) {
+									if ($status->code == "S2001" || $status->code == "S2003") continue;
 									if ($house->statusCode == $status->code) {
 										print "<option value='".$status->code."' selected>".$status->name."</option>";
 									} else {

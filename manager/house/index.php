@@ -64,6 +64,7 @@ function body() {
 	<a href="editHouse.php?mode=addHouse&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">선교관추가</a> | 
 	<a href="index.php">등록된 선교관</a> | 
 	<a href="index.php?status=S2001">대기중 선교관</a> | 
+	<a href="index.php?status=S2004">숨김 선교관</a> | 
 	<a href="editHospital.php??mode=addHospital&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>">병원 추가</a> | 
 	<a href="hospital.php">등록된 병원</a> | 
 	<a href="hospital.php?status=S2001">대기중 병원</a>
