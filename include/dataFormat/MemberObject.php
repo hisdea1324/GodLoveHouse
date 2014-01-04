@@ -169,6 +169,10 @@ class MemberObject {
 
 	function Update() {
 		global $mysqli;
+		if (len(trim($this->userid)) <= 2) {
+			// userid 길이가 2보다 작으면 에러 
+			return false;
+		}
 
 		if ($this->isNew) {
 
@@ -225,6 +229,8 @@ class MemberObject {
 				return false;
 			}
 		}
+
+		return true;
 	} 
 
 	function Delete() {
