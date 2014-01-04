@@ -356,11 +356,27 @@ function body() {
 			<br />
 			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
 			<table class="write mt30" width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
-				<col width="15%">
+				<col width="12%">
 				<col />
 <?php
 	if ($roomId != "" && $house->status == "승인") {
 ?>
+				<tr>
+					<th><p class="reserve"><b>회원아이디</b></th>
+					<td colspan="3">
+						<input type="text" name="userid" id="userid" value="" class="input" readonly onclick="searchUser();" />
+					</td>
+				</tr>
+				<tr>
+					<th><p class="reserve"><b>이름</b></th>
+					<td width="45%">
+						<input type="text" name="resv_name" id="resv_name" value="" class="input">
+					</td>
+					<th><p class="reserve"><b>연락처</b></th>
+					<td>
+						<input type="text" name="resv_phone" id="resv_phone" value="" class="input">
+					</td>
+				</tr>
 				<tr>
 					<th><p class="reserve"><b>날짜입력</b></th>
 					<td>
@@ -370,8 +386,6 @@ function body() {
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate')">
 						<label class="fs11" type="text" name='resultMessage1' id='resultMessage1'></label>
 					</td>
-				</tr>
-				<tr>
 					<th><p class="reserve"><b>희망 입주 시간</b></th>
 					<td>
 						<select type="text" name="arrival_time" id="arrival_time">
@@ -381,24 +395,6 @@ function body() {
 							} 
 							?>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<th><p class="reserve"><b>회원아이디</b></th>
-					<td>
-						<input type="text" name="userid" id="userid" value="" class="input" readonly onclick="searchUser();" />
-					</td>
-				</tr>
-				<tr>
-					<th><p class="reserve"><b>이름</b></th>
-					<td>
-						<input type="text" name="resv_name" id="resv_name" value="" class="input">
-					</td>
-				</tr>
-				<tr>
-					<th><p class="reserve"><b>연락처</b></th>
-					<td>
-						<input type="text" name="resv_phone" id="resv_phone" value="" class="input">
 					</td>
 				</tr>
 				<tr>
@@ -412,8 +408,6 @@ function body() {
 							?>
 						</select>
 					</td>
-				</tr>
-				<tr>
 					<th><p class="reserve"><b>방문 목적</b></th>
 					<td>
 						
@@ -426,7 +420,7 @@ function body() {
 				</tr>
 				<tr>
 					<th><p class="reserve"><b>메모</b></th>
-					<td>
+					<td colspan="3">
 
 							<textarea name="memo" id="memo" cols="100" rows="10">
 <? 
@@ -437,7 +431,7 @@ function body() {
 				</tr>
 				<tr>
 					<td> </td>
-					<td align="right" width="100%">
+					<td align="right" width="100%" colspan="3">
 						<img src="../images/board/btn_reserve.gif" border="0" align="absmiddle" class="m5" onclick="reserveSubmit('<?=$available_date_list?>')">
 					</td>
 				</tr>
