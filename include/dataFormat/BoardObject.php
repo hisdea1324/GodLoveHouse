@@ -134,7 +134,7 @@ class BoardObject {
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerId);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerNum);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->answerLv);
-			$temp = $temp.", ".$mysqli->real_escape_string($this->record['attachfile']);
+			$temp = $temp.", '".$mysqli->real_escape_string($this->record['attachfile'])."'";
 			$temp = $temp.", ".time();
 
 			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `regDate`, `attachFile`) VALUES ($temp)";
@@ -165,13 +165,14 @@ class BoardObject {
 			$updateData = $updateData." `userid` = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData." countView = '".$mysqli->real_escape_string($this->countView)."', ";
 			$updateData = $updateData." countComment = '".$mysqli->real_escape_string($this->countComment)."', ";
-			$updateData = $updateData." attachFile = ".$mysqli->real_escape_string($this->record['attachfile']).", ";
+			$updateData = $updateData." attachFile = '".$mysqli->real_escape_string($this->record['attachfile'])."', ";
 			$updateData = $updateData." answerId = ".$mysqli->real_escape_string($this->answerId).", ";
 			$updateData = $updateData." answerNum = ".$mysqli->real_escape_string($this->answerNum).", ";
 			$updateData = $updateData." answerLv = ".$mysqli->real_escape_string($this->answerLv);
 			$query = $query.$updateData." WHERE `id` = ".$mysqli->real_escape_string($this->id);
 
 			$result = $mysqli->query($query);
+
 			if (!$result) {
 				return false;
 			}

@@ -243,7 +243,6 @@ function login() {
 		} else {
 			header("Location: "."../index.php");
 		} 
-		exit();
 	}
 
 	//값이 제대로 들어있지 않다면 이전 페이지로 돌아간다.	

@@ -73,7 +73,7 @@ showFooter();
 
 function body() {
 	global $boardInfo, $boardGrp;
-	global $mode, $page, $groupId;
+	global $mode, $page, $groupId, $keyword, $field;
 ?>
 	<script type="text/javascript" src="editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 

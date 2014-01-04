@@ -43,6 +43,7 @@ function editPost() {
 	} 
 
 	$board->Update();
+
 	header("Location: "."view.php?groupId=".$board->GroupID."&id=".$board->BoardID."&page=".$page."&field=".$field."&keyword=".$keyword);
 } 
 
