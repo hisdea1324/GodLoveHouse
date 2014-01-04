@@ -163,7 +163,7 @@ function body() {
 		//------------------------
 		// 룸 예약 정보 받아오기 
 		//------------------------
-		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$aRoom->RoomID."' AND B.roomId = C.roomId AND C.reservStatus <> 'S0004' ";
+		$query = "SELECT * FROM room B, reservation C WHERE B.roomId = '".$aRoom->RoomID."' AND B.roomId = C.roomId ";
 		$query = $query." AND ((endDate >= {$fromDate} AND startDate < {$toDate}) ";
 		$query = $query." OR (startDate < {$fromDate} AND endDate >= {$toDate})) ";
 		$query = $query." ORDER BY startDate";
