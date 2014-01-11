@@ -91,13 +91,14 @@ function showSimpleHeader($strNavi,$strSub,$strTitleImg) {
 	print $strHeader.$strSubMenu;
 }
 
-function showHeader($strNavi, $strSub, $strTitleImg) {
+function showHeader($strNavi, $strSub, $strTitleImg, $fb_meta_string="") {
 	global $Application;
 	
 	$strHeader = file_get_contents($_SERVER['DOCUMENT_ROOT']."/include/html/header.php");
 	$strHeader = str_replace("[TITLE]",$Application["Title"],$strHeader);
 	$strHeader = str_replace("[WEBROOT]", "http://".$_SERVER['HTTP_HOST']."/", $strHeader);
 	$strHeader = str_replace("[CHARSET]",$Application["Charset"],$strHeader);
+	$strHeader = str_replace("[METAINFO_FACEBOOK]", $fb_meta_string, $strHeader);
 
 	if (!isset($_SESSION['userid']) || $_SESSION['userid'] == "") {
 		$strHeader = str_replace("[LOGIN_STATUS1]","gm_01",$strHeader);

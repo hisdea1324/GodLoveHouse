@@ -137,7 +137,7 @@ class BoardObject {
 			$temp = $temp.", '".$mysqli->real_escape_string($this->record['attachfile'])."'";
 			$temp = $temp.", ".time();
 
-			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `regDate`, `attachFile`) VALUES ($temp)";
+			$query = "INSERT INTO board (`groupId`, `title`, `contents`, `password`, `userid`, `answerId`, `answerNum`, `answerLv`, `attachFile`, `regDate`) VALUES ($temp)";
 
 			$result = $mysqli->query($query);
 			if (!$result) {
@@ -161,7 +161,7 @@ class BoardObject {
 			$updateData = $updateData." title = '".$mysqli->real_escape_string($this->title)."', ";
 			$updateData = $updateData." contents = '".$mysqli->real_escape_string($this->contents)."', ";
 			$updateData = $updateData." `password` = '".$mysqli->real_escape_string($this->password)."', ";
-			$updateData = $updateData." editDate = ".time().", ";
+			$updateData = $updateData." regDate = ".time().", ";
 			$updateData = $updateData." `userid` = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData." countView = '".$mysqli->real_escape_string($this->countView)."', ";
 			$updateData = $updateData." countComment = '".$mysqli->real_escape_string($this->countComment)."', ";
@@ -229,7 +229,6 @@ class BoardObject {
 		} else {
 			return false;
 		} 
-
 	} 
 }
 ?>

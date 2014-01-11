@@ -69,7 +69,6 @@ function MM_swapImage() { //v3.0
 	 if ((x=MM_findObj(a[i])) != null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
 }
 
-<!--
 	// 서브메뉴
 	function subMenu(arg) {
 		try {

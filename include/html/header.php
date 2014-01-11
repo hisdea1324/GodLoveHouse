@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=[CHARSET]">
+	[METAINFO_FACEBOOK]
 	<title>[TITLE]</title>
 	<link href="[WEBROOT]include/css/style.css" rel="stylesheet" type="text/css">
 	<script language='javascript' src='[WEBROOT]include/js/flash.js'></script>
@@ -24,6 +25,15 @@
 </head>
 
 <body onLoad="MM_preloadImages('[WEBROOT]images/sub/left_0101_on.gif')">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=1400358856879134";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <div id="top"><a href="[WEBROOT]index.php"><img src="[WEBROOT]images/common/logo.gif" class="logo"></a>
 	<ul class="gm">
 		<li><img src="[WEBROOT]images/common/[LOGIN_STATUS1].gif" onclick="clickTopNavi([LOGIN_VALUE1]);" style="cursor:pointer"><img src="[WEBROOT]images/common/gm_bar.gif" class="m5"></li>

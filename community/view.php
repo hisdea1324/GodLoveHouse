@@ -45,7 +45,16 @@ $b_Helper = new BoardHelper();
 $boardGrp = $b_Helper->getBoardGroupByGroupId($groupId);
 $board = $b_Helper->getBoardInfoById($id);
 
-showHeader($headerSet[0],$headerSet[1],$headerSet[2]);
+$content = rawurlencode(str_replace("<br>", "", $board->Contents));
+$fb_string = <<<EOT
+	<meta property="og:image" content="http://www.godlovehouse.net/images/sub/subimg_06.gif" />
+	<meta property="og:title" content="{$board->Title}" />
+	<meta property="title" content="{$board->Title}" />
+	<meta name="Description" content="{$content}" />
+EOT;
+
+showHeader($headerSet[0],$headerSet[1],$headerSet[2], $fb_string);
+
 body();
 showFooter();
 
@@ -86,6 +95,7 @@ function body() {
 						<td colspan="5"><?=$board->attachfilelink?></td>
 					</tr>
 				</table>
+				<div class="fb-comments" data-href="http://www.godlovehouse.net/community/view.php?groupId=<?=$groupId?>&id=<?=$id?>" data-width="700" data-numposts="10" data-colorscheme="light"></div>
 			<table border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td><a class="addthis_button_facebook"><img src="/images/icon_face.gif" style="cursor:pointer;" onclick="javascript:sns_share('fb','<?=$board->Title?>');" alt="페이스북 공유하기"></a></td>

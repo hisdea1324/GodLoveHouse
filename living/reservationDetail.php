@@ -19,10 +19,19 @@ if (isset($_SESSION["userid"])) {
 	$mission = $m_Helper->getMissionInfoByuserid();
 }
 
+$content = rawurlencode(str_replace("<br>", "", $house->explain));
+$image = str_replace(" ", "%20", $room->Image1);
+$fb_string = <<<EOT
+	<meta property="og:image" content=http://godlovehouse.net{$image}" />
+	<meta property="og:title" content="{$house->HouseName} :: {$room->RoomName}" />
+	<meta property="title" content="{$house->HouseName} :: {$room->RoomName}" />
+	<meta name="Description" content="{$content}" />
+EOT;
+
 if ($house->StatusCode == "S2002") {
-	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif");
+	showHeader("HOME > 선교관 > 예약종합안내","living","tit_0202.gif", $fb_string);
 } else {
-	showHeader("HOME > 선교관 > 기타 선교관 안내","living","tit_0201.gif");
+	showHeader("HOME > 선교관 > 기타 선교관 안내","living","tit_0201.gif", $fb_string);
 } 
 
 body();
@@ -242,6 +251,8 @@ function body() {
 				</tr>
 			</table>
 		</form>
+
+		<div class="fb-comments" data-href="http://www.godlovehouse.net/living/reservationDetail.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>" data-width="700" data-numposts="10" data-colorscheme="light"></div>
 
 		<?php } ?>     
 		<!-- view// -->
