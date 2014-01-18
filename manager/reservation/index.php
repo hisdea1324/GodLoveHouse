@@ -97,6 +97,8 @@ function body() {
 	<div class="rSec">
 	<!-- 컨텐츠 들어가는 부분 -->
 			
+		<a href="/manager/csv_download.php?action=download&table=reservation" target="_blank">[엑셀 다운 로드]</a>
+		
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
 			<form name="findForm" method="get" action="<?php echo $CurUrl;?>">
 			<tr>

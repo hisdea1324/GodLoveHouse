@@ -1,4 +1,4 @@
-<?php
+<?
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 checkAuth();
@@ -64,8 +64,6 @@ showAdminFooter();
 $listRS = null;
 $objTable = null;
 
-
-
 function makeCondition($userLv,$field,$keyword) {
 	if ($userLv == 1) {
 		$strWhere = " WHERE userLv BETWEEN 0 AND 1 ";
@@ -108,39 +106,40 @@ function body() {
 	</div>
 	<div class="rSec">
 	<!-- 컨텐츠 들어가는 부분 -->
-
+		<a href="/manager/csv_download.php?action=download&table=users" target="_blank">[엑셀 다운 로드]</a>
+		<a href="/manager/csv_download.php?action=download&table=missionary" target="_blank">[선교사 - 엑셀 다운 로드]</a>
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
-			<form name="findForm" method="get" action="<?php echo $CurUrl;?>">
+			<form name="findForm" method="get" action="<?=$_SERVER['PHP_SELF']?>?<?=$_SERVER['QUERY_STRING']?>">
 			<!--tr><td align="right"><a href="test.csv">[download csv excel:test.csv]</a></td></tr-->
 			<tr>
 				<td align="right">
 					<select name="field">
-						<option value="name" <?php if (($field=="name")) {?>selected<?php } ?>>이름</option>
-						<option value="userid" <?php if (($field=="userid")) {?>selected<?php } ?>>아이디</option>
-						<option value="mobile" <?php if (($field=="mobile")) {?>selected<?php } ?>>핸드폰</option>
-						<option value="phone" <?php if (($field=="phone")) {?>selected<?php } ?>>전화번호</option>
+						<option value="name" <?if (($field=="name")) {?>selected<?} ?>>이름</option>
+						<option value="userid" <?if (($field=="userid")) {?>selected<?} ?>>아이디</option>
+						<option value="mobile" <?if (($field=="mobile")) {?>selected<?} ?>>핸드폰</option>
+						<option value="phone" <?if (($field=="phone")) {?>selected<?} ?>>전화번호</option>
 					</select>
-					<input type="text" name="keyword" size="15" value="<?php echo $keyword;?>">
+					<input type="text" name="keyword" size="15" value="<?echo $keyword;?>">
 					<input type="image" src="/images/btn_find.gif" border="0" align="absmiddle">
 				</td>
 			</tr>
 			</form>
 		</table>
-		<?php echo $htmlTable;?>
+		<?echo $htmlTable;?>
 
 		<table cellpadding=0 cellspacing=0 border=0 width=100%>
-		<tr><td align="center" height="60"><?php echo $strPage;?></td></tr>
+		<tr><td align="center" height="60"><?echo $strPage;?></td></tr>
 		</table>
 	</div>
 	</div>
 
-<?php 
+<?
 } 
 ?>
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
+	var searchString = '&keyword=<?echo $keyword;?>&field=<?echo $field;?>';
 	
 	function clickButton(no, userid) {
 		switch(no) {
@@ -179,12 +178,12 @@ function body() {
 	}
 
 	function goShow(userid) {
-		location.href = 'editForm.php?userLv=<?php echo $userLv;?>&userid=' + userid;
+		location.href = 'editForm.php?userLv=<?echo $userLv;?>&userid=' + userid;
 	}
 
 	function goDelete(userid) {
 		if (confirm("정말 삭제 하시겠습니까?")) {
-			location.href = 'process.php?mode=deleteUser&userLv=<?php echo $userLv;?>&userid=' + userid;
+			location.href = 'process.php?mode=deleteUser&userLv=<?echo $userLv;?>&userid=' + userid;
 		}
 	}
 	
