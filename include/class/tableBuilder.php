@@ -49,15 +49,15 @@ class tableBuilder {
 		if (substr($ordString, strlen($ordString) - 4) == "DESC") {
 			$this->orderType = "DESC";
 			$this->order = substr($ordString, 0, strlen($ordString) - 5);
-		} else
+		} else {
 			if (substr($ordString, strlen($ordString) - 3) == "ASC") {
 				$this->orderType = "ASC";
-				$order = substr($ordString, 0, strlen($ordString) - 4);
+				$this->order = substr($ordString, 0, strlen($ordString) - 4);
 			} else {
 				$this->orderType = "ASC";
-				$order = $ordString;
+				$this->order = $ordString;
 			}
-
+		}
 	}
 
 	function setGotoPage($value) {
