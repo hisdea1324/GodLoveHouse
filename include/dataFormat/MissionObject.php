@@ -9,6 +9,7 @@
 class MissionObject {
 	protected $record = array();
 	protected $family = array();
+	protected $isNew = true;
 
 	public function __set($name, $value) { 
 		$name = strtolower($name);
@@ -23,11 +24,22 @@ class MissionObject {
 				return "/upload/mission_pic/".$this->record['fileimage'];
 			case 'memo':
 			case 'praylist':
-				return str_replace("\n", "<br>", $this->record[$name]);
+				return $this->record[$name];
 			case 'familycount':
 				return count($this->family);
 			case 'family':
 				return $this->family;
+
+			case "attachfilename":
+				global $mysqli;
+				$query = "SELECT name FROM attachFile WHERE id = {$this->record['attachfile']}";
+				$result = $mysqli->query($query);
+				if ($result) {
+					$row = $result->fetch_assoc();
+					return $row['name'];
+				} else {
+					return "";
+				}
 			default: 
 				return $this->record[$name];
 		}
@@ -40,6 +52,7 @@ class MissionObject {
 
     function __construct($value = -1) {
 		$this->initialize();
+		$this->isNew = true;
     	if ($value > -1 && $value != "") {
     		$this->Open($value);
     	}
@@ -47,26 +60,23 @@ class MissionObject {
 
     private function initialize() {
 		$this->userid = "";
+		$this->BirthYear = "";
+		$this->SentYear = "";
 		$this->missionName = "";
 		$this->church = "";
 		$this->churchContact = "--";
-		$this->ngo = "";
-		$this->ngoContact = "--";
 		$this->nationCode = "";
 		$this->nation = "";
 		$this->accountNo = "";
 		$this->bank = "";
 		$this->accountName = "";
-		$this->homepage = "";
-		$this->manager = "";
 		$this->managerContact = "--";
-		$this->managerEmail = "";
 		$this->memo = "";
 		$this->prayList = "";
 		$this->fileImage = "noimg.gif";
-		$this->imageId = 0;
 		$this->approval = 0;
 		$this->flagFamily = "";
+		$this->attachFile = "";
 	}
 
 	function Open($userid) {
@@ -78,32 +88,30 @@ class MissionObject {
 		$result = $mysqli->query($query);
 		if (!$result) return;
 
+		$this->userid = $userid;
 		while ($row = $result->fetch_assoc()) {
-			$this->userid = $row['userid'];
+			$this->BirthYear = $row['sentyear'];
+			$this->SentYear = $row['birthyear'];
 			$this->missionName = $row['missionname'];
 			$this->church = $row['church'];
 			$this->churchContact = $row['churchcontact'];
-			$this->ngo = $row['ngo'];
-			$this->ngoContact = $row['ngocontact'];
 			$this->nationCode = $row['nationcode'];
 			$this->nation = $row['nation'];
 			$this->accountNo = $row['accountno'];
 			$this->bank = $row['bank'];
 			$this->accountName = $row['accountname'];
-			$this->homepage = $row['homepage'];
-			$this->manager = $row['manager'];
 			$this->managerContact = $row['managercontact'];
-			$this->managerEmail = $row['manageremail'];
 			$this->memo = $row['memo'];
 			$this->prayList = $row['praylist'];
-			$this->imageId = $row['imageid'];
 			$this->approval = $row['approval'];
 			$this->flagFamily = $row['flagfamily'];
+			$this->attachFile = $row['attachFile'];
+			$this->isNew = false;
 		}
 	    $result->close();
 
-		if (isset($this->imageid) && $this->imageid > 0) {
-			$query = "SELECT `name` FROM attachFile WHERE `id` = '" . $mysqli->real_escape_string($this->imageid) . "'";
+		if (isset($this->attachFile) && $this->attachFile > 0) {
+			$query = "SELECT `name` FROM attachFile WHERE `id` = '" . $mysqli->real_escape_string($this->attachFile) . "'";
 			if ($result = $mysqli->query($query)) {
 			    /* Get field information for all columns */
 			    while ($row = $result->fetch_assoc()) {
@@ -128,32 +136,29 @@ class MissionObject {
 	function Update() {
 		global $mysqli;
 
-		if ($this->userid == "") {
+		if ($this->isNew) {
 			$values = "'".$mysqli->real_escape_string($this->userid)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->sentyear)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->birthyear)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->missionname)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->church)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->churchcontact)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->ngo)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->ngocontact)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->nationcode)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->accountno)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->bank)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->accountname)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->homepage)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->manager)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->managercontact)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->manageremail)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->memo)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->praylist)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->approval)."'";
-			$values .= ", '".$mysqli->real_escape_string($this->imageid)."'";
+			$values .= ", '".$mysqli->real_escape_string($this->attachFile)."'";
 			$values .= ", '".$mysqli->real_escape_string($this->flagfamily)."'";
 
-			$query = "INSERT INTO missionary (`userid`, `missionname`, `church`, `churchcontact`, ";
-			$query = $query."`ngo`, `ngocontact`, `nationcode`, `accountno`, ";
-			$query = $query."`bank`, `accountname`, `homepage`, `manager`, ";	
-			$query = $query."`managercontact`, `manageremail`, `memo`, `praylist`, ";
-			$query = $query."`approval`, `imageid`, `flagfamily`) VALUES ";
+			$query = "INSERT INTO missionary (`userid`, `sentyear`, `birthyear`, `missionname`, `church`, `churchcontact`, ";
+			$query = $query."`nationcode`, `accountno`, ";
+			$query = $query."`bank`, `accountname`, ";	
+			$query = $query."`managercontact`, `memo`, `praylist`, ";
+			$query = $query."`approval`, `attachFile`, `flagfamily`) VALUES ";
 			$query = $query."($values)";
 
 			$result = $mysqli->query($query);
@@ -164,23 +169,20 @@ class MissionObject {
 		} else {
 
 			$query = "UPDATE missionary SET ";
-			$updateData = "`missionname` = '".$mysqli->real_escape_string($this->missionname)."', ";
+			$updateData = "`sentyear` = '".$mysqli->real_escape_string($this->sentyear)."', ";
+			$updateData.= "`birthyear` = '".$mysqli->real_escape_string($this->birthyear)."', ";
+			$updateData.= "`missionname` = '".$mysqli->real_escape_string($this->missionname)."', ";
 			$updateData.= "`church` = ".$mysqli->real_escape_string($this->church).", ";
 			$updateData.= "`churchcontact` = '".$mysqli->real_escape_string($this->churchcontact)."', ";
-			$updateData.= "`ngo` = '".$mysqli->real_escape_string($this->ngo)."', ";
-			$updateData.= "`ngocontact` = '".$mysqli->real_escape_string($this->ngocontact)."', ";
 			$updateData.= "`nationcode` = '".$mysqli->real_escape_string($this->nationcode)."', ";
 			$updateData.= "`accountno` = '".$mysqli->real_escape_string($this->accountno)."', ";
 			$updateData.= "`bank` = '".$mysqli->real_escape_string($this->bank)."', ";
 			$updateData.= "`accountname` = '".$mysqli->real_escape_string($this->accountname)."', ";
-			$updateData.= "`homepage` = '".$mysqli->real_escape_string($this->homepage)."', ";
-			$updateData.= "`manager` = '".$mysqli->real_escape_string($this->manager)."', ";
 			$updateData.= "`managercontact` = '".$mysqli->real_escape_string($this->managercontact)."', ";
-			$updateData.= "`manageremail` = '".$mysqli->real_escape_string($this->manageremail)."', ";
 			$updateData.= "`memo` = '".$mysqli->real_escape_string($this->memo)."', ";
 			$updateData.= "`praylist` = '".$mysqli->real_escape_string($this->praylist)."', ";
 			$updateData.= "`approval` = '".$mysqli->real_escape_string($this->approval)."', ";
-			$updateData.= "`imageid` = '".$mysqli->real_escape_string($this->imageid)."', ";
+			$updateData.= "`attachFile` = '".$mysqli->real_escape_string($this->attachFile)."', ";
 			$updateData.= "`flagfamily` = '".$mysqli->real_escape_string($this->flagfamily)."' ";
 			$query .= $updateData." WHERE `userid` = '".$mysqli->real_escape_string($this->userid)."'";
 

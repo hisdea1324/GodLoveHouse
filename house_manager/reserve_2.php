@@ -200,9 +200,9 @@ function body() {
 				$prev_margin += $margin_left + $width;
 				$color_id = $aRoom->RoomID % 10 + 1;
 				if ($row["resv_name"]) {
-					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."', event)\" onmouseout=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
 				}
 
 				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\" onclick=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\"></div>\r\n";
@@ -278,14 +278,14 @@ function body() {
 					<tr>
 						<td><?=$aResv->BookNo?></td>
 						<td>
-							<label id="_pf2_<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>', event)" onmouseout="unshowProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							<label id="_pf2_<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
 							if ($aResv->resv_name) { 
 								echo $aResv->resv_name; 
 							} else { 
 								echo $member->Nick;
 							} 
 							?></label>
-							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px;" onclick="unshowProfile('pf2_', '<?=$aResv->BookNo?>')"></div>
+							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px;" ></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
 						<td style="text-align: left;">
@@ -521,13 +521,16 @@ function body() {
 	}
 
 	var element_name;
-	function showProfile(element, num, e) {
+	function showProfile(element, num) {
+		if (element_name != element + num && document.getElementById(element_name)) {
+			document.getElementById(element_name).style.visibility = "hidden";
+		}
 		element_name = element + num;
 		var _oProfile = document.getElementById("_" + element_name);
 		var oProfile = document.getElementById(element_name);
 		//var oId = document.getElementById('profileId' + num);
 		if (oProfile.style.visibility == "hidden") {
-			var url = 'ajax.php?mode=getUserProfile&reservationNo='+num;
+			var url = 'ajax.php?element=' + element + '&mode=getUserProfile&reservationNo='+num;
 
 			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
 			oProfile.style.left = _oProfile.offsetLeft + (_oProfile.offsetWidth / 2) - (oProfile.offsetWidth / 2) + "px";

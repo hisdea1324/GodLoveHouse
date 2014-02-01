@@ -117,24 +117,21 @@ function editUserNormal() {
 	// $jumin[1] = $_REQUEST["jumin2"];
 	// $member->Jumin = $jumin;
 
-	$member->Email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
-
 	$member->Post = $_REQUEST["post1"]."-".$_REQUEST["post2"];
 	$member->Address1 = $_REQUEST["addr1"];
 	$member->Address2 = $_REQUEST["addr2"];
 
+	$member->Email = $_REQUEST["email1"]."@".$_REQUEST["email2"];
 	$member->Phone = $_REQUEST["tel1"]."-".$_REQUEST["tel2"]."-".$_REQUEST["tel3"];
-
 	$member->Mobile = $_REQUEST["hp1"]."-".$_REQUEST["hp2"]."-".$_REQUEST["hp3"];
 
 	$member->CheckMessageOption = isset($_REQUEST["smsOk"]) ? $_REQUEST["smsOk"] : "0";
-
 	$member->userlv = $_REQUEST["level"];
 	
 	$missionary = isset($_REQUEST["missionary"]) ? $_REQUEST["missionary"] : "0";
 	if ($missionary == "1" && $_REQUEST["level"] == 1) {
 		$member->userlv = 3;
-	} else if ($member->userlv == 3) {
+	} else if ($member->userlv == 3 && $_REQUEST["level"] != 3) {
 		$member->userlv = 1;
 	}
 
@@ -142,58 +139,48 @@ function editUserNormal() {
 } 
 
 function editUserMissionary() {
-	$mission = new MissionObject();
+	$mission = new MissionObject($_REQUEST["userid"]);
 
-	$mission->userid = $_REQUEST["userid"];
+	$mission->BirthYear = $_REQUEST["birth_year"];
+	$mission->SentYear = $_REQUEST["sent_year"];
 	$mission->Church = $_REQUEST["church"];
 	$mission->MissionName = $_REQUEST["missionName"];
-	$mission->Ngo = $_REQUEST["ngo"];
 	$mission->NationCode = $_REQUEST["nation"];
-	$mission->Homepage = $_REQUEST["homepage"];
-	$mission->Manager = $_REQUEST["manager"];
 	$mission->AccountNo = $_REQUEST["accountNo"];
 	$mission->Bank = $_REQUEST["bank"];
 	$mission->AccountName = $_REQUEST["accountName"];
 	$mission->Memo = $_REQUEST["memo"];
 	$mission->PrayList = $_REQUEST["prayList"];
-	$mission->FlagFamily = $_REQUEST["flagFalily"];
-
-	$managerEmail1 = $_REQUEST["managerEmail1"];
-	$managerEmail2 = $_REQUEST["managerEmail2"];
-	$mission->ManagerEmail = $managerEmail1."@".$managerEmail2;
+	$mission->attachFile = $_REQUEST["idmissionFile"];
 
 	$churchContact1 = $_REQUEST["churchContact1"];
 	$churchContact2 = $_REQUEST["churchContact2"];
 	$churchContact3 = $_REQUEST["churchContact3"];
 	$mission->ChurchContact = $churchContact1."-".$churchContact2."-".$churchContact3;
 
-	$ngoContact1 = $_REQUEST["ngoContact1"];
-	$ngoContact2 = $_REQUEST["ngoContact2"];
-	$ngoContact3 = $_REQUEST["ngoContact3"];
-	$mission->NgoContact = $ngoContact1."-".$ngoContact2."-".$ngoContact3;
-
 	$managerContact1 = $_REQUEST["managerContact1"];
 	$managerContact2 = $_REQUEST["managerContact2"];
 	$managerContact3 = $_REQUEST["managerContact3"];
 	$mission->ManagerContact = $managerContact1."-".$managerContact2."-".$managerContact3;
 
+	// $mission->FlagFamily = $_REQUEST["flagFalily"];
 	$mission->Update();
 
-	$familyName = $_REQUEST["familyName"];
-	$familyAge = $_REQUEST["familyAge"];
-	$familySex = $_REQUEST["familySex"];
-	$familyRelation = $_REQUEST["familyRelation"];
-	$familyId = isset($_REQUEST["familyId"]) ? $_REQUEST["familyId"] : array();
-	
-	for ($i = 0; $i < count($familyName); $i++) {
-		$familyMember = (count($familyId) > 0) ? new MissionaryFamily($familyId[$i]) : new MissionaryFamily();
-		$familyMember->userid = $_REQUEST["userid"];
-		$familyMember->Name = $familyName[$i];
-		$familyMember->Age = $familyAge[$i];
-		$familyMember->Sex = $familySex[$i];
-		$familyMember->Relation = $familyRelation[$i];
-		$familyMember->Update();
-	}
+	// $familyName = $_REQUEST["familyName"];
+	// $familyAge = $_REQUEST["familyAge"];
+	// $familySex = $_REQUEST["familySex"];
+	// $familyRelation = $_REQUEST["familyRelation"];
+	// $familyId = isset($_REQUEST["familyId"]) ? $_REQUEST["familyId"] : array();
+// 	
+	// for ($i = 0; $i < count($familyName); $i++) {
+		// $familyMember = (count($familyId) > 0) ? new MissionaryFamily($familyId[$i]) : new MissionaryFamily();
+		// $familyMember->userid = $_REQUEST["userid"];
+		// $familyMember->Name = $familyName[$i];
+		// $familyMember->Age = $familyAge[$i];
+		// $familyMember->Sex = $familySex[$i];
+		// $familyMember->Relation = $familyRelation[$i];
+		// $familyMember->Update();
+	// }
 } 
 
 function deleteUser() {

@@ -58,10 +58,10 @@ function body() {
 		<!-- 정보// -->
 		<!-- //개인정보 -->
 			<p class="b5"><img src="../images/sub/stit_080101.gif"></p>
-	<form name="dataForm" id="dataForm" method="post">
-	<input type="hidden" id="mode" name="mode" value="editUser" />
-	<input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
-	<input type="hidden" id="level" name="level" value="<?=$member->UserLevel?>" />
+			<form name="dataForm" id="dataForm" method="post">
+			<input type="hidden" id="mode" name="mode" value="editUser" />
+			<input type="hidden" id="userid" name="userid" value="<?=$member->userid?>" />
+			<input type="hidden" id="level" name="level" value="<?=$member->UserLevel?>" />
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_write">
 				<col width="25%" />
 				<col />
@@ -185,22 +185,17 @@ function body() {
 	if ($member->userLv!="3") {
 		$display="none";
 		$churchContact = array("","","");
-		$ngoContact = array("","","");
 		$managerContact = array("","","");
-		$managerEmail = array("","");
 		$memo="간단한 소개 :".chr(13).chr(13).chr(13)."사역소개 :".chr(13).chr(13).chr(13);
 		$prayList="1.".chr(13).chr(13)."2.".chr(13).chr(13)."3.".chr(13).chr(13);
 	} else {
 		$display="";
 		$churchContact=explode("-",$mission->ChurchContact);
-		$ngoContact=explode("-",$mission->NgoContact);
 		$managerContact=explode("-",$mission->ManagerContact);
-		$managerEmail=explode("@",$mission->ManagerEmail);
 		$memo = $mission->Memo;
 		$prayList = $mission->PrayList;
 		$familyList = $mission->Family;
-	} 
-
+	}
 ?>
 		<!-- //선교사일 경우 -->
 			<p class="b5"	id="imgMission" style="display: <?=$display?>;" /><img src="../images/sub/stit_080102.gif"></p>
@@ -212,30 +207,62 @@ function body() {
 					<td><input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?=$mission->MissionName?>" /></td>
 				</tr>
 				<tr>
-					<td class="td01">파송교회</td>
+					<td class="td01">출생년도</span></td>
+					<td>
+						<select name="birth_year" id="birth_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		if ($mission->BirthYear == (date('Y') - $i)) {
+			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
+		} else {
+			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+		}
+	}
+?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01">파송년도</span></td>
+					<td>
+						<select name="sent_year" id="sent_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		if ($mission->SentYear == (date('Y') - $i)) {
+			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
+		} else {
+			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+		}
+	}
+?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01">파송기관(교회)</td>
 					<td><input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->Church?>" /></td>
 				</tr>
 				<tr>
-					<td class="td01">파송교회 연락처 </td>
+					<td class="td01">파송기관(교회) 연락처 </td>
 					<td>
-				<select name="churchContact1" id="churchContact1" tabindex="24">
-				<option value="02"<? if (($churchContact[0]=="02")) { ?> selected<? } ?>>02</option>
-				<option value="031"<? if (($churchContact[0]=="031")) { ?> selected<? } ?>>031</option>
-				<option value="032"<? if (($churchContact[0]=="032")) { ?> selected<? } ?>>032</option>
-				<option value="033"<? if (($churchContact[0]=="033")) { ?> selected<? } ?>>033</option>
-				<option value="041"<? if (($churchContact[0]=="041")) { ?> selected<? } ?>>041</option>
-				<option value="042"<? if (($churchContact[0]=="042")) { ?> selected<? } ?>>042</option>
-				<option value="043"<? if (($churchContact[0]=="043")) { ?> selected<? } ?>>043</option>
-				<option value="051"<? if (($churchContact[0]=="051")) { ?> selected<? } ?>>051</option>
-				<option value="052"<? if (($churchContact[0]=="052")) { ?> selected<? } ?>>052</option>
-				<option value="053"<? if (($churchContact[0]=="053")) { ?> selected<? } ?>>053</option>
-				<option value="054"<? if (($churchContact[0]=="054")) { ?> selected<? } ?>>054</option>
-				<option value="055"<? if (($churchContact[0]=="055")) { ?> selected<? } ?>>055</option>
-				<option value="061"<? if (($churchContact[0]=="061")) { ?> selected<? } ?>>061</option>
-				<option value="062"<? if (($churchContact[0]=="062")) { ?> selected<? } ?>>062</option>
-				<option value="063"<? if (($churchContact[0]=="063")) { ?> selected<? } ?>>063</option>
-				<option value="064"<? if (($churchContact[0]=="064")) { ?> selected<? } ?>>064</option>
-				<option value="070"<? if (($churchContact[0]=="070")) { ?> selected<? } ?>>070</option>
+						<select name="churchContact1" id="churchContact1" tabindex="24">
+						<option value="02"<? if (($churchContact[0]=="02")) { ?> selected<? } ?>>02</option>
+						<option value="031"<? if (($churchContact[0]=="031")) { ?> selected<? } ?>>031</option>
+						<option value="032"<? if (($churchContact[0]=="032")) { ?> selected<? } ?>>032</option>
+						<option value="033"<? if (($churchContact[0]=="033")) { ?> selected<? } ?>>033</option>
+						<option value="041"<? if (($churchContact[0]=="041")) { ?> selected<? } ?>>041</option>
+						<option value="042"<? if (($churchContact[0]=="042")) { ?> selected<? } ?>>042</option>
+						<option value="043"<? if (($churchContact[0]=="043")) { ?> selected<? } ?>>043</option>
+						<option value="051"<? if (($churchContact[0]=="051")) { ?> selected<? } ?>>051</option>
+						<option value="052"<? if (($churchContact[0]=="052")) { ?> selected<? } ?>>052</option>
+						<option value="053"<? if (($churchContact[0]=="053")) { ?> selected<? } ?>>053</option>
+						<option value="054"<? if (($churchContact[0]=="054")) { ?> selected<? } ?>>054</option>
+						<option value="055"<? if (($churchContact[0]=="055")) { ?> selected<? } ?>>055</option>
+						<option value="061"<? if (($churchContact[0]=="061")) { ?> selected<? } ?>>061</option>
+						<option value="062"<? if (($churchContact[0]=="062")) { ?> selected<? } ?>>062</option>
+						<option value="063"<? if (($churchContact[0]=="063")) { ?> selected<? } ?>>063</option>
+						<option value="064"<? if (($churchContact[0]=="064")) { ?> selected<? } ?>>064</option>
+						<option value="070"<? if (($churchContact[0]=="070")) { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
@@ -243,109 +270,58 @@ function body() {
 						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
 				</tr>
 				<tr>
-					<td class="td01">파송선교단체</td>
-					<td><input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?=$mission->Ngo?>"></td>
-				</tr>
-				<tr>
-					<td class="td01">파송선교단체 연락처 </td>
-					<td>
-				<select name="ngoContact1" id="ngoContact1" tabindex="24">
-				<option value="02"<? if (($ngoContact[0]=="02")) { ?> selected<? } ?>>02</option>
-				<option value="031"<? if (($ngoContact[0]=="031")) { ?> selected<? } ?>>031</option>
-				<option value="032"<? if (($ngoContact[0]=="032")) { ?> selected<? } ?>>032</option>
-				<option value="033"<? if (($ngoContact[0]=="033")) { ?> selected<? } ?>>033</option>
-				<option value="041"<? if (($ngoContact[0]=="041")) { ?> selected<? } ?>>041</option>
-				<option value="042"<? if (($ngoContact[0]=="042")) { ?> selected<? } ?>>042</option>
-				<option value="043"<? if (($ngoContact[0]=="043")) { ?> selected<? } ?>>043</option>
-				<option value="051"<? if (($ngoContact[0]=="051")) { ?> selected<? } ?>>051</option>
-				<option value="052"<? if (($ngoContact[0]=="052")) { ?> selected<? } ?>>052</option>
-				<option value="053"<? if (($ngoContact[0]=="053")) { ?> selected<? } ?>>053</option>
-				<option value="054"<? if (($ngoContact[0]=="054")) { ?> selected<? } ?>>054</option>
-				<option value="055"<? if (($ngoContact[0]=="055")) { ?> selected<? } ?>>055</option>
-				<option value="061"<? if (($ngoContact[0]=="061")) { ?> selected<? } ?>>061</option>
-				<option value="062"<? if (($ngoContact[0]=="062")) { ?> selected<? } ?>>062</option>
-				<option value="063"<? if (($ngoContact[0]=="063")) { ?> selected<? } ?>>063</option>
-				<option value="064"<? if (($ngoContact[0]=="064")) { ?> selected<? } ?>>064</option>
-				<option value="070"<? if (($ngoContact[0]=="070")) { ?> selected<? } ?>>070</option>
-						</select>
-						-
-						<input type="text" name="ngoContact2" id="ngoContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$ngoContact[1]?>" />
-						-
-						<input type="text" name="ngoContact3" id="ngoContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$ngoContact[2]?>" />
-				</tr>
-				<tr>
 					<td class="td01">선교지</td>
 					<td>
 						<select name="nation" id="nation" tabindex="32">
-			<? 
+<? 
 	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
 		$codeObj = $codes[$i];
-		if (($codeObj->Code == $mission->NationCode)) {
-?>
+		if (($codeObj->Code == $mission->NationCode)) { ?>
 					<option value="<?=$codeObj->Code?>" selected><?=$codeObj->Name?></option>
-				<? 
+<?
 		} else {
 ?>
 					<option value="<?=$codeObj->Code?>"><?=$codeObj->Name?></option>
-				<? 
-		} 
-
-
+<? 
+		}
 	}
-
 ?>
 						</select>
-			</td>
+					</td>
 				</tr>
 				<tr>
-					<td class="td01">홈페이지 주소 </td>
-					<td><input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?=$mission->Homepage?>"></td>
-				</tr>
-				<tr>
-					<td class="td01">파송관리자 이름 </td>
-					<td><input type="text" name="manager" id="manager" maxlength="20" value="<?=$mission->Manager?>"></td>
-				</tr>
-				<tr>
-					<td class="td01">파송관리자 연락처 </td>
+					<td class="td01">국내 연락처 </td>
 					<td>
-				<select name="managerContact1" id="managerContact1" tabindex="24">
-				<option value="010"<? if (($managerContact[0]=="010")) { ?> selected<? } ?>>010</option>
-				<option value="011"<? if (($managerContact[0]=="011")) { ?> selected<? } ?>>011</option>
-				<option value="016"<? if (($managerContact[0]=="016")) { ?> selected<? } ?>>016</option>
-				<option value="017"<? if (($managerContact[0]=="017")) { ?> selected<? } ?>>017</option>
-				<option value="018"<? if (($managerContact[0]=="018")) { ?> selected<? } ?>>018</option>
-				<option value="019"<? if (($managerContact[0]=="019")) { ?> selected<? } ?>>019</option>
-				<option value="02"<? if (($managerContact[0]=="02")) { ?> selected<? } ?>>02</option>
-				<option value="031"<? if (($managerContact[0]=="031")) { ?> selected<? } ?>>031</option>
-				<option value="032"<? if (($managerContact[0]=="032")) { ?> selected<? } ?>>032</option>
-				<option value="033"<? if (($managerContact[0]=="033")) { ?> selected<? } ?>>033</option>
-				<option value="041"<? if (($managerContact[0]=="041")) { ?> selected<? } ?>>041</option>
-				<option value="042"<? if (($managerContact[0]=="042")) { ?> selected<? } ?>>042</option>
-				<option value="043"<? if (($managerContact[0]=="043")) { ?> selected<? } ?>>043</option>
-				<option value="051"<? if (($managerContact[0]=="051")) { ?> selected<? } ?>>051</option>
-				<option value="052"<? if (($managerContact[0]=="052")) { ?> selected<? } ?>>052</option>
-				<option value="053"<? if (($managerContact[0]=="053")) { ?> selected<? } ?>>053</option>
-				<option value="054"<? if (($managerContact[0]=="054")) { ?> selected<? } ?>>054</option>
-				<option value="055"<? if (($managerContact[0]=="055")) { ?> selected<? } ?>>055</option>
-				<option value="061"<? if (($managerContact[0]=="061")) { ?> selected<? } ?>>061</option>
-				<option value="062"<? if (($managerContact[0]=="062")) { ?> selected<? } ?>>062</option>
-				<option value="063"<? if (($managerContact[0]=="063")) { ?> selected<? } ?>>063</option>
-				<option value="064"<? if (($managerContact[0]=="064")) { ?> selected<? } ?>>064</option>
-				<option value="070"<? if (($managerContact[0]=="070")) { ?> selected<? } ?>>070</option>
+						<select name="managerContact1" id="managerContact1" tabindex="24">
+						<option value="010"<? if (($managerContact[0]=="010")) { ?> selected<? } ?>>010</option>
+						<option value="011"<? if (($managerContact[0]=="011")) { ?> selected<? } ?>>011</option>
+						<option value="016"<? if (($managerContact[0]=="016")) { ?> selected<? } ?>>016</option>
+						<option value="017"<? if (($managerContact[0]=="017")) { ?> selected<? } ?>>017</option>
+						<option value="018"<? if (($managerContact[0]=="018")) { ?> selected<? } ?>>018</option>
+						<option value="019"<? if (($managerContact[0]=="019")) { ?> selected<? } ?>>019</option>
+						<option value="02"<? if (($managerContact[0]=="02")) { ?> selected<? } ?>>02</option>
+						<option value="031"<? if (($managerContact[0]=="031")) { ?> selected<? } ?>>031</option>
+						<option value="032"<? if (($managerContact[0]=="032")) { ?> selected<? } ?>>032</option>
+						<option value="033"<? if (($managerContact[0]=="033")) { ?> selected<? } ?>>033</option>
+						<option value="041"<? if (($managerContact[0]=="041")) { ?> selected<? } ?>>041</option>
+						<option value="042"<? if (($managerContact[0]=="042")) { ?> selected<? } ?>>042</option>
+						<option value="043"<? if (($managerContact[0]=="043")) { ?> selected<? } ?>>043</option>
+						<option value="051"<? if (($managerContact[0]=="051")) { ?> selected<? } ?>>051</option>
+						<option value="052"<? if (($managerContact[0]=="052")) { ?> selected<? } ?>>052</option>
+						<option value="053"<? if (($managerContact[0]=="053")) { ?> selected<? } ?>>053</option>
+						<option value="054"<? if (($managerContact[0]=="054")) { ?> selected<? } ?>>054</option>
+						<option value="055"<? if (($managerContact[0]=="055")) { ?> selected<? } ?>>055</option>
+						<option value="061"<? if (($managerContact[0]=="061")) { ?> selected<? } ?>>061</option>
+						<option value="062"<? if (($managerContact[0]=="062")) { ?> selected<? } ?>>062</option>
+						<option value="063"<? if (($managerContact[0]=="063")) { ?> selected<? } ?>>063</option>
+						<option value="064"<? if (($managerContact[0]=="064")) { ?> selected<? } ?>>064</option>
+						<option value="070"<? if (($managerContact[0]=="070")) { ?> selected<? } ?>>070</option>
 						</select>
 						-
 						<input type="text" name="managerContact2" id="managerContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$managerContact[1]?>" />
 						-
 						<input type="text" name="managerContact3" id="managerContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$managerContact[2]?>" />
-			</td>
-				</tr>
-				<tr>
-					<td class="td01"> 파송관리자 E-mail </td>
-					<td>
-						<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" value="<?=$managerEmail[0]?>" />
-						@
-						<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" value="<?=$managerEmail[1]?>" />
-			</td>
+					</td>
 				</tr>
 				<tr>
 					<td class="td01">후원 계좌번호</td>
@@ -362,16 +338,16 @@ function body() {
 				<tr>
 					<td class="td01">기타메모</td>
 					<td>
-			<textarea name="memo" id="memo" class="b10"><?=$memo?></textarea>
+						<textarea name="memo" id="memo" class="b10"><?=$memo?></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">기도제목</td>
 					<td>
-			<textarea name="prayList" id="prayList"><?=$prayList?></textarea>
+						<textarea name="prayList" id="prayList"><?=$prayList?></textarea>
 					</td>
 				</tr>
-				<tr>
+				<!--tr>
 					<td class="td01">가족사항</td>
 					<td>			
 			<table id="tblFamily" name="tbmFamily" width="100%" border="0" cellspacing="0" cellpadding="0" class="board_con">
@@ -446,19 +422,28 @@ function body() {
 	} 
 
 ?>
-			</table>
-			<input type="hidden" id="familyNum" name="familyNum" value="0">
-			<p class="right" valign="absmiddle">
-				<input type="button" value=" 추가 " border="0" style="cursor:pointer" onclick='addRelation()' onfocus='this.blur();'>
-				<input type="button" value=" 삭제 " border="0" style="cursor:pointer" onclick='DelRelation()' onfocus='this.blur();'>
-			</p>
+				</table>
+				<input type="hidden" id="familyNum" name="familyNum" value="0">
+				<p class="right" valign="absmiddle">
+					<input type="button" value=" 추가 " border="0" style="cursor:pointer" onclick='addRelation()' onfocus='this.blur();'>
+					<input type="button" value=" 삭제 " border="0" style="cursor:pointer" onclick='DelRelation()' onfocus='this.blur();'>
+				</p>
 					</td>
 				</tr>
 				<tr>
 					<td class="td01">가족사항 공개여부 </td>
 					<td>
-			<input name="flagFalily" id="flagFalily" type="radio" value="1" class="chk" checked><span style="padding-right:50px">공개</span>
-			<input name="flagFalily" id="flagFalily" type="radio" value="0" class="chk">비공개
+						<input name="flagFalily" id="flagFalily" type="radio" value="1" class="chk" checked><span style="padding-right:50px">공개</span>
+						<input name="flagFalily" id="flagFalily" type="radio" value="0" class="chk">비공개
+					</td>
+				</tr-->
+				<tr>
+					<td class="td01">선교사 증명</td>
+					<td>
+						<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
+						<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
+						<input type="text" name="txtmissionFile" id="txtmissionFile" value="<?=$mission->attachFileName?>" size="80" readonly /> <br />
+						* fax(0505-911-0811), 혹은 email(godlovehouse@nate.com)로 보내주셔도 됩니다.
 					</td>
 				</tr>
 		<!--tr>

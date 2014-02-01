@@ -90,8 +90,7 @@ function getUserProfile() {
 	print "<li> 이름 : ".$member->Name."</li>";
 	print "<li> 선교사명 : ".$mission->MissionName."</li>";
 	print "<li> 지역 : ".$mission->Nation."</li>";
-	print "<li> 파송교회 : ".$mission->Church."</li>";
-	print "<li> 파송단체 : ".$mission->Ngo."</li>";
+	print "<li> 파송기관 : {$mission->Church} ({$mission->ChurchContact})</li>";
 	print "</ul>";
 
 	$mission = null;
@@ -108,26 +107,34 @@ function getUserProfile2() {
 	$mission = $m_helper->getMissionInfoByuserid($resv->userid);
 	
 	print "<div class=\"tit\">";
-	print "	신청자 정보";
+	print "신청자 정보 <a href=\"javascript:unshowProfile('{$_REQUEST["element"]}', '{$_REQUEST["reservationNo"]}')\" style='color:white; text-decoration:underline;'>[닫기]</a>";
 	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
 	print "</div>";
 	print "<ul>";
 	print "<li><p>회원아이디</p> ".$member->userid."</li>";
 	print "<li><p>회원이름(별명)</p> ".$member->Name."(".$member->Nick.")</li>";
-	print "<li><p>회원연락처</p> ".implode('-',$member->mobile)."</li>";
+	print "<li><p>회원연락처</p> ".implode('-',$member->phone)."</li>";
+	print "<li><p>회원휴대폰</p> ".implode('-',$member->mobile)."</li>";
+	print "<li><p>회원-Email</p> ".implode('@',$member->email)."</li>";
 	if ($member->Name != $resv->resv_name) {
 		print "<li><p>예약자성명</p> ".(($resv->resv_name) ? $resv->resv_name : "-")."</li>";
 	}
 	if (implode('-',$member->mobile) != $resv->resv_phone) {
-		print "<li><p>예약자연락처</p> ".(($resv->resv_phone) ? $resv->resv_phone : "-")."</li>";
+		print "<li><p>국내연락처</p> ".(($mission->managercontact) ? $mission->managercontact : "-")."</li>";
 	}
 	print "<li><p>인원수</p> ".(($resv->people_number) ? $resv->people_number : "-")."</li>";
 	print "<li><p>희망입주시간</p> ".(($resv->arrival_time) ? $resv->arrival_time : "-")."</li>";
 	print "<li><p>방문목적</p> ".(($resv->purpose) ? $resv->purpose : "-")."</li>";
-	print "<li><p>메모</p> ".(($resv->memo) ? $resv->memo : "-")."</li>";
 	print "<li><p>지역</p> ".(($mission->Nation) ? $mission->Nation : "-")."</li>";
-	print "<li><p>파송교회</p> ".(($mission->Church) ? $mission->Church : "-")."</li>";
-	print "<li><p>파송단체</p> ".(($mission->Ngo) ? $mission->Ngo : "-")."</li>";
+	if ($mission->Church) {
+		print "<li><p>파송기관</p> {$mission->Church} ({$mission->ChurchContact})</li>";
+	} else {
+		print "<li><p>파송기관</p> - </li>";
+	}
+	print "<li><p>파송년도</p> ".(($mission->SentYear) ? $mission->SentYear : "-")."</li>";
+	print "<li><p>출생년도</p> ".(($mission->BirthYear) ? $mission->BirthYear : "-")."</li>";
+	print "<li><p>선교사 증명</p> ".(($mission->attachFileName) ? "<a href='/upload/mission/{$mission->attachFileName}' target='_blank' style='color:white; text-decoration:underline;'>{$mission->attachFileName}</a>" : "-")."</li>";
+		print "<li>".(($resv->memo) ? "<table style='border: 1px solid white;'><tr><th>memo</th></tr><tr><td style='text-align:left; width:100px;'>".str_replace("\r\n", "<br>", $resv->memo)."</td></tr></table>" : "-")."</li>";
 	print "</ul>";
 }
 

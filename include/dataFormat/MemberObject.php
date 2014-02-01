@@ -92,7 +92,7 @@ class MemberObject {
 		$this->name = "";
 		$this->nick = "";
 		$this->userlv = 0;
-		$this->email = "";
+		$this->email = "@";
 		$this->jumin = "000000-0000000";
 		$this->address1 = "";
 		$this->address2 = "";

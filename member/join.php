@@ -148,12 +148,12 @@ function body() {
 					<td class="td01">휴대폰번호</td>
 					<td>
 						<select id="hp1" name="hp1" tabindex="18">
-				<option value="010">010</option>
-				<option value="011">011</option>
-				<option value="016">016</option>
-				<option value="017">017</option>
-				<option value="018">018</option>
-				<option value="019">019</option>
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="016">016</option>
+							<option value="017">017</option>
+							<option value="018">018</option>
+							<option value="019">019</option>
 						</select>
 						-
 						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="19" maxlength="4" />
@@ -179,71 +179,61 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01">파송교회<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+					<td class="td01">출생년도</span></td>
+					<td>
+						<select name="birth_year" id="birth_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+	}
+?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01">파송년도</span></td>
+					<td>
+						<select name="sent_year" id="sent_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+	}
+?>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="td01">파송기관(교회)<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
 						<input type="text" name="church" id="church" maxlength="30" tabindex="24" /> (* 파송교회 혹은 파송선교단체를 꼭 입력해야 합니다.)
 					</td>
 				</tr>
 				<tr>
-					<td class="td01">파송교회 연락처<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+					<td class="td01">파송기관(교회) 연락처<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
 						<select name="churchContact1" id="churchContact1" tabindex="25">
-				<option value="02">02</option>
-				<option value="031">031</option>
-				<option value="032">032</option>
-				<option value="033">033</option>
-				<option value="041">041</option>
-				<option value="042">042</option>
-				<option value="043">043</option>
-				<option value="051">051</option>
-				<option value="052">052</option>
-				<option value="053">053</option>
-				<option value="054">054</option>
-				<option value="055">055</option>
-				<option value="061">061</option>
-				<option value="062">062</option>
-				<option value="063">063</option>
-				<option value="064">064</option>
-				<option value="070">070</option>
+							<option value="02">02</option>
+							<option value="031">031</option>
+							<option value="032">032</option>
+							<option value="033">033</option>
+							<option value="041">041</option>
+							<option value="042">042</option>
+							<option value="043">043</option>
+							<option value="051">051</option>
+							<option value="052">052</option>
+							<option value="053">053</option>
+							<option value="054">054</option>
+							<option value="055">055</option>
+							<option value="061">061</option>
+							<option value="062">062</option>
+							<option value="063">063</option>
+							<option value="064">064</option>
+							<option value="070">070</option>
 						</select>
 						-
 						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" />
 						-
 						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="27" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">파송선교단체<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
-					<td>
-						<input type="text" name="ngo" id="ngo" maxlength="30" tabindex="28" /> (* 파송교회 혹은 파송선교단체를 꼭 입력해야 합니다.)
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">파송선교단체 연락처<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
-					<td>
-						<select name="ngoContact1" id="ngoContact1" tabindex="29">
-				<option value="02">02</option>
-				<option value="031">031</option>
-				<option value="032">032</option>
-				<option value="033">033</option>
-				<option value="041">041</option>
-				<option value="042">042</option>
-				<option value="043">043</option>
-				<option value="051">051</option>
-				<option value="052">052</option>
-				<option value="053">053</option>
-				<option value="054">054</option>
-				<option value="055">055</option>
-				<option value="061">061</option>
-				<option value="062">062</option>
-				<option value="063">063</option>
-				<option value="064">064</option>
-				<option value="070">070</option>
-						</select>
-						-
-						<input type="text" name="ngoContact2" id="ngoContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="30" />
-						-
-						<input type="text" name="ngoContact3" id="ngoContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="31" />
 					</td>
 				</tr>
 				<tr>
@@ -259,19 +249,7 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01">홈페이지 주소 </td>
-					<td>
-						<input type="text" id="homepage" name="homepage" style="width:50%" maxlength="100" tabindex="33" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">파송관리자 이름 </td>
-					<td>
-						<input type="text" id="manager" name="manager" maxlength="30" tabindex="34" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">파송관리자 연락처 </td>
+					<td class="td01">국내 연락처 </td>
 					<td>
 						<select name="managerContact1" id="managerContact1" tabindex="35">
 				<option value="010">010</option>
@@ -302,14 +280,6 @@ function body() {
 						<input type="text" name="managerContact2" id="managerContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="36" />
 						-
 						<input type="text" name="managerContact3" id="managerContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="37" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td01"> 파송관리자 E-mail </td>
-					<td>
-						<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" />
-						@
-						<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" />
 					</td>
 				</tr>
 				<tr>
@@ -355,7 +325,7 @@ function body() {
 			</textarea>
 					</td>
 				</tr>
-				<tr>
+				<!--tr>
 					<td class="td01">가족사항</td>
 					<td>			
 			<table id="tblFamily" name="tbmFamily" width="100%" border="0" cellspacing="0" cellpadding="0" class="board_con">
@@ -391,6 +361,15 @@ function body() {
 					<td>
 						<input name="flagFalily" id="flagFalily" type="radio" value="1" class="chk" checked><span style="padding-right:50px">공개</span>
 						<input name="flagFalily" id="flagFalily" type="radio" value="0" class="chk">비공개
+					</td>
+				</tr-->
+				<tr>
+					<td class="td01">선교사 증명</td>
+					<td>
+						<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
+						<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
+						<input type="text" name="txtmissionFile" id="txtmissionFile" value="" size="80" readonly /> <br />
+						* fax(0505-911-0811), 혹은 email(godlovehouse@nate.com)로 보내주셔도 됩니다.
 					</td>
 				</tr>
 		<!--tr>
@@ -532,11 +511,6 @@ function body() {
 			if (document.getElementById("church").value != "" && (document.getElementById("churchContact2").value == "" || document.getElementById("churchContact3").value == "")) {
 				alert("파송교회의 연락처를 정확히 입력해주세요.");
 				document.getElementById("churchContact2").focus();
-				return;
-			}
-			if (document.getElementById("ngo").value != "" && (document.getElementById("ngoContact2").value == "" || document.getElementById("ngoContact3").value == "")) {
-				alert("파송선교단체의 연락처를 정확히 입력해주세요.");
-				document.getElementById("ngoContact2").focus();
 				return;
 			}
 		}

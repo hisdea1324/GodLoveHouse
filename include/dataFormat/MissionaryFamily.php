@@ -73,7 +73,6 @@ class MissionaryFamily {
 			$query = "INSERT INTO missionary_family (`userid`, `name`, `age`, `sex`, `relation` ) VALUES ";
 			$query = $query."($values)";
 
-			echo $query;
 			$result = $mysqli->query($query);
 			
 			if (!$result) {
