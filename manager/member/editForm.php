@@ -19,18 +19,15 @@ if ($member->userLv != "3") {
 	$display="none";
 	$btnValue="선교사 정보 추가입력";
 	$churchContact = array("","","");
-	$ngoContact = array("","","");
 	$managerContact = array("","","");
-	$managerEmail = array("","");
 	$memo="간단한 소개 :".chr(13).chr(13).chr(13)."사역소개 :".chr(13).chr(13).chr(13);
 	$prayList="1.".chr(13).chr(13)."2.".chr(13).chr(13)."3.".chr(13).chr(13);
+	$familyList = array();
 } else {
 	$display="";
 	$btnValue="선교사 정보 입력취소";
 	$churchContact = explode("-", $mission->churchContact);
-	$ngoContact = explode("-", $mission->ngoContact);
 	$managerContact = explode("-", $mission->managerContact);
-	$managerEmail = explode("@", $mission->managerEmail);
 	$memo = $mission->memo;
 	$prayList = $mission->prayList;
 	$familyList = $mission->family;
@@ -43,7 +40,7 @@ showAdminFooter();
 
 function body() {
 		global $field, $keyword, $gotoPage;
-		global $display, $btnValue, $churchContact, $ngoContact, $managerContact, $managerEmail, $memo, $prayList;
+		global $display, $btnValue, $churchContact, $managerContact, $memo, $prayList, $familyList;
 		global $uid, $userLv;
 		global $member, $mission, $codes;
 ?>
@@ -177,22 +174,43 @@ function body() {
 		<div id="joinMission" name="joinMission" style="display:<?=$display?>;">
 			<dl>
 				<dt>
-					프로필 이미지
-				<dd>
-					<div id="showimage" style="position:absolute;visibility:hidden;border:1px solid black"></div>
-					<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'Profile', 'mission_pic')" style="cursor:pointer" /> (190 x 120)<br />
-					<input type="hidden" name="idProfile" id="idProfile" value="<?=$mission->ImageID?>" />
-					<img src="<?=$mission->fileImage?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" />
-				<dt>
 					선교사명
 				<dd>
 					<input type="text" name="missionName" id="missionName" maxlength="30" tabindex="27" value="<?=$mission->missionName?>" />
+
+				<dt>출생년도
+				<dd>
+					<select name="birth_year" id="birth_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		if ($mission->BirthYear == (date('Y') - $i)) {
+			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
+		} else {
+			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+		}
+	}
+?>
+					</select>
 				<dt>
-					파송교회
+					파송년도
+				<dd>
+					<select name="sent_year" id="sent_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		if ($mission->SentYear == (date('Y') - $i)) {
+			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
+		} else {
+			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+		}
+	}
+?>
+					</select>
+				<dt>
+					파송기관(교회)
 				<dd>
 					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->church?>" />
 				<dt>
-					파송교회 연락처
+					파송기관(교회) 연락처
 				<dd>
 					<select name="churchContact1" id="churchContact1" tabindex="24">
 						<option value="02" <?php if (($churchContact[0]=="02")) { print "selected"; } ?>>02</option>
@@ -218,36 +236,6 @@ function body() {
 					-
 					<input type="text" name="churchContact3" id="churchContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
 				<dt>
-					파송선교단체
-				<dd>
-					<input type="text" name="ngo" id="ngo" maxlength="20" size="30" value="<?=$mission->ngo?>">
-				<dt>
-					파송단체 연락처
-				<dd>
-					<select name="ngoContact1" id="ngoContact1" tabindex="24">
-						<option value="02" <?php if (($ngoContact[0]=="02")) { print "selected"; } ?>>02</option>
-						<option value="031" <?php if (($ngoContact[0]=="031")) { print "selected"; } ?>>031</option>
-						<option value="032" <?php if (($ngoContact[0]=="032")) { print "selected"; } ?>>032</option>
-						<option value="033" <?php if (($ngoContact[0]=="033")) { print "selected"; } ?>>033</option>
-						<option value="041" <?php if (($ngoContact[0]=="041")) { print "selected"; } ?>>041</option>
-						<option value="042" <?php if (($ngoContact[0]=="042")) { print "selected"; } ?>>042</option>
-						<option value="043" <?php if (($ngoContact[0]=="043")) { print "selected"; } ?>>043</option>
-						<option value="051" <?php if (($ngoContact[0]=="051")) { print "selected"; } ?>>051</option>
-						<option value="052" <?php if (($ngoContact[0]=="052")) { print "selected"; } ?>>052</option>
-						<option value="053" <?php if (($ngoContact[0]=="053")) { print "selected"; } ?>>053</option>
-						<option value="054" <?php if (($ngoContact[0]=="054")) { print "selected"; } ?>>054</option>
-						<option value="055" <?php if (($ngoContact[0]=="055")) { print "selected"; } ?>>055</option>
-						<option value="061" <?php if (($ngoContact[0]=="061")) { print "selected"; } ?>>061</option>
-						<option value="062" <?php if (($ngoContact[0]=="062")) { print "selected"; } ?>>062</option>
-						<option value="063" <?php if (($ngoContact[0]=="063")) { print "selected"; } ?>>063</option>
-						<option value="064" <?php if (($ngoContact[0]=="064")) { print "selected"; } ?>>064</option>
-						<option value="070" <?php if (($ngoContact[0]=="070")) { print "selected"; } ?>>070</option>
-					</select>
-					-
-					<input type="text" name="ngoContact2" id="ngoContact2" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="25" value="<?=$ngoContact[1]?>" />
-					-
-					<input type="text" name="ngoContact3" id="ngoContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$ngoContact[2]?>" />
-				<dt>
 					선교지
 				<dd>
 					<select name="nation" id="nation" tabindex="32">
@@ -266,15 +254,7 @@ function body() {
 ?>
 					</select>
 				<dt>
-					홈페이지 주소
-				<dd>
-					<input type="text" name="homepage" id="homepage" maxlength="200" size="80" value="<?=$mission->homepage?>">
-				<dt>
-					파송관리자 이름
-				<dd>
-					<input type="text" name="manager" id="manager" maxlength="20" value="<?=$mission->manager?>">
-				<dt>
-					파송관리자 연락처
+					국내 연락처
 				<dd>
 					<select name="managerContact1" id="managerContact1" tabindex="24">
 						<option value="010" <?php if (($managerContact[0]=="010")) { print "selected"; } ?>>010</option>
@@ -307,12 +287,6 @@ function body() {
 					-
 					<input type="text" name="managerContact3" id="managerContact3" style="ime-mode:disabled;width:50px" onKeyPress="CheckNumber(event);" maxlength="4" tabindex="26" value="<?=$managerContact[2]?>" />
 				<dt>
-					파송관리자 E-mail
-				<dd>
-					<input type="text" id="managerEmail1" name="managerEmail1" maxlength="30" tabindex="38" style="ime-mode:disabled;" value="<?=$managerEmail[0]?>" />
-					@
-					<input type="text" id="managerEmail2" name="managerEmail2" maxlength="50" tabindex="39" style="ime-mode:disabled;" value="<?=$managerEmail[1]?>" />
-				<dt>
 					후원 계좌번호
 				<dd>
 					<input type="text" name="accountNo" id="accountNo" maxlength="30" size="30" style="ime-mode:disabled" value="<?=$mission->accountNo?>">
@@ -332,6 +306,7 @@ function body() {
 					기도제목
 				<dd>
 					<textarea name="prayList" id="prayList"><?=$prayList?></textarea>
+				<!--
 				<dt>
 					가족사항
 				<dd>
@@ -340,8 +315,7 @@ function body() {
 					<?php 
 	$year=substr(time(),0,4);
 	if ((strlen($mission->userid)>0)) {
-		for ($num=0; $num<=count($familyList); $num = $num+1) {
-			$familyObj = $familyList[$num];
+		foreach ($familyList as $familyObj) {
 ?>
 						<tr id="trFamily" align="center">
 							<input type="hidden" name="familyId" id="familyId" value="<?=$familyObj->familyId?>" />
@@ -424,17 +398,27 @@ function body() {
 	} ?>> 공개 &nbsp;&nbsp;&nbsp;&nbsp;
 					<input name="flagFamily" id="flagFamily" type="radio" value="0" class="chk" <?php if (($mission->flagFamily==0)) {
 		print "checked";
-	} ?>> 비공개
+	} ?>> 비공개 -->
+
+				<td>선교사 증명
+				<dd>
+					<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
+					<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
+					<input type="text" name="txtmissionFile" id="txtmissionFile" value="<?=$mission->attachFileName?>" size="80" readonly /> <br />
+					* fax(0505-911-0811), 혹은 email(godlovehouse@nate.com)로 보내주셔도 됩니다.
+				<!--dt>
+					프로필 이미지
+				<dd>
+					<div id="showimage" style="position:absolute;visibility:hidden;border:1px solid black"></div>
+					<input type="button" name="imgUpload" id="imgUpload" value="이미지 업로드" onclick="uploadImage(event, 'Profile', 'mission')" style="cursor:pointer" /> (190 x 120)<br />
+					<input type="hidden" name="idProfile" id="idProfile" value="<?=$mission->ImageID?>" />
+					<img src="<?=$mission->fileImage?>" id="imgProfile" width="190" height="120" onclick="showImage(this, event)" alt="크게보기" style="cursor:pointer" /-->
 				<dt>
 					선교사 승인
 				<dd>
 					<select name="approval" id="approval">
-						<option value="0" <?php if ((!$mission->approval)) {
-		print "selected";
-	} ?>>미승인</option>
-						<option value="1" <?php if (($mission->approval)) {
-		print "selected";
-	} ?>>승인</option>
+						<option value="0" <? if (!$mission->approval) { print "selected"; } ?>>미승인</option>
+						<option value="1" <? if ($mission->approval) { print "selected"; } ?>>승인</option>
 					</select>
 			</dl>
 		</div>

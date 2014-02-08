@@ -73,62 +73,50 @@ function editUserNormal() {
 } 
 
 function addUserMissionary() {
-	$mission = new MissionObject();
+	$mission = new MissionObject($_REQUEST["userid"]);
 
-	$mission->userid = $_REQUEST["userid"];
+	$mission->BirthYear = $_REQUEST["birth_year"];
+	$mission->SentYear = $_REQUEST["sent_year"];
 	$mission->Church = $_REQUEST["church"];
 	$mission->MissionName = $_REQUEST["missionName"];
-	$mission->Ngo = $_REQUEST["ngo"];
 	$mission->NationCode = $_REQUEST["nation"];
-	$mission->Homepage = $_REQUEST["homepage"];
-	$mission->Manager = $_REQUEST["manager"];
 	$mission->AccountNo = $_REQUEST["accountNo"];
 	$mission->Bank = $_REQUEST["bank"];
 	$mission->AccountName = $_REQUEST["accountName"];
 	$mission->Memo = $_REQUEST["memo"];
 	$mission->PrayList = $_REQUEST["prayList"];
-	$mission->FlagFamily = $_REQUEST["flagFamily"];
+	$mission->attachFile = $_REQUEST["idmissionFile"];
 	$mission->Approval = $_REQUEST["approval"];
-
-	$managerEmail1 = $_REQUEST["managerEmail1"];
-	$managerEmail2 = $_REQUEST["managerEmail2"];
-	$mission->ManagerEmail = $managerEmail1."@".$managerEmail2;
 
 	$churchContact1 = $_REQUEST["churchContact1"];
 	$churchContact2 = $_REQUEST["churchContact2"];
 	$churchContact3 = $_REQUEST["churchContact3"];
 	$mission->ChurchContact = $churchContact1."-".$churchContact2."-".$churchContact3;
 
-	$ngoContact1 = $_REQUEST["ngoContact1"];
-	$ngoContact2 = $_REQUEST["ngoContact2"];
-	$ngoContact3 = $_REQUEST["ngoContact3"];
-	$mission->NgoContact = $ngoContact1."-".$ngoContact2."-".$ngoContact3;
-
 	$managerContact1 = $_REQUEST["managerContact1"];
 	$managerContact2 = $_REQUEST["managerContact2"];
 	$managerContact3 = $_REQUEST["managerContact3"];
 	$mission->ManagerContact = $managerContact1."-".$managerContact2."-".$managerContact3;
 
-	$mission->ImageID = $_REQUEST["idProfile"];
+	// $mission->ImageID = $_REQUEST["idProfile"];
 	$mission->Update();
 
-	$familyId=explode(",",$_REQUEST["familyId"]);
-	$familyName=explode(",",$_REQUEST["familyName"]);
-	$familyAge=explode(",",$_REQUEST["familyAge"]);
-	$familySex=explode(",",$_REQUEST["familySex"]);
-	$familyRelation=explode(",",$_REQUEST["familyRelation"]);
-	for ($i=0; $i<=count($familyName); $i = $i+1) {
-		$familyMember = new MissionaryFamily();
-		$familyMember->userid = $_REQUEST["userid"];
-		$familyMember->familyID = $familyId[$i];
-		$familyMember->Name = $familyName[$i];
-		$familyMember->Age = $familyAge[$i];
-		$familyMember->Sex = $familySex[$i];
-		$familyMember->Relation = $familyRelation[$i];
-		$familyMember->Update();
-
-	}
-
+	// $familyId=explode(",",$_REQUEST["familyId"]);
+	// $familyName=explode(",",$_REQUEST["familyName"]);
+	// $familyAge=explode(",",$_REQUEST["familyAge"]);
+	// $familySex=explode(",",$_REQUEST["familySex"]);
+	// $familyRelation=explode(",",$_REQUEST["familyRelation"]);
+	// for ($i=0; $i<=count($familyName); $i = $i+1) {
+		// $familyMember = new MissionaryFamily();
+		// $familyMember->userid = $_REQUEST["userid"];
+		// $familyMember->familyID = $familyId[$i];
+		// $familyMember->Name = $familyName[$i];
+		// $familyMember->Age = $familyAge[$i];
+		// $familyMember->Sex = $familySex[$i];
+		// $familyMember->Relation = $familyRelation[$i];
+		// $familyMember->Update();
+// 
+	// }
 } 
 
 function deleteUser() {
