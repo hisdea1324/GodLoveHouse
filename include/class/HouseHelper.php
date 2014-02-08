@@ -71,6 +71,20 @@ class HouseHelper {
 	#  method : Return Object List
 	# ************************************************************
 	function setCondition($houseId, $regionCode, $fromDate, $toDate) {
+		$fromDate = explode("-", $fromDate);
+		if (count($fromDate) == 3) {
+			$fromDate = mktime(0, 0, 0, $fromDate[1], $fromDate[2], $fromDate[0]);
+		} else {
+			$fromDate = "";
+		}
+
+		$toDate = explode("-", $toDate);
+		if (count($toDate) == 3) {
+			$toDate = mktime(0, 0, 0, $toDate[1], $toDate[2], $toDate[0]);
+		} else {
+			$toDate = "";
+		}
+		
 		$strWhere = " WHERE B.status = 'S2002' AND A.houseId = B.houseId AND A.hide = 0 ";
 		if (strlen($houseId) > 0) {
 			$strWhere = $strWhere." AND A.houseId = '{$houseId}'";
