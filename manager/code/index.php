@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 global $mysqli;
 
 checkAuth();
-
+	
 $mode = (isset($_REQUEST["mode"])) ? trim($_REQUEST["mode"]) : "";
 
 switch ($mode) {
