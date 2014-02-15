@@ -90,8 +90,8 @@ class MissionObject {
 
 		$this->userid = $userid;
 		while ($row = $result->fetch_assoc()) {
-			$this->BirthYear = $row['sentyear'];
-			$this->SentYear = $row['birthyear'];
+			$this->BirthYear = $row['birthyear'];
+			$this->SentYear = $row['sentyear'];
 			$this->missionName = $row['missionname'];
 			$this->church = $row['church'];
 			$this->churchContact = $row['churchcontact'];
