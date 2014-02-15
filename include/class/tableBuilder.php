@@ -97,7 +97,7 @@ class tableBuilder {
 		$pathInfo = get_path_info();
 		if (isset($_SERVER["QUERY_STRING"])) {
 			$queryString = preg_replace('/(&*)page=(\d+)/i', '', $_SERVER["QUERY_STRING"]);
-			$queryString = preg_replace('/(&*)order=(\w+)/i', '', $_SERVER["QUERY_STRING"]);
+			$queryString = preg_replace('/(&*)order=((\w|\+)+)/i', '', $_SERVER["QUERY_STRING"]);
 			$queryString = preg_replace('/^&/i', '?', $queryString);
 		} else {
 			$queryString = "";
