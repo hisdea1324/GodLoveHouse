@@ -27,10 +27,9 @@ function body() {
 			<img src="../images/board/img_search.gif" class="r10" align="absmiddle">
 			<select name="field" id="field">
 				<option value="B.name"<?php if (($field=="B.name")) { ?> selected<?php } ?>>지역</option>
-				<option value="A.ngo"<?php if (($field=="A.ngo")) { ?> selected<?php } ?>>파송선교단체</option>
-				<option value="A.church"<?php if (($field=="A.church")) { ?> selected<?php } ?>>파송교회</option>
+				<option value="A.church"<?php if (($field=="A.church")) { ?> selected<?php } ?>>파송기관</option>
 			</select>
-			<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?php echo $keyword;?>">
+			<input type="text" name="keyword" id="keyword" style="width:150px" class="input" value="<?=$keyword?>">
 			<img src="../images/board/btn_search.gif" border="0" align="absmiddle" onclick="frmSubmit();" style="cursor:pointer;">
 		</div>
 		</form>
@@ -63,11 +62,11 @@ function body() {
 			$mission = $missions[$i];
 ?>
 				<tr>
-					<td><?php echo ($i+1);?></td>
+					<td><?=($i+1)?></td>
 					<td><a href="familyDetail.php?userid=<?=$mission->userid?>"><img src="<?=$mission->fileImage?>" width="120" height="75" border="0" class="img"></a></td>
-					<td><?php echo $mission->nation;?></td>
+					<td><?=$mission->nation?></td>
 					<td class="ltd">
-						<p class="b"><?php echo $mission->missionName;?></p>
+						<p class="b"><?=$mission->missionName?></p>
 						<p>
 <?php 
 			if (strlen($mission->memo) < 150) {
@@ -79,12 +78,12 @@ function body() {
 ?>
 						</p>
 					</td>
-					<td><?php echo $mission->ngo;?></td>
+					<td><?=$mission->church?></td>
 				</tr>
 				<tr>
 					<td colspan="5" class="total">
-						<?php $count = $mission->familyCount;?>
-						가족참여 회원수 : <?php echo $count[0];?> 명 / 정기후원 회원수 : <?php echo $count[1];?> 명
+						<?php $count = $mission->familyCount?>
+						가족참여 회원수 : <?=$count[0]?> 명 / 정기후원 회원수 : <?=$count[1]?> 명
 					</td>
 				</tr>
 <?php 
@@ -97,7 +96,7 @@ function body() {
 		<!-- list// -->
 
 		<!-- //page -->
-		<?php echo $strPage;?>
+		<?=$strPage?>
 		<!-- page// -->
 	</div>
 	<!-- content// -->

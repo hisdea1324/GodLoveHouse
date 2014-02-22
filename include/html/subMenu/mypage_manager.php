@@ -12,7 +12,7 @@
 				<li>- <a href="#" onclick="clickTopNavi(12);">regist</a></li>
 			</ul-->
 		</li>
-			<li>- <a href="#" onclick="clickTopNavi(11);">book Information</a></li>
+			<li>- <a href="#" onclick="clickTopNavi(11);">내 예약 정보</a></li>
 			<li>- <a href="#" onclick="clickTopNavi(13);">관리자</a></li>
 		</ul>
 	</div>
