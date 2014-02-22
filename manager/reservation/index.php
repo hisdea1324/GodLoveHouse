@@ -10,7 +10,7 @@ $PAGE_UNIT=10;
 
 $field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "reservationNo";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
-$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "reservationNo";
+$order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "reservationNo DESC";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S0001";
 
