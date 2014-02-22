@@ -1,4 +1,4 @@
-<?php
+<?
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 
@@ -7,7 +7,8 @@ require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-
+$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "";
+$keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 checkAuth();
 $topNum = $PAGE_COUNT * ($page - 1);
@@ -32,7 +33,7 @@ $objTable = null;
 
 
 function body() {
-	global $htmlTable;
+	global $htmlTable, $keyword, $field;
 ?>
 <div class="sub">
 	<a href="index.php">게시판목록</a> | 
@@ -58,20 +59,20 @@ function body() {
 	</div>
 	<div class="rSec">
 		<!-- 컨텐츠 들어가는 부분 -->
-		<?php echo $htmlTable;?>
+		<?=$htmlTable?>
 	</div>
 </div>
-<?php } ?>
+<? } ?>
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
+	var searchString = '&keyword=<?=$keyword?>&field=<?=$field?>';
 	
 	function clickButton(no, groupId) {
 		switch(no) {
 			case 0: goShow(groupId); break;
 			case 1: goEdit(groupId); break;
-			case 2: goDelete(groupId); brea;
+			case 2: goDelete(groupId); break;
 			default: break;
 		}
 	}
