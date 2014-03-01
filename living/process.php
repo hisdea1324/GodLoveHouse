@@ -98,16 +98,17 @@ function reservation() {
 	$mission->ManagerContact = $managerContact1."-".$managerContact2."-".$managerContact3;
 	$mission->Update();
 	
-	alertGoPage("예약요청 되었습니다.","reservation.php");
+	#alertGoPage("예약요청 되었습니다.","reservation.php");
 
 	# SMS 메세지 보내기	
 	$house = new HouseObject($houseId);
 	$manager = new MemberObject($house->userid);
 
-	$from_number = "01010041004";
-	$message = "선교관 예약 신청이 들어왔습니다."." 선교관 : ".$house->HouseName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
+	# 발신 전화번호 
+	$from_number = "01085916394";
+	$message = "선교관 예약 신청\r\n선교관: {$house->HouseName}\r\n날짜: {$_REQUEST["startDate"]} ~ {$_REQUEST["endDate"]}";
 
-	sendSMSMessage($from_number, "01085916394", $message);
-	sendSMSMessage($from_number, $manager->Mobile, $message);
+#	sendSMSMessage($from_number, "01085916394;01087249504;", $message);
+	sendSMSMessage($from_number, "{$from_number};{$manager->Mobile};", $message);
 } 
 ?>
