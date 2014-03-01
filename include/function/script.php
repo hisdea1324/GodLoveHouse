@@ -145,6 +145,7 @@ function sendSMSMessage($from_number, $to_number, $message) {
 		<input type="hidden" name="P_MSG" value="<?=$message?>" />										<!-- 메세지내용-->
 		<input type="hidden" name="P_TYPE" value="N" />													<!-- 발송타입-->
 		<input type="hidden" name="P_TIME" value="" />
+		<!--input type="submit" value="전송" />													<!-- 발송시간-->
 	</form>
 </body>
 </html>

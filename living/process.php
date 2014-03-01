@@ -109,6 +109,7 @@ function reservation() {
 	$message = "선교관 예약 신청\r\n선교관: {$house->HouseName}\r\n날짜: {$_REQUEST["startDate"]} ~ {$_REQUEST["endDate"]}";
 
 #	sendSMSMessage($from_number, "01085916394;01087249504;", $message);
-	sendSMSMessage($from_number, "{$from_number};{$manager->Mobile};", $message);
+	$to_number = implode($manager->Mobile, '');
+	sendSMSMessage($from_number, "{$from_number};{$to_number};", $message);
 } 
 ?>

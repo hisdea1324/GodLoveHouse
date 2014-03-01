@@ -98,7 +98,7 @@ function body() {
 			<col />
 			<col width="15%">
 			<col />
-			<col width="20%">
+			<col width="17%">
 			<col />
 			<tr>
 				<td class="td01">주거형태</td>
@@ -119,15 +119,11 @@ function body() {
 				<td><?=$room->bed?></td>
 			</tr>
 			<tr>
-				<td class="td01">제출서류</td>
-				<td colspan="7"><?=$house->document_link?><br></td>
-			</tr>
-			<tr>
-				<td class="td01">선교관 소개</td>
+				<td class="td01">선교관소개</td>
 				<td colspan="7"><?=$house->Explain?></td>
 			</tr>
 			<tr>
-				<td class="td01">방 소개</td>
+				<td class="td01">객실소개</td>
 				<td colspan="7"><?=$room->Explain?></td>
 			</tr>
 			<tr>
@@ -169,14 +165,18 @@ function body() {
 			<input type="hidden" name="mode" id="mode" value="reservation" />
 			<input type="hidden" name="roomId" id="roomId" value="<?=$roomId?>" />
 			<input type="hidden" name="houseId" id="houseId" value="<?=$houseId?>" />
-			<h2><img src="../images/board/stit_reserve_03.gif"></h2>
+			<h2><img src="../images/board/stit_reserve_03.gif"> &nbsp; * 선교사증명서 제출로 최종예약됩니다. 예약내용은 마이페이지=> 내예약정보에서 확인 가능합니다.</h2>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_reserve">
-				<col width="20%">
+				<col width="15%">
 				<col />
+				<col width="14%">
+				<col />
+
 
 <?		
 		if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
 ?>
+
 				<tr>
 					<td class="td01"><p class="reserve">예약은 회원에게만 제공됩니다.<a href="/member/login.php">[로그인 하기]</a> <a href="/member/join.php">[회원 가입 하기]</a><br /></td>
 				</tr>
@@ -189,8 +189,6 @@ function body() {
 					<td>
 						<input type="text" name="resv_name" id="resv_name" value="<?=$member->name?>" class="input">
 					</td>
-				</tr>
-				<tr>
 					<td class="td01">출생년도</span></td>
 					<td>
 						<select name="birth_year" id="birth_year" tabindex="25">
@@ -207,79 +205,26 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01">파송년도</span></td>
-					<td>
-						<select name="sent_year" id="sent_year" tabindex="25">
-<?
-	for ($i = 0; $i <= 99; $i++) {
-		if ($mission->SentYear == (date('Y') - $i)) {
-			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
-		} else {
-			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
-		}
-	}
-?>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">파송기관(교회)</td>
-					<td><input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->Church?>" /></td>
-				</tr>
-				<tr>
-					<td class="td01">파송기관(교회) 연락처 </td>
-					<? $churchContact=explode("-",$mission->ChurchContact); ?>
-					<td>
-						<select name="churchContact1" id="churchContact1" tabindex="24">
-						<option value="02"<? if (($churchContact[0]=="02")) { ?> selected<? } ?>>02</option>
-						<option value="031"<? if (($churchContact[0]=="031")) { ?> selected<? } ?>>031</option>
-						<option value="032"<? if (($churchContact[0]=="032")) { ?> selected<? } ?>>032</option>
-						<option value="033"<? if (($churchContact[0]=="033")) { ?> selected<? } ?>>033</option>
-						<option value="041"<? if (($churchContact[0]=="041")) { ?> selected<? } ?>>041</option>
-						<option value="042"<? if (($churchContact[0]=="042")) { ?> selected<? } ?>>042</option>
-						<option value="043"<? if (($churchContact[0]=="043")) { ?> selected<? } ?>>043</option>
-						<option value="051"<? if (($churchContact[0]=="051")) { ?> selected<? } ?>>051</option>
-						<option value="052"<? if (($churchContact[0]=="052")) { ?> selected<? } ?>>052</option>
-						<option value="053"<? if (($churchContact[0]=="053")) { ?> selected<? } ?>>053</option>
-						<option value="054"<? if (($churchContact[0]=="054")) { ?> selected<? } ?>>054</option>
-						<option value="055"<? if (($churchContact[0]=="055")) { ?> selected<? } ?>>055</option>
-						<option value="061"<? if (($churchContact[0]=="061")) { ?> selected<? } ?>>061</option>
-						<option value="062"<? if (($churchContact[0]=="062")) { ?> selected<? } ?>>062</option>
-						<option value="063"<? if (($churchContact[0]=="063")) { ?> selected<? } ?>>063</option>
-						<option value="064"<? if (($churchContact[0]=="064")) { ?> selected<? } ?>>064</option>
-						<option value="070"<? if (($churchContact[0]=="070")) { ?> selected<? } ?>>070</option>
-						</select>
-						-
-						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
-						-
-						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
-				</tr>
-				<tr>
-					<td class="td01">선교지</td>
-					<td>
-						<select name="nation" id="nation" tabindex="32">
-<? 
-	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
-		$codeObj = $codes[$i];
-		if (($codeObj->Code == $mission->NationCode)) { ?>
-					<option value="<?=$codeObj->Code?>" selected><?=$codeObj->Name?></option>
-<?
-		} else {
-?>
-					<option value="<?=$codeObj->Code?>"><?=$codeObj->Name?></option>
-<? 
-		}
-	}
-?>
-						</select>
-					</td>
-				</tr>
-				<tr>
 					<td class="td01">E-mail<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
 						<input type="text" name="email1" id="email1" style="ime-mode:disabled" tabindex="5" maxlength="30" value="<?=$member->Email[0]?>" />
 						@
 						<input type="text" name="email2" id="email2" style="ime-mode:disabled" tabindex="6" maxlength="50" value="<?=$member->Email[1]?>" />
+					</td>
+					<td class="td01">휴대폰번호</td>
+					<td>
+						<select id="hp1" name="hp1" tabindex="14">
+							<option value="010"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>010</option>
+							<option value="011"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>011</option>
+							<option value="016"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>016</option>
+							<option value="017"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>017</option>
+							<option value="018"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>018</option>
+							<option value="019"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>019</option>
+						</select>
+						-
+						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?=$member->Mobile[1]?>" />
+						-
+						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?=$member->Mobile[2]?>" />
 					</td>
 				</tr>
 				<tr>
@@ -309,35 +254,7 @@ function body() {
 						-
 						<input type="text" id="tel3" name="tel3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="13" maxlength="4" value="<?=$member->Phone[2]?>" />
 					</td>
-				</tr>
-				<tr>
-					<td class="td01">휴대폰번호</td>
-					<td>
-						<select id="hp1" name="hp1" tabindex="14">
-							<option value="010"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>010</option>
-							<option value="011"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>011</option>
-							<option value="016"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>016</option>
-							<option value="017"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>017</option>
-							<option value="018"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>018</option>
-							<option value="019"<? if ($member->Mobile[0] == "070") { ?> selected<? } ?>>019</option>
-						</select>
-						-
-						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?=$member->Mobile[1]?>" />
-						-
-						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?=$member->Mobile[2]?>" />
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">선교사 증명</td>
-					<td>
-						<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
-						<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
-						<input type="text" name="txtmissionFile" id="txtmissionFile" value="<?=$mission->attachFileName?>" size="80" readonly /> <br />
-						* fax(0505-911-0811), 혹은 email(godlovehouse@nate.com)로 보내주셔도 됩니다.
-					</td>
-				</tr>
-				<tr>
-					<td class="td01">국내 연락처 </td>
+					<td class="td01">국내연락처 </td>
 					<td>
 						<? $managerContact=explode("-",$mission->ManagerContact); ?>
 						<select name="managerContact1" id="managerContact1" tabindex="24">
@@ -370,10 +287,85 @@ function body() {
 						-
 						<input type="text" name="managerContact3" id="managerContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$managerContact[2]?>" />
 					</td>
+				</tr>		
+				<tr>
+					<td class="td01">선교지</td>
+					<td>
+						<select name="nation" id="nation" tabindex="32">
+<? 
+	for ($i=0; $i<=count($codes)-1; $i = $i+1) {
+		$codeObj = $codes[$i];
+		if (($codeObj->Code == $mission->NationCode)) { ?>
+					<option value="<?=$codeObj->Code?>" selected><?=$codeObj->Name?></option>
+<?
+		} else {
+?>
+					<option value="<?=$codeObj->Code?>"><?=$codeObj->Name?></option>
+<? 
+		}
+	}
+?>
+						</select>
+					</td>
+					<td class="td01">파송년도</span></td>
+					<td>
+						<select name="sent_year" id="sent_year" tabindex="25">
+<?
+	for ($i = 0; $i <= 99; $i++) {
+		if ($mission->SentYear == (date('Y') - $i)) {
+			print "<option value='".(date('Y') - $i)."' selected>".(date('Y') - $i)." </option>";			
+		} else {
+			print "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)." </option>";
+		}
+	}
+?>
+						</select>
+					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>희망 사용 기간</b></td>
+					<td class="td01">파송단체</td>
+					<td><input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->Church?>" /></td>
+					<td class="td01">단체연락처 </td>
+					<? $churchContact=explode("-",$mission->ChurchContact); ?>
 					<td>
+						<select name="churchContact1" id="churchContact1" tabindex="24">
+						<option value="02"<? if (($churchContact[0]=="02")) { ?> selected<? } ?>>02</option>
+						<option value="031"<? if (($churchContact[0]=="031")) { ?> selected<? } ?>>031</option>
+						<option value="032"<? if (($churchContact[0]=="032")) { ?> selected<? } ?>>032</option>
+						<option value="033"<? if (($churchContact[0]=="033")) { ?> selected<? } ?>>033</option>
+						<option value="041"<? if (($churchContact[0]=="041")) { ?> selected<? } ?>>041</option>
+						<option value="042"<? if (($churchContact[0]=="042")) { ?> selected<? } ?>>042</option>
+						<option value="043"<? if (($churchContact[0]=="043")) { ?> selected<? } ?>>043</option>
+						<option value="051"<? if (($churchContact[0]=="051")) { ?> selected<? } ?>>051</option>
+						<option value="052"<? if (($churchContact[0]=="052")) { ?> selected<? } ?>>052</option>
+						<option value="053"<? if (($churchContact[0]=="053")) { ?> selected<? } ?>>053</option>
+						<option value="054"<? if (($churchContact[0]=="054")) { ?> selected<? } ?>>054</option>
+						<option value="055"<? if (($churchContact[0]=="055")) { ?> selected<? } ?>>055</option>
+						<option value="061"<? if (($churchContact[0]=="061")) { ?> selected<? } ?>>061</option>
+						<option value="062"<? if (($churchContact[0]=="062")) { ?> selected<? } ?>>062</option>
+						<option value="063"<? if (($churchContact[0]=="063")) { ?> selected<? } ?>>063</option>
+						<option value="064"<? if (($churchContact[0]=="064")) { ?> selected<? } ?>>064</option>
+						<option value="070"<? if (($churchContact[0]=="070")) { ?> selected<? } ?>>070</option>
+						</select>
+						-
+						<input type="text" name="churchContact2" id="churchContact2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="25" value="<?=$churchContact[1]?>" />
+						-
+						<input type="text" name="churchContact3" id="churchContact3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" maxlength="4" tabindex="26" value="<?=$churchContact[2]?>" />
+				</tr>
+			
+				<tr>
+					<td class="td01">선교사증명서</td>
+					<td colspan="3">
+						<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
+						<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
+						<input type="text" name="txtmissionFile" id="txtmissionFile" value="<?=$mission->attachFileName?>" size="80" readonly /> <br />
+						* 미제출시 팩스(0505-911-0811) 혹은 이메일(godlovehouse@nate.com)로 보내주세요.
+					</td>
+				</tr>
+		
+				<tr>
+					<td class="td01"><p class="reserve"><b>예약일정</b></td>
+					<td colspan="3">
 						<input type="text" name="startDate" id="startDate" value="<?=$fromDate?>" class="input" readonly onclick="calendar('startDate')">
 						<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate')"> ~
 						<input type="text" name="endDate" id="endDate" class="input" value="<?=$toDate?>" readonly onclick="calendar('endDate')">
@@ -382,7 +374,19 @@ function body() {
 					</td>
 				</tr>
 				<tr>
-					<td class="td01"><p class="reserve"><b>희망 입주 시간</b></td>
+					<td class="td01"><p class="reserve"><b>방문목적</b></td>
+					<td colspan="3">
+						
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="병원" class="input"> 병원
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="단체행사" class="input"> 단체행사 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="안식년" class="input"> 안식년 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="자녀교육" class="input"> 자녀교육 
+						<input type="checkbox" name="purpose[]" id="purpose[]" value="기타" class="input"> 기타 
+					</td>
+				</tr>
+		
+				<tr>
+					<td class="td01"><p class="reserve"><b>희망입주시간</b></td>
 					<td>
 						<select type="text" name="arrival_time" id="arrival_time">
 							<? 
@@ -392,9 +396,7 @@ function body() {
 							?>
 						</select>
 					</td>
-				</tr>
-				<tr>
-					<td class="td01"><p class="reserve"><b>입주 인원수</b></td>
+					<td class="td01"><p class="reserve"><b>입주인원수</b></td>
 					<td>
 						<select type="text" name="people_number" id="people_number">
 							<? 
@@ -407,27 +409,16 @@ function body() {
 				</tr>
 				<tr>
 					<td class="td01"><p class="reserve"><b>메모</b></td>
-					<td>
+					<td colspan="3">
 						<textarea type="text" name="memo" id="memo">
 * 입주 예정자 상세 (이름/나이/성별/관계):
 
-* 기타:
+* 소개 및 요청사항:
 
 						</textarea>
 					</td>
 				</tr>
-				<tr>
-					<td class="td01"><p class="reserve"><b>방문 목적</b></td>
-					<td>
-						
-						<input type="checkbox" name="purpose[]" id="purpose[]" value="병원" class="input"> 병원
-						<input type="checkbox" name="purpose[]" id="purpose[]" value="단체행사" class="input"> 단체행사 
-						<input type="checkbox" name="purpose[]" id="purpose[]" value="안식년" class="input"> 안식년 
-						<input type="checkbox" name="purpose[]" id="purpose[]" value="자녀교육" class="input"> 자녀교육 
-						<input type="checkbox" name="purpose[]" id="purpose[]" value="기타" class="input"> 기타 
-					</td>
-				</tr>
-				<tr>
+		<tr>
 					<td colspan="2">
 						<img src="../images/board/btn_reserve.gif" border="0" align="right" align="absmiddle" class="m5" onclick="reserveSubmit()">
 					</td>
@@ -551,4 +542,3 @@ if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
 	}
 //]]>
 </script>
-
