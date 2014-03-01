@@ -1,0 +1,235 @@
+@charset "utf-8";
+
+* {margin:0; padding:0;}
+html, body {height:100%;}
+body {background:transparent; color:#555555; font-size:12px; font-family:"돋움", Dotum, AppleGothic, Sans-serif;}
+a:link, a:active {color:#555555; text-decoration:none;}
+a:visited {color:#555555; text-decoration:none;}
+a:hover   {color:#555555; text-decoration:none;}
+input {vertical-align:middle; font-family:"돋움", Dotum, AppleGothic, Sans-serif;}
+select {height:23px; border:1px solid #cecfcf; font-size:12px; background:#ffffff; color:#373737; vertical-align:middle; font-family:"돋움", Dotum, AppleGothic, Sans-serif;}
+img, fieldset, iframe {border:0;}
+img {vertical-align:top}
+em, address, cite {font-style:normal;}
+table {border-collapse:collapse; border:0;}
+caption {width:0; height:0; font-size:0; line-height:0; overflow:hidden; visibility:hidden;}
+textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d1d1d1; padding:3px; line-height:18px;}
+.inputTxt {background:#ffffff; color:#373737; border:1px solid #cecfcf; height:20px; font-size:12px; padding:2px 2px 0 2px;}
+
+.mt10 {margin-top:10px;}
+.mt15 {margin-top:15px;}
+.mt20 {margin-top:20px;}
+.mt30 {margin-top:30px;}
+.mb10 {margin-bottom:10px;}
+.mb20 {margin-bottom:20px;}
+.mb30 {margin-bottom:30px;}
+.ml10 {margin-left:10px;}
+.ml20 {margin-left:20px;}
+.ml30 {margin-left:30px;}
+.mr20 {margin-right:20px}
+
+.aLeft {text-align:left;}
+.aRight {text-align:right;}
+.aCenter {text-align:center;}
+
+.fs2{font-size:14px !important; font-family:돋움 !important}
+
+
+/* Common Page  */
+.bgSub {background:url(../images/bg_left2.gif) 0 0 repeat-y;}
+#wrapper {width:100%;}
+#wrapper #header {width:100%; background-color:#3b4047}
+#wrapper #header .headTop {width:100%; height:80px;}
+#wrapper #header .headTop:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .headTop h1 {float:left; display:inline; margin:20px 0 0 25px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:40px; letter-spacing:-1px; font-weight:100}
+#wrapper #header .headTop h1 a{color:#fff}
+#wrapper #header .headTop .schBtn {float:right; display:inline; margin:30px 22px 0 0;}
+#wrapper #header .headTop .schBtn a{color:#fff; text-decoration:underline}
+
+#wrapper #header .outer {background:#9bc419; border-left:200px solid #88a922;}
+#wrapper #header .outer .inner {width:100%;}
+#wrapper #header .outer .inner:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .outer .inner .headMenu {float:left; width:100%; margin-left:-150px;}
+#wrapper #header .outer:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .outer .inner .headMenu .mInfo {width:130px; float:left; display:inline; display:inline; padding:7px 0 11px 20px; _position:relative;}
+#wrapper #header .outer .inner .headMenu .mInfo:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .outer .inner .headMenu .mInfo img {float:left; display:inline;}
+#wrapper #header .outer .inner .headMenu #gnb {width:100%; float:right; display:inline; margin-right:-150px; _position:relative;}
+#wrapper #header .outer .inner .headMenu #gnb:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .outer .inner .headMenu #gnb ul {float:left; display:inline; list-style:none;}
+#wrapper #header .outer .inner .headMenu #gnb ul:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #header .outer .inner .headMenu #gnb ul li {float:left; display:inline; font-weight:bold; padding:15px 40px 15px 40px; font-size:16px; border-right:1px solid #88a922}
+#wrapper #header .outer .inner .headMenu #gnb ul li.on {float:left; display:inline; font-weight:bold; padding:15px 40px 15px 40px; font-size:16px; border-right:1px solid #88a922; background-color:#fff}
+#wrapper #header .outer .inner .headMenu #gnb ul li.on a:hover {color:#789421;}
+#wrapper #header .outer .inner .headMenu #gnb ul li a {color:#789421; white-space:nowrap;}
+#wrapper #header .outer .inner .headMenu #gnb ul li a:hover {color:#fff;}
+
+#wrapper #container {width:100%;}
+#wrapper #container .outer {border-left:200px #ebebeb solid; _width:1080px;}
+#wrapper #container .outer .inner {width:100%;}
+#wrapper #container .outer .inner:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+#wrapper #container .outer .inner .conSec {float:left; width:100%; margin-left:-200px; padding-bottom:20px;}
+#wrapper #container .outer .inner .conSec #leftSec {width:200px; _position:relative; float:left;}
+#wrapper #container .outer .inner .conSec #leftSec h2 {padding:0 0 5px 15px; font-size:14px; font-weight:bold; margin:15px 0 10px 0; color:#3b4047}
+#wrapper #container .outer .inner .conSec #leftSec ul {background:#ddd; padding:10px 0 10px 0px; list-style:none;}
+#wrapper #container .outer .inner .conSec #leftSec ul li {padding:3px 0 3px 35px; line-height:25px; font-size:14px; font-weight:bold; position:relative}
+#wrapper #container .outer .inner .conSec #leftSec ul li a {color:#666;}
+#wrapper #container .outer .inner .conSec #leftSec ul li a:hover {text-decoration:underline; font-weight:bold;}
+#wrapper #container .outer .inner .conSec #leftSec ul .on {padding:3px 0 3px 35px; line-height:25px; font-size:14px; font-weight:bold; position:relative; background:#3b4047; color:#fff}
+#wrapper #container .outer .inner .conSec #leftSec ul .on a {font-weight:bold; color:#fff}
+#wrapper #container .outer .inner .conSec #leftSec ul .on a:hover {text-decoration:underline; font-weight:bold; color:#fff}
+#wrapper #container .outer .inner .conSec #leftSec ul .c_g {padding:3px 0 3px 35px; line-height:25px; font-size:14px; font-weight:bold; position:relative}
+#wrapper #container .outer .inner .conSec #leftSec ul .c_g a {color:#a2400c; text-decoration:underline;}
+#wrapper #container .outer .inner .conSec #leftSec ul .c_g a:hover {text-decoration:underline; font-weight:bold;}
+
+#wrapper #container .outer .inner .conSec #rightSec {_position:relative; float:right; width:100%; margin-right:-200px;}
+#wrapper #container .outer .inner .conSec #rightSec .lnb {height:40px; color:#88a922; padding:15px 0 0 40px; background: url(../images/arrow_01.gif) 30px 20px no-repeat;}
+#wrapper #container .outer .inner .conSec #rightSec .lnb a {color:#f28d9d;}
+#wrapper #container .outer .inner .conSec #rightSec #content {padding:0 30px 0 30px;}
+#wrapper #container .outer .inner .conSec #rightSec #content h3 {background:url(../images/dot_02.gif) 0 0 no-repeat; padding:0 0 10px 20px; font-size:14px; font-weight:bold; color:#333333;}
+
+/* index  */
+.main_box{background: url(../images/bg_icon.jpg) repeat -100px -30px; padding:270px 0 400px 0;}
+.main_box .notice{width:200px; margin-right:30px; background-color:#fff; padding:15px; float:left; overflow:hidden}
+.main_box .notice .tit{font-size:14px; font-weight:bold; margin-bottom:10px}
+.main_box .notice ul {list-style:none;}
+.main_box .notice ul li{line-height:20px; background: url(../images/arrow_01.gif) 0px 8px no-repeat; padding-left:8px}
+.main_box .notice ul li a:hover {color:#555555; text-decoration:underline;}
+
+/* color_box */
+.sColor {height:12px; width:12px; position:absolute; top:8px; left:15px}
+.c1{background-color:#a2400c}
+.c2{background-color:#d67907}
+.c3{background-color:#ded72f}
+.c4{background-color:#9bc419}
+.c5{background-color:#509758}
+.c6{background-color:#4bafc3}
+.c7{background-color:#4b6fc3}
+.c8{background-color:#9651bc}
+.c9{background-color:#de2f76}
+.c10{background-color:#868686}
+.c_g a{color:#a2400c; text-decoration:underline}
+.c_g a:hover{color:#a2400c; text-decoration:underline}
+.img{width:150px; height:150px; border:1px solid #ddd; float:left; display:inline; margin:10px 10px 0 0}
+.chart_c{}
+.chart_c li{float:left; display:inline; list-style:none; margin-right:20px;}
+.chart_c li input{float:left}
+.chart_c li .color{width:12px; height:12px; margin-left:17px}
+.cb1{background-color:#d4a78f}
+.cb2{background-color:#ecc18c}
+.cb3{background-color:#f0ec9f}
+.cb4{background-color:#d1e495}
+.cb5{background-color:#aecfb2}
+.cb6{background-color:#acdae3}
+.cb7{background-color:#acbce3}
+.cb8{background-color:#ceaee0}
+.cb9{background-color:#f09fc0}
+.cb10{background-color:#c7c7c7}
+
+/* Button */
+.btn1{border:1px solid #3b4047; padding:5px 15px 5px 15px; border-radius:5px; font-size:11px; font-weight:bold; text-align:center; background:#3b4047; color:#fff;}
+.btn1 a:link, a:active {color:#fff; text-decoration:none;}
+.btn1 a:visited {color:#fff; text-decoration:none;}
+.btn1 a:hover   {color:#fff; text-decoration:none;}
+
+.btn1w{border:1px solid #3b4047; padding:5px 15px 5px 15px; border-radius:5px; font-size:11px; font-weight:bold; text-align:center; background:#fff; color:#000; line-height:15px}
+.btn1w a:link, a:active {color:#000; text-decoration:none;}
+.btn1w a:visited {color:#000; text-decoration:none;}
+.btn1w a:hover   {color:#000; text-decoration:none;}
+
+.btn1g{display:none;}
+
+.btn2{border:2px solid #3b4047; padding:7px 20px 7px 20px; border-radius:5px; font-size:12px; font-weight:bold; text-align:center; background:#fff; color:#3b4047;}
+.btn2 a:link, a:active {color:#3b4047; text-decoration:none;}
+.btn2 a:visited {color:#3b4047; text-decoration:none;}
+.btn2 a:hover   {color:#3b4047; text-decoration:none;}
+
+/* Calendar */
+.list_year {width:100%; height:50px;}
+.list_year:after {content:""; display:block; clear:both;}
+.list_year ul {float:left;}
+.list_year ul:after {content:""; display:block; clear:both;}
+.list_year ul li {float:left; list-style:none}
+.list_year ul li.txt {font-size:45px; font-family:'Tahoma'; font-weight:bold; color:#222; padding:7px 10px 10px 12px; }
+.list_year ul li img{margin-top:25px}
+.list_year .mr1{margin-right:10px}
+
+.cal_month {width:100%; position:relative;}
+.cal_month table {width:100%; border-left:1px solid #e4e0dd;}
+.cal_month table thead th {height:40px; color:#fff; font-size:14px; background:#959aa2; font-weight:bold; font-family:'Tahoma';}
+.cal_month table tbody td {border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd;}
+.cal_month table tbody td .cal_day {width:100%; height:130px; position:relative;}
+.cal_month table tbody td .cal_day p {padding:10px 0 0 13px; font-family:'Tahoma'; font-weight:bold; font-size:13px;}
+.cal_month table tbody td .cal_day p.red {color:#c50000;}
+.cal_month table tbody td .cal_day p.red a {color:#c50000;}
+.cal_month table tbody td .cal_day p.blue {color:#015bd6;}
+.cal_month table tbody td .cal_day p.blue a {color:#015bd6;}
+.cal_month table tbody td .cal_day ul {width:100%;}
+.cal_month table tbody td .cal_day ul li {margin-bottom:1px; list-style:none; padding:2px}
+.cal_month table tbody td .cal_day ul li:after {content:""; display:block; clear:both;}
+.cal_month table tbody td .cal_day ul li span {display:block; float:left; line-height:15px; padding:1px 0 0 0;}
+.cal_month table tbody td .cal_day .view{position:absolute; background:#3b4047; z-index:1; width:250px; padding:10px 20px 10px 20px; color:#fff}
+.cal_month table tbody td .cal_day .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff}
+.cal_month table tbody td .cal_day .view ul li{line-height:18px; background:#3b4047; list-style:none}
+
+.cal_month2 {width:100%; position:relative;}
+.cal_month2 table {width:100%; border-left:1px solid #e4e0dd;}
+.cal_month2 table thead th {height:30px; color:#fff; font-size:12px; background:#959aa2; font-weight:bold; font-family:'Tahoma'; border-right:solid 1px #aaa}
+.cal_month2 table tbody th{border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd; padding:10px}
+.cal_month2 table tbody td {border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd;}
+.cal_month2 .check{height:20px; text-align:center; line-height:20px; z-index:1}
+.red {color:#c50000;}
+.blue {color:#015bd6;}
+
+/* Board */
+.write {width:100%; border-top:3px #3b4047 solid; }
+.write thead th {font-size:12px; font-weight:bold; background:#e9e9e9; border-bottom:1px #cecece solid; padding:10px 0 10px 0;}
+.write tbody th {font-size:12px; font-weight:bold; background:#e9e9e9; border-bottom:1px #cecece solid; padding:10px 0 10px 0;; text-align:center; line-height:14px;}
+.write thead th:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+.write tbody td {font-size:12px; border-bottom:1px #cecece solid; empty-cells:show; padding:5px 15px; text-align:left; line-height:18px; position:relative}
+.write tbody td select,
+.write tbody td input{vertical-align:middle;}
+
+.write2 {width:100%; border-top:3px #3b4047 solid;}
+.write2 tbody th {font-size:12px; font-weight:bold; background:#e9e9e9; border-bottom:1px #cecece solid; padding:10px 0 10px 0;; text-align:center; line-height:14px; border-right:1px #cecece solid; border-left:1px #cecece solid;}
+.write2 thead th:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+.write2 tbody td {font-size:12px; border-bottom:1px #cecece solid; empty-cells:show; padding:5px 15px; text-align:left; line-height:18px; position:relative; border-right:1px #cecece solid; border-left:1px #cecece solid;}
+.write2 tbody td select,
+.write2 tbody td input{vertical-align:middle;}
+
+.search{height:30px; margin-top:50px}
+.search strong{font-size:16px; font-family:'Tahoma'; color:#88a922}
+.search img{margin-top:5px}
+
+.list{width:100%; position:relative}
+.list table {width:100%; border-top:3px #3b4047 solid; }
+.list table thead th {font-size:14px; font-weight:bold; padding:10px 0 10px 0; border-bottom:1px #3b4047 solid;}
+.list table thead th:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+.list table tbody td {font-size:12px; border-bottom:1px #cecece solid; empty-cells:show; padding:7px 15px; text-align:center; line-height:18px; position:relative}
+.list table tbody td.tdLeft {text-align:left;}
+.list table tbody td select,
+.list table tbody td input{vertical-align:middle;}
+.list .view{position:absolute; background:#3b4047; z-index:1; width:300px; padding:10px 20px 10px 20px; color:#fff}
+.list .view .tit{margin-bottom:5px; line-height:20px; font-weight:bold; border-bottom: dotted 1px #fff; position:relative; height:30px}
+.list .view ul li{line-height:20px; background:#3b4047; list-style:none}
+.list .view p{float:left; width:100px; font-weight:bold}
+.list .view span{float:left}
+
+.paging {width:100%; text-align:center; position:relative; margin-top:15px;}
+.paging:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+.paging .rBtn {float:right; display:inline; position:absolute; top:-5px; right:0;}
+.paging a {padding:0 2px;}
+.paging a:hover {color:#185084; text-decoration:none;}
+.paging img {vertical-align:middle;}
+
+/* Tab */
+ul.tabs {list-style:none; width:100%; height:35px; width:100%}
+ul.tabs:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+ul.tabs li {float:left; display:inline; padding:0 40px 0 40px; line-height:35px; margin-right:2px; font-size:14px; font-weight:bold; border:2px solid #3b4047}
+ul.tabs li:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
+ul.tabs .on {background-color:#3b4047; color:#fff}
+ul.tabs .on a {color:#fff}
+ul.tabs .on a:hover {color:#fff}
+
+/* popup */
+#popup{padding:30px}

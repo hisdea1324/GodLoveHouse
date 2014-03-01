@@ -172,7 +172,7 @@ class MissionObject {
 			$updateData = "`sentyear` = '".$mysqli->real_escape_string($this->sentyear)."', ";
 			$updateData.= "`birthyear` = '".$mysqli->real_escape_string($this->birthyear)."', ";
 			$updateData.= "`missionname` = '".$mysqli->real_escape_string($this->missionname)."', ";
-			$updateData.= "`church` = ".$mysqli->real_escape_string($this->church).", ";
+			$updateData.= "`church` = '".$mysqli->real_escape_string($this->church)."', ";
 			$updateData.= "`churchcontact` = '".$mysqli->real_escape_string($this->churchcontact)."', ";
 			$updateData.= "`nationcode` = '".$mysqli->real_escape_string($this->nationcode)."', ";
 			$updateData.= "`accountno` = '".$mysqli->real_escape_string($this->accountno)."', ";

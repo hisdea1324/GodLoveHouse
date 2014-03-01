@@ -17,6 +17,7 @@ class ReservationObject {
 				break;
 			case 'status': 
 				$this->record['reservstatus'] = $value;
+				break;
 			case 'startdate':
 			case 'enddate':
 			case 'regdate':

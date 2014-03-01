@@ -108,6 +108,7 @@ function getUserProfile2() {
 	
 	print "<div class=\"tit\">";
 	print "신청자 정보 <a href=\"javascript:unshowProfile('{$_REQUEST["element"]}', '{$_REQUEST["reservationNo"]}')\" style='color:white; text-decoration:underline;'>[닫기]</a>";
+	print "<a href=\"print.php?userid={$member->userid}&reservationNo={$reservationNo}\" target=\"_print\" style='color:white; text-decoration:underline;'>[프린트하기]</a>";
 	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
 	print "</div>";
 	print "<ul>";
