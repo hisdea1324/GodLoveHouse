@@ -78,12 +78,12 @@ function body() {
 		foreach ($reservList as $reservObj) {
 ?>
 			<tr>
-				<td><?=$reservObj->RegDate?></td>
+				<td><?=date("Y.m.d", $reservObj->RegDate)?></td>
 				<td class="ltd">
 					<label id="profileId<?=$i?>" onmouseover="showProfile('<?=$i?>', event)" onmouseout="unshowProfile('<?=$i?>')" style="cursor:prointer"><?=$member->Nick?><? //=member.Name ?><? //=reservObj.userid ?></label>
 					<div id="profile<?=$i?>" style="position:absolute;visibility:hidden;border:1px solid black;color:#FFF;"></div>
 				</td>
-				<td><?=$reservObj->HouseName?> / <?=$reservObj->RoomName?></td>
+				<td><a href="/house_manager/print.php?userid=<?=$member->userid?>&reservationNo=<?=$reservObj->reservationNo?>" target="_print"><?=$reservObj->HouseName?> / <?=$reservObj->RoomName?></a></td>
 				<td><?=date("Y.m.d", $reservObj->StartDate)?> ~ <?=date("Y.m.d", $reservObj->EndDate)?> <!--a href="#"><img src="../images/board/btn_modify_date.gif" align="absmiddle"></a--></td>
 				<td><?=$reservObj->Status?> <?	if ($reservObj->Status=="신규예약") { ?><a href="#" onclick="deny(<?=$reservObj->BookNo?>)" >[취소]</a><? } ?>
 				</td>
