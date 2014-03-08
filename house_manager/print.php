@@ -1,13 +1,12 @@
 <?
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 checkUserLogin(7);
-$userid = $_REQUEST['userid'];
 $reservationNo = isset($_REQUEST["reservationNo"]) ? $_REQUEST["reservationNo"] : "";
 
 $resv = new ReservationObject($reservationNo);
 $m_helper = new MemberHelper();
-$member = $m_helper->getMemberByuserid($userid);
-$mission = $m_helper->getMissionInfoByuserid($userid);
+$member = $m_helper->getMemberByuserid($_REQUEST['userid']);
+$mission = $m_helper->getMissionInfoByuserid($_REQUEST['userid']);
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=11.0000" http-equiv="X-UA-Compatible">
