@@ -20,7 +20,6 @@ if ((strlen($groupId)>0)) {
 	}
 } 
 
-
 showAdminHeader("관리툴 - 게시판 정보수정","","","");
 body();
 showAdminFooter();

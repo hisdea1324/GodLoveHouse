@@ -1,4 +1,3 @@
-
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/include/manageMenu.php");
@@ -9,9 +8,9 @@ if (strlen($groupId)==0) {
 	alertGoPage("잘못된 접근입니다","/index.php");
 } 
 
-$field = trim($_REQUEST["field"]);
-$keyword = trim($_REQUEST["keyword"]);
-$page = trim($_REQUEST["page"]);
+$field = isset($_REQUEST["field"]) ? trim($_REQUEST["field"]) : "";
+$keyword = isset($_REQUEST["field"]) ? trim($_REQUEST["keyword"]) : "";
+$page = isset($_REQUEST["field"]) ? trim($_REQUEST["page"]) : "";
 
 switch (($mode)) {
 	case "addPost":
@@ -144,7 +143,6 @@ function deletePost() {
 
 function editGroup() {
 	$groupid = trim($_REQUEST["groupId"]);
-	$id = trim($_REQUEST["id"]);
 	$authReadLv = trim($_REQUEST["authRead"]);
 	$authWriteLv = trim($_REQUEST["authWrite"]);
 	$managerId = trim($_REQUEST["managerId"]);

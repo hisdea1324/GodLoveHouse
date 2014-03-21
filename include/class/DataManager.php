@@ -118,7 +118,7 @@ class DataManager {
 			$query = $query.$this->fieldList[$i]."='".$this->valueList[$i]."', ";
 		}
 
-		for ($i = 0; $i <= $this->fieldNCount; $i++) {
+		for ($i = 0; $i < $this->fieldNCount; $i++) {
 			$query = $query.$this->fieldNList[$i]."=".$this->valueNList[$i].", ";
 		}
 
