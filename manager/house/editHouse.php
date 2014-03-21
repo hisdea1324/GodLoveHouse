@@ -195,7 +195,7 @@ function body() {
 			<dt>
 				홈페이지
 			<dd>
-				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$houseObj->homepageNoLink?>" />
+				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$houseObj->homepage?>" />
 			<dt>
 				선교관 설명 
 			<dd>

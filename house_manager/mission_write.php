@@ -208,7 +208,7 @@ function body() {
 					<tr>
 						<th>홈페이지</th>
 						<td>
-							<input type="text" name="homepage" id="homepage" class="inputTxt" size="100" value="<?=$house->homepageNoLink?>" />
+							<input type="text" name="homepage" id="homepage" class="inputTxt" size="100" value="<?=$house->homepage?>" />
 						</td>
 					</tr>
 					<tr>

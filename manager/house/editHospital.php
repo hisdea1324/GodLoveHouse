@@ -182,7 +182,7 @@ function body() {
 			<dt>
 				홈페이지
 			<dd>
-				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$hospitalObj->HomepageNoLink?>" />
+				<input type="text" name="homepage" id="homepage" style="width:80%;" tabindex="13" value="<?=$hospitalObj->Homepage?>" />
 			<dt>
 				병원 설명 
 			<dd>
