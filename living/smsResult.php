@@ -5,5 +5,5 @@ $rcode = $_REQUEST["R_CODE"];
 $pid = $_REQUEST["P_ID"];
 
 #echo "Result : {$rcode} {$pid}";
-alertGoPage("예약요청 성공 되었습니다.","reservation.php");
+alertGoPage("신청되었습니다.","reservation.php");
 ?>

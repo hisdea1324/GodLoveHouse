@@ -48,8 +48,10 @@ function editReserv() {
 	global $status;
 	
 	$reservId = trim($_REQUEST["reservId"]);
-	$fromDate = trim($_REQUEST["fromDate"]);
-	$toDate = trim($_REQUEST["toDate"]);
+	$fromDate = explode('-', trim($_REQUEST["fromDate"]));
+	$fromDate = mktime(0, 0, 0, $fromDate[1], $fromDate[2], $fromDate[0]);
+	$toDate = explode('-', trim($_REQUEST["toDate"]));
+	$toDate = mktime(0, 0, 0, $toDate[1], $toDate[2], $toDate[0]);
 
 	$ObjQuery = new DataManager();
 	

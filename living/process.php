@@ -48,7 +48,14 @@ function registHouse() {
 	$house->Update();
 	$house = null;
 
-	alertGoPage("선교관 등록요청이 되었습니다.","registHouse.php");
+	$from_number = "01085916394";
+	$message = "선교관 등록 신청\r\n선교관: {$house->HouseName}\r\n{$house->Manager1}, {$house->Contact1}";
+
+#	sendSMSMessage($from_number, "01085916394;01087249504;", $message);
+	$to_number = implode($manager->Mobile, '');
+	sendSMSMessage($from_number, "{$from_number};{$to_number};", $message);
+
+	//alertGoPage("선교관 등록요청이 되었습니다.","registHouse.php");
 } 
 
 function reservation() {

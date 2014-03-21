@@ -28,8 +28,7 @@ class DataManager {
 	public function __destruct() {
 
 	}
-}
-/*
+	
 	function setTable($tName) {
 		$this->tableName = $tName;
 	} 
@@ -84,11 +83,11 @@ class DataManager {
 
 		} 
 
-		return "WHERE ".$strCond;
-	} 
+		$this->strCondition = "WHERE ".$strCond;
+	}
 
 	function insert() {
-		checkField();
+		$this->checkField();
 
 		if ($this->fieldNCount < 0) {
 			$strField = join($this->fieldList, ",");
@@ -105,31 +104,35 @@ class DataManager {
 		$query = "INSERT INTO ".$this->tableName;
 		$query = $query."(".$strField.") VALUES";
 		$query = $query."(".$strValue.")";
-		print $query;
-		$mysqli->execute($query);
+
+		global $mysqli;
+		$mysqli->query($query);
 	} 
 
 	function update() {
-		checkField();
-		checkCondition();
+		$this->checkField();
+		$this->checkCondition();
 
 		$query = "UPDATE ".$this->tableName." SET ";
-		for ($i=0; $i <= $this->fieldCount; $i = $i+1) {
+		for ($i = 0; $i < $this->fieldCount; $i++) {
 			$query = $query.$this->fieldList[$i]."='".$this->valueList[$i]."', ";
 		}
 
-		for ($i=0; $i <= $this->fieldNCount; $i = $i+1) {
+		for ($i = 0; $i <= $this->fieldNCount; $i++) {
 			$query = $query.$this->fieldNList[$i]."=".$this->valueNList[$i].", ";
 		}
 
-		$query = substr($query, 0, strlen($query) - 2)." ".$this->strCondition();
-		$mysqli->execute($query);
+		$query = substr($query, 0, strlen($query) - 2)." ".$this->strCondition;
+
+		global $mysqli;
+		$mysqli->query($query);
 	} 
 
 	function delete() {
-		checkCondition();
-		$query = "DELETE FROM ".$this->tableName." ".$this->strCondition();
-		$mysqli->execute($query);
+		$this->checkCondition();
+		$query = "DELETE FROM ".$this->tableName." ".$this->strCondition;
+		global $mysqli;
+		$mysqli->query($query);
 	} 
 
 	function checkField() {
@@ -152,7 +155,7 @@ class DataManager {
 	} 
 
 	function checkCondition() {
-		if (strlen($this->strCondition()) == 0) {
+		if (strlen($this->strCondition) == 0) {
 			print "Error: DataManager Error 7";
 			exit();
 		} 
@@ -199,5 +202,4 @@ class DataManager {
 		}
 	} 
 }
-*/
 ?>

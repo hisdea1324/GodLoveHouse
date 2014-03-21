@@ -277,7 +277,7 @@ class HouseObject {
 
 		if (strlen($this->record["contact2"]) > 10) {
 			$retString = $retString." / ".$this->record["manager2"]." ".$this->record["contact2"];
-		} 
+		}
 
 		return $retString;
 	}

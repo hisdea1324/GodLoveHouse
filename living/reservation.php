@@ -43,6 +43,7 @@ function body() {
 	}
 ?>
 				</select>
+				<!--
 				<select name="houseId" id="houseId" onchange="selectHouse()">
 					<option value=''>-- 선교관선택 --</option>
 			<?php 
@@ -56,6 +57,7 @@ function body() {
 	}
 ?>
 				</select>
+				-->
 				<input type="text" name="fromDate" id="fromDate" value="<?=$fromDate?>" style="width:100px" class="input" readonly onclick="calendar('fromDate')">
 				<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('fromDate')" style="cursor:pointer;"> ~
 				<input type="text" name="toDate" id="toDate" value="<?=$toDate?>" style="width:100px" class="input" readonly onclick="calendar('toDate')">

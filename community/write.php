@@ -131,6 +131,7 @@ function body() {
 				<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'boardFile', 'board')" style="cursor:pointer" />
 				<input type="hidden" name="idboardFile" id="idboardFile" value="" />
 				<input type="text" name="txtboardFile" id="txtboardFile" value="<?=$boardInfo->attachFileName?>" size="80" readonly /> <br />
+				* 영문 파일명만 지원합니다. 
 			</td>
 		</tr>
 		</form>

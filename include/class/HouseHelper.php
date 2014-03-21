@@ -93,11 +93,11 @@ class HouseHelper {
 			$strWhere = $strWhere." AND B.regionCode = '{$regionCode}'";
 		} 
 		if (strlen($fromDate) > 0 && strlen($toDate) > 0) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate <= '{$toDate}' AND endDate >= '{$fromDate}' )";
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE reservStatus != 'S0004' AND startDate <= '{$toDate}' AND endDate >= '{$fromDate}' )";
 		} elseif (strlen($fromDate) > 0) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE endDate >= '{$fromDate}')";
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE reservStatus != 'S0004' AND endDate >= '{$fromDate}')";
 		} elseif (strlen($toDate) > 0) {
-			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE startDate <= '{$toDate}')";
+			$strWhere = $strWhere." AND A.roomId NOT IN (SELECT DISTINCT roomId FROM reservation WHERE reservStatus != 'S0004' AND startDate <= '{$toDate}')";
 		} 
 
 		$this->m_StrConditionQuery = $strWhere;
