@@ -71,6 +71,8 @@ class HouseObject {
 				return $c_Helper->getCodeName($this->record['status']);
 			case "statuscode":
 				return str_pad($this->record['status'], 5, '0', STR_PAD_LEFT);
+			case "explain":
+				return str_replace("\\", "", $this->record['explain']);
 			case "roomlist":
 				$rooms = array();
 				foreach ($this->mRoom as $room) {
@@ -202,7 +204,7 @@ class HouseObject {
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->address2)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['zipcode'])."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->regionCode)."', ";
-			$insertData = $insertData."'".$mysqli->real_escape_string($this->explain)."', ";
+			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['explain'])."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->userid)."', ";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->manager1)."',";
 			$insertData = $insertData."'".$mysqli->real_escape_string($this->record['contact1'])."', ";
@@ -233,7 +235,7 @@ class HouseObject {
 			$updateData = $updateData."address2 = '".$mysqli->real_escape_string($this->address2)."', ";
 			$updateData = $updateData."regionCode = '".$mysqli->real_escape_string($this->regionCode)."', ";
 			$updateData = $updateData."`zipcode` = '".$mysqli->real_escape_string($this->record['zipcode'])."', ";
-			$updateData = $updateData."`explain` = '".$mysqli->real_escape_string($this->explain)."', ";
+			$updateData = $updateData."`explain` = '".$mysqli->real_escape_string($this->record['explain'])."', ";
 			$updateData = $updateData."`userid` = '".$mysqli->real_escape_string($this->userid)."', ";
 			$updateData = $updateData."manager1 = '".$mysqli->real_escape_string($this->manager1)."', ";
 			$updateData = $updateData."contact1 = '".$mysqli->real_escape_string($this->record['contact1'])."', ";
