@@ -391,6 +391,16 @@ function body() {
 	var familyNum = 1;
 	
 	function checkuserid(userid) {
+        var idReg = /^[a-z]+[a-z0-9]{4,19}$/g;
+		if (document.getElementById("userid").value == "") {
+			document.getElementById("resultMessage1").innerHTML = "<b><font color=red>아이디는 4자 이상만 가능합니다.</font></b>";
+			return;
+		}
+		if (!idReg.test(document.getElementById("userid").value)) {
+			document.getElementById("resultMessage1").innerHTML = "<b><font color=red>아이디는 영문과 숫자로만 가능합니다.</b>";
+			return;
+		}
+        
 		var url = 'ajax.php?mode=checkuserid&userid='+userid;
 		var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultuserid});
 	}
@@ -449,8 +459,9 @@ function body() {
 			return;
 		}
 		
-		if (document.getElementById("userid").value == "") {
-			alert("아이디를 입력해주세요.");
+        var idReg = /^[a-z]+[a-z0-9]{4,19}$/g;
+		if (document.getElementById("userid").value == "" || !idReg.test(document.getElementById("userid").value)) {
+			alert("아이디를 확인해주세요.");
 			document.getElementById("userid").focus();
 			return;
 		}
