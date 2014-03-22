@@ -111,7 +111,7 @@ function deleteHouse() {
 	$query = "DELETE FROM room WHERE houseId = ".$houseId;
 	$result = $mysqli->query($query);
 
-	header("Location: index.php");
+	header("Location: index.php?status=".$_REQUEST["status"]);
 } 
 
 function confirmHouse() {

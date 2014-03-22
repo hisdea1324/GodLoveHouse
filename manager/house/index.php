@@ -130,7 +130,7 @@ if ($status == "S2002") {
 ?>
 			case 0: goShow(houseId); break;
 			case 1: goEdit(houseId); break;
-			case 2: goDelete(houseId); break;
+			case 2: goDelete(houseId, 'S2002'); break;
 			case 3: goConfirm(houseId, 'S2002'); break;
 <?php 
 } 
@@ -150,7 +150,7 @@ if ($status == "S2002") {
 
 	function goDelete(houseId) {
 		if (confirm("정말 삭제 하시겠습니까?")) {
-			location.href = 'process.php?mode=deleteHouse&houseId=' + houseId + searchString;
+			location.href = 'process.php?mode=deleteHouse&status=<?=$status?>&houseId=' + houseId + searchString;
 		}
 	}
 	
