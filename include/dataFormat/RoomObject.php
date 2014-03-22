@@ -170,7 +170,7 @@ class RoomObject {
 
 			$this->roomId = $mysqli->insert_id;
 			
-			$query = "UPDATE house SET roomCount = roomCount + 1 WHERE houseId = '".$this->houseId."'";
+			$query = "UPDATE house SET roomCount = (SELECT COUNT(roomId) FROM room WHERE houseId = '{$this->houseId}') WHERE houseId = '{$this->houseId}'";
 			$mysqli->query($query);
 			
 		} else {
@@ -196,6 +196,9 @@ class RoomObject {
 				return false;
 			}
 		}
+
+		$query = "UPDATE house SET roomCount = (SELECT COUNT(roomId) FROM room WHERE houseId = '{$this->houseId}') WHERE houseId = '{$this->houseId}'";
+		$mysqli->query($query);
 
 		return true;
 	} 
