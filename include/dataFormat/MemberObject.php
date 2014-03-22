@@ -241,5 +241,17 @@ class MemberObject {
 		$result = $mysqli->query($query);
 		return $result;
 	} 
+	
+	function getReservHistory() {
+		global $mysqli;
+		$query = "SELECT reservStatus, COUNT(reservStatus) as cnt FROM reservation WHERE userid = '".$mysqli->real_escape_string($this->userid)."' GROUP BY reservStatus";
+		$result = $mysqli->query($query);
+
+		$rows = array();
+		while ($row = $result->fetch_assoc()) {
+			$rows[] = $row;
+		}
+		return $rows;
+	}
 }
 ?>

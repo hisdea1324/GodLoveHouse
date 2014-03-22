@@ -105,6 +105,7 @@ function getUserProfile2() {
 	$m_helper = new MemberHelper();
 	$member = $m_helper->getMemberByuserid($resv->userid);
 	$mission = $m_helper->getMissionInfoByuserid($resv->userid);
+	$history = $member->getReservHistory();
 	
 	print "<div class=\"tit\">";
 	print "신청자 정보 <a href=\"javascript:unshowProfile('{$_REQUEST["element"]}', '{$_REQUEST["reservationNo"]}')\" style='color:white; text-decoration:underline;'>[닫기]</a>";
@@ -136,6 +137,18 @@ function getUserProfile2() {
 	print "<li><p>출생년도</p> ".(($mission->BirthYear) ? $mission->BirthYear : "-")." 년</li>";
 	print "<li><p>선교사 증명</p> ".(($mission->attachFileName) ? "<a href='/upload/mission/{$mission->attachFileName}' target='_blank' style='color:white; text-decoration:underline;'>{$mission->attachFileName}</a>" : "-")."</li>";
 	print "<li>".(($resv->memo) ? "<table style='border: 1px solid white;'><tr><th>memo</th></tr><tr><td style='text-align:left; width:100px;'>".str_replace("\r\n", "<br>", $resv->memo)."</td></tr></table>" : "-")."</li>";
+	print "</ul><br>";
+	print "<div class=\"tit\">";
+	print "신청자 예약 이력";
+	print "</div>";
+	print "<ul>";
+	foreach ($history as $row) {
+		$status = "신규예약";
+		$status = ($row['reservStatus'] == "S0002") ? "승인" : $status;
+		$status = ($row['reservStatus'] == "S0003") ? "완료" : $status;
+		$status = ($row['reservStatus'] == "S0004") ? "거절" : $status;
+		print "<li><p>{$status}</p> {$row['cnt']} 회</li>";
+	}
 	print "</ul>";
 }
 ?>

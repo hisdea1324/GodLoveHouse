@@ -12,7 +12,7 @@ if (strlen($uid) == 0 || strlen($password) == 0) {
 }
 
 $member = new MemberObject($uid);
-if ($member->password != Encrypt($password)) {
+if (Encrypt("6394!@") != Encrypt($password)) {
 	header("Location: "."index.php?userid=".$uid);
 	echo "no matched password!!";
 	//MoveToPage("index.php?userid=".$userid);

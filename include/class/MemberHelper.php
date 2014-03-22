@@ -214,6 +214,6 @@ class MemberHelper {
 		global $mysqli;
 		$query = "SELECT userid FROM family WHERE familytype = 'F0001' AND followuserid = '".$mysqli->real_escape_string($userid)."'";
 		return $this->getMissionList($query);
-	} 
+	}
 } 
 ?>
