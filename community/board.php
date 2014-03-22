@@ -52,6 +52,7 @@ $b_Helper->PAGE_COUNT=15; # 한페이지에 보여줄 리스트 갯수
 $b_Helper->setCondition($field, $keyword, $groupId); # 조건문 작성
 $strPage = $b_Helper->makePagingHTML($page);
 $boardList = $b_Helper->getBoardListWithPaging($page);
+$noticeList = $b_Helper->getNoticeList();
 
 showHeader($headerSet[0], $headerSet[1], $headerSet[2]);
 body();
@@ -59,7 +60,7 @@ showFooter();
 
 function body() {
 	global $groupId, $keyword, $field, $page;
-	global $strPage, $boardList;
+	global $strPage, $boardList, $noticeList;
 	global $b_Helper;
 ?>
 		<!-- //content -->
@@ -91,6 +92,21 @@ function body() {
 						<th class="th01">작성일</th>
 						<th class="th01">조회</th>
 					</tr>
+<?
+	if ($groupId != "notice") {
+		foreach ($noticeList as $boardObj) {
+?>
+				<tr>
+				<td><strong>[공지글]</strong></td>
+				<td class="ltd"><a href="view.php?groupId=<?=$boardObj->groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><strong><?=$boardObj->Title?></strong></a></td>
+				<td><?=$boardObj->userid?></td>
+				<td> - </td>
+				<td> - </td>
+				</tr>
+				<? 
+		}
+	}
+?>
 <?php 
 	if (count($boardList) == 0) {
 ?>

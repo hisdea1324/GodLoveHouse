@@ -112,5 +112,20 @@ class BoardHelper {
 		
 		return $board;
 	} 
+	
+	function getNoticeList() {
+		global $mysqli;
+		
+		$query = "SELECT * FROM board WHERE groupId = 'notice' order by editDate desc limit 1";
+
+		$board = array();
+		if ($result = $mysqli->query($query)) {
+			while ($row = $result->fetch_array()) {
+				$board[] = new BoardObject($row["id"]);
+			}
+		}
+		
+		return $board;
+	} 
 } 
 ?>
