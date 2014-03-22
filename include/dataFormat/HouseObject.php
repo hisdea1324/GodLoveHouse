@@ -249,7 +249,6 @@ class HouseObject {
 			$updateData = $updateData."houseName = '".$mysqli->real_escape_string($this->houseName)."', ";
 			$updateData = $updateData."`status` = '".$mysqli->real_escape_string($this->statuscode)."', ";
 			$updateData = $updateData."`homepage` = '".$mysqli->real_escape_string($this->homepage)."', ";
-			$updateData = $updateData."roomCount = ".$mysqli->real_escape_string($this->roomCount).", ";
 			$updateData = $updateData."`document` = '".$mysqli->real_escape_string($this->document)."', ";
 			$updateData = $updateData."documentId = ".$mysqli->real_escape_string($this->documentId).", ";
 			$updateData = $updateData."buildingType = ".$mysqli->real_escape_string($this->buildingType)." ";
