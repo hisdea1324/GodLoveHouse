@@ -69,17 +69,23 @@ function body() {
 					<td class="td01">아이디</td>
 					<td><?=$member->userid?></td>
 				</tr>
-				<tr>
-					<td class="td01">비밀번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+				<tr id="trpw_prev">
+					<td class="td01">비밀번호</td>
 					<td>
-						<input type="password" id="password" name="password" style="ime-mode:disabled" maxlength="20" tabindex="5" />&nbsp;&nbsp;
-						<font color="red">(* 주의해 주세요. 공백으로 두면 패스워드가 변경되지 않습니다.)</font>
+						<span class="btn1g"><a href="javascript:void(0)" onclick="change_passwd(true)">비밀번호 변경</a></span>
 					</td>
 				</tr>
-				<tr>
+				<tr id="trpw" style="display:none;">
+					<td class="td01">비밀번호<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
+					<td>
+						<input type="password" id="password" name="password" style="ime-mode:disabled" maxlength="20" tabindex="19" />&nbsp;&nbsp;
+						<span class="btn1g"><a href="javascript:void(0)" onclick="change_passwd(false)">변경하지 않기</a></span>
+					</td>
+				</tr>
+				<tr id="trpw_conf" style="display:none;">
 					<td class="td01">비밀번호확인<span class="form-required" title="이 항목은 반드시 입력해야 합니다.">*</span></td>
 					<td>
-						<input type="password" id="password_confirm" name="password_confirm" style="ime-mode:disabled" maxlength="20" tabindex="6" onkeyup="checkPassword();" />
+						<input type="password" id="password_confirm" name="password_confirm" style="ime-mode:disabled" maxlength="20" tabindex="20" onkeyup="checkPassword();" />
 						<label class="fs11" type="text" name='resultMessage5' id='resultMessage5'></label>
 					</td>
 				</tr>
@@ -169,13 +175,13 @@ function body() {
 						<input type="text" id="hp2" name="hp2" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="15" maxlength="4" value="<?=$member->Mobile[1]?>" />
 						-
 						<input type="text" id="hp3" name="hp3" style="width:50px" onKeyPress="CheckNumber(event);" style="ime-mode:disabled" tabindex="16" maxlength="4" value="<?=$member->Mobile[2]?>" />
-						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="21"<? if ($member->CheckMessageOption == 1) {?> checked<? } ?> />
+						<input type="checkbox" id="smsOk" name="smsOk" value="1" class="chk" tabindex="17"<? if ($member->CheckMessageOption == 1) {?> checked<? } ?> />
 						SMS 수신동의 
 					</td>
 				</tr>
 			</table>
 			<p class="right b10">
-				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="22"<? if ($member->Level=="3") {
+				<input name="missionary" id="missionary" type="checkbox" value="1" class="chk" onclick="checkMission()" tabindex="18"<? if ($member->Level=="3") {
 ?> checked<? } ?> />
 				<span class="fc_01 b">선교사일 경우 추가입력</span></p>
 			<!-- //write -->
@@ -457,7 +463,7 @@ function body() {
 			
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align="center"><input type="button" value="저장" onclick="check()" /></td>
+					<td align="center"><span class="btn1g"><a href="javascript:void(0)" onclick="check()">저장</a></span></td>
 				</tr>
 			</table>
 		</div>
@@ -648,6 +654,20 @@ function body() {
 	
 	function deleteFamily(familyId) {
 		location.href = "process.php?mode=deleteFamily&userLv=<?=$userLv?>&userid=<?=$userid?>&familyId=" + familyId;
+	}
+	
+	function change_passwd(flag) {
+		if (flag) {
+			document.getElementById("trpw_prev").style.display = "none";
+			document.getElementById("trpw").style.display = "";
+			document.getElementById("trpw_conf").style.display = "";
+		} else {
+			document.getElementById("trpw_prev").style.display = "";
+			document.getElementById("trpw").style.display = "none";
+			document.getElementById("trpw_conf").style.display = "none";
+			document.getElementById("password").value = "";
+			document.getElementById("password_confirm").value = "";
+		}
 	}
 //]]>
 </script>
