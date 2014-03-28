@@ -99,7 +99,7 @@ function body() {
 				<tr>
 				<td><strong>[공지글]</strong></td>
 				<td class="ltd"><a href="view.php?groupId=<?=$boardObj->groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><strong><?=$boardObj->Title?></strong></a></td>
-				<td><?=$boardObj->userid?></td>
+				<td><?=substr($boardObj->userid, 0, -3)."***"?></td>
 				<td> - </td>
 				<td> - </td>
 				</tr>
@@ -120,7 +120,7 @@ function body() {
 				<tr>
 				<td><?=$boardObj->id?></td>
 				<td class="ltd"><?=$boardObj->ReplyImage?><a href="view.php?groupId=<?=$groupId?>&keyword=<?=$keyword?>&field=<?=$field?>&id=<?=$boardObj->BoardID?>"><?=$boardObj->Title?></a></td>
-				<td><?=$boardObj->userid?></td>
+				<td><?=substr($boardObj->userid, 0, -3)."***"?></td>
 				<td><?=date("Y.m.d", $boardObj->RegDate)?></td>
 				<td><?=$boardObj->CountView?></td>
 				</tr>

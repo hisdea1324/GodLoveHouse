@@ -81,7 +81,7 @@ function body() {
 					</tr>
 					<tr>
 						<td class="td01">작성자</td>
-						<td><?=$board->userid?></td>
+						<td><?=substr($board->userid, 0, -3)."***"?></td>
 						<td class="td01">작성일</td>
 						<td><?=date("Y.m.d", $board->RegDate)?></td>
 						<td class="td01">조회</td>
