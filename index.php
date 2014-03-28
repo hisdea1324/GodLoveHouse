@@ -60,5 +60,6 @@ function body() {
 		document.getElementById('shortList').innerHTML = dataobj;
 	}
 
+	centerWinOpen(600, 400, '/common/guide.php', 'guide')
 //]]>
 </script>

@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
-global $mysqli;
+global $mysqli, $Application;
 
 $uid = isset($_REQUEST["userid"]) ? trim($_REQUEST["userid"]) : "";
 $password = isset($_REQUEST["password"]) ? trim($_REQUEST["password"]) : "";
@@ -12,7 +12,7 @@ if (strlen($uid) == 0 || strlen($password) == 0) {
 }
 
 $member = new MemberObject($uid);
-if (Encrypt("6394!@") != Encrypt($password)) {
+if (Encrypt($Application["admin_pw"]) != Encrypt($password)) {
 	header("Location: "."index.php?userid=".$uid);
 	echo "no matched password!!";
 	//MoveToPage("index.php?userid=".$userid);
