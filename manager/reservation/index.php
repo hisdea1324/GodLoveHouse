@@ -29,16 +29,16 @@ $query = "SELECT * FROM reservation $strWhere ORDER BY $order LIMIT $topNum, $PA
 $objTable = new tableBuilder();
 if ($status == "S0001") {
 	$path = " 신규예약신청리스트 ";
-	$objTable->setButton(array("방정보","회원정보","수정","승인","승인불가"));
+	$objTable->setButton(array("방정보","회원정보","수정","승인","승인불가", "프린트하기"));
 } else if ($status == "S0002") {
 	$path = " 승인리스트 ";
-	$objTable->setButton(array("방정보","회원정보","수정","완료"));
+	$objTable->setButton(array("방정보","회원정보","수정","완료", "프린트하기"));
 } else if ($status == "S0003") {
 	$path=" 이전승인리스트";
-	$objTable->setButton(array("방정보","회원정보","수정","삭제"));
+	$objTable->setButton(array("방정보","회원정보","수정","삭제", "프린트하기"));
 } else {
 	$path = " 승인거절리스트";
-	$objTable->setButton(array("방정보","회원정보","수정","삭제"));
+	$objTable->setButton(array("방정보","회원정보","수정","삭제", "프린트하기"));
 } 
 $objTable->setColumn(array("예약번호","회원아이디","방번호","상태","숙박날짜","숙박날짜"));
 $objTable->setOrder($order);
@@ -139,26 +139,34 @@ function body() {
 			case 2: goEdit(reservId); break;
 			case 3: goChange(reservId, 'S0002'); break;
 			case 4: goChange(reservId, 'S0004'); break;
+			case 5: goPrint(userid, reservId); break;
 <?php } else if(($status=="S0002")) { ?>
 			case 0: goShowRoom(roomId); break;
 			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goChange(reservId, 'S0003'); break;
+			case 4: goPrint(userid, reservId); break;
 <?php } else if(($status=="S0003")) { ?>
 			case 0: goShowRoom(roomId); break;
 			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goDelete(reservId); break;
+			case 4: goPrint(userid, reservId); break;
 <?php } else { ?>
 			case 0: goShowRoom(roomId); break;
 			case 1: goShowUser(userid); break;
 			case 2: goEdit(reservId); break;
 			case 3: goDelete(reservId); break;
+			case 4: goPrint(userid, reservId); break;
 <?php } ?>
 			default: break;
 		}
 	}
 
+	function goPrint(userid, reservId) {
+		window.open('/house_manager/print.php?userid=' + userid + '&reservationNo=' + reservId, '');
+	}
+	
 	function goShowRoom(roomId) 
 	{
 		window.open('/living/reservationDetail.php?roomId=' + roomId, 'new', '');
