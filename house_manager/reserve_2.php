@@ -450,7 +450,6 @@ function body() {
 </div>
 <!-- // rightSec -->
 <!-- // rightSec -->
-<?php } ?>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -510,14 +509,14 @@ function body() {
 	
 	function searchRoom(room) {
 		if (room != 0) {
-			location.href = 'reserve_2.php?houseId=<?=$houseId?>&roomId=' + room;
+			location.href = 'reserve_2.php?year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>&roomId=' + room;
 		} else {
-			location.href = 'reserve_2.php?houseId=<?=$houseId?>';
+			location.href = 'reserve_2.php?year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>';
 		}
 	}
 	
 	function search(value) {
-		location.href = 'reserve_2.php?houseId=<?=$houseId?>&roomId=<?=$roomId?>&search=' + value;
+		location.href = 'reserve_2.php?year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>&roomId=<?=$roomId?>&search=' + value;
 	}
 
 	var element_name;
@@ -555,3 +554,4 @@ function body() {
 	}
 //]]>
 </script>
+<?php } ?>
