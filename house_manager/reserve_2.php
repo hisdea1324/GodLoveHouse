@@ -200,9 +200,9 @@ function body() {
 				$prev_margin += $margin_left + $width;
 				$color_id = $aRoom->RoomID % 10 + 1;
 				if ($row["resv_name"]) {
-					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onclick=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["resv_name"]."</div>\r\n";
 				} else {
-					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onmouseover=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
+					print "<div class=\"check cb".$color_id."\" id=\"_pf1_".$row["reservationNo"]."\" style=\"width:{$width}%; margin-left:{$margin_left}%\" onclick=\"showProfile('pf1_', '".$row["reservationNo"]."')\" >".$row["userid"]."</div>\r\n";
 				}
 
 				print "<div class=\"view\" id=\"pf1_".$row["reservationNo"]."\" style=\"position:absolute; visibility:hidden; top:38px;\" onclick=\"unshowProfile('pf1_', '".$row["reservationNo"]."')\"></div>\r\n";
@@ -278,7 +278,7 @@ function body() {
 					<tr>
 						<td><?=$aResv->BookNo?></td>
 						<td>
-							<label id="_pf2_<?=$aResv->BookNo?>" onmouseover="showProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							<label id="_pf2_<?=$aResv->BookNo?>" onclick="showProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
 							if ($aResv->resv_name) { 
 								echo $aResv->resv_name; 
 							} else { 
@@ -489,17 +489,17 @@ function body() {
 
 	function allow(value) {
 		if (confirm('예약을 승인합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=2&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=2&bookNo=' + value;
 	}
 
 	function deny(value) {
 		if (confirm('예약을 거절합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=4&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=4&bookNo=' + value;
 	}
 
 	function complete(value) {
 		if (confirm('예약을 완료합니다.'))
-			location.href = 'process.php?mode=changeReservStatus&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=3&bookNo=' + value;
+			location.href = 'process.php?mode=changeReservStatus&year=<?=$calendar["year"]?>&month=<?=$calendar["month"]?>&houseId=<?=$houseId?>&roomId=<?=$roomId?>&status=3&bookNo=' + value;
 	}
 
 	function edit_date(value) {

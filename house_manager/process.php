@@ -215,6 +215,8 @@ function changeReservStatus() {
 	$houseId = isset($_REQUEST["houseId"]) ? $_REQUEST["houseId"] : "";
 	$roomId = isset($_REQUEST["roomId"]) ? $_REQUEST["roomId"] : "";
 	$bookNo = isset($_REQUEST["bookNo"]) ? $_REQUEST["bookNo"] : "";
+	$year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : "";
+	$month = isset($_REQUEST["month"]) ? $_REQUEST["month"] : "";
 
 	if ($status < 2 || $status > 4) {
 		alertBack("잘못된 값입니다");
@@ -232,7 +234,7 @@ function changeReservStatus() {
 	$reserv->Update();
 	$reserv = null;
 
-	header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$roomId);
+	header("Location: reserve_2.php?year={$year}&month={$month}&houseId={$houseId}&roomId={$roomId}");
 } 
 
 function editReservationDate() {
