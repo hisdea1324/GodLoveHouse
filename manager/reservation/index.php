@@ -18,12 +18,12 @@ $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S0001";
 $strWhere = makeCondition($status, $field, $keyword);
 
 // 페이지 네비게이션 
-$query = "SELECT * FROM reservation ".$strWhere;
+$query = "SELECT * FROM reservation, users ".$strWhere;
 $strPage = makePaging($page, $PAGE_COUNT, $PAGE_UNIT, $query);
 
 // 현재 페이지에 보여줄 레코드 
 $topNum = $PAGE_COUNT * ($page - 1);
-$query = "SELECT * FROM reservation $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
+$query = "SELECT *, users.name as name FROM reservation, users $strWhere ORDER BY $order LIMIT $topNum, $PAGE_COUNT";
 
 // 테이블 생성
 $objTable = new tableBuilder();
@@ -40,9 +40,9 @@ if ($status == "S0001") {
 	$path = " 승인거절리스트";
 	$objTable->setButton(array("방정보","회원정보","수정","삭제", "프린트하기"));
 } 
-$objTable->setColumn(array("예약번호","회원아이디","방번호","상태","숙박날짜","숙박날짜"));
+$objTable->setColumn(array("예약번호","회원아이디", "예약자이름", "방번호","상태","숙박날짜","숙박날짜"));
 $objTable->setOrder($order);
-$objTable->setField(array("reservationNo","userid","roomId","reservStatus","startDate","endDate"));
+$objTable->setField(array("reservationNo","userid", "name", "roomId", "reservStatus","startDate","endDate"));
 $objTable->setKeyValue(array("reservationNo","roomId","userid"));
 $objTable->setGotoPage($page);
 $htmlTable = $objTable->getTable($query);
@@ -58,7 +58,7 @@ $listRs = null;
 
 
 function makeCondition($status,$field,$keyword) {
-	$strWhere = " WHERE reservStatus = '".$status."'";
+	$strWhere = " WHERE reservStatus = '".$status."' AND reservation.userid = users.userid ";
 	if (strlen($field) > 0 && strlen($keyword) > 0) {
 		$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
 	} 

@@ -210,7 +210,7 @@ function body() {
 				<dd>
 					<input type="text" name="church" id="church" maxlength="20" size="30" value="<?=$mission->church?>" />
 				<dt>
-					파송기관(교회) 연락처
+					파송기관 연락처
 				<dd>
 					<select name="churchContact1" id="churchContact1" tabindex="24">
 						<option value="02" <?php if (($churchContact[0]=="02")) { print "selected"; } ?>>02</option>

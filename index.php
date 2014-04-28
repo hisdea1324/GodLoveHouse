@@ -20,7 +20,8 @@ function body() {
 		</ul>
 	</div>
 	<div class="dan2"> 
-		<a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(860, 600, '/common/usingForm.php', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a>
+		<a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(760, 500, 'https://docs.google.com/forms/d/1o9SxIF3hS6gE30u5IATZhawn8QIH7AAm3-nmWXA4PCk/viewform?embedded=true', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a>
+		<!--a href="/living/reservation.php"><img src="/images/main/link_01.gif" border="0"></a><a href="#" onclick="centerWinOpen(860, 600, '/common/usingForm.php', 'usingForm')"><img src="/images/main/link_02.gif" border="0"></a><a href="/cooperate/family.php"><img src="/images/main/link_03.gif" border="0"></a-->
 	</div>
 	<div class="dan3">
 		<ul class="link">

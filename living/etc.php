@@ -92,7 +92,7 @@ function body() {
 						<li><b>요금</b> : <?=$roomObj->showFee()?></li>
 					</ul>
 				</td>
-				<td class="ltd">
+				<td class="ltd" width="100">
 					<span class="btn1g"><a href="reservationDetail.php?houseId=<?=$roomObj->HouseID?>&roomId=<?=$roomObj->RoomID?>">자세히 보기</a></span>
 				</td>
 			</tr>
