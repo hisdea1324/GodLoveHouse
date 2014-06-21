@@ -8,14 +8,13 @@ checkAuth();
 $PAGE_COUNT=15;
 $PAGE_UNIT=10;
 
-$field = (isset($_REQUEST["field"])) ? trim($_REQUEST["field"]) : "reservationNo";
 $keyword = (isset($_REQUEST["keyword"])) ? trim($_REQUEST["keyword"]) : "";
 $order = (isset($_REQUEST["order"])) ? trim($_REQUEST["order"]) : "reservationNo DESC";
 $page = (isset($_REQUEST["page"])) ? trim($_REQUEST["page"]) : 1;
 $status = (isset($_REQUEST["status"])) ? trim($_REQUEST["status"]) : "S0001";
 
 // 조건문 작성
-$strWhere = makeCondition($status, $field, $keyword);
+$strWhere = makeCondition($status, $keyword);
 
 // 페이지 네비게이션 
 $query = "SELECT * FROM reservation, users ".$strWhere;
@@ -57,11 +56,13 @@ $objTable = null;
 $listRs = null;
 
 
-function makeCondition($status,$field,$keyword) {
-	$strWhere = " WHERE reservStatus = '".$status."' AND reservation.userid = users.userid ";
-	if (strlen($field) > 0 && strlen($keyword) > 0) {
-		$strWhere = $strWhere." AND ".$field." LIKE '%".$keyword."%'";
-	} 
+function makeCondition($status,$keyword) {
+	if (strlen($keyword) > 0) {
+		$strWhere = " WHERE reservation.userid = users.userid AND ";
+		$strWhere = $strWhere . "(users.userid LIKE '%".$keyword."%' or users.name LIKE '%".$keyword."%' or users.nick LIKE '%".$keyword."%' or reservation.resv_name LIKE '%".$keyword."%')";
+	} else {
+		$strWhere = " WHERE reservStatus = '".$status."' AND reservation.userid = users.userid ";
+	}
 
 	if ($strWhere == " WHERE") {
 		return "";
@@ -72,7 +73,7 @@ function makeCondition($status,$field,$keyword) {
 } 
 
 function body() {
-	global $path, $field, $keyword;
+	global $path, $keyword;
 	global $CurUrl, $strPage, $htmlTable;
 ?>
 	<div class="sub">
@@ -104,12 +105,6 @@ function body() {
 			<tr>
 				<td><b><?php echo $path;?></b></td>
 				<td align="right">
-					<select name="field">
-						<option value="name" <?php if ($field == "name") {
-?>selected<?php } ?>>이름</option>
-						<option value="userid" <?php if ($field == "userid") {
-?>selected<?php } ?>>아이디</option>
-					</select>
 					<input type="text" name="keyword" size="15" value="<?php echo $keyword;?>">
 					<input type="image" src="/images/btn_find.gif" border="0" align="absmiddle">
 				</td>
@@ -129,7 +124,7 @@ function body() {
 
 <script type="text/javascript">
 //<![CDATA[
-	var searchString = '&keyword=<?php echo $keyword;?>&field=<?php echo $field;?>';
+	var searchString = '&keyword=<?php echo $keyword;?>';
 	
 	function clickButton(no, reservId, roomId, userid) {
 		switch(no) {

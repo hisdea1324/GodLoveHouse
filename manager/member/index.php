@@ -29,21 +29,21 @@ $objTable = new tableBuilder();
 switch ($userLv) {
 	case "1":
 		$path="일반회원";
-		$objTable->setButton(array("선교사로","관리자로","정보변경","삭제"));
+		$objTable->setButton(array("선교사로","관리자로","정보변경","예약정보보기","삭제"));
 		break;
 	case "3":
 		$path="선교사";
-		$objTable->setButton(array("일반회원으로","정보변경","삭제"));
+		$objTable->setButton(array("일반회원으로","정보변경","예약정보보기","삭제"));
 		break;
 	case "7":
 		$path="선교관관리자";
-		$objTable->setButton(array("일반회원으로","정보변경","삭제"));
+		$objTable->setButton(array("일반회원으로","정보변경","예약정보보기","삭제"));
 		break;
 	default:
 		$path="전체리스트";
-		$objTable->setButton(array("정보변경","삭제"));
+		$objTable->setButton(array("정보변경","예약정보보기","삭제"));
 		break;
-} 
+}
 
 
 
@@ -149,28 +149,32 @@ function body() {
 			case 0: changeGrade(1, userid); break;
 			case 1: changeGrade(2, userid); break;
 			case 2: goShow(userid); break;
-			case 3: goDelete(userid); break;
+			case 3: goReservation(userid); break;
+			case 4: goDelete(userid); break;
 			default: break;
 <?		 break;
 	case "3":
 ?>
 			case 0: changeGrade(0, userid); break;
 			case 1: goShow(userid); break;
-			case 2: goDelete(userid); break;
+			case 2: goReservation(userid); break;
+			case 3: goDelete(userid); break;
 			default: break;
 <?		 break;
 	case "7":
 ?>
 			case 0: changeGrade(0, userid); break;
 			case 1: goShow(userid); break;
-			case 2: goDelete(userid); break;
+			case 2: goReservation(userid); break;
+			case 3: goDelete(userid); break;
 			default: break;
 <?		 break;
 	default:
 
 ?>
 			case 0: goShow(userid); break;
-			case 1: goDelete(userid); break;
+			case 1: goReservation(userid); break;
+			case 2: goDelete(userid); break;
 			default: break;
 <?		 break;
 } ?>
@@ -187,6 +191,10 @@ function body() {
 		}
 	}
 	
+	function goReservation(userid) {
+		location.href = "/manager/reservation/index.php?keyword=" + userid;
+	}
+
 	function changeGrade(lv, userid) {
 		switch (lv) {
 			case 0:
