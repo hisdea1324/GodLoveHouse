@@ -400,8 +400,10 @@ function body() {
 		print "checked";
 	} ?>> 비공개 -->
 
-				<td>선교사 증명
+				<dt>
+					선교사 증명
 				<dd>
+					<?=$mission->attachfilelink?><br>
 					<input type="button" name="fileUpload" id="fileUpload" value=" 파일 업로드 " onclick="uploadFile(event, 'missionFile', 'mission')" style="cursor:pointer" />
 					<input type="hidden" name="idmissionFile" id="idmissionFile" value="" />
 					<input type="text" name="txtmissionFile" id="txtmissionFile" value="<?=$mission->attachFileName?>" size="80" readonly /> <br />

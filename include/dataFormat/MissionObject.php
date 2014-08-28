@@ -30,6 +30,16 @@ class MissionObject {
 			case 'family':
 				return $this->family;
 
+			case "attachfilelink":
+				global $mysqli;
+				$query = "SELECT name FROM attachFile WHERE id = {$this->record['attachfile']}";
+				$result = $mysqli->query($query);
+				if ($result) {
+					$row = $result->fetch_assoc();
+					return "<a href=\"/upload/mission/{$row['name']}\" target=\"_blank\">{$row['name']}</a>";
+				} else {
+					return "";
+				}
 			case "attachfilename":
 				global $mysqli;
 				$query = "SELECT name FROM attachFile WHERE id = {$this->record['attachfile']}";

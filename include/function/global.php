@@ -261,6 +261,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	# 임시코드 : 나중에 수정합시다.
 	$linkUrl = str_replace("?&", "?", str_replace("?&", "?", $linkUrl));
 	$linkUrl = str_replace("&&", "&", str_replace("&&", "&", $linkUrl));
+	$linkUrl = str_replace("??", "?", str_replace("??", "?", $linkUrl));
 
 	$totalPage = round($total / $pageCount);
 	$prevPage = round($page / $pageUnit) * 10 + 1;

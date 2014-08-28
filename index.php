@@ -62,11 +62,12 @@ function body() {
 	}
 
 <? 
-if ($_SESSION["userLv"] >= 3) {
-	echo "clickTopNavi(13);";
-} else {
-	echo "centerWinOpen(600, 400, '/common/guide.php', 'guide');";
-}
+// if ($_SESSION["userLv"] >= 3) {
+// 	echo "clickTopNavi(13);";
+// } else {
+// 	echo "centerWinOpen(600, 400, '/common/guide.php', 'guide');";
+// }
+echo "centerWinOpen(850, 1000, '/common/thanksgiving.php', 'thanksgiving');";
 ?>
 
 //]]>
