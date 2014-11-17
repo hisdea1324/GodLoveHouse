@@ -197,6 +197,7 @@ function body() {
 				상태코드
 			<dd>
 				<select name="status" id="status">
+				<?=var_dump($hospitalObj)?>
 				<?php 
 	for ($i=0; $i<=count($codeStatus)-1; $i = $i+1) {
 		$status = $codeStatus[$i];

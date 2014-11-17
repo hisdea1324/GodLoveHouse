@@ -263,7 +263,7 @@ function makePaging($page, $pageCount, $pageUnit, $query) {
 	$linkUrl = str_replace("&&", "&", str_replace("&&", "&", $linkUrl));
 	$linkUrl = str_replace("??", "?", str_replace("??", "?", $linkUrl));
 
-	$totalPage = round($total / $pageCount);
+	$totalPage = ceil($total / $pageCount);
 	$prevPage = round($page / $pageUnit) * 10 + 1;
 	$nextPage = $prevPage + 10;
 	if ($nextPage > $totalPage) {

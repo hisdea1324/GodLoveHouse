@@ -45,7 +45,6 @@ function body() {
 		<li><img src="/images/manager/lm_bot.gif"></li>
 		</ul>
 	</div>
-	
 	<div class="rSec">
 		<dl>
 		<form name="dataForm" id="dataForm" method="post">
@@ -151,7 +150,7 @@ function body() {
 				<input name="buildType" id="buildType" type="radio" value="4" class="chk" <?php if ($houseObj->buildingType == 4) { print "checked"; } ?> />
 				<span class="r10">기타</span>
 			<dt>
-				지역코드
+				지역코드 
 			<dd>
 				<select name="region" id="region">
 					<option value=''>-- 지역선택 --</option>
@@ -219,7 +218,7 @@ function body() {
 				<select name="status" id="status">
 <?php 
 	foreach ($codeStatus as $status) {
-		if ($houseObj->status == $status->code) {
+		if ($houseObj->statuscode == $status->code) {
 			print "<option value='".$status->code."' selected>".$status->name."</option>";
 		} else {
 			print "<option value='".$status->code."'>".$status->name."</option>";
