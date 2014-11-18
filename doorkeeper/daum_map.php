@@ -8,20 +8,20 @@
 <body topmargin="0" leftmargin="0">
 	<div id="map" style="width:700px;height:400px;"></div>
 	<script type="text/javascript"> 
-		var map = new DMap("map", {point:new DLatLng(37.33979895934866, 127.10900120103005), level:1}); 
+		var map = new DMap("map", {point:new DLatLng(37.473744284749415, 127.04868615337242), level:1}); 
 		
 		//var icon = new DIcon("http://localimg.daum-img.net/localimages/07/2008/map/i_mks_b1.gif", new DSize(127, 33));
 		//icon.src = "http://www.servingod.org/yulynmoon/new/img/body/foot_logo.gif";
 		//map.addOverlay(new DMark(new DLatLng(37.51549895934866, 127.01395020103005), {mark:icon})); // mark Overlay
 		
 		var iw = new DInfoWindow("http://www.godlovehouse.net/include/html/daum_banner.html", {width:170, height:80});
-		var m = new DMark(new DLatLng(37.34047896714991, 127.10810154676437), {infowindow:iw, draggable:true});
+		var m = new DMark(new DLatLng(37.473744284749415, 127.04868615337242), {infowindow:iw, draggable:true});
 		map.addOverlay(m); // mark Overlay
 		map.addControl(new DIndexMapControl());
 		map.addControl(new DZoomControl());	
 		
 		// 맵이동 
-		window.setTimeout(function() {map.panTo(new DLatLng(37.34047896714991, 127.10810154676437));}, 1000);
+		window.setTimeout(function() {map.panTo(new DLatLng(37.47477454507724, 127.05196418727105));}, 1000);
 		
 		//신사 37.51629527200998, 127.01976791269156
 		//잠원 37.51276438751054, 127.01108601643457

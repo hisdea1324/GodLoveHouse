@@ -21,7 +21,7 @@
 		map.addControl(new DZoomControl());	
 		
 		// 맵이동
-		window.setTimeout(function() {map.panTo(new DLatLng(37.51549895934866, 127.01435020103005));}, 1000);
+		window.setTimeout(function() {map.panTo(new DLatLng(37.51559895934866, 127.01435020103005));}, 1000);
 		
 		//신사 37.51629527200998, 127.01976791269156
 		//잠원 37.51276438751054, 127.01108601643457
