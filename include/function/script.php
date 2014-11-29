@@ -119,7 +119,7 @@ function invalidAccess() {
 	$error_message[500];
 } 
 
-function sendSMSMessage($from_number, $to_number, $message) {
+function sendSMSMessage($from_number, $to_number, $message, $return_page="http://godlovehouse.net/living/smsResult.php", $confirm=false, $confirm_msg="문자 메세지를 보내시겠습니까") {
 ?>
 <html>
 <head>
@@ -128,6 +128,12 @@ function sendSMSMessage($from_number, $to_number, $message) {
 <script type="text/javascript">
 //<![CDATA[
 	function formSubmit() {
+		<? if ($confirm) { ?>
+			if (!confirm("<?=$confirm_msg?>")) {
+				location.href = "<?=$return_page?>";
+				return;
+			}
+		<? } ?>
 		document.charset='utf-8';
 		document.getElementById("smssend").submit();
 	}
@@ -136,7 +142,7 @@ function sendSMSMessage($from_number, $to_number, $message) {
 </head>
 <body onLoad="formSubmit()">
 	<form id="smssend" name="smssend" action="http://www.pongdang.net/client/sendsms.aspx" method="post">
-		<input type="hidden" name="returnURL" value="http://godlovehouse.net/living/smsResult.php" />	<!-- 결과회신페이지-->
+		<input type="hidden" name="returnURL" value="<?=$return_page?>" />	<!-- 결과회신페이지-->
 		<input type="hidden" name="FaildURL" value="http://godlovehouse.net/living/smsResult.php" />		<!-- 실패회신페이지-->
 		<input type="hidden" name="P_ID" value="npngjjh" />												<!-- 고객아이디--> 
 		<input type="hidden" name="P_CODE" value="dad504907bdf14747cb40bf2b8b81553" />					<!-- 퐁당넷제공고객코드-->

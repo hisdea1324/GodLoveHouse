@@ -232,9 +232,32 @@ function changeReservStatus() {
 	} 
 
 	$reserv->Update();
-	$reserv = null;
 
-	header("Location: reserve_2.php?year={$year}&month={$month}&houseId={$houseId}&roomId={$roomId}");
+	$url = "reserve_2.php?year={$year}&month={$month}&houseId={$houseId}&roomId={$roomId}";
+	if ($reserv->reservStatus == "S0002" || $reserv->reservStatus == "S0004") {
+		// 예약 승인
+		$m_helper = new MemberHelper();
+		$member = $m_helper->getMemberByuserid($reserv->userid);
+		if ($reserv->resv_phone != "") {
+			$to_number = $reserv->resv_phone;
+		} else {
+			$to_number = implode('',$member->mobile);
+		}
+
+		if ($reserv->reservStatus == "S0002") {
+			$msg = "[GodLovehouse] {$reserv->resv_name}님의 예약 요청이 승인 되었습니다.";
+			$confirm_msg = "{$reserv->resv_name}님($to_number)께 예약 승인 문자메세지를 발송합니다.";
+		} else {
+			$msg = "[GodLovehouse] {$reserv->resv_name}님의 예약 요청이 승인 되지 않았습니다.";
+			$confirm_msg = "{$reserv->resv_name}님($to_number)께 예약 거절 문자메세지를 발송합니다.";
+		}
+
+		sendSMSMessage("01085916394", $to_number, $msg, "http://godlovehouse.net/house_manager/$url", true, $confirm_msg);
+		return;
+	}
+
+	header("Location: $url");
+
 } 
 
 function editReservationDate() {
