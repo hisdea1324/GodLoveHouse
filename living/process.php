@@ -48,7 +48,7 @@ function registHouse() {
 	$house->Update();
 	$house = null;
 
-	$from_number = "01085916394";
+	$from_number = "07078076394";
 	$message = "선교관 등록 신청\r\n선교관: {$house->HouseName}\r\n{$house->Manager1}, {$house->Contact1}";
 
 #	sendSMSMessage($from_number, "01085916394;01087249504;", $message);
@@ -112,7 +112,7 @@ function reservation() {
 	$manager = new MemberObject($house->userid);
 
 	# 발신 전화번호 
-	$from_number = "01085916394";
+	$from_number = "07078076394";
 	$message = "선교관 예약 신청\r\n선교관: {$house->HouseName}\r\n날짜: {$_REQUEST["startDate"]} ~ {$_REQUEST["endDate"]}";
 
 #	sendSMSMessage($from_number, "01085916394;01087249504;", $message);

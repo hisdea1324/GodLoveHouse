@@ -77,7 +77,7 @@ function reservation() {
 	$manager = new MemberObject();
 	$hospital->Open($hospitalId);
 	$manager->Open($hospital->userid);
-	$from_number="01010041004";
+	$from_number="07078076394";
 	$message="병원 예약 신청이 들어왔습니다."." 병원 : ".$hospital->HospitalName." 예약날짜 : ".$_REQUEST["startDate"]." ~ ".$_REQUEST["endDate"];
 	sendSMSMessage($from_number,$Join[$manager->Mobile][""],$message);
 } 
