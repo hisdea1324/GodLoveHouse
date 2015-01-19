@@ -24,7 +24,19 @@ function body() {
 	$m_Helper = new MemberHelper();
 	$member = $m_Helper->getMemberByuserid($_SESSION["userid"]);
 	$mission = $m_Helper->getMissionInfoByuserid($_SESSION["userid"]);
-
+?>
+							<!-- rightSec -->
+							<div id="rightSec">
+								<div class="lnb">
+									<strong>Home</strong> <? 
+									echo "&gt; {$house->houseName} ";
+									if ($room->roomId != -1) {
+										echo "&gt; {$room->roomName} ";
+									}
+									echo "&gt; 예약 현황 보기";
+								?></div>
+								<div id="content">
+<?php
 	//******************************************************************
 	// 달력 세팅
 	$calendar['year'] = isset($_REQUEST["year"]) ? trim($_REQUEST["year"]) : date("Y");
@@ -53,17 +65,6 @@ function body() {
 
 	$available_date_list = 'a'.str_pad('', 31, '0');
 ?>
-							<!-- rightSec -->
-							<div id="rightSec">
-								<div class="lnb">
-									<strong>Home</strong> <? 
-									echo "&gt; {$house->houseName} ";
-									if ($room->roomId != -1) {
-										echo "&gt; {$room->roomName} ";
-									}
-									echo "&gt; 예약 현황 보기";
-								?></div>
-								<div id="content">
 									<div class="list_year"> <!-- list_year -->
 										<ul class="mr1">
 											<li><a href="reserve_2.php?<?="{$q[0]}&{$q[1]}&{$q[2]}&{$q[6]}"?>"><img src="images/btn_yprev.gif" alt="이전년도" /></a></li>

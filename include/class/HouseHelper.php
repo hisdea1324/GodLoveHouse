@@ -292,7 +292,7 @@ class HouseHelper {
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
-	function getReservationListWithPaging($curPage) {
+	function getReservationListWithPaging($curPage, $debug = false) {
 		global $mysqli;
 
 		$query = "SELECT C.reservationNo FROM house A, room B, reservation C ";
@@ -304,6 +304,10 @@ class HouseHelper {
 
 		$start = $this->m_pageCount * ($curPage - 1);
 		$query = $query." ORDER BY C.reservationNo DESC LIMIT $start, {$this->m_pageCount}";
+
+		if ($debug) {
+			echo $query;
+		}
 
 		$reserveInfo = array();
 		if ($result = $mysqli->query($query)) {
