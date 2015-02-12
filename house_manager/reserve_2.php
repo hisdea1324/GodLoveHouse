@@ -300,6 +300,7 @@ function body() {
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate<?=$aResv->BookNo?>')"> ~
 							<input type="text" size="12" name="endDate<?=$aResv->BookNo?>" id="endDate<?=$aResv->BookNo?>" class="input" value="<?=date("Y-m-d", $aResv->EndDate)?>" readonly onclick="calendar('endDate<?=$aResv->BookNo?>')">
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate<?=$aResv->BookNo?>')">
+							<span class="btn1g" style="padding: 1px 10px; margin-top: 0; font-size: 9px; height: 13px;"><a href="javascript:void(0)" onclick="edit_date(<?=$aResv->BookNo?>)">날짜 변경</a></span>
 							</form>
 							<? } else { ?>
 							<?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?> <br />
@@ -310,11 +311,11 @@ function body() {
 						<td><?
 							// echo "<span class=\"btn\">{$aResv->Status}</span>";
 							if ($aResv->Status == "신규예약") {
-							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"edit_date({$aResv->BookNo})\">날짜 변경</a></span>\r\n";
+								echo "<span style=\"border:1px solid #3b4047; padding:2px 10px 2px 10px; border-radius:1px; font-size:10px; font-weight:bold; text-align:center; background:#ffeeee; color:#550000;\">{$aResv->Status}</span><br>";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"allow({$aResv->BookNo})\">승인</a></span>\r\n";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">거절</a></span>\r\n";
 							} else if ($aResv->Status == "승인") {
-							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"edit_date({$aResv->BookNo})\">날짜 변경</a></span>\r\n";
+								echo "<span style=\"border:1px solid #3b4047; padding:2px 10px 2px 10px; border-radius:1px; font-size:10px; font-weight:bold; text-align:center; background:#eeffee; color:#005500;\">{$aResv->Status}</span><br>";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"complete({$aResv->BookNo})\">완료</a></span>\r\n";
 							 	echo "<span class=\"btn1g\"><a href=\"javascript:void(0)\" onclick=\"deny({$aResv->BookNo})\">거절</a></span>\r\n";
 							} else {

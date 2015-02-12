@@ -252,12 +252,11 @@ function changeReservStatus() {
 			$confirm_msg = "{$reserv->resv_name}님($to_number)께 예약 거절 문자메세지를 발송합니다.";
 		}
 
-		sendSMSMessage("07078076394", $to_number, $msg, "http://godlovehouse.net/house_manager/$url", true, $confirm_msg);
+		sendSMSMessage("07078076394", $to_number, $msg, "{$_SERVER['HTTP_REFERER']}", true, $confirm_msg);
 		return;
 	}
 
-	header("Location: $url");
-
+	header("Location: {$_SERVER['HTTP_REFERER']}");
 } 
 
 function editReservationDate() {
@@ -273,7 +272,8 @@ function editReservationDate() {
 	$book->EndDate = $end;
 	$book->Update();
 
-	header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
+	header("Location: {$_SERVER['HTTP_REFERER']}");
+	// header("Location: reserve_2.php?houseId=".$houseId."&roomId=".$book->RoomId);
 }
 
 function reservation() {
