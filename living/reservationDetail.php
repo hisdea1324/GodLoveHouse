@@ -476,6 +476,7 @@ function body() {
 		document.getElementById("reservationCal").innerHTML = addHtml;
 	}
 	
+	var submited = false;
 	function reserveSubmit() {
 <? 
 if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
@@ -521,6 +522,10 @@ if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
 			document.getElementById("managerContact2").select();
 			return;
 		}
+
+		// 이중 클릭 방지
+		if (submited) return;
+		submited = true;
 		
 		var endDate = document.getElementById("endDate").value;
 		var startDate = document.getElementById("startDate").value;
