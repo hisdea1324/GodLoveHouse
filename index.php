@@ -27,7 +27,7 @@ function body() {
 		<ul class="link">
 			<li class="bot"><a href="/doorkeeper/map.php"><img src="/images/main/link_04.gif" border="0"></a></li>
 		<li><a href="/community/board.php?groupId=impression"><img src="/images/main/link_05.gif" border="0"></a></li>
-		<li><img src="/images/main/img_bank.gif"></li>
+		<li><a href="http://go.MissionFund.org/infraglh"><img src="/images/main/img_bank.gif"></a></li>
 		</ul>
 	</div>
 <?php }	?>
@@ -67,7 +67,7 @@ function body() {
 // } else {
 // 	echo "centerWinOpen(600, 400, '/common/guide.php', 'guide');";
 // }
-echo "centerWinOpen(850, 1000, '/common/thanksgiving.php', 'thanksgiving');";
+// echo "centerWinOpen(850, 1000, '/common/thanksgiving.php', 'thanksgiving');";
 ?>
 
 //]]>
