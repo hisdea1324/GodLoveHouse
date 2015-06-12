@@ -8,7 +8,7 @@ $user_list = array();
 
 if (($mode == "search") && (strlen($checkuserid) > 1)) {
 	global $mysqli;
-	$query = "SELECT * FROM users WHERE userid like '%".$mysqli->real_escape_string($checkuserid)."%'";
+	$query = "SELECT * FROM users WHERE userid like '".$mysqli->real_escape_string($checkuserid)."'";
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_assoc()) {
 			array_push($user_list, $row);

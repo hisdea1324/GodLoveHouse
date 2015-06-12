@@ -420,7 +420,7 @@ function body() {
 				</tr>
 		<tr>
 					<td colspan="2">
-						<img src="../images/board/btn_reserve.gif" border="0" align="right" align="absmiddle" class="m5" onclick="reserveSubmit()">
+						<img id="btn_reserv" src="../images/board/btn_reserve.gif" border="0" align="right" align="absmiddle" class="m5" onclick="reserveSubmit()">
 					</td>
 				</tr>
 <? 
@@ -522,6 +522,8 @@ if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
 			document.getElementById("managerContact2").select();
 			return;
 		}
+
+		document.getElementById("btn_reserv").style.display = "none";
 
 		// 이중 클릭 방지
 		if (submited) return;

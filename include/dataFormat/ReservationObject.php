@@ -161,6 +161,18 @@ class ReservationObject {
 		global $mysqli;
 
 		if ($this->reservationNo == -1) {
+			$query = "SELECT * from reservation";
+			$query = $query." WHERE userid = '".$mysqli->real_escape_string($this->userid)."'";
+			$query = $query." AND startDate = '".$mysqli->real_escape_string($this->startDate))."'";
+			$query = $query." AND endDate = '".$mysqli->real_escape_string($this->endDate)."'";
+			if ($result = $mysqli->query($query)) {
+			    if ($result->num_rows > 0) {
+			    	// 데이터 중복 방지
+			    	$result->close();
+			    	return false;
+			    }
+			}
+
 			$temp = "'".$mysqli->real_escape_string($this->userid)."'";
 			$temp = $temp.", ".$mysqli->real_escape_string($this->roomId);
 			$temp = $temp.", ".$mysqli->real_escape_string($this->hospitalId);
