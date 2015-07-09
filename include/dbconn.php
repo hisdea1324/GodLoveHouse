@@ -1,6 +1,6 @@
 <?php
 global $mysqli, $Application;
-$mysqli = new mysqli($Application["server"], $Application["user"], $Application["pass"], $Application["db"]);
+$mysqli = new mysqli($Application["ex_server"], $Application["ex_user"], $Application["ex_pass"], $Application["ex_db"]);
 
 /* check connection */
 if ($mysqli->connect_errno) {

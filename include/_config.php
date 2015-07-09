@@ -17,6 +17,11 @@
 	$Application["db"]="mysql";
 	$Application["server"]="localhost";
 
+	$Application["ex_pass"]="root";
+	$Application["ex_user"]="root";
+	$Application["ex_db"]="mysql";
+	$Application["ex_server"]="localhost";
+
 	$Application["QueryDebug"]=true;
 	
 	$_SERVER["TEST_IP"] = "59.13.120.79";

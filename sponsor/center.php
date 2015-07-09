@@ -1,4 +1,6 @@
 <?php
+header('Location: http://go.MissionFund.org/infraglh');
+
 require_once($_SERVER['DOCUMENT_ROOT']."/include/include.php");
 $s_Helper = new SupportHelper();
 
