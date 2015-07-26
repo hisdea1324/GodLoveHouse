@@ -170,12 +170,22 @@ class HouseHelper {
 
 	function getHouseListByuserid($userid, $houseType) {
 		if ($userid == "lovehouse") {
-			$query = "SELECT houseId FROM house WHERE status IN ('S2002','S2004')";
-		} elseif ($houseType == 1) {
-			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2002'";
+			if ($houseType == 1) {
+				$query = "SELECT houseId FROM house WHERE status = 'S2002'";
+			} else if ($houseType == 2) {
+				$query = "SELECT houseId FROM house WHERE status = 'S2004'";
+			} else {
+				$query = "SELECT houseId FROM house WHERE status = 'S2001'";
+			} 
 		} else {
-			$query = "SELECT houseId FROM house WHERE userid = '$userid' AND (status IN ('S2004')";
-		} 
+			if ($houseType == 1) {
+				$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2002'";
+			} else if ($houseType == 2) {
+				$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2004'";
+			} else {
+				$query = "SELECT houseId FROM house WHERE userid = '$userid' AND status = 'S2001'";
+			}
+		}
 
 		return $this->getHouseList($query);
 	} 

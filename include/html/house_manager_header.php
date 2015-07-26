@@ -4,9 +4,17 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title> God Lovehouse 관리자화면 </title>
 		<link type="text/css" rel="stylesheet" href="css/design.css" media="all" />
-		<script language='javascript' src='[WEBROOT]include/js/prototype.js'></script>
 		<script language='javascript' src='[WEBROOT]include/js/calendar.js'></script>
 		<script language='javascript' src='[WEBROOT]include/js/interface.js'></script>
+
+	    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+		<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	</head>
 	<body class="bgSub">
 		<div id="wrapper">

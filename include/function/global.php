@@ -28,14 +28,44 @@ function showHouseManagerLeft() {
 	$codes = $c_Helper->getNationCodeList();
 
 	$h_Helper = new HouseHelper();
-	$houseList1 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
-	$houseList2 = $h_Helper->getHouseListByuserid($_SESSION["userid"], 2);
+	$houseList_open = $h_Helper->getHouseListByuserid($_SESSION["userid"], 1);
+	$houseList_hidden = $h_Helper->getHouseListByuserid($_SESSION["userid"], 2);
+	$houseList_waiting = $h_Helper->getHouseListByuserid($_SESSION["userid"], 3);
 
 	$roomId = isset($_REQUEST['roomId']) ? $_REQUEST['roomId'] : "";
-	
-	echo "<!-- leftSec -->";
-	echo "<div id=\"leftSec\">";
-	foreach ($houseList1 as $house) {
+	echo <<<EOD
+<!-- leftSec -->
+<div id="leftSec">
+<div align='center'>
+<div class="btn-group btn-group-xs" data-toggle="buttons">
+<label class="btn btn-primary active" id="option_open"><input type="radio" name="options" id="option1" autocomplete="off" checked> 승인</label>
+<label class="btn btn-primary" id="option_hidden"><input type="radio" name="options" id="option2" autocomplete="off"> 숨김</label>
+<!--label class="btn btn-primary" id="option_waiting"><input type="radio" name="options" id="option3" autocomplete="off"> 대기중</label-->
+</div></div>
+<script type="text/javascript">
+//<![CDATA[
+    $(function() {
+		$('#option_open').on('click', function () {
+			$('#o_list').show();
+			$('#h_list').hide();
+			$('#w_list').hide();
+		});
+		$('#option_hidden').click(function () {
+			$('#o_list').hide();
+			$('#h_list').show();
+			$('#w_list').hide();
+		});
+		$('#option_waiting').click(function () {
+			$('#o_list').hide();
+			$('#h_list').hide();
+			$('#w_list').show();
+		});
+	});
+//]]>
+</script>
+EOD;
+	echo "<div id=\"o_list\">";
+	foreach ($houseList_open as $house) {
 		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
 		echo "	<ul>";
 		foreach ($house->RoomList as $room) {
@@ -50,6 +80,42 @@ function showHouseManagerLeft() {
 		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
 		echo "	</ul>";
 	}
+	echo "</div>";
+	echo "<div id=\"h_list\" style='display:none'>";
+	foreach ($houseList_hidden as $house) {
+		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
+		echo "	<ul>";
+		foreach ($house->RoomList as $room) {
+			//selected
+			$color_id = $room->RoomID % 10 + 1;
+			if ($room->roomId == $roomId) {
+				echo "		<li class=\"on\"><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
+			} else {
+				echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
+			}
+		}
+		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
+		echo "	</ul>";
+	}
+	echo "</div>";
+	echo "<div id=\"w_list\" style='display:none'>";
+	foreach ($houseList_waiting as $house) {
+		echo "	<h2><a href=\"reserve_2.php?houseId=".$house->houseId."\">".$house->HouseName."</a> <a href=\"mission_write2.php?houseId=".$house->houseId."\">+</a> </h2>";
+		echo "	<ul>";
+		foreach ($house->RoomList as $room) {
+			//selected
+			$color_id = $room->RoomID % 10 + 1;
+			if ($room->roomId == $roomId) {
+				echo "		<li class=\"on\"><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
+			} else {
+				echo "		<li><a href=\"reserve_2.php?houseId=".$house->houseId."&roomId=".$room->roomId."\">".$room->RoomName."<div class=\"sColor c{$color_id}\"></div></a></li>";
+			}
+		}
+		//echo "		<li class=\"c_g\"><a href=\"mission_write2.php?houseId=".$house->houseId."\">방추가 +</a></li>";
+		echo "	</ul>";
+	}
+	echo "</div>";
+
 	echo "	<h2 class=\"c_g\"><a href=\"mission_write.php\">선교관 추가 +</a></h2>";
 	echo "</div>";
 	echo "<!-- // leftSec -->";

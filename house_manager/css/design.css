@@ -159,16 +159,16 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 
 .cal_month {width:100%; position:relative;}
 .cal_month table {width:100%; border-left:1px solid #e4e0dd;}
-.cal_month table thead th {height:40px; color:#fff; font-size:14px; background:#959aa2; font-weight:bold; font-family:'Tahoma';}
+.cal_month table thead th {height:40px; color:#fff; font-size:14px; background:#959aa2; font-weight:bold; font-family:'Tahoma'; text-align: center;}
 .cal_month table tbody td {border-bottom:1px solid #e4e0dd; height:130px; border-right:1px solid #e4e0dd;}
 .cal_month table tbody td .cal_day {width:100%; position:relative;}
-.cal_month table tbody td .cal_day p {padding:10px 0 0 13px; font-family:'Tahoma'; font-weight:bold; font-size:13px;}
+.cal_month table tbody td .cal_day p {padding:10px 0 0 13px; font-family:'Tahoma'; font-weight:bold; font-size:13px; text-align:center;}
 .cal_month table tbody td .cal_day p.red {color:#c50000;}
 .cal_month table tbody td .cal_day p.red a {color:#c50000;}
 .cal_month table tbody td .cal_day p.blue {color:#015bd6;}
 .cal_month table tbody td .cal_day p.blue a {color:#015bd6;}
 .cal_month table tbody td .cal_day ul {width:100%; margin-top:4px;}
-.cal_month table tbody td .cal_day ul li {margin-top:4px;margin-bottom:5px; list-style:none; padding:4px; height:15px; text-align:center;}
+.cal_month table tbody td .cal_day ul li {margin-top:4px;margin-bottom:5px; list-style:none; padding:4px; height:30px; text-align:center;}
 .cal_month table tbody td .cal_day ul li:after {content:""; display:block; clear:both;}
 .cal_month table tbody td .cal_day ul li span {display:block; float:left; line-height:15px; padding:1px 0 0 0;}
 .cal_month table tbody td .cal_day .view{position:absolute; background:#3b4047; z-index:1; width:300px; padding:10px 20px 10px 20px; color:#fff}
@@ -180,7 +180,7 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 
 .cal_month2 {width:100%; position:relative;}
 .cal_month2 table {width:100%; border-left:1px solid #e4e0dd;}
-.cal_month2 table thead th {height:30px; color:#fff; font-size:12px; background:#959aa2; font-weight:bold; font-family:'Tahoma'; border-right:solid 1px #aaa}
+.cal_month2 table thead th {height:30px; color:#fff; font-size:12px; background:#959aa2; font-weight:bold; font-family:'Tahoma'; border-right:solid 1px #aaa; text-align:center;}
 .cal_month2 table tbody th{border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd; padding:10px}
 .cal_month2 table tbody td {border-bottom:1px solid #e4e0dd; border-right:1px solid #e4e0dd;}
 .cal_month2 .check{float:left; height:20px; text-align:center; line-height:20px; z-index:1}
@@ -214,7 +214,7 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 
 .list{width:100%; position:relative}
 .list table {width:100%; border-top:3px #3b4047 solid; }
-.list table thead th {font-size:14px; font-weight:bold; padding:10px 0 10px 0; border-bottom:1px #3b4047 solid;}
+.list table thead th {font-size:14px; font-weight:bold; padding:10px 0 10px 0; border-bottom:1px #3b4047 solid; text-align: center;}
 .list table thead th:after {content:""; display:block; clear:both; height:0; visibility:hidden;}
 .list table tbody td {font-size:12px; border-bottom:1px #cecece solid; empty-cells:show; padding:7px 15px; text-align:center; line-height:18px; position:relative}
 .list table tbody td.tdLeft {text-align:left;}

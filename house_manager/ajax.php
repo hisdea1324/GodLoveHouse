@@ -106,49 +106,41 @@ function getUserProfile2() {
 	$member = $m_helper->getMemberByuserid($resv->userid);
 	$mission = $m_helper->getMissionInfoByuserid($resv->userid);
 	$history = $member->getReservHistory();
-	
-	print "<div class=\"tit\">";
-	print "신청자 정보 <a href=\"javascript:unshowProfile('{$_REQUEST["element"]}', '{$_REQUEST["reservationNo"]}')\" style='color:white; text-decoration:underline;'>[닫기]</a>";
-	print "<a href=\"print.php?userid={$member->userid}&reservationNo={$reservationNo}\" target=\"_print\" style='color:white; text-decoration:underline;'>[프린트하기]</a>";
-	//print "	<span class=\"btn1w\" style=\"position:absolute; right:0px; top:-3px\"><a href=\"#\">상세보기</a></span>";
-	print "</div>";
-	print "<ul>";
-	print "<li><p>회원아이디</p> ".$member->userid."</li>";
-	print "<li><p>회원이름(별명)</p> ".$member->Name."(".$member->Nick.")</li>";
-	print "<li><p>회원연락처</p> ".implode('-',$member->phone)."</li>";
-	print "<li><p>회원휴대폰</p> ".implode('-',$member->mobile)."</li>";
-	print "<li><p>회원-Email</p> ".implode('@',$member->email)."</li>";
+
+	print "<table class=\"table table-striped\">";
+	print "<tr><th>회원아이디</th><td>".$member->userid."</td></tr>";
+	print "<tr><th>회원이름(별명)</th><td>".$member->Name."(".$member->Nick.")</td></tr>";
+	print "<tr><th>회원연락처</th><td>".implode('-',$member->phone)."</td></tr>";
+	print "<tr><th>회원-Email</th><td>".implode('@',$member->email)."</td></tr>";
 	if ($member->Name != $resv->resv_name) {
-		print "<li><p>예약자성명</p> ".(($resv->resv_name) ? $resv->resv_name : "-")."</li>";
+		print "<tr><th>예약자성명</th><td>".(($resv->resv_name) ? $resv->resv_name : "-")."</td></tr>";
 	}
 	if (implode('-',$member->mobile) != $resv->resv_phone) {
-		print "<li><p>국내연락처</p> ".(($mission->managercontact) ? $mission->managercontact : "-")."</li>";
+		print "<tr><th>국내연락처</th><td>".(($mission->managercontact) ? $mission->managercontact : "-")."</td></tr>";
 	}
-	print "<li><p>인원수</p> ".(($resv->people_number) ? $resv->people_number : "-")."</li>";
-	print "<li><p>희망입주시간</p> ".(($resv->arrival_time) ? $resv->arrival_time : "-")."</li>";
-	print "<li><p>방문목적</p> ".(($resv->purpose) ? $resv->purpose : "-")."</li>";
-	print "<li><p>지역</p> ".(($mission->Nation) ? $mission->Nation : "-")."</li>";
+	print "<tr><th>인원수</th><td>".(($resv->people_number) ? $resv->people_number : "-")."</td></tr>";
+	print "<tr><th>희망입주시간</th><td>".(($resv->arrival_time) ? $resv->arrival_time : "-")."</td></tr>";
+	print "<tr><th>방문목적</th><td>".(($resv->purpose) ? $resv->purpose : "-")."</td></tr>";
+	print "<tr><th>지역</th><td>".(($mission->Nation) ? $mission->Nation : "-")."</td></tr>";
 	if ($mission->Church) {
-		print "<li><p>파송기관</p> {$mission->Church} ({$mission->ChurchContact})</li>";
+		print "<tr><th>파송기관</th><td>{$mission->Church} ({$mission->ChurchContact})</td></tr>";
 	} else {
-		print "<li><p>파송기관</p> - </li>";
+		print "<tr><th>파송기관</th><td> - </td></tr>";
 	}
-	print "<li><p>파송년도</p> ".(($mission->SentYear) ? $mission->SentYear : "-")." 년</li>";
-	print "<li><p>출생년도</p> ".(($mission->BirthYear) ? $mission->BirthYear : "-")." 년</li>";
-	print "<li><p>선교사 증명</p> ".(($mission->attachFileName) ? "<a href='/upload/mission/{$mission->attachFileName}' target='_blank' style='color:white; text-decoration:underline;'>{$mission->attachFileName}</a>" : "-")."</li>";
-	print "<li>".(($resv->memo) ? "<table style='border: 1px solid white;'><tr><th>memo</th></tr><tr><td style='text-align:left; width:100px;'>".str_replace("\r\n", "<br>", $resv->memo)."</td></tr></table>" : "-")."</li>";
-	print "</ul><br>";
-	print "<div class=\"tit\">";
-	print "신청자 예약 이력";
-	print "</div>";
-	print "<ul>";
+	print "<tr><th>파송년도</th><td>".(($mission->SentYear) ? $mission->SentYear : "-")."</td></tr>";
+	print "<tr><th>출생년도</th><td>".(($mission->BirthYear) ? $mission->BirthYear : "-")."</td></tr>";
+	print "<tr><th>선교사 증명</th><td>".(($mission->attachFileName) ? "<a href='/upload/mission/{$mission->attachFileName}' target='_blank' style='color:white; text-decoration:underline;'>{$mission->attachFileName}</a>" : "-")."</td></tr>";
+	print "<tr><th>메모</th><td>".(($resv->memo) ? "".str_replace("\r\n", "<br>", $resv->memo) : "-")."</td></tr>";
+	print "<tr><th>신청자 예약 이력</th>";
+	print "<td><ul class=\"list-group\">";
 	foreach ($history as $row) {
 		$status = "신규예약";
 		$status = ($row['reservStatus'] == "S0002") ? "승인" : $status;
 		$status = ($row['reservStatus'] == "S0003") ? "완료" : $status;
 		$status = ($row['reservStatus'] == "S0004") ? "거절" : $status;
-		print "<li><p>{$status}</p> {$row['cnt']} 회</li>";
+		print "<li class=\"list-group-item\"><strong>{$status}</strong> {$row['cnt']} 회</li>";
 	}
-	print "</ul>";
+	print "</ul></td></tr>";
+	print "</table>";
 }
 ?>

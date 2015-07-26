@@ -77,13 +77,14 @@ function body() {
 					<tr>
 						<td><?=$aResv->BookNo?></td>
 						<td>
-							<label id="_pf2_<?=$aResv->BookNo?>" onclick="showProfile('pf2_', '<?=$aResv->BookNo?>')" style="cursor:prointer"><? 
+							<label id="_pf2_<?=$aResv->BookNo?>"><? 
 							if ($aResv->resv_name) { 
 								echo $aResv->resv_name; 
 							} else { 
 								echo $member->Nick;
 							} 
 							?></label>
+							<button type="button" class="btn btn-success btn-xs" data-bookno="<?=$aResv->BookNo?>" data-userid="<?=$aResv->userid?>" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 							<div class="view" id="pf2_<?=$aResv->BookNo?>" style="position:absolute;visibility:hidden; top:38px;" ></div>
 						</td>
 						<td><?=$aResv->HouseName?> / <?=$aResv->RoomName?></td>
@@ -96,7 +97,7 @@ function body() {
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('startDate<?=$aResv->BookNo?>')"> ~
 							<input type="text" size="12" name="endDate<?=$aResv->BookNo?>" id="endDate<?=$aResv->BookNo?>" class="input" value="<?=date("Y-m-d", $aResv->EndDate)?>" readonly onclick="calendar('endDate<?=$aResv->BookNo?>')">
 							<img src="../images/board/icon_calendar.gif" border="0" class="m2" align="absmiddle" onclick="calendar('endDate<?=$aResv->BookNo?>')">
-							<span class="btn1g" style="padding: 1px 10px; margin-top: 0; font-size: 9px; height: 13px;"><a href="javascript:void(0)" onclick="edit_date(<?=$aResv->BookNo?>)">날짜 변경</a></span>
+							<span class="btn1g" style="padding: 1px 10px; margin-top: 0; font-size: 9px; height: 20px;"><a href="javascript:void(0)" onclick="edit_date(<?=$aResv->BookNo?>)">날짜 변경</a></span>
 							</form>
 							<? } else { ?>
 							<?=date("Y.m.d", $aResv->StartDate)?> ~ <?=date("Y.m.d", $aResv->EndDate)?> <br />
@@ -130,6 +131,25 @@ function body() {
 <!-- // rightSec -->
 <!-- // rightSec -->
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">신청자 정보</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+	    <button type="button" id="btn-print" class="btn btn-primary" target="_print">프린트하기</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 //<![CDATA[
 	calendar_init();
@@ -158,39 +178,23 @@ function body() {
 		location.href = 'reserve_all.php?search=' + value;
 	}
 
-	var element_name;
-	function showProfile(element, num) {
-		if (element_name != element + num && document.getElementById(element_name)) {
-			document.getElementById(element_name).style.visibility = "hidden";
-		}
-		element_name = element + num;
-		var _oProfile = document.getElementById("_" + element_name);
-		var oProfile = document.getElementById(element_name);
-		//var oId = document.getElementById('profileId' + num);
-		if (oProfile.style.visibility == "hidden") {
-			var url = 'ajax.php?element=' + element + '&mode=getUserProfile&reservationNo='+num;
+	$(function () {
+		$('#myModal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget) // Button that triggered the modal
+		  var modal = $(this)
 
-			var myAjax = new Ajax.Request(url, {method: 'post', parameters: '', onComplete: resultProfile});
-			oProfile.style.left = _oProfile.offsetLeft + (_oProfile.offsetWidth / 2) - (oProfile.offsetWidth / 2) + "px";
-			if (element == "pf1_") {
-				oProfile.style.top = _oProfile.parentNode.offsetTop + _oProfile.parentNode.offsetHeight + "px";
-			} else {
-				oProfile.style.top = _oProfile.offsetTop + _oProfile.offsetHeight + 5 + "px";
-			}
-			oProfile.style.visibility = "visible";
-		}
-	}
-	
-	function resultProfile(reqResult) {
-		var addHtml = reqResult.responseText;
-		var oProfile = document.getElementById(element_name);
-		oProfile.innerHTML = addHtml;
-	}
-	
-	function unshowProfile(element, num) {
-		oProfile = document.getElementById(element + num);
-		oProfile.style.visibility = "hidden";
-	}
+		  modal.find('#btn-print').attr('data-userid', button.data('userid'))
+		  modal.find('#btn-print').attr('data-bookno', button.data('bookno'))
+  		  var url = 'ajax.php?mode=getUserProfile&reservationNo=' + button.data('bookno');
+		  $.get(url, function(data, status) {
+			modal.find('.modal-body').html(data)
+		  });
+		})
+
+		$('#btn-print').click(function () {
+			location.href='print.php?userid=' + $(this).attr('data-userid') + '&reservationNo=' + $(this).attr('data-bookno');
+		})
+	});
 //]]>
 </script>
 <?php } ?>
