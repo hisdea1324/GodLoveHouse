@@ -73,7 +73,7 @@ textarea {color:#787878; background:#ffffff; font-size:12px; border:1px solid #d
 #wrapper #container .outer .inner .conSec #leftSec h2 {padding:0 0 5px 15px; font-size:14px; font-weight:bold; margin:15px 0 10px 0; color:#3b4047}
 #wrapper #container .outer .inner .conSec #leftSec ul {background:#ddd; padding:10px 0 10px 0px; list-style:none;}
 #wrapper #container .outer .inner .conSec #leftSec ul li {left:20px; padding:3px 0 3px 35px; line-height:25px; font-size:14px; font-weight:bold; position:relative}
-#wrapper #container .outer .inner .conSec #leftSec ul li a {color:#666;}
+#wrapper #container .outer .inner .conSec #leftSec ul li a {color:#666; display:block; height:17px;}
 #wrapper #container .outer .inner .conSec #leftSec ul li a:hover {text-decoration:underline; font-weight:bold;}
 #wrapper #container .outer .inner .conSec #leftSec ul .on {padding:3px 0 3px 35px; width:155px; line-height:25px; font-size:14px; font-weight:bold; position:relative; background:#3b4047; color:#fff}
 #wrapper #container .outer .inner .conSec #leftSec ul .on a {font-weight:bold; color:#fff}
