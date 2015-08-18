@@ -20,6 +20,9 @@ switch ($mode) {
 	case "getUserProfile":
 		getUserProfile2();
 		break;
+	case "updateMemo":
+		updateMemo();
+		break;
 } 
 
 function confirmuserid() {
@@ -77,6 +80,19 @@ function confirmPassword() {
 	} 
 } 
 
+function updateMemo() {
+	$reservationNo = isset($_REQUEST["reservationNo"]) ? $_REQUEST["reservationNo"] : "";
+	$resv = new ReservationObject($reservationNo);
+	if (isset($_POST["memo"])) {
+		$resv->memo = $_POST['memo'];
+		$resv->Update();
+		print "메모가 저장되었습니다.";
+	} else {
+		print "죄송합니다. 잠시 후에 다시 시도해 주세요.";
+	}
+
+}
+
 function getUserProfile() {
 	$m_helper = new MemberHelper();
 	$member = $m_helper->getMemberByuserid($trim[$_REQUEST["userid"]]);
@@ -130,7 +146,7 @@ function getUserProfile2() {
 	print "<tr><th>파송년도</th><td>".(($mission->SentYear) ? $mission->SentYear : "-")."</td></tr>";
 	print "<tr><th>출생년도</th><td>".(($mission->BirthYear) ? $mission->BirthYear : "-")."</td></tr>";
 	print "<tr><th>선교사 증명</th><td>".(($mission->attachFileName) ? "<a href='/upload/mission/{$mission->attachFileName}' target='_blank' style='color:white; text-decoration:underline;'>{$mission->attachFileName}</a>" : "-")."</td></tr>";
-	print "<tr><th>메모</th><td>".(($resv->memo) ? "".str_replace("\r\n", "<br>", $resv->memo) : "-")."</td></tr>";
+	print "<tr><th>메모</th><td><textarea id='update-memo' class='form-control' rows='7' style='resize:none;'>{$resv->memo}</textarea></td></tr>";
 	print "<tr><th>신청자 예약 이력</th>";
 	print "<td><ul class=\"list-group\">";
 	foreach ($history as $row) {

@@ -180,13 +180,13 @@ function body() {
 			$prev_margin = 0;
 			while ($row = $result->fetch_assoc()) {
 				setTestValue($row);
-				if (date('m', $row["startDate"]) == $calendar['month']) {
+				if (date('m', $row["startDate"]) == $calendar['month'] && date('Y', $row["startDate"]) == $calendar['year']) {
 					$start = date('d', $row["startDate"]);
 				} else {
 					$start = 1;
 				}
 
-				if (date('m', $row["endDate"]) == $calendar['month']) {
+				if (date('m', $row["endDate"]) == $calendar['month'] && date('Y', $row["endDate"]) == $calendar['year']) {
 					$end = date('d', $row["endDate"]);
 				} else {
 					$end = date('d', $toDate - 86400);
@@ -469,6 +469,7 @@ function body() {
       </div>
       <div class="modal-footer">
 	    <button type="button" id="btn-print" class="btn btn-primary" target="_print">프린트하기</button>
+	    <button type="button" id="btn-memo" class="btn btn-success" target="_print">메모 저장</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -550,6 +551,7 @@ function body() {
 
 		  modal.find('#btn-print').attr('data-userid', button.data('userid'))
 		  modal.find('#btn-print').attr('data-bookno', button.data('bookno'))
+		  modal.find('#btn-memo').attr('data-bookno', button.data('bookno'))
   		  var url = 'ajax.php?mode=getUserProfile&reservationNo=' + button.data('bookno');
 		  $.get(url, function(data, status) {
 			modal.find('.modal-body').html(data)
@@ -558,6 +560,14 @@ function body() {
 
 		$('#btn-print').click(function () {
 			location.href='print.php?userid=' + $(this).attr('data-userid') + '&reservationNo=' + $(this).attr('data-bookno');
+		})
+
+		$('#btn-memo').click(function() {
+			var bookno = $(this).attr('data-bookno');
+			$.post( "ajax.php?mode=updateMemo&reservationNo=" + bookno, { memo: $('#update-memo').val() })
+			  .done(function( data ) {
+			    alert( data );
+			  });
 		})
 	});
 //]]>
