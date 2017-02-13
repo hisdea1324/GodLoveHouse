@@ -124,12 +124,12 @@ class HouseHelper {
 		return makePagingN($curPage, $this->m_pageCount, $this->m_pageUnit, $total);
 	} 
 
-	function getRoomListWithPaging($curPage) {
+	function getRoomListWithPaging($curPage, $sort="A.roomId") {
 		global $mysqli;
 		$rooms = array();
 		
 		$topNum = $this->m_pageCount * ($curPage - 1);
-		$query = "SELECT A.roomId, B.houseId FROM room A, house B {$this->m_StrConditionQuery} ORDER BY A.roomId ASC LIMIT {$topNum}, {$this->m_pageCount}";
+		$query = "SELECT A.roomId, B.houseId FROM room A, house B {$this->m_StrConditionQuery} ORDER BY {$sort} ASC LIMIT {$topNum}, {$this->m_pageCount}";
 
 		if ($result = $mysqli->query($query)) {
 			while ($row = $result->fetch_array()) {

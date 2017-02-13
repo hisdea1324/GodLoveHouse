@@ -15,7 +15,7 @@ $h_Helper->setCondition($houseId, $regionCode, $fromDate, $toDate); # 조건문 
 $strPage = $h_Helper->makePagingHTML($page);
 $codes = $c_Helper->getLocalCodeList();
 $houses = $h_Helper->getHouseListByRegion($regionCode);
-$rooms = $h_Helper->getRoomListWithPaging($page);
+$rooms = $h_Helper->getRoomListWithPaging($page, "B.Address1");
 
 showHeader("HOME > 선교관 > 선교관 예약하기","living","tit_0202.gif");
 body();
@@ -70,12 +70,12 @@ function body() {
 			<!-- //list -->
 			<div class="bg_list">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0" class="board_list">
-					<col width="7%" />
+					<col width="4%" />
 					<col width="20%" />
 					<col width="20%" />
 					<col />
 					<tr>
-						<th>No</th>
+						<th></th>
 						<th>이미지</th>
 						<th class="th01">선교관(방이름)</th>
 						<th class="th01">내용</th>
@@ -94,7 +94,7 @@ function body() {
 			$houseObj = $h_Helper->getHouseInfoById($roomObj->HouseID);
 ?>
 			<tr>
-			<td><?=$roomObj->roomId?></td>
+			<td></td>
 			<td>
 <?php 
 			$searchDateValue = "";
@@ -178,5 +178,8 @@ function body() {
 		var findFrm = document.getElementById("findFrm");
 		findFrm.submit();
 	}
+
+	
+
 //]]>
 </script>

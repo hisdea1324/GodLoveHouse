@@ -227,7 +227,7 @@ H4 { background:url(../../images/common/bullet_sstit.gif) no-repeat 5px 5px; pad
 
 /* page */
 .paging { height:18px; width:100%; overflow:hidden; text-align:-moz-center;/* FF */ text-align:center;/* IE */}
-.pagingText {margin:0px 3px 2px 3px; height:15px; color:#D1D1D1; font-size:11px; vertical-align:middle;}
+.pagingText {margin:0px 3px 2px 3px; height:15px; color:#D1D1D1; font-size:12px; vertical-align:middle;}
 .pagingText a b { color:#787878; }
 .btn_right {width:100%; text-align:right;}
 
