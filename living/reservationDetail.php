@@ -478,6 +478,9 @@ function body() {
 	
 	var submited = false;
 	function reserveSubmit() {
+		alert('현재 구버전 갓러브하우스는 동작하지 않습니다. 새로운 갓러브하우스(https://missioninfra.net)를 이용해주세요.');
+		location.href = 'https://missioninfra.net';
+		return;
 <? 
 if (isset($_SESSION['userLv']) && $_SESSION['userLv'] < 1) {
 ?>

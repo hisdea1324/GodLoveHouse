@@ -1,5 +1,4 @@
 <?php
-header('Location: https://www.missioninfra.net');
 require "include/include.php";
 
 showHeader("HOME","main","");
